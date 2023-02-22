@@ -7,6 +7,15 @@
     align-items: center;
 }
 
+.homeHeaderContainer2 {
+    height: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
     .homeHeader1Container {
         height: 80px;
         width: 100%;
@@ -14,7 +23,7 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1.5px solid rgba(0, 0, 0, 0.1);
+        border-bottom: 1.5px solid rgba(100, 100, 100, 0.1);
         padding: 0 40px;
     }
 
@@ -43,7 +52,6 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            cursor: pointer;
         }
 
             .homeHeader1Search {
@@ -54,8 +62,16 @@
                 justify-content: center;
                 align-items: center;
                 border-radius: 50px;
-                box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
                 padding: 10px 5px;
+                cursor: pointer;
+                transition: 0.1s linear;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .homeHeader1Search:hover {
+                transition: 0.1s linear;
+                box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
             }
 
                 .homeHeader1AnywhereContainer {
@@ -120,14 +136,80 @@
             width: 25%;
             display: flex;
             flex-direction: row;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
         }
+
+            .homeHeader1AddHomeContainer {
+                height: 40px;
+                width: 150px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                border-radius: 30px;
+                cursor: pointer;
+                margin-right: 15px;
+            }
+
+            .homeHeader1AddHomeContainer:hover {
+                background-color: rgba(172, 172, 172, 0.1);
+            }
+
+             .homeHeader1AddHomeText {
+                font-size: 13.5px;
+                color: var(--black);
+                font-weight: bold;
+             }
+
+            .homeHeader1UserContainer {
+                height: 40px;
+                width: 80px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                border-radius: 30px;
+                cursor: pointer;
+                border: 1px solid rgba(0, 0, 0, 0.2);
+                padding: 7px;
+                padding-left: 12px;
+                transition: 0.1s linear;
+            }
+
+            .homeHeader1UserContainer:hover {
+                transition: 0.1s linear;
+                box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+            }
+
+                .fa-solid.fa-bars.homeHeader1UserMenuBars {
+                    font-size: 15px;
+                    color: var(--black);
+                }
+
+                .homeHeader1UserPicture {
+                    height: 30px;
+                    width: 30px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 50%;
+                }
 
     .homeHeader2Container {
         height: 120px;
         width: 100%;
         display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .homeHeader3Container {
+        height: 100px;
+        width: 100%;
+        display: none;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
