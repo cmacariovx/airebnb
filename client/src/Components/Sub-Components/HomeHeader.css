@@ -43,6 +43,7 @@
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
+                cursor: pointer;
             }
 
         .homeHeader1SearchContainer {
@@ -204,7 +205,64 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        padding: 0 40px;
     }
+
+        .homeHeader2CategoriesContainer {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .homeHeader2CategoryContainer {
+                height: 80px;
+                width: 100px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                margin: 0 10px;
+            }
+
+            .homeHeader2CategoryContainer1 {
+                height: 80px;
+                width: 100px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                margin: 0 10px;
+                margin-right: 0px;
+            }
+
+            .homeHeader2CategoryContainer2 {
+                height: 80px;
+                width: 100px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                margin: 0 10px;
+                margin-left: 0px;
+            }
+
+                .homeHeader2CategoryIcon {
+                    font-size: 20px;
+                    color: var(--gray);
+                    margin-bottom: 10px;
+                }
+
+                .homeHeader2CategoryText {
+                    font-size: 12px;
+                    color: var(--gray);
+                    font-weight: bold;
+                }
 
     .homeHeader3Container {
         height: 100px;

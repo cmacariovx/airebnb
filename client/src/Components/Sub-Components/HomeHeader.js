@@ -39,7 +39,24 @@ function HomeHeader() {
                 </div>
             </div>
             <div className="homeHeader2Container">
-
+                <div className="homeHeader2CategoriesContainer">
+                    <div className="homeHeader2CategoryContainer">
+                        <i class="fa-solid fa-umbrella-beach homeHeader2CategoryIcon"></i>
+                        <p className="homeHeader2CategoryText">Beachfront</p>
+                    </div>
+                    <div className="homeHeader2CategoryContainer">
+                        <i class="fa-solid fa-mountain homeHeader2CategoryIcon"></i>
+                        <p className="homeHeader2CategoryText">Amazing Views</p>
+                    </div>
+                    <div className="homeHeader2CategoryContainer1">
+                        <i class="fa-solid fa-tree homeHeader2CategoryIcon"></i>
+                        <p className="homeHeader2CategoryText">Treehouses</p>
+                    </div>
+                    <div className="homeHeader2CategoryContainer2">
+                    <i class="fa-solid fa-fire homeHeader2CategoryIcon"></i>
+                        <p className="homeHeader2CategoryText">Trending</p>
+                    </div>
+                </div>
             </div>
             {/* if logged in, display this div with the real price switch */}
             <div className="homeHeader3Container">
