@@ -8,7 +8,7 @@
   line-height: 1.25;
   font-weight: 400;
   text-decoration: none;
-  text-rendering: optimizeLegibility;
+  text-rendering: geometricPrecision;
   shape-rendering: crispEdges;
   image-rendering: optimizeQuality;
   border: none;
@@ -16,6 +16,7 @@
   appearance: none;
   outline: none;
   list-style-type: none;
+  -webkit-font-smoothing: antialiased;
 }
 
 #root {
@@ -29,11 +30,11 @@
 
 ::-webkit-scrollbar {
   width: 10px;
-  background-color: rgb(24, 24, 24);
+  background-color: rgb(200, 200, 200);
 }
 
 ::-webkit-scrollbar-thumb {
   width: 3px;
-  background-color: rgb(50, 50, 50);
+  background-color: rgb(150, 150, 150);
   border-radius: 5px;
 }

@@ -1,3 +1,9 @@
+:root {
+  --pink: #FF385C;
+  --black: #222222;
+  --gray: #717171;
+}
+
 .app {
   height: 100%;
   width: 100%;
