@@ -1,0 +1,10 @@
+.homeBodyContainer {
+    min-height: 100vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    place-items: center;
+    padding: 0 40px;
+    gap: 20px;
+    margin-bottom: 20px;
+}

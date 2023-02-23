@@ -41,19 +41,19 @@ function HomeHeader() {
             <div className="homeHeader2Container">
                 <div className="homeHeader2CategoriesContainer">
                     <div className="homeHeader2CategoryContainer">
-                        <i class="fa-solid fa-umbrella-beach homeHeader2CategoryIcon"></i>
+                        <i className="fa-solid fa-umbrella-beach homeHeader2CategoryIcon"></i>
                         <p className="homeHeader2CategoryText">Beachfront</p>
                     </div>
                     <div className="homeHeader2CategoryContainer">
-                        <i class="fa-solid fa-mountain homeHeader2CategoryIcon"></i>
+                        <i className="fa-solid fa-mountain homeHeader2CategoryIcon"></i>
                         <p className="homeHeader2CategoryText">Amazing Views</p>
                     </div>
                     <div className="homeHeader2CategoryContainer1">
-                        <i class="fa-solid fa-tree homeHeader2CategoryIcon"></i>
+                        <i className="fa-solid fa-tree homeHeader2CategoryIcon"></i>
                         <p className="homeHeader2CategoryText">Treehouses</p>
                     </div>
                     <div className="homeHeader2CategoryContainer2">
-                    <i class="fa-solid fa-fire homeHeader2CategoryIcon"></i>
+                        <i className="fa-solid fa-fire homeHeader2CategoryIcon"></i>
                         <p className="homeHeader2CategoryText">Trending</p>
                     </div>
                 </div>
