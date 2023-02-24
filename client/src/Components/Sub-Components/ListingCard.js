@@ -5,7 +5,38 @@ import './ListingCard.css'
 function ListingCard() {
     return (
         <div className="listingCardContainer">
-            
+            <div className="listingCardImageContainer">
+                <div className="listingCardCarouselContainer">
+                    <div className="listingCardArrowContainer">
+                        <i className="fa-solid fa-chevron-left"></i>
+                    </div>
+
+                    <div className="listingCardArrowContainer">
+                        <i className="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+            <div className="listingCardInfoContainer">
+                <div className="listingCardInfoLocationReviewContainer">
+                    <div className="listingCardInfoLocationContainer">
+                        <p className="listingCardInfoLocationText">Asheville, North Carolina</p>
+                    </div>
+                    <div className="listingCardInfoReviewContainer">
+                        <i className="fa-solid fa-star listingCardInfoReviewStar"></i>
+                        <p className="listingCardInfoReviewText">4.93</p>
+                    </div>
+                </div>
+                <div className="listingCardInfoMilesAwayContainer">
+                    <p className="listingCardInfoMilesAwayText">5 miles away</p>
+                </div>
+                <div className="listingCardInfoAvailableDateContainer">
+                    <p className="listingCardInfoAvailableDateText">Jun 11 - 16</p>
+                </div>
+                <div className="listingCardInfoPriceContainer">
+                    <p className="listingCardInfoPrice1Text">$380</p>
+                    <p className="listingCardInfoPrice2Text">night</p>
+                </div>
+            </div>
         </div>
     )
 }

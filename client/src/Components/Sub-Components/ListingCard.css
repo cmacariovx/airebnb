@@ -5,7 +5,160 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid black;
     border-radius: 10px;
     flex: auto;
 }
+
+    .listingCardImageContainer {
+        height: 70%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 10px;
+        background-image: url("../../Images/home1.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+
+    .listingCardCarouselContainer {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+        .listingCardArrowContainer {
+            position: relative;
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            background-color: rgb(255, 255, 255);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0.9;
+        }
+
+            .fa-solid.fa-chevron-left {
+                font-size: 12px;
+                color: var(--black);
+            }
+
+            .fa-solid.fa-chevron-right {
+                font-size: 12px;
+                color: var(--black);
+            }
+
+
+    .listingCardInfoContainer {
+        height: 30%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0;
+    }
+
+        .listingCardInfoLocationReviewContainer {
+            height: 25%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .listingCardInfoLocationContainer {
+                height: 100%;
+                width: 70%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+                .listingCardInfoLocationText {
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: var(--black);
+                }
+
+            .listingCardInfoReviewContainer {
+                height: 100%;
+                width: 30%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+            }
+
+                .fa-solid.fa-star.listingCardInfoReviewStar {
+                    font-size: 12px;
+                    color: var(--black);
+                    margin-right: 4px;
+                    margin-bottom: 2px;
+                }
+
+                .listingCardInfoReviewText {
+                    font-size: 14px;
+                    color: var(--black);
+                }
+
+        .listingCardInfoMilesAwayContainer {
+            height: 25%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+            .listingCardInfoMilesAwayText {
+                font-size: 14px;
+                color: var(--gray);
+            }
+
+        .listingCardInfoAvailableDateContainer {
+            height: 25%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+            .listingCardInfoAvailableDateText {
+                font-size: 14px;
+                color: var(--gray);
+            }
+
+        .listingCardInfoPriceContainer {
+            height: 25%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+            .listingCardInfoPrice1Text{
+                font-size: 14px;
+                font-weight: bold;
+                color: var(--black);
+                margin-right: 3px;
+            }
+
+            .listingCardInfoPrice2Text{
+                font-size: 14px;
+                color: var(--black);
+            }
