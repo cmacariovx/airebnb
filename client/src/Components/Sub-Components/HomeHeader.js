@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 import './HomeHeader.css'
 
@@ -7,12 +8,23 @@ import personalPic from '../../Images/personalPic.jpg'
 
 function HomeHeader(props) {
     const homePage = props.homePage
+    const navigate = useNavigate()
+
+    function toHomeHandler() {
+        if (homePage) {
+            navigate("/")
+            window.location.reload()
+        }
+        else {
+            navigate("/")
+        }
+    }
 
     return (
         <div className={homePage ? "homeHeaderContainer" : "homeHeaderContainerListing"}>
             <div className={homePage ? "homeHeader1Container" : "homeHeader1Container2"}>
                 <div className="homeHeader1LogoContainer">
-                    <img src={airbnbLogo} className="homeHeader1Logo"/>
+                    <img src={airbnbLogo} className="homeHeader1Logo" onClick={toHomeHandler}/>
                 </div>
                 <div className="homeHeader1SearchContainer">
                     {homePage && <div className="homeHeader1Search">
