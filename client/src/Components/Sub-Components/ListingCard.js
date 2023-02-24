@@ -7,12 +7,20 @@ function ListingCard() {
         <div className="listingCardContainer">
             <div className="listingCardImageContainer">
                 <div className="listingCardCarouselContainer">
-                    <div className="listingCardArrowContainer">
-                        <i className="fa-solid fa-chevron-left"></i>
+                    <div className="listingCardHeartContainer">
+                        <i className="fa-solid fa-heart listingCardHeart"></i>
                     </div>
+                    <div className="listingCardArrowsContainer">
+                        <div className="listingCardArrowContainer">
+                            <i className="fa-solid fa-chevron-left"></i>
+                        </div>
 
-                    <div className="listingCardArrowContainer">
-                        <i className="fa-solid fa-chevron-right"></i>
+                        <div className="listingCardArrowContainer">
+                            <i className="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <div className="listingCardCarouselNumberContainer">
+                        {/* for every image (imagesNum) render a small circle and highlight which index/image were at */}
                     </div>
                 </div>
             </div>
