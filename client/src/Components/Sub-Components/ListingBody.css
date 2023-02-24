@@ -1,0 +1,87 @@
+.listingBodyContainer {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 80px;
+    margin: 20px 0;
+}
+
+    .listingBodyIntroContainer {
+        height: 80px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+        .listingBodyTitleContainer {
+            height: 50%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+            .listingBodyTitleText {
+                font-size: 24px;
+                font-weight: bold;
+                letter-spacing: 0.5px;
+            }
+
+        .listingBodyInfoContainer {
+            height: 50%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+            .listingBodyReviewContainer {
+                height: 100%;
+                width: 50px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+            }
+
+                .fa-solid.fa-star.listingBodyStar {
+                    font-size: 12px;
+                    margin-bottom: 1px;
+                    margin-right: 2px;
+                }
+
+                .listingBodyDotText {
+                    opacity: 0.8;
+                    font-size: 10px;
+                    margin-left: 5px;
+                    margin-right: 5px;
+                }
+
+                .listingBodyReviewText {
+                    font-size: 13px;
+                    font-weight: bold;
+                }
+
+            .listingBodyReviewCountText {
+                font-size: 13px;
+                font-weight: bold;
+                text-decoration: underline;
+                text-decoration-thickness: 1px;
+                cursor: pointer;
+            }
+
+            .listingBodyLocationText {
+                font-size: 13px;
+                font-weight: bold;
+                text-decoration: underline;
+                text-decoration-thickness: 1px;
+                cursor: pointer;
+            }
