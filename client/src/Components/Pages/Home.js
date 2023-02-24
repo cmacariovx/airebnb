@@ -10,7 +10,7 @@ import HomeFooter from "../Sub-Components/HomeFooter";
 function Home() {
     return (
         <div className="homeContainer">
-            <HomeHeader/>
+            <HomeHeader homePage={true}/>
             <HomeBody/>
             <HomeFooter/>
         </div>
