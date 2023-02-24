@@ -1,10 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 import './ListingCard.css'
 
-function ListingCard() {
+function ListingCard(props) {
+    const navigate = useNavigate()
+
+    function toListingHandler() {
+        navigate("/listing/" + props._id)
+    }
     return (
-        <div className="listingCardContainer">
+        <div className="listingCardContainer" onClick={toListingHandler}>
             <div className="listingCardImageContainer">
                 <div className="listingCardCarouselContainer">
                     <div className="listingCardHeartContainer">

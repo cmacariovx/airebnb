@@ -6,6 +6,7 @@ import './App.css'
 import { AuthContext } from './Context/Auth-Context'
 
 import Home from './Components/Pages/Home'
+import Listing from './Components/Pages/Listing'
 import AppPrivateRoutes from './AppRoutes/AppPrivateRoutes'
 import AppPublicRoutes from'./AppRoutes/AppPublicRoutes'
 
@@ -57,6 +58,7 @@ function App() {
         <Routes>
           <Route element={<AppPublicRoutes isLoadingLogin={loadingLogin}/>}>
             <Route path='/' exact element={<Home/>} />
+            <Route path='/listing/:listingId' element={<Listing/>} />
           </Route>
 
           <Route element={<AppPrivateRoutes isLoadingLogin={loadingLogin}/>}>
