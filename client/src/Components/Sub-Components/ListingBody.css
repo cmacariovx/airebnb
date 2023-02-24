@@ -38,60 +38,106 @@
             width: 100%;
             display: flex;
             flex-direction: row;
-            justify-content: flex-start;
+            justify-content: space-between;
             align-items: center;
         }
 
-            .listingBodyReviewContainer {
+            .listingBodyInfoContainerLeft {
                 height: 100%;
-                width: 50px;
+                width: 80%;
                 display: flex;
                 flex-direction: row;
-                justify-content: center;
+                justify-content: flex-start;
                 align-items: center;
-                cursor: pointer;
             }
 
-                .fa-solid.fa-star.listingBodyStar {
-                    font-size: 12px;
-                    margin-bottom: 1px;
-                    margin-right: 2px;
+                .listingBodyReviewContainer {
+                    height: 100%;
+                    width: 50px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
                 }
 
-                .listingBodyDotText {
-                    opacity: 0.8;
-                    font-size: 10px;
-                    margin-left: 5px;
-                    margin-right: 5px;
-                }
+                    .fa-solid.fa-star.listingBodyStar {
+                        font-size: 12px;
+                        margin-bottom: 1px;
+                        margin-right: 2px;
+                    }
 
-                .listingBodyReviewText {
+                    .listingBodyDotText {
+                        opacity: 0.8;
+                        font-size: 10px;
+                        margin-left: 5px;
+                        margin-right: 5px;
+                    }
+
+                    .listingBodyReviewText {
+                        font-size: 13px;
+                        font-weight: bold;
+                    }
+
+                .listingBodyReviewCountText {
                     font-size: 13px;
                     font-weight: bold;
+                    text-decoration: underline;
+                    text-decoration-thickness: 1px;
+                    cursor: pointer;
                 }
 
-            .listingBodyReviewCountText {
-                font-size: 13px;
-                font-weight: bold;
-                text-decoration: underline;
-                text-decoration-thickness: 1px;
-                cursor: pointer;
+                .listingBodyLocationText {
+                    font-size: 13px;
+                    font-weight: bold;
+                    text-decoration: underline;
+                    text-decoration-thickness: 1px;
+                    cursor: pointer;
+                }
+
+            .listingBodyInfoContainerRight {
+                height: 100%;
+                width: 20%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
             }
 
-            .listingBodyLocationText {
-                font-size: 13px;
-                font-weight: bold;
-                text-decoration: underline;
-                text-decoration-thickness: 1px;
-                cursor: pointer;
-            }
+                .listingBodySaveContainer {
+                    height: 35px;
+                    width: 80px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    padding: 5px;
+                }
+
+                .listingBodySaveContainer:hover {
+                    background-color: rgba(165, 165, 165, 0.1);
+                }
+
+                    .fa-regular.fa-heart.listingBodySaveHeart {
+                        font-size: 15px;
+                        margin-right: 7px;
+                    }
+
+                    .listingBodySaveText {
+                        font-size: 13px;
+                        font-weight: bold;
+                        text-decoration: underline;
+                        text-decoration-thickness: 1px;
+                    }
 
     .listingBodyImagesContainer {
         height: 500px;
         width: 100%;
         display: grid;
         place-items: center;
-        border-radius: 20px;
+        border-radius: 10px;
         margin-top: 20px;
         overflow: hidden;
         grid-template-areas:
@@ -115,7 +161,14 @@
                 background-image: url(../../Images/home1.jpg);
                 background-repeat: no-repeat;
                 background-size: cover;
+                transition: 0.1s linear;
+                cursor: pointer;
             }
+
+                .listingBodyMainImage:hover {
+                    transition: 0.1s linear;
+                    filter: brightness(85%);
+                }
 
         .listingBodySubImageContainer {
             height: 100%;
@@ -131,7 +184,14 @@
                 background-image: url(../../Images/home1.jpg);
                 background-repeat: no-repeat;
                 background-size: cover;
+                transition: 0.1s linear;
+                cursor: pointer;
             }
+
+                .listingBodySubImage:hover {
+                    transition: 0.1s linear;
+                    filter: brightness(85%);
+                }
 
         #listingBodySubImage1 {
             grid-area: listingBodySubImage1;

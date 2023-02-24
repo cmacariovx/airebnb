@@ -12,14 +12,22 @@ function ListingBody() {
                     <p className="listingBodyTitleText">Modern Mansion</p>
                 </div>
                 <div className="listingBodyInfoContainer">
-                    <div className="listingBodyReviewContainer">
-                        <i className="fa-solid fa-star listingBodyStar"></i>
-                        <p className="listingBodyReviewText">4.93</p>
+                    <div className="listingBodyInfoContainerLeft">
+                        <div className="listingBodyReviewContainer">
+                            <i className="fa-solid fa-star listingBodyStar"></i>
+                            <p className="listingBodyReviewText">4.93</p>
+                        </div>
+                        <p className="listingBodyDotText">•</p>
+                        <a className="listingBodyReviewCountText">653 reviews</a>
+                        <p className="listingBodyDotText">•</p>
+                        <a className="listingBodyLocationText">Asheville, North Carolina</a>
                     </div>
-                    <p className="listingBodyDotText">•</p>
-                    <a className="listingBodyReviewCountText">653 reviews</a>
-                    <p className="listingBodyDotText">•</p>
-                    <a className="listingBodyLocationText">Asheville, North Carolina</a>
+                    <div className="listingBodyInfoContainerRight">
+                        <div className="listingBodySaveContainer">
+                            <i className="fa-regular fa-heart listingBodySaveHeart"></i>
+                            <p className="listingBodySaveText">Save</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div className="listingBodyImagesContainer">
