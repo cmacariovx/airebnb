@@ -10,3 +10,8 @@
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     background-color: white;
 }
+
+    .homeFooterText {
+        font-size: 14px;
+        color: var(--gray);
+    }

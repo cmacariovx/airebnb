@@ -75,7 +75,15 @@
                 align-items: center;
                 cursor: pointer;
                 opacity: 0.9;
+                transition: 0.1s linear;
             }
+
+                .listingCardArrowContainer:hover {
+                    transition: 0.1s linear;
+                    height: 32px;
+                    width: 32px;
+                    opacity: 1;
+                }
 
                 .fa-solid.fa-chevron-left {
                     font-size: 12px;
