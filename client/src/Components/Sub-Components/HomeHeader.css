@@ -20,6 +20,21 @@
     align-items: center;
 }
 
+.homeHeaderContainerListing {
+    height: 80px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 100;
+    padding: 0 40px;
+}
+
+
     .homeHeader1Container {
         height: 80px;
         width: 100%;
@@ -62,6 +77,21 @@
             .homeHeader1Search {
                 height: 45px;
                 width: 350px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                border-radius: 50px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+                padding: 10px 5px;
+                cursor: pointer;
+                transition: 0.1s linear;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .homeHeader2Search {
+                height: 45px;
+                width: 300px;
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
@@ -120,8 +150,26 @@
                     align-items: center;
                 }
 
+                .homeHeader1StartSearchContainer {
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding-left: 20px;
+                }
+
+                    .homeHeader1StartSearchText {
+                        font-size: 13px;
+                        color: var(--black);
+                        font-weight: bold;
+                    }
+
                 .homeHeader1SearchButtonContainer {
+                    min-height: 35px;
                     height: 35px;
+                    min-width: 35px;
                     width: 35px;
                     border-radius: 50%;
                     background-color: var(--pink);

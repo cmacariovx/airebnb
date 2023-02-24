@@ -5,15 +5,17 @@ import './HomeHeader.css'
 import airbnbLogo from '../../Images/airbnbLogo.png'
 import personalPic from '../../Images/personalPic.jpg'
 
-function HomeHeader() {
+function HomeHeader(props) {
+    const homePage = props.homePage
+
     return (
-        <div className="homeHeaderContainer">
+        <div className={homePage ? "homeHeaderContainer" : "homeHeaderContainerListing"}>
             <div className="homeHeader1Container">
                 <div className="homeHeader1LogoContainer">
                     <img src={airbnbLogo} className="homeHeader1Logo"/>
                 </div>
                 <div className="homeHeader1SearchContainer">
-                    <div className="homeHeader1Search">
+                    {homePage && <div className="homeHeader1Search">
                         <div className="homeHeader1AnywhereContainer">
                             <p className="homeHeader1SearchText1">Anywhere</p>
                         </div>
@@ -26,7 +28,15 @@ function HomeHeader() {
                         <div className="homeHeader1SearchButtonContainer">
                             <i className="fa-solid fa-magnifying-glass homeHeader1SearchButton"></i>
                         </div>
-                    </div>
+                    </div>}
+                    {!homePage && <div className="homeHeader2Search">
+                        <div className="homeHeader1StartSearchContainer">
+                            <p className="homeHeader1StartSearchText">Start your search</p>
+                        </div>
+                        <div className="homeHeader1SearchButtonContainer">
+                            <i className="fa-solid fa-magnifying-glass homeHeader1SearchButton"></i>
+                        </div>
+                    </div>}
                 </div>
                 <div className="homeHeader1RightContainer">
                     <div className="homeHeader1AddHomeContainer">
@@ -38,7 +48,7 @@ function HomeHeader() {
                     </div>
                 </div>
             </div>
-            <div className="homeHeader2Container">
+            {homePage && <div className="homeHeader2Container">
                 <div className="homeHeader2CategoriesContainer">
                     <div className="homeHeader2CategoryContainer">
                         <i className="fa-solid fa-umbrella-beach homeHeader2CategoryIcon"></i>
@@ -57,7 +67,7 @@ function HomeHeader() {
                         <p className="homeHeader2CategoryText">Trending</p>
                     </div>
                 </div>
-            </div>
+            </div>}
             {/* if logged in, display this div with the real price switch */}
             <div className="homeHeader3Container">
 
