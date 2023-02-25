@@ -195,3 +195,150 @@
         #listingBodySubImage4 {
             grid-area: listingBodySubImage4;
         }
+
+    .listingBodyMainContainer {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 40px 0;
+    }
+
+        .listingBodyMainLeftContainer {
+            height: 100%;
+            width: 58.33%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .listingBodyMainLeftHostedContainer {
+            height: 100px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(100, 100, 100, 0.3);
+        }
+
+            .listingBodyMainLeftHostedLeftContainer {
+                height: 100%;
+                width: 80%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+            }
+
+                .listingBodyMainLeftHostedLeftTitleContainer {
+                    height: 40%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+
+                    .listingBodyMainLeftHostedLeftTitleText {
+                        font-size: 21px;
+                        font-weight: bold;
+                    }
+
+                .listingBodyMainLeftHostedLeftInfoContainer {
+                    height: 40%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+
+                    .listingBodyMainLeftHostedLeftInfoText {
+                        font-size: 15px;
+                    }
+
+                    .listingBodyMainLeftHostedLeftDotText {
+                        font-size: 8px;
+                        margin-left: 5px;
+                        margin-right: 5px;
+                    }
+
+            .listingBodyMainRightHostedRightContainer {
+                height: 100%;
+                width: 20%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                padding-bottom: 21px;
+            }
+
+            .listingBodyMainRightHostedRightImage {
+                min-height: 58px;
+                min-width: 58px;
+                height: 58px;
+                width: 58px;
+                border-radius: 50%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+
+        .listingBodyMainLeftCheckContainer {
+            height: 250px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: flex-start;
+        }
+
+        .listingBodyMainLeftAircoverContainer {
+            height: 200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .listingBodyMainLeftDescriptionContainer {
+            height: 250px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .listingBodyMainLeftAmenitiesContainer {
+            height: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .listingBodyMainLeftCalendarContainer {
+            height: 600px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .listingBodyMainRightContainer {
+            height: 100%;
+            width: 33.33%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }

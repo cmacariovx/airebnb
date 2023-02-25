@@ -3,6 +3,7 @@ import React from "react";
 import './ListingBody.css'
 
 import homePic from '../../Images/home1.jpg'
+import personalPic from '../../Images/personalPic.jpg'
 
 function ListingBody() {
     return (
@@ -45,6 +46,47 @@ function ListingBody() {
                 </div>
                 <div className="listingBodySubImageContainer" id="listingBodySubImage4">
                     <div className="listingBodySubImage"/>
+                </div>
+            </div>
+            <div className="listingBodyMainContainer">
+                <div className="listingBodyMainLeftContainer">
+                    <div className="listingBodyMainLeftHostedContainer">
+                        <div className="listingBodyMainLeftHostedLeftContainer">
+                            <div className="listingBodyMainLeftHostedLeftTitleContainer">
+                                <p className="listingBodyMainLeftHostedLeftTitleText">House hosted by Carlos</p>
+                            </div>
+                            <div className="listingBodyMainLeftHostedLeftInfoContainer">
+                                <p className="listingBodyMainLeftHostedLeftInfoText">8 guests</p>
+                                <p className="listingBodyMainLeftHostedLeftDotText">•</p>
+                                <p className="listingBodyMainLeftHostedLeftInfoText">4 bedrooms</p>
+                                <p className="listingBodyMainLeftHostedLeftDotText">•</p>
+                                <p className="listingBodyMainLeftHostedLeftInfoText">4 beds</p>
+                                <p className="listingBodyMainLeftHostedLeftDotText">•</p>
+                                <p className="listingBodyMainLeftHostedLeftInfoText">4 bath</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyMainRightHostedRightContainer">
+                            <img src={personalPic} className="listingBodyMainRightHostedRightImage"/>
+                        </div>
+                    </div>
+                    <div className="listingBodyMainLeftCheckContainer">
+
+                    </div>
+                    <div className="listingBodyMainLeftAircoverContainer">
+
+                    </div>
+                    <div className="listingBodyMainLeftDescriptionContainer">
+
+                    </div>
+                    <div className="listingBodyMainLeftAmenitiesContainer">
+
+                    </div>
+                    <div className="listingBodyMainLeftCalendarContainer">
+
+                    </div>
+                </div>
+                <div className="listingBodyMainRightContainer">
+
                 </div>
             </div>
         </div>
