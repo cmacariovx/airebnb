@@ -4,6 +4,7 @@ import './ListingBody.css'
 
 import homePic from '../../Images/home1.jpg'
 import personalPic from '../../Images/personalPic.jpg'
+import aircoverLogo from '../../Images/aircover.png'
 
 function ListingBody() {
     return (
@@ -88,7 +89,13 @@ function ListingBody() {
                         </div>
                     </div>
                     <div className="listingBodyMainLeftAircoverContainer">
-
+                        <div className="listingBodyMainLeftAircoverLogoContainer">
+                            <img src={aircoverLogo} className="aircoverLogo"/>
+                        </div>
+                        <div className="listingBodyMainLeftAircoverDescriptionContainer">
+                            <p className="listingBodyMainLeftAircoverDescriptionText">Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.
+                            </p>
+                        </div>
                     </div>
                     <div className="listingBodyMainLeftDescriptionContainer">
 

@@ -296,6 +296,7 @@
             flex-direction: column;
             justify-content: space-evenly;
             align-items: flex-start;
+            border-bottom: 1px solid rgba(100, 100, 100, 0.3);
         }
 
             .listingBodyMainLeftCheckSubContainer {
@@ -338,13 +339,45 @@
                     }
 
         .listingBodyMainLeftAircoverContainer {
-            height: 200px;
+            height: 150px;
             width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
+            border-bottom: 1px solid rgba(100, 100, 100, 0.3);
         }
+
+            .listingBodyMainLeftAircoverLogoContainer {
+                height: 40%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+                .aircoverLogo {
+                    height: 25px;
+                    width: auto;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+            .listingBodyMainLeftAircoverDescriptionContainer {
+                height: 40%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+                .listingBodyMainLeftAircoverDescriptionText {
+                    font-size: 16px;
+                    letter-spacing: 0;
+                }
 
         .listingBodyMainLeftDescriptionContainer {
             height: 250px;
@@ -353,6 +386,7 @@
             flex-direction: row;
             justify-content: flex-start;
             align-items: center;
+            border-bottom: 1px solid rgba(100, 100, 100, 0.3);
         }
 
         .listingBodyMainLeftAmenitiesContainer {
@@ -362,6 +396,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
+            border-bottom: 1px solid rgba(100, 100, 100, 0.3);
         }
 
         .listingBodyMainLeftCalendarContainer {
@@ -371,6 +406,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: flex-start;
+            border-bottom: 1px solid rgba(100, 100, 100, 0.3);
         }
 
         .listingBodyMainRightContainer {
