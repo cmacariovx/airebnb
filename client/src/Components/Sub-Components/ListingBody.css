@@ -58,7 +58,6 @@
                     flex-direction: row;
                     justify-content: center;
                     align-items: center;
-                    cursor: pointer;
                 }
 
                     .fa-solid.fa-star.listingBodyStar {
@@ -101,7 +100,7 @@
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-end;
-                align-items: center; 
+                align-items: center;
             }
 
                 .listingBodySaveContainer {
@@ -162,13 +161,7 @@
                 background-repeat: no-repeat;
                 background-size: cover;
                 transition: 0.1s linear;
-                cursor: pointer;
             }
-
-                .listingBodyMainImage:hover {
-                    transition: 0.1s linear;
-                    filter: brightness(85%);
-                }
 
         .listingBodySubImageContainer {
             height: 100%;
@@ -185,13 +178,7 @@
                 background-repeat: no-repeat;
                 background-size: cover;
                 transition: 0.1s linear;
-                cursor: pointer;
             }
-
-                .listingBodySubImage:hover {
-                    transition: 0.1s linear;
-                    filter: brightness(85%);
-                }
 
         #listingBodySubImage1 {
             grid-area: listingBodySubImage1;
