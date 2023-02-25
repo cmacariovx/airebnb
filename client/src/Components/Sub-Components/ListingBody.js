@@ -70,7 +70,22 @@ function ListingBody() {
                         </div>
                     </div>
                     <div className="listingBodyMainLeftCheckContainer">
-
+                        <div className="listingBodyMainLeftCheckSubContainer">
+                            <div className="listingBodyMainLeftCheckSubLeftContainer">
+                                <i className="fa-solid fa-door-closed listingBodyMainLeftCheckSubLeftDoor"></i>
+                            </div>
+                            <div className="listingBodyMainLeftCheckSubRightContainer">
+                                <p className="listingBodyMainLeftCheckSubRightText">Self check-in</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyMainLeftCheckSubContainer">
+                            <div className="listingBodyMainLeftCheckSubLeftContainer">
+                                <i className="fa-solid fa-calendar listingBodyMainLeftCheckSubLeftCalendar"></i>
+                            </div>
+                            <div className="listingBodyMainLeftCheckSubRightContainer">
+                                <p className="listingBodyMainLeftCheckSubRightText">Free cancellation before Feb 28</p>
+                            </div>
+                        </div>
                     </div>
                     <div className="listingBodyMainLeftAircoverContainer">
 

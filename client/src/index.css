@@ -8,7 +8,7 @@
   line-height: 1.25;
   font-weight: 400;
   text-decoration: none;
-  text-rendering: geometricPrecision;
+  text-rendering: optimizeLegibility;
   shape-rendering: crispEdges;
   image-rendering: optimizeQuality;
   border: none;
@@ -27,14 +27,3 @@
   justify-content: space-between;
   align-items: center;
 }
-
-/* ::-webkit-scrollbar {
-  width: 10px;
-  background-color: rgb(200, 200, 200);
-}
-
-::-webkit-scrollbar-thumb {
-  width: 3px;
-  background-color: rgb(150, 150, 150);
-  border-radius: 5px;
-} */
