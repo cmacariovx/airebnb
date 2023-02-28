@@ -98,10 +98,82 @@ function ListingBody() {
                         </div>
                     </div>
                     <div className="listingBodyMainLeftDescriptionContainer">
-
+                        <p className="listingBodyMainLeftDescriptionText">This tree house is very unique. It features two separate sleeping quarters to give renters the ability to accommodate more friends and enjoy time together but also have private time at night. Its 25 feet up in the trees and has plenty of nature coming through and around the decks. Its also has all the amenities one would want for comfort in the main house with heat/ AC, TV, Shower, and Toilet. The bunk house also has TV/DVD, heat and AC. Come enjoy nature at its best.</p>
                     </div>
                     <div className="listingBodyMainLeftAmenitiesContainer">
-
+                        <div className="listingBodyMainLeftAmenitiesTitleContainer">
+                            <p className="listingBodyMainLeftAmenitiesTitleText">What this place offers</p>
+                        </div>
+                        <div className="listingBodyMainLeftAmenitiesListContainer">
+                            <div className="listingBodyMainLeftAmenitiesListLeftContainer">
+                                <div className="listingBodyMainLeftAmenityContainer">
+                                    <div className="listingBodyMainLeftAmenityLeftContainer">
+                                        <i className="fa-solid fa-wifi listingBodyMainLeftAmenity"></i>
+                                    </div>
+                                    <div className="listingBodyMainLeftAmenityRightContainer">
+                                        <p className="listingBodyMainLeftAmenityText">Wifi</p>
+                                    </div>
+                                </div>
+                                <div className="listingBodyMainLeftAmenityContainer">
+                                    <div className="listingBodyMainLeftAmenityLeftContainer">
+                                        <i className="fa-solid fa-temperature-three-quarters listingBodyMainLeftAmenity"></i>
+                                    </div>
+                                    <div className="listingBodyMainLeftAmenityRightContainer">
+                                        <p className="listingBodyMainLeftAmenityText">Heating</p>
+                                    </div>
+                                </div>
+                                <div className="listingBodyMainLeftAmenityContainer">
+                                    <div className="listingBodyMainLeftAmenityLeftContainer">
+                                        <i className="fa-solid fa-shirt listingBodyMainLeftAmenity"></i>
+                                    </div>
+                                    <div className="listingBodyMainLeftAmenityRightContainer">
+                                        <p className="listingBodyMainLeftAmenityText">Washer & Dryer</p>
+                                    </div>
+                                </div>
+                                <div className="listingBodyMainLeftAmenityContainer">
+                                    <div className="listingBodyMainLeftAmenityLeftContainer">
+                                        <i className="fa-solid fa-key listingBodyMainLeftAmenity"></i>
+                                    </div>
+                                    <div className="listingBodyMainLeftAmenityRightContainer">
+                                        <p className="listingBodyMainLeftAmenityText">Self check-in</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="listingBodyMainLeftAmenitiesListRightContainer">
+                                <div className="listingBodyMainLeftAmenityContainer">
+                                    <div className="listingBodyMainLeftAmenityLeftContainer">
+                                        <i className="fa-solid fa-tv listingBodyMainLeftAmenity"></i>
+                                    </div>
+                                    <div className="listingBodyMainLeftAmenityRightContainer">
+                                        <p className="listingBodyMainLeftAmenityText">TV</p>
+                                    </div>
+                                </div>
+                                <div className="listingBodyMainLeftAmenityContainer">
+                                    <div className="listingBodyMainLeftAmenityLeftContainer">
+                                        <i className="fa-solid fa-snowflake listingBodyMainLeftAmenity"></i>
+                                    </div>
+                                    <div className="listingBodyMainLeftAmenityRightContainer">
+                                        <p className="listingBodyMainLeftAmenityText">Air conditioning</p>
+                                    </div>
+                                </div>
+                                <div className="listingBodyMainLeftAmenityContainer">
+                                    <div className="listingBodyMainLeftAmenityLeftContainer">
+                                        <i className="fa-solid fa-bottle-droplet listingBodyMainLeftAmenity"></i>
+                                    </div>
+                                    <div className="listingBodyMainLeftAmenityRightContainer">
+                                        <p className="listingBodyMainLeftAmenityText">Essentials</p>
+                                    </div>
+                                </div>
+                                <div className="listingBodyMainLeftAmenityContainer">
+                                    <div className="listingBodyMainLeftAmenityLeftContainer">
+                                        <i class="fa-solid fa-bell listingBodyMainLeftAmenity"></i>
+                                    </div>
+                                    <div className="listingBodyMainLeftAmenityRightContainer">
+                                        <p className="listingBodyMainLeftAmenityText">Smoke alarm</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className="listingBodyMainLeftCalendarContainer">
 
