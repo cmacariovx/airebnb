@@ -184,11 +184,11 @@ function ListingBody() {
                             <Calendar/>
                         </div>
                         <div className="listingBodyMainLeftCalendarFooterContainer">
+                            <p className="listingBodyMainLeftCalendarFooterText">Clear dates</p>
                         </div>
                     </div>
                 </div>
                 <div className="listingBodyMainRightContainer">
-
                 </div>
             </div>
         </div>

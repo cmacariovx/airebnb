@@ -5,6 +5,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    -webkit-user-drag: none;
 }
 
     .calendarMonthContainer {
@@ -15,6 +16,8 @@
         justify-content: space-between;
         align-items: center;
         margin-bottom: 10px;
+        user-select: none;
+        -webkit-user-drag: none;
     }
 
         .calendarLeftMonthContainer {
@@ -26,6 +29,7 @@
             align-items: center;
             padding-right: 25px;
             position: relative;
+            -webkit-user-drag: none;
         }
 
             .calendarLeftArrowCircleContainer:hover {
@@ -40,6 +44,7 @@
                 justify-content: flex-start;
                 align-items: center;
                 position: absolute;
+                -webkit-user-drag: none;
             }
 
                 .calendarLeftArrowCircleContainer {
@@ -53,6 +58,7 @@
                     align-items: center;
                     border-radius: 50%;
                     cursor: pointer;
+                    -webkit-user-drag: none;
                 }
 
                     .calendarLeftArrowCircleContainer:hover {
@@ -62,16 +68,19 @@
                 .fa-solid.fa-chevron-left.calendarLeftArrow {
                     font-size: 14px;
                     font-weight: bold;
+                    -webkit-user-drag: none;
                 }
 
             .calendarLeftMonthText {
                 font-size: 15px;
                 font-weight: bold;
+                -webkit-user-drag: none;
             }
 
             .calendarRightMonthText {
                 font-size: 15px;
                 font-weight: bold;
+                -webkit-user-drag: none;
             }
 
         .calendarRightMonthContainer {
@@ -83,6 +92,7 @@
             align-items: center;
             padding-left: 25px;
             position: relative;
+            -webkit-user-drag: none;
         }
 
                 .calendarRightArrowContainer {
@@ -93,6 +103,7 @@
                     justify-content: flex-end;
                     align-items: center;
                     position: absolute;
+                    -webkit-user-drag: none;
                 }
 
                     .calendarRightArrowCircleContainer {
@@ -106,6 +117,7 @@
                         align-items: center;
                         border-radius: 50%;
                         cursor: pointer;
+                        -webkit-user-drag: none;
                     }
 
                         .calendarRightArrowCircleContainer:hover {
@@ -115,6 +127,7 @@
                     .fa-solid.fa-chevron-right.calendarRightArrow {
                         font-size: 14px;
                         font-weight: bold;
+                        -webkit-user-drag: none;
                     }
 
     .calendarBodyContainer {
@@ -124,6 +137,7 @@
         flex-direction: row;
         justify-content: center;
         align-items: flex-start;
+        -webkit-user-drag: none;
     }
 
         .calendarLeftBodyContainer {
@@ -133,6 +147,7 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
+            -webkit-user-drag: none;
         }
 
             .calendarLeft {
@@ -141,6 +156,8 @@
                 justify-content: center;
                 align-items: center;
                 margin-right: 25px;
+                user-select: none;
+                -webkit-user-drag: none;
             }
 
             .calendarRight {
@@ -149,6 +166,8 @@
                 justify-content: center;
                 align-items: center;
                 margin-left: 25px;
+                user-select: none;
+                -webkit-user-drag: none;
             }
 
                 thead {
@@ -158,6 +177,7 @@
                     flex-direction: row;
                     justify-content: space-between;
                     align-items: center;
+                    -webkit-user-drag: none;
                 }
 
                     th {
@@ -169,15 +189,18 @@
                         font-size: 12px;
                         font-weight: bold;
                         color: var(--gray);
+                        -webkit-user-drag: none;
                     }
 
                 tbody {
                     height: 85%;
                     width: 100%;
+                    -webkit-user-drag: none;
                 }
 
                     tr {
                         width: 100%;
+                        -webkit-user-drag: none;
                     }
 
                     /* 56 for 1 calendar */
@@ -191,6 +214,7 @@
                             font-weight: bold;
                             border-radius: 50%;
                             cursor: pointer;
+                            -webkit-user-drag: none;
                         }
 
                             td:hover {
@@ -204,4 +228,5 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
+            -webkit-user-drag: none;
         }
