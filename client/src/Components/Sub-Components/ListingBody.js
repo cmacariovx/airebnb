@@ -184,7 +184,9 @@ function ListingBody() {
                             <Calendar/>
                         </div>
                         <div className="listingBodyMainLeftCalendarFooterContainer">
-                            <p className="listingBodyMainLeftCalendarFooterText">Clear dates</p>
+                            <div className="listingBodyMainLeftCalendarFooterTextContainer">
+                                <p className="listingBodyMainLeftCalendarFooterText">Clear dates</p>
+                            </div>
                         </div>
                     </div>
                 </div>

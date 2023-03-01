@@ -530,10 +530,7 @@
                 -webkit-user-drag: none;
             }
 
-                .listingBodyMainLeftCalendarFooterText {
-                    font-size: 14px;
-                    font-weight: bold;
-                    text-decoration: underline;
+                .listingBodyMainLeftCalendarFooterTextContainer {
                     height: 100%;
                     width: 100%;
                     display: flex;
@@ -542,6 +539,34 @@
                     align-items: center;
                     cursor: pointer;
                     -webkit-user-drag: none;
+                    user-select: none;
+                }
+
+                .listingBodyMainLeftCalendarFooterText {
+                    height: 35px;
+                    width: 90px;
+                    border-radius: 5px;
+                    font-size: 13.5px;
+                    font-weight: bold;
+                    text-decoration: underline;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 5px;
+                    transition: 0.1s linear;
+                }
+
+                .listingBodyMainLeftCalendarFooterText:hover {
+                    background-color: rgba(165, 165, 165, 0.1);
+                }
+
+                .listingBodyMainLeftCalendarFooterText:active {
+                    height: 34px;
+                    width: 88px;
+                    font-size: 13px;
+                    transition: 0.1s linear;
+                    margin-right: 1px;
                 }
 
         .listingBodyMainRightContainer {
