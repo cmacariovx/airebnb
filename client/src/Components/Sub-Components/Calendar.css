@@ -3,18 +3,18 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 }
 
     .calendarMonthContainer {
-        height: 15%;
+        height: 10%;
         width: 100%;
         display: flex;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
-        border: 1px solid black;
+        margin-bottom: 10px;
     }
 
         .calendarLeftMonthContainer {
@@ -24,9 +24,11 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
+            padding-right: 25px;
+            position: relative;
         }
 
-            .calendarLeftArrowContainer {
+            .calendarLeftArrowCircleContainer {
                 height: 30px;
                 width: 30px;
                 display: flex;
@@ -34,23 +36,51 @@
                 justify-content: center;
                 align-items: center;
                 border-radius: 50%;
-                cursor: pointer;
-                margin-right: 50px;
             }
 
-            .calendarLeftArrowContainer:hover {
-                background-color: rgba(156, 156, 156, 0.1);
-            }
+                .calendarLeftArrowCircleContainer:hover {
+                    background-color: rgba(150, 150, 150, 0.2);
+                }
 
-                .fa-solid.fa-chevron-left.calendarLeftArrow {
-                    font-size: 14px;
+                .calendarLeftArrowContainer {
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    position: absolute;
+                }
+
+                    .calendarLeftArrowCircleContainer {
+                        height: 30px;
+                        width: 30px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 50%;
+                        cursor: pointer;
+                    }
+
+                        .calendarLeftArrowCircleContainer:hover {
+                            background-color: rgba(160, 160, 160, 0.2);
+                        }
+
+                    .fa-solid.fa-chevron-left.calendarLeftArrow {
+                        font-size: 14px;
+                        font-weight: bold;
+                    }
+
+                .calendarLeftMonthText {
+                    font-size: 15px;
                     font-weight: bold;
                 }
 
-            .calendarMonthText {
-                font-size: 15px;
-                font-weight: bold;
-            }
+                .calendarRightMonthText {
+                    font-size: 15px;
+                    font-weight: bold;
+                }
 
         .calendarRightMonthContainer {
             height: 100%;
@@ -59,37 +89,47 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
+            padding-left: 25px;
+            position: relative;
         }
 
-            .calendarRightArrowContainer {
-                height: 30px;
-                width: 30px;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                border-radius: 50%;
-                cursor: pointer;
-                margin-left: 50px;
-            }
-
-            .calendarRightArrowContainer:hover {
-                background-color: rgba(156, 156, 156, 0.1);
-            }
-
-                .fa-solid.fa-chevron-right.calendarRightArrow {
-                    font-size: 14px;
-                    font-weight: bold;
+                .calendarRightArrowContainer {
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-end;
+                    align-items: center;
+                    position: absolute;
                 }
 
+                    .calendarRightArrowCircleContainer {
+                        height: 30px;
+                        width: 30px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 50%;
+                        cursor: pointer;
+                    }
+
+                        .calendarRightArrowCircleContainer:hover {
+                            background-color: rgba(150, 150, 150, 0.1);
+                        }
+
+                    .fa-solid.fa-chevron-right.calendarRightArrow {
+                        font-size: 14px;
+                        font-weight: bold;
+                    }
+
     .calendarBodyContainer {
-        height: 85%;
+        height: 100%;
         width: 100%;
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        border: 1px solid black;
+        justify-content: center;
+        align-items: flex-start;
     }
 
         .calendarLeftBodyContainer {
@@ -97,17 +137,24 @@
             width: 50%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
         }
 
             .calendarLeft {
-                height: 100%;
-                width: 100%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+                margin-right: 25px;
+            }
+
+            .calendarRight {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-left: 25px;
             }
 
                 thead {
@@ -125,7 +172,7 @@
                         min-width: 42px;
                         width: 42px;
                         text-align: center;
-                        font-size: 13px;
+                        font-size: 12px;
                         font-weight: bold;
                         color: var(--gray);
                     }
@@ -153,7 +200,7 @@
                         }
 
                             td:hover {
-                                border: 1.5px solid black;
+                                border: 1.5px solid var(--black);
                             }
 
         .calendarRightBodyContainer {
@@ -161,6 +208,6 @@
             width: 50%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
         }
