@@ -492,6 +492,38 @@
             border-bottom: 1px solid rgba(100, 100, 100, 0.3);
         }
 
+            .listingBodyMainLeftCalendarTitleContainer {
+                height: 20%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+                .listingBodyMainLeftCalendarTitleText {
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+            .listingBodyMainLeftCalendarBodyContainer {
+                height: 70%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .listingBodyMainLeftCalendarFooterContainer {
+                height: 10%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
         .listingBodyMainRightContainer {
             height: 100%;
             width: 33.33%;

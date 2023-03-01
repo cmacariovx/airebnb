@@ -5,6 +5,7 @@ import './ListingBody.css'
 import homePic from '../../Images/home1.jpg'
 import personalPic from '../../Images/personalPic.jpg'
 import aircoverLogo from '../../Images/aircover.png'
+import Calendar from "./Calendar";
 
 function ListingBody() {
     return (
@@ -176,7 +177,14 @@ function ListingBody() {
                         </div>
                     </div>
                     <div className="listingBodyMainLeftCalendarContainer">
-
+                        <div className="listingBodyMainLeftCalendarTitleContainer">
+                            <p className="listingBodyMainLeftCalendarTitleText">Select check-in date</p>
+                        </div>
+                        <div className="listingBodyMainLeftCalendarBodyContainer">
+                            <Calendar/>
+                        </div>
+                        <div className="listingBodyMainLeftCalendarFooterContainer">
+                        </div>
                     </div>
                 </div>
                 <div className="listingBodyMainRightContainer">
