@@ -1,6 +1,6 @@
 .calendarContainer {
     height: 100%;
-    width: 100%;
+    width: 650px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -9,7 +9,7 @@
 
     .calendarMonthContainer {
         height: 10%;
-        width: 100%;
+        width: 628px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -28,59 +28,51 @@
             position: relative;
         }
 
-            .calendarLeftArrowCircleContainer {
-                height: 30px;
-                width: 30px;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                border-radius: 50%;
+            .calendarLeftArrowCircleContainer:hover {
+                background-color: rgba(150, 150, 150, 0.2);
             }
 
-                .calendarLeftArrowCircleContainer:hover {
-                    background-color: rgba(150, 150, 150, 0.2);
-                }
+            .calendarLeftArrowContainer {
+                height: 100%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                position: absolute;
+            }
 
-                .calendarLeftArrowContainer {
-                    height: 100%;
-                    width: 100%;
+                .calendarLeftArrowCircleContainer {
+                    min-height: 30px;
+                    min-width: 30px;
+                    height: 30px;
+                    width: 30px;
                     display: flex;
                     flex-direction: row;
-                    justify-content: flex-start;
+                    justify-content: center;
                     align-items: center;
-                    position: absolute;
+                    border-radius: 50%;
+                    cursor: pointer;
                 }
 
-                    .calendarLeftArrowCircleContainer {
-                        height: 30px;
-                        width: 30px;
-                        display: flex;
-                        flex-direction: row;
-                        justify-content: center;
-                        align-items: center;
-                        border-radius: 50%;
-                        cursor: pointer;
+                    .calendarLeftArrowCircleContainer:hover {
+                        background-color: rgba(160, 160, 160, 0.2);
                     }
 
-                        .calendarLeftArrowCircleContainer:hover {
-                            background-color: rgba(160, 160, 160, 0.2);
-                        }
-
-                    .fa-solid.fa-chevron-left.calendarLeftArrow {
-                        font-size: 14px;
-                        font-weight: bold;
-                    }
-
-                .calendarLeftMonthText {
-                    font-size: 15px;
+                .fa-solid.fa-chevron-left.calendarLeftArrow {
+                    font-size: 14px;
                     font-weight: bold;
                 }
 
-                .calendarRightMonthText {
-                    font-size: 15px;
-                    font-weight: bold;
-                }
+            .calendarLeftMonthText {
+                font-size: 15px;
+                font-weight: bold;
+            }
+
+            .calendarRightMonthText {
+                font-size: 15px;
+                font-weight: bold;
+            }
 
         .calendarRightMonthContainer {
             height: 100%;
@@ -104,6 +96,8 @@
                 }
 
                     .calendarRightArrowCircleContainer {
+                        min-height: 30px;
+                        min-width: 30px;
                         height: 30px;
                         width: 30px;
                         display: flex;
