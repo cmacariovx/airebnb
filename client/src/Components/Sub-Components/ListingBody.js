@@ -11,20 +11,20 @@ import { Loader } from "@googlemaps/js-api-loader"
 
 function ListingBody() {
     let map
-    const loader = new Loader({
-        apiKey: "AIzaSyBd71DPuMIZg8hparl3w2RfPSJLnP5wAZM",
-        version: "weekly",
-    });
+    // const loader = new Loader({
+    //     apiKey: "AIzaSyBd71DPuMIZg8hparl3w2RfPSJLnP5wAZM",
+    //     version: "weekly",
+    // });
 
-    loader.load().then((google) => {
-        // geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
-        //     coords = [data.results[0].geometry.bounds.Ia.hi, data.results[0].geometry.bounds.Ua.hi]
-        // })
-        map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
-            center: { lat: 35.5951, lng: -82.5515 },
-            zoom: 16,
-        });
-    });
+    // loader.load().then((google) => {
+    //     // geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
+    //     //     coords = [data.results[0].geometry.bounds.Ia.hi, data.results[0].geometry.bounds.Ua.hi]
+    //     // })
+    //     map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
+    //         center: { lat: 35.5951, lng: -82.5515 },
+    //         zoom: 16,
+    //     });
+    // });
 
     return (
         <div className="listingBodyContainer">
