@@ -6,6 +6,7 @@
     justify-content: center;
     align-items: center;
     position: sticky;
+    position: -webkit-sticky !important;
     top: 0;
     background-color: white;
     z-index: 100;

@@ -167,7 +167,7 @@ function ListingBody() {
                                 </div>
                                 <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
-                                        <i class="fa-solid fa-bell listingBodyMainLeftAmenity"></i>
+                                        <i className="fa-solid fa-bell listingBodyMainLeftAmenity"></i>
                                     </div>
                                     <div className="listingBodyMainLeftAmenityRightContainer">
                                         <p className="listingBodyMainLeftAmenityText">Smoke alarm</p>
@@ -191,6 +191,28 @@ function ListingBody() {
                     </div>
                 </div>
                 <div className="listingBodyMainRightContainer">
+                    <div className="listingBodyMainRightCheckContainer">
+                        <div className="listingBodyMainRightCheckHeaderContainer">
+                            <div className="listingBodyMainRightCheckHeaderLeft">
+                                <p className="listingBodyMainRightCheckHeaderLeftPriceText">$184</p>
+                                <p className="listingBodyMainRightCheckHeaderLeftNightText">night</p>
+                            </div>
+                            <div className="listingBodyMainRightCheckHeaderRight">
+                                <div className="listingBodyReviewContainer">
+                                    <i className="fa-solid fa-star listingBodyStar"></i>
+                                    <p className="listingBodyReviewText">4.93</p>
+                                </div>
+                                <p className="listingBodyDotText">•</p>
+                                <a className="listingBodyReviewCountText2">653 reviews</a>
+                            </div>
+                        </div>
+                        <div className="listingBodyMainRightCheckBodyContainer">
+
+                        </div>
+                        <div className="listingBodyMainRightCheckButtonContainer">
+                            <button className="listingBodyMainRightCheckButton">Check availability</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
