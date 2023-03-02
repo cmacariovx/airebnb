@@ -514,9 +514,21 @@ function ListingBody() {
                         <i className="fa-solid fa-star listingBodyHostedByStar"></i>
                         <p className="listingBodyReviewText4">110 Reviews</p>
                     </div>
+                    <div className="listingBodyHostedByDuringStayContainer">
+                        <p className="listingBodyHostedByDuringStayTitle">During your stay</p>
+                        <p className="listingBodyHostedByDuringStayDesc">I live 2 miles from the farm and have no problem helping guests when needed. I tend to stay away from the guests during their stay but try to be available whenever I can by phone or person when needed.</p>
+                    </div>
                 </div>
-                <div className="listingBodyHostedByContainerMainRight">
-
+            </div>
+            <div className="listingBodyExploreContainer">
+                <div className="listingBodyExploreTitleContainer">
+                    <p className="listingBodyExploreTitle">Explore other options</p>
+                </div>
+                <div className="listingBodyExploreOptionsContainer">
+                    <p className="listingBodyExploreOption">Asheville</p>
+                    <p className="listingBodyExploreOption">Seattle</p>
+                    <p className="listingBodyExploreOption">Hilton Head</p>
+                    <p className="listingBodyExploreOption">Beverly Hills</p>
                 </div>
             </div>
         </div>

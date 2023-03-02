@@ -15,4 +15,10 @@
     .homeFooterText {
         font-size: 14px;
         color: var(--gray);
+        margin-right: 10px;
+    }
+
+    .fa-linkedin {
+        font-size: 20px;
+        cursor: pointer;
     }
