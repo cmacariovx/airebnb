@@ -11,12 +11,17 @@ import { Loader } from "@googlemaps/js-api-loader"
 
 function ListingBody() {
     let map
+    // let geocoder
+    // let coords
     const loader = new Loader({
         apiKey: "AIzaSyBd71DPuMIZg8hparl3w2RfPSJLnP5wAZM",
         version: "weekly",
     });
 
     loader.load().then((google) => {
+        // geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
+        //     coords = [data.results[0].geometry.bounds.Ia.hi, data.results[0].geometry.bounds.Ua.hi]
+        // })
         map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
             center: { lat: 35.5951, lng: -82.5515 },
             zoom: 15,
@@ -491,6 +496,26 @@ function ListingBody() {
                     <p className="listingBodyMapHeaderText2">Asheville, North Carolina</p>
                 </div>
                 <div className="listingBodyMainMapContainer" id="listingBodyMainMapContainer">
+
+                </div>
+            </div>
+            <div className="listingBodyHostedByContainer">
+                <div className="listingBodyHostedByContainerMainLeft">
+                    <div className="listingBodyHostedByProfileContainer">
+                        <div className="listingBodyHostedByContainerLeft">
+                            <img src={personalPic} className="listingBodyHostedByProfilePicture"/>
+                        </div>
+                        <div className="listingBodyHostedByContainerRight">
+                            <p className="listingBodyHostedByContainerRightHostedByText">Hosted by Carlos</p>
+                            <p className="listingBodyHostedByContainerRightDateJoinedText">Joined in March 2023</p>
+                        </div>
+                    </div>
+                    <div className="listingBodyHostedByReviewsContainer">
+                        <i className="fa-solid fa-star listingBodyHostedByStar"></i>
+                        <p className="listingBodyReviewText4">110 Reviews</p>
+                    </div>
+                </div>
+                <div className="listingBodyHostedByContainerMainRight">
 
                 </div>
             </div>
