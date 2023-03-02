@@ -253,6 +253,223 @@ function ListingBody() {
                     </div>
                 </div>
             </div>
+            <div className="listingBodyReviewsContainer">
+                <div className="listingBodyReviewsHeaderContainer">
+                    <div className="listingBodyReviewContainer2">
+                        <i className="fa-solid fa-star listingBodyStar2"></i>
+                        <p className="listingBodyReviewText2">4.93</p>
+                    </div>
+                    <p className="listingBodyDotText2">•</p>
+                    <a className="listingBodyReviewCountText3">653 reviews</a>
+                </div>
+                <div className="listingBodyReviewStatsContainer">
+                    <div className="listingBodyReviewStatsContainerLeft">
+                        <div className="listingBodyReviewStatContainer">
+                            <p className="listingBodyReviewStatLabel">Cleanliness</p>
+                            <div className="listingBodyReviewBarContainer">
+                                <div className="listingBodyReviewBar">
+                                    <div className="listingBodyReviewBarFiller"/>
+                                </div>
+                                <p className="listingBodyReviewNumber">4.9</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyReviewStatContainer">
+                            <p className="listingBodyReviewStatLabel">Communication</p>
+                            <div className="listingBodyReviewBarContainer">
+                                <div className="listingBodyReviewBar">
+                                    <div className="listingBodyReviewBarFiller"/>
+                                </div>
+                                <p className="listingBodyReviewNumber">4.9</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyReviewStatContainer">
+                            <p className="listingBodyReviewStatLabel">Check-in</p>
+                            <div className="listingBodyReviewBarContainer">
+                                <div className="listingBodyReviewBar">
+                                    <div className="listingBodyReviewBarFiller"/>
+                                </div>
+                                <p className="listingBodyReviewNumber">4.9</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="listingBodyReviewStatsContainerRight">
+                        <div className="listingBodyReviewStatContainer">
+                            <p className="listingBodyReviewStatLabel">Accuracy</p>
+                            <div className="listingBodyReviewBarContainer">
+                                <div className="listingBodyReviewBar">
+                                    <div className="listingBodyReviewBarFiller"/>
+                                </div>
+                                <p className="listingBodyReviewNumber">4.9</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyReviewStatContainer">
+                            <p className="listingBodyReviewStatLabel">Location</p>
+                            <div className="listingBodyReviewBarContainer">
+                                <div className="listingBodyReviewBar">
+                                    <div className="listingBodyReviewBarFiller"/>
+                                </div>
+                                <p className="listingBodyReviewNumber">4.9</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyReviewStatContainer">
+                            <p className="listingBodyReviewStatLabel">Value</p>
+                            <div className="listingBodyReviewBarContainer">
+                                <div className="listingBodyReviewBar">
+                                    <div className="listingBodyReviewBarFiller"/>
+                                </div>
+                                <p className="listingBodyReviewNumber">4.9</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="listingBodyReviewsBodyContainer">
+                    <div className="listingBodyReviewsBodyContainerLeft">
+                        <div className="listingBodyFullReviewContainer">
+                            <div className="listingBodyFullReviewProfileContainer">
+                                <div className="listingBodyFullReviewProfileContainerLeft">
+                                    <img src={personalPic} className="fullReviewProfilePic"/>
+                                </div>
+                                <div className="listingBodyFullReviewProfileContainerRight">
+                                    <p className="fullReviewProfileName">Carlos</p>
+                                    <p className="fullReviewPostMonth">March 2023</p>
+                                </div>
+                            </div>
+                            <div className="listingBodyFullReviewDescContainer">
+                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyFullReviewContainer">
+                            <div className="listingBodyFullReviewProfileContainer">
+                                <div className="listingBodyFullReviewProfileContainerLeft">
+                                    <img src={personalPic} className="fullReviewProfilePic"/>
+                                </div>
+                                <div className="listingBodyFullReviewProfileContainerRight">
+                                    <p className="fullReviewProfileName">Carlos</p>
+                                    <p className="fullReviewPostMonth">March 2023</p>
+                                </div>
+                            </div>
+                            <div className="listingBodyFullReviewDescContainer">
+                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyFullReviewContainer">
+                            <div className="listingBodyFullReviewProfileContainer">
+                                <div className="listingBodyFullReviewProfileContainerLeft">
+                                    <img src={personalPic} className="fullReviewProfilePic"/>
+                                </div>
+                                <div className="listingBodyFullReviewProfileContainerRight">
+                                    <p className="fullReviewProfileName">Carlos</p>
+                                    <p className="fullReviewPostMonth">March 2023</p>
+                                </div>
+                            </div>
+                            <div className="listingBodyFullReviewDescContainer">
+                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyFullReviewContainer">
+                            <div className="listingBodyFullReviewProfileContainer">
+                                <div className="listingBodyFullReviewProfileContainerLeft">
+                                    <img src={personalPic} className="fullReviewProfilePic"/>
+                                </div>
+                                <div className="listingBodyFullReviewProfileContainerRight">
+                                    <p className="fullReviewProfileName">Carlos</p>
+                                    <p className="fullReviewPostMonth">March 2023</p>
+                                </div>
+                            </div>
+                            <div className="listingBodyFullReviewDescContainer">
+                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyFullReviewContainer">
+                            <div className="listingBodyFullReviewProfileContainer">
+                                <div className="listingBodyFullReviewProfileContainerLeft">
+                                    <img src={personalPic} className="fullReviewProfilePic"/>
+                                </div>
+                                <div className="listingBodyFullReviewProfileContainerRight">
+                                    <p className="fullReviewProfileName">Carlos</p>
+                                    <p className="fullReviewPostMonth">March 2023</p>
+                                </div>
+                            </div>
+                            <div className="listingBodyFullReviewDescContainer">
+                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="listingBodyReviewsBodyContainerRight">
+                        <div className="listingBodyFullReviewContainer">
+                            <div className="listingBodyFullReviewProfileContainer">
+                                <div className="listingBodyFullReviewProfileContainerLeft">
+                                    <img src={personalPic} className="fullReviewProfilePic"/>
+                                </div>
+                                <div className="listingBodyFullReviewProfileContainerRight">
+                                    <p className="fullReviewProfileName">Carlos</p>
+                                    <p className="fullReviewPostMonth">March 2023</p>
+                                </div>
+                            </div>
+                            <div className="listingBodyFullReviewDescContainer">
+                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyFullReviewContainer">
+                            <div className="listingBodyFullReviewProfileContainer">
+                                <div className="listingBodyFullReviewProfileContainerLeft">
+                                    <img src={personalPic} className="fullReviewProfilePic"/>
+                                </div>
+                                <div className="listingBodyFullReviewProfileContainerRight">
+                                    <p className="fullReviewProfileName">Carlos</p>
+                                    <p className="fullReviewPostMonth">March 2023</p>
+                                </div>
+                            </div>
+                            <div className="listingBodyFullReviewDescContainer">
+                                {/* char limit of 170 */}
+                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyFullReviewContainer">
+                            <div className="listingBodyFullReviewProfileContainer">
+                                <div className="listingBodyFullReviewProfileContainerLeft">
+                                    <img src={personalPic} className="fullReviewProfilePic"/>
+                                </div>
+                                <div className="listingBodyFullReviewProfileContainerRight">
+                                    <p className="fullReviewProfileName">Carlos</p>
+                                    <p className="fullReviewPostMonth">March 2023</p>
+                                </div>
+                            </div>
+                            <div className="listingBodyFullReviewDescContainer">
+                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyFullReviewContainer">
+                            <div className="listingBodyFullReviewProfileContainer">
+                                <div className="listingBodyFullReviewProfileContainerLeft">
+                                    <img src={personalPic} className="fullReviewProfilePic"/>
+                                </div>
+                                <div className="listingBodyFullReviewProfileContainerRight">
+                                    <p className="fullReviewProfileName">Carlos</p>
+                                    <p className="fullReviewPostMonth">March 2023</p>
+                                </div>
+                            </div>
+                            <div className="listingBodyFullReviewDescContainer">
+                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyFullReviewContainer">
+                            <div className="listingBodyFullReviewProfileContainer">
+                                <div className="listingBodyFullReviewProfileContainerLeft">
+                                    <img src={personalPic} className="fullReviewProfilePic"/>
+                                </div>
+                                <div className="listingBodyFullReviewProfileContainerRight">
+                                    <p className="fullReviewProfileName">Carlos</p>
+                                    <p className="fullReviewPostMonth">March 2023</p>
+                                </div>
+                            </div>
+                            <div className="listingBodyFullReviewDescContainer">
+                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

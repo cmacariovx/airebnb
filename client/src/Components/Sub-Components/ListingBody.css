@@ -499,7 +499,6 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: flex-start;
-            border-bottom: 1px solid rgba(100, 100, 100, 0.3);
             -webkit-user-drag: none;
         }
 
@@ -602,7 +601,7 @@
                 position: -webkit-sticky;
                 position: sticky;
                 top: 125px;
-                bottom: 0;
+                margin-bottom: 55px;
                 padding: 24px;
                 padding-bottom: 0px;
                 border: 1px solid rgba(165, 165, 165, 0.3);
@@ -845,3 +844,252 @@
                     font-weight: bold;
                     font-size: 15.5px;
                 }
+
+    .listingBodyReviewsContainer {
+        height: 900px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        padding: 40px 0;
+        border-top: 2px solid rgba(165, 165, 165, 0.1);
+        border-bottom: 2px solid rgba(165, 165, 165, 0.1);
+    }
+
+        .listingBodyReviewsHeaderContainer {
+            height: 10%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+
+            .listingBodyReviewContainer2 {
+                height: 100%;
+                width: 50px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+
+                .fa-solid.fa-star.listingBodyStar2 {
+                    font-size: 15px;
+                    margin-bottom: 0px;
+                    margin-right: 7px;
+                }
+
+                .listingBodyDotText2 {
+                    opacity: 0.8;
+                    font-size: 12px;
+                    margin-left: 15px;
+                    margin-right: 6px;
+                }
+
+                .listingBodyReviewText2 {
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+            .listingBodyReviewCountText3 {
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+        .listingBodyReviewStatsContainer {
+            height: 15%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .listingBodyReviewStatsContainerLeft {
+                height: 100%;
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                padding-right: 100px;
+            }
+
+            .listingBodyReviewStatsContainerRight {
+                height: 100%;
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                padding-right: 100px;
+            }
+
+                .listingBodyReviewStatContainer {
+                    height: 30%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                    .listingBodyReviewStatLabel {
+                        height: 100%;
+                        width: 65%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                        font-size: 16px;
+                    }
+
+                    .listingBodyReviewBarContainer {
+                        height: 100%;
+                        width: 35%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-end;
+                        align-items: center;
+                    }
+
+                        .listingBodyReviewBar {
+                            height: 4px;
+                            width: 100%;
+                            border-radius: 2px;
+                            margin-right: 4px;
+                            background-color: rgba(165, 165, 165, 0.5);
+                        }
+
+                            .listingBodyReviewBarFiller {
+                                height: 100%;
+                                width: 98%;
+                                background-color: var(--black);
+                                border-radius: 2px;
+                            }
+
+                        .listingBodyReviewNumber {
+                            font-size: 12px;
+                            font-weight: bold;
+                            margin-left: 6px;
+                        }
+
+        .listingBodyReviewsBodyContainer {
+            height: 75%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .listingBodyReviewsBodyContainer::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .listingBodyReviewsBodyContainer::-webkit-scrollbar-track {
+            width: 6px;
+            border-radius: 5px;
+            background-color: rgba(165, 165, 165, 0.2);
+        }
+
+        .listingBodyReviewsBodyContainer::-webkit-scrollbar-thumb {
+            width: 6px;
+            border-radius: 5px;
+            background-color: rgba(165, 165, 165, 0.6);
+        }
+
+            .listingBodyReviewsBodyContainerLeft {
+                height: 100%;
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-right: 100px;
+            }
+
+            .listingBodyReviewsBodyContainerRight {
+                height: 100%;
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-right: 100px;
+            }
+
+                .listingBodyFullReviewContainer {
+                    min-height: 150px;
+                    height: 150px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    margin-bottom: 20px;
+                }
+
+                    .listingBodyFullReviewProfileContainer {
+                        height: 30%;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                    }
+
+                        .listingBodyFullReviewProfileContainerLeft {
+                            height: 100%;
+                            width: 10%;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: flex-start;
+                            align-items: center;
+                            margin-right: 5px;
+                        }
+
+                            .fullReviewProfilePic {
+                                min-height: 40px;
+                                min-width: 40px;
+                                height: 40px;
+                                width: 40px;
+                                border-radius: 50%;
+                                cursor: pointer;
+                            }
+
+                        .listingBodyFullReviewProfileContainerRight {
+                            height: 100%;
+                            width: 90%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: flex-start;
+                        }
+
+                            .fullReviewProfileName {
+                                font-size: 16px;
+                                font-weight: bold;
+                                margin-bottom: 4px;
+                            }
+
+                            .fullReviewPostMonth {
+                                font-size: 13px;
+                                color: var(--gray)
+                            }
+
+                    .listingBodyFullReviewDescContainer {
+                        height: 70%;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: flex-start;
+                        margin-top: 20px;
+                    }
