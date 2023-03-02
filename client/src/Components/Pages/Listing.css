@@ -7,3 +7,18 @@
     align-items: center;
     transition: all 0.5s;
 }
+
+    .floatingListingHeader {
+        height: 100px;
+        width: 100%;
+        display: none;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        background-color: white;
+        z-index: 100;
+        transition: all 0.5s;
+        border-bottom: 1.5px solid rgba(160, 160, 160, 0.2);
+    }
