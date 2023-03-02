@@ -11,8 +11,6 @@ import { Loader } from "@googlemaps/js-api-loader"
 
 function ListingBody() {
     let map
-    // let geocoder
-    // let coords
     const loader = new Loader({
         apiKey: "AIzaSyBd71DPuMIZg8hparl3w2RfPSJLnP5wAZM",
         version: "weekly",
