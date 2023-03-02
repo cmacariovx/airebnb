@@ -7,7 +7,22 @@ import personalPic from '../../Images/personalPic.jpg'
 import aircoverLogo from '../../Images/aircover.png'
 import Calendar from "./Calendar";
 
+import { Loader } from "@googlemaps/js-api-loader"
+
 function ListingBody() {
+    let map
+    const loader = new Loader({
+        apiKey: "AIzaSyBd71DPuMIZg8hparl3w2RfPSJLnP5wAZM",
+        version: "weekly",
+    });
+
+    loader.load().then((google) => {
+        map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
+            center: { lat: 35.5951, lng: -82.5515 },
+            zoom: 15,
+        });
+    });
+
     return (
         <div className="listingBodyContainer">
             <div className="listingBodyIntroContainer">
@@ -468,6 +483,15 @@ function ListingBody() {
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className="listingBodyMapContainer">
+                <div className="listingBodyMapHeaderContainer">
+                    <p className="listingBodyMapHeaderText1">Where you'll be</p>
+                    <p className="listingBodyMapHeaderText2">Asheville, North Carolina</p>
+                </div>
+                <div className="listingBodyMainMapContainer" id="listingBodyMainMapContainer">
+
                 </div>
             </div>
         </div>
