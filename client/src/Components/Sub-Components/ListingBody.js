@@ -207,7 +207,25 @@ function ListingBody() {
                             </div>
                         </div>
                         <div className="listingBodyMainRightCheckBodyContainer">
-
+                            <div className="listingBodyMainRightCheckBodyContainerMain">
+                                <div className="listingBodyMainRightCheckBodyContainerMainUpper">
+                                    <div className="listingBodyMainRightCheckBodyContainerMainUpperLeft">
+                                        <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInText">CHECK-IN</p>
+                                        <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText">3/3/2023</p>
+                                    </div>
+                                    <div className="listingBodyMainRightCheckBodyContainerMainUpperRight">
+                                        <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInText">CHECKOUT</p>
+                                        <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText">3/7/2023</p>
+                                    </div>
+                                </div>
+                                <div className="listingBodyMainRightCheckBodyContainerMainLower">
+                                    <div className="listingBodyMainRightCheckBodyContainerMainLowerLeft">
+                                        <p className="listingBodyMainRightCheckBodyContainerMainLowerLeftGuestsText">GUESTS</p>
+                                        <p className="listingBodyMainRightCheckBodyContainerMainLowerLeftGuestsNumText">1 guest</p>
+                                    </div>
+                                    <i className="fa-solid fa-chevron-down listingBodyMainRightCheckBodyContainerMainLowerLeftChevronDown"></i>
+                                </div>
+                            </div>
                         </div>
                         <div className="listingBodyMainRightCheckButtonContainer">
                             <button className="listingBodyMainRightCheckButton">Reserve</button>
