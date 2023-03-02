@@ -47,7 +47,7 @@ function ListingCard(props) {
                     <p className="listingCardInfoAvailableDateText">Jun 11 - 16</p>
                 </div>
                 <div className="listingCardInfoPriceContainer">
-                    <p className="listingCardInfoPrice1Text">$380</p>
+                    <p className="listingCardInfoPrice1Text">$175</p>
                     <p className="listingCardInfoPrice2Text">night</p>
                 </div>
             </div>

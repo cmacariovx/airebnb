@@ -194,7 +194,7 @@ function ListingBody() {
                     <div className="listingBodyMainRightCheckContainer">
                         <div className="listingBodyMainRightCheckHeaderContainer">
                             <div className="listingBodyMainRightCheckHeaderLeft">
-                                <p className="listingBodyMainRightCheckHeaderLeftPriceText">$184</p>
+                                <p className="listingBodyMainRightCheckHeaderLeftPriceText">$175</p>
                                 <p className="listingBodyMainRightCheckHeaderLeftNightText">night</p>
                             </div>
                             <div className="listingBodyMainRightCheckHeaderRight">
@@ -210,7 +210,27 @@ function ListingBody() {
 
                         </div>
                         <div className="listingBodyMainRightCheckButtonContainer">
-                            <button className="listingBodyMainRightCheckButton">Check availability</button>
+                            <button className="listingBodyMainRightCheckButton">Reserve</button>
+                        </div>
+                        <p className="listingBodyMainRightCheckDisclaimerText">You won't be charged yet</p>
+                        <div className="listingBodyMainRightCheckFeesContainer">
+                            <div className="listingBodyMainRightCheckFeeContainer">
+                                <p className="listingBodyMainRightCheckFeeLeft">$175 x 2 nights</p>
+                                <p className="listingBodyMainRightCheckFeeRight">$350</p>
+                            </div>
+                            <div className="listingBodyMainRightCheckFeeContainer">
+                                <p className="listingBodyMainRightCheckFeeLeft">Cleaning fee</p>
+                                <p className="listingBodyMainRightCheckFeeRight">$50</p>
+                            </div>
+                            <div className="listingBodyMainRightCheckFeeContainer">
+                                <p className="listingBodyMainRightCheckFeeLeft">Airbnb service fee</p>
+                                {/* 14%-16% airbnb fee */}
+                                <p className="listingBodyMainRightCheckFeeRight">$56</p>
+                            </div>
+                        </div>
+                        <div className="listingBodyMainRightCheckTotalContainer">
+                            <p className="listingBodyMainRightCheckTotalLeft">Total before taxes</p>
+                            <p className="listingBodyMainRightCheckTotalRight">$456</p>
                         </div>
                     </div>
                 </div>
