@@ -22,7 +22,7 @@ function ListingBody() {
         // })
         map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
             center: { lat: 35.5951, lng: -82.5515 },
-            zoom: 15,
+            zoom: 16,
         });
     });
 
