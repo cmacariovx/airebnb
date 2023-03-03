@@ -6,10 +6,13 @@ import homePic from '../../Images/home1.jpg'
 import personalPic from '../../Images/personalPic.jpg'
 import aircoverLogo from '../../Images/aircover.png'
 import Calendar from "./Calendar";
+import { Navigate, useNavigate } from "react-router";
 
 import { Loader } from "@googlemaps/js-api-loader"
 
 function ListingBody() {
+    const navigate = useNavigate()
+
     let map
     // const loader = new Loader({
     //     apiKey: "AIzaSyBd71DPuMIZg8hparl3w2RfPSJLnP5wAZM",
@@ -25,6 +28,10 @@ function ListingBody() {
     //         zoom: 16,
     //     });
     // });
+
+    function toProfileHandler() {
+        navigate("/profile/" + "userId")
+    }
 
     return (
         <div className="listingBodyContainer">
@@ -501,7 +508,7 @@ function ListingBody() {
                 <div className="listingBodyHostedByContainerMainLeft">
                     <div className="listingBodyHostedByProfileContainer">
                         <div className="listingBodyHostedByContainerLeft">
-                            <img src={personalPic} className="listingBodyHostedByProfilePicture"/>
+                            <img src={personalPic} className="listingBodyHostedByProfilePicture" onClick={toProfileHandler}/>
                         </div>
                         <div className="listingBodyHostedByContainerRight">
                             <p className="listingBodyHostedByContainerRightHostedByText">Hosted by Carlos</p>
