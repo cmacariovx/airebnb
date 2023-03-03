@@ -9,9 +9,7 @@ import HomeFooter from "../Sub-Components/HomeFooter";
 function Listing() {
     let [floatingHeader, setFloatingHeader] = useState()
     let [floatingHeaderRight, setFloatingHeaderRight] = useState()
-
-    console.log(444444444444444)
-
+    
     const h = document.documentElement
     const b = document.body
     const st = 'scrollTop'

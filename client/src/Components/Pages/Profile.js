@@ -5,7 +5,7 @@ import './Profile.css'
 function Profile() {
     return (
         <div className="profileContainer">
-            
+
         </div>
     )
 }
