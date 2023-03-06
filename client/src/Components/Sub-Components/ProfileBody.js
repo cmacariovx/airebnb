@@ -19,7 +19,19 @@ function ProfileBody() {
                 </div>
             </div>
             <div className="profileBodyRightContainer">
-
+                <div className="profileBodyRightIntroContainer">
+                    <div className="profileBodyRightIntroNameDateContainer">
+                        <p className="profileBodyRightIntroNameText">Hi, I'm Carlos</p>
+                        <p className="profileBodyRightIntroDateText">Joined in 2023</p>
+                    </div>
+                    <div className="profileBodyRightIntroAboutContainer">
+                        <p className="profileBodyRightIntroAboutText">About</p>
+                        <div className="profileBodyRightIntroLivesContainer">
+                            <i className="fa-solid fa-house profileBodyRightIntroLivesHouse"></i>
+                            <p className="profileBodyRightIntroLivesText">Lives in Asheville, NC</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )

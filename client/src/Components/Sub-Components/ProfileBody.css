@@ -67,7 +67,7 @@
                 }
 
                 .profileBodyLeftUserInfoLowerReviewText {
-                    font-size: 16px;
+                    font-size: 15px;
                     font-weight: bold;
                 }
 
@@ -78,4 +78,69 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
+        padding-left: 80px;
     }
+
+        .profileBodyRightIntroContainer {
+            height: 200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(160, 160, 160, 0.4);
+        }
+
+            .profileBodyRightIntroNameDateContainer {
+                height: 50%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: flex-start;
+            }
+
+                .profileBodyRightIntroNameText {
+                    font-size: 26px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
+                }
+
+                .profileBodyRightIntroDateText {
+                    font-size: 14px;
+                    color: var(--gray);
+                }
+
+            .profileBodyRightIntroAboutContainer {
+                height: 50%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+            }
+
+                .profileBodyRightIntroAboutText {
+                    font-size: 20px;
+                    font-weight: bold;
+                    margin-bottom: 30px;
+                }
+
+                .profileBodyRightIntroLivesContainer {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    margin-bottom: 30px;
+                }
+
+                    .fa-solid.fa-house.profileBodyRightIntroLivesHouse {
+                        font-size: 16px;
+                        margin-bottom: 3px;
+                        margin-right: 8px;
+                    }
+
+                    .profileBodyRightIntroLivesText {
+                        font-size: 15px;
+                    }
