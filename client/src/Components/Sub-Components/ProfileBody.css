@@ -144,3 +144,247 @@
                     .profileBodyRightIntroLivesText {
                         font-size: 15px;
                     }
+
+        .profileBodyListingsContainer {
+            height: 350px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+            .profileBodyListingsHeaderText {
+                height: 20%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            .profileBodyListingsBodyContainer {
+                height: 80%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                position: relative;
+            }
+
+                .profileBodyListingsBodyOverlayContainer {
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    position: absolute;
+                    padding: 0 10px;
+                    padding-bottom: 70px;
+                }
+
+                    .profileBodyListingsBodyOverlayArrowContainer {
+                        min-height: 32px;
+                        min-width: 32px;
+                        height: 32px;
+                        width: 32px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: rgba(255, 255, 255, 0.85);
+                        border-radius: 50%;
+                        box-shadow: 0 0 10px rgba(75, 75, 75, 0.2);
+                        cursor: pointer;
+                    }
+
+                        .fa-solid.fa-chevron-left.profileBodyListingsBodyOverlayArrow {
+                            font-size: 14px;
+                            opacity: 1;
+                        }
+
+                        .fa-solid.fa-chevron-right.profileBodyListingsBodyOverlayArrow {
+                            font-size: 14px;
+                            opacity: 1;
+                        }
+
+        .profileBodyReviewsContainer {
+            height: 1000px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            border-top: 1px solid rgba(160, 160, 160, 0.4);
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+            .profileBodyReviewsHeaderContainer {
+                height: 5%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+                .fa-solid.fa-star.profileBodyReviewsHeaderStar {
+                    font-size: 15px;
+                    margin-right: 8px;
+                }
+
+                .profileBodyReviewsHeaderText {
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+            .profileBodyReviewsBodyContainer {
+                height: 90%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                overflow-x: hidden;
+                overflow-y: auto;
+                border-top: 1px solid rgba(160, 160, 160, 0.4);
+                padding-top: 20px;
+            }
+
+                .profileBodyReviewsBodyContainer::-webkit-scrollbar {
+                    width: 6px;
+                }
+
+                .profileBodyReviewsBodyContainer::-webkit-scrollbar-track {
+                    width: 6px;
+                    border-radius: 5px;
+                    background-color: rgba(165, 165, 165, 0.2);
+                }
+
+                .profileBodyReviewsBodyContainer::-webkit-scrollbar-thumb {
+                    width: 6px;
+                    border-radius: 5px;
+                    background-color: rgba(165, 165, 165, 0.6);
+                }
+
+                .profileBodyReviewContainer {
+                    height: 200px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                }
+
+                    .profileBodyReviewTitleContainer {
+                        height: 30%;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+
+                        .profileBodyReviewTitleContainerLeft {
+                            height: 100%;
+                            width: 50%;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: flex-start;
+                        }
+
+                            .profileBodyReviewTitleText {
+                                font-size: 16px;
+                                font-weight: bold;
+                            }
+
+                            .profileBodyReviewDatePostedText {
+                                font-size: 14px;
+                                color: var(--gray);
+                            }
+
+                        .profileBodyReviewTitleContainerRight {
+                            height: 100%;
+                            width: 50%;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: flex-end;
+                            align-items: center;
+                        }
+
+                            .profileBodyReviewTitleContainerRightPic {
+                                height: 80%;
+                                min-width: 80px;
+                                width: 80px;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: center;
+                                align-items: center;
+                                object-fit: cover;
+                                border-radius: 5px;
+                            }
+
+                    .profileBodyReviewText {
+                        height: 30%;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                    }
+
+                    .profileBodyReviewProfileContainer {
+                        height: 30%;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                    }
+
+                    .profileBodyReviewProfileContainerLeft {
+                        height: 100%;
+                        min-width: 50px;
+                        width: 50px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                        .profileBodyReviewProfilePic {
+                            min-height: 50px;
+                            min-width: 50px;
+                            height: 50px;
+                            width: 50px;
+                            object-fit: cover;
+                            border-radius: 50%;
+                        }
+
+                    .profileBodyReviewProfileContainerRight {
+                        height: 100%;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        margin-left: 10px;
+                    }
+
+                    .profileBodyReviewProfileContainerRightName {
+                        font-size: 16px;
+                        font-weight: bold;
+                        margin-bottom: 5px;
+                    }
+
+                    .profileBodyReviewProfileContainerRightJoinedDate {
+                        font-size: 14px;
+                        color: var(--gray);
+                    }

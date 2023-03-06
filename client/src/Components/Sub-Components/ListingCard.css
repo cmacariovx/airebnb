@@ -21,6 +21,7 @@
         background-image: url("../../Images/home1.jpg");
         background-repeat: no-repeat;
         background-size: cover;
+        object-fit: cover;
     }
 
 

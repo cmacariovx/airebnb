@@ -1,0 +1,65 @@
+.profileListingCardContainer {
+    height: 100%;
+    width: 47%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+    .profileListingCardPic {
+        height: 70%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .profileListingInfoContainer {
+        height: 30%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+        .profileListingReviewsContainer {
+            height: 40%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+            .fa-solid.fa-star.profileListingReviewsStar {
+                font-size: 13px;
+                margin-bottom: 2px;
+                margin-right: 4px;
+            }
+
+            .profileListingReviewsText {
+                font-size: 14px;
+                margin-right: 3px;
+            }
+
+            .profileListingReviewsNumText {
+                font-size: 14px;
+                color: var(--gray);
+            }
+
+
+        .profileListingTitle {
+            height: 60%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 15px;
+        }
