@@ -8,6 +8,8 @@ import personalPic from '../../Images/personalPic.jpg'
 
 function HomeHeader(props) {
     const homePage = props.homePage
+    const profilePage = props.profilePage ? props.profilePage : null
+
     const navigate = useNavigate()
 
     function toHomeHandler() {
@@ -27,7 +29,7 @@ function HomeHeader(props) {
                     <img src={airbnbLogo} className="homeHeader1Logo" onClick={toHomeHandler}/>
                 </div>
                 <div className="homeHeader1SearchContainer">
-                    {homePage && <div className="homeHeader1Search">
+                    {(homePage && !profilePage) && <div className="homeHeader1Search">
                         <div className="homeHeader1AnywhereContainer">
                             <p className="homeHeader1SearchText1">Anywhere</p>
                         </div>
@@ -41,7 +43,7 @@ function HomeHeader(props) {
                             <i className="fa-solid fa-magnifying-glass homeHeader1SearchButton"></i>
                         </div>
                     </div>}
-                    {!homePage && <div className="homeHeader2Search">
+                    {(!homePage && !profilePage) && <div className="homeHeader2Search">
                         <div className="homeHeader1StartSearchContainer">
                             <p className="homeHeader1StartSearchText">Start your search</p>
                         </div>

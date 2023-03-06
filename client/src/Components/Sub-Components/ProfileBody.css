@@ -1,0 +1,81 @@
+.profileBodyContainer {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 100px;
+    margin-top: 50px;
+}
+
+    .profileBodyLeftContainer {
+        height: 100%;
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+        .profileBodyLeftUserInfoContainer {
+            height: 250px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            border: 1px solid rgba(160, 160, 160, 0.4);
+            padding: 20px;
+            padding-bottom: 10px;
+            padding-top: 0px;
+        }
+
+            .profileBodyLeftUserInfoUpperContainer {
+                height: 80%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+
+                .profileBodyLeftUserInfoUpperPic {
+                    height: 120px;
+                    width: 120px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 50%;
+                }
+
+            .profileBodyLeftUserInfoLowerContainer {
+                height: 20%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+                .fa-regular.fa-star.profileBodyLeftUserInfoLowerStar {
+                    font-size: 20px;
+                    margin-right: 7px;
+                    margin-bottom: 2px;
+                }
+
+                .profileBodyLeftUserInfoLowerReviewText {
+                    font-size: 16px;
+                    font-weight: bold;
+                }
+
+    .profileBodyRightContainer {
+        height: 100%;
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
