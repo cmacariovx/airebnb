@@ -62,7 +62,7 @@ function App() {
             <Route path='/' exact element={<Home/>} />
             <Route path='/listing/:listingId' element={<Listing/>} />
             <Route path='/profile/:userId' element={<Profile/>} />
-            <Route path='/createListing' element={<CreateListing/>} />
+            <Route path='/createListing/:createListingBodyId' element={<CreateListing/>} />
           </Route>
 
           <Route element={<AppPrivateRoutes isLoadingLogin={loadingLogin}/>}>
