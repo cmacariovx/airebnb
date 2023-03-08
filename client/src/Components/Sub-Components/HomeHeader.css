@@ -323,12 +323,3 @@
                     color: var(--gray);
                     font-weight: bold;
                 }
-
-    .homeHeader3Container {
-        height: 100px;
-        width: 100%;
-        display: none;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-    }

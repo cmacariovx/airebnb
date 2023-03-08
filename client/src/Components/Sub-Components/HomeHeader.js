@@ -82,10 +82,6 @@ function HomeHeader(props) {
                     </div>
                 </div>
             </div>}
-            {/* if logged in, display this div with the real price switch */}
-            <div className="homeHeader3Container">
-
-            </div>
         </div>
     )
 }
