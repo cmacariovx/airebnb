@@ -100,23 +100,6 @@ function CreateListing() {
                         <img src={airbnbListing2Pic} className="createListingSubBody2RightImg"/>
                     </div>
                 </div>
-                <div className="createListingBody2Footer">
-                    <div className="createListingBody2FooterUpper">
-                        <div className="createListingBody2FooterUpperLine">
-                            <div className="createListingBody2FooterUpperOverlay1"/>
-                        </div>
-                        <div className="createListingBody2FooterUpperLine">
-                            <div className="createListingBody2FooterUpperOverlay2"/>
-                        </div>
-                        <div className="createListingBody2FooterUpperLine">
-                            <div className="createListingBody2FooterUpperOverlay3"/>
-                        </div>
-                    </div>
-                    <div className="createListingBody2FooterLower">
-                        <p className="createListingBody2FooterBackText">Back</p>
-                        <button className="createListingBody2FooterButton">Next</button>
-                    </div>
-                </div>
             </div>}
             {listingBodyId == 3 && <div className="createListingBody3">
                 <div className="createListingSubBody3">
@@ -136,23 +119,62 @@ function CreateListing() {
                         </div>
                     </div>
                 </div>
-                <div className="createListingBody3Footer">
-                    <div className="createListingBody3FooterUpper">
-                        <div className="createListingBody3FooterUpperLine">
-                            <div className="createListingBody3FooterUpperOverlay1"/>
+            </div>}
+            {listingBodyId == 4 && <div className="createListingBody4">
+                <div className="createListingSubBody4">
+                    <p className="createListingSubBody4Title">What type of place will guests have?</p>
+                    <div className="createListingSubBody4List">
+                        <div className="createListingSubBody4ListOption">
+                            <div className="createListingSubBody4ListOptionLeft">
+                                <p className="createListingSubBody4ListOptionLeftTitle">An entire place</p>
+                                <p className="createListingSubBody4ListOptionLeftDesc">Guests have the whole place to themselves.</p>
+                            </div>
+                            <div className="createListingSubBody4ListOptionRight">
+                                <i className="fa-solid fa-house createListingSubBody4ListOptionRightIcon"></i>
+                            </div>
                         </div>
-                        <div className="createListingBody3FooterUpperLine">
-                            <div className="createListingBody3FooterUpperOverlay2"/>
+                        <div className="createListingSubBody4ListOption">
+                            <div className="createListingSubBody4ListOptionLeft">
+                                <p className="createListingSubBody4ListOptionLeftTitle">A private room</p>
+                                <p className="createListingSubBody4ListOptionLeftDesc">Guests sleep in a private room but some areas may be shared with you or others.</p>
+                            </div>
+                            <div className="createListingSubBody4ListOptionRight">
+                                <i className="fa-solid fa-door-closed createListingSubBody4ListOptionRightIcon"></i>
+                            </div>
                         </div>
-                        <div className="createListingBody3FooterUpperLine">
-                            <div className="createListingBody3FooterUpperOverlay3"/>
+                        <div className="createListingSubBody4ListOption">
+                            <div className="createListingSubBody4ListOptionLeft">
+                                <p className="createListingSubBody4ListOptionLeftTitle">A shared room</p>
+                                <p className="createListingSubBody4ListOptionLeftDesc">Guests sleep in a room or common area that may be shared with you or others.</p>
+                            </div>
+                            <div className="createListingSubBody4ListOptionRight">
+                                <i className="fa-solid fa-people-arrows createListingSubBody4ListOptionRightIcon"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div className="createListingBody3FooterLower">
-                        <p className="createListingBody3FooterBackText">Back</p>
-                        <button className="createListingBody3FooterButton">Next</button>
                     </div>
                 </div>
+            </div>}
+            <div className="createListingBody5">
+                <div className="createListingSubBody5">
+
+                </div>
+            </div>
+            {listingBodyId >= 2 && <div className="createListingBody2Footer">
+                    <div className="createListingBody2FooterUpper">
+                        <div className="createListingBody2FooterUpperLine">
+                            <div className="createListingBody2FooterUpperOverlay1" style={{transform: "translateX(20%)"}}/>
+                        </div>
+                        <div className="createListingBody2FooterUpperLine">
+                            <div className="createListingBody2FooterUpperOverlay2"/>
+                        </div>
+                        <div className="createListingBody2FooterUpperLine">
+                            <div className="createListingBody2FooterUpperOverlay3"/>
+                        </div>
+                    </div>
+                    <div className="createListingBody2FooterLower">
+                        <p className="createListingBody2FooterBackText">Back</p>
+                        <button className="createListingBody2FooterButton">Next</button>
+                    </div>
             </div>}
         </div>
     )

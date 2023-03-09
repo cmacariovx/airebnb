@@ -15,7 +15,7 @@ function ListingBody() {
 
     let map
     // const loader = new Loader({
-    //     apiKey: "AIzaSyBd71DPuMIZg8hparl3w2RfPSJLnP5wAZM",
+    //     apiKey: "process.env.REACT_APP_GOOGLE_API_KEY",
     //     version: "weekly",
     // });
 

@@ -390,19 +390,31 @@
                     justify-content: flex-start;
                     align-items: center;
                     background-color: rgba(160, 160, 160, 0.35);
+                    position: relative;
                 }
 
                     .createListingBody2FooterUpperOverlay1 {
                         height: 100%;
                         background-color: var(--black);
+                        width: 100%;
+                        left: -100%;
+                        transform: translateX(0%);
+                        transition: transform 600ms linear 0s;
+                        position: absolute;
                     }
                     .createListingBody2FooterUpperOverlay2 {
                         height: 100%;
                         background-color: var(--black);
+                        transform: translateX(0%);
+                        transition: transform 600ms linear 0s;
+                        position: absolute;
                     }
                     .createListingBody2FooterUpperOverlay3 {
                         height: 100%;
                         background-color: var(--black);
+                        transform: translateX(0%);
+                        transition: transform 600ms linear 0s;
+                        position: absolute;
                     }
 
             .createListingBody2FooterLower {
@@ -536,98 +548,121 @@
                         font-weight: bold;
                     }
 
-        .createListingBody3Footer {
-            height: 86px;
+/* ---------------------------------------------------------------------------------------------- */
+
+.createListingBody4 {
+    min-height: 600px;
+    height: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    .createListingSubBody4 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 300px;
+        padding-bottom: 150px;
+    }
+
+        .createListingSubBody4Title {
+            height: 80px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .createListingSubBody4List {
+            height: 340px;
             width: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            position: absolute;
-            bottom: 0;
         }
 
-            .createListingBody3FooterUpper {
-                min-height: 6px;
-                height: 6px;
+            .createListingSubBody4ListOption {
+                height: 105px;
                 width: 100%;
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
+                border: 1px solid rgba(160, 160, 160, 0.35);
+                border-radius: 10px;
+                padding: 20px 25px;
+                cursor: pointer;
+                transition: 0.1s linear;
             }
 
-                .createListingBody3FooterUpperLine {
-                    height: 100%;
-                    width: 33%;
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: flex-start;
-                    align-items: center;
-                    background-color: rgba(160, 160, 160, 0.35);
-                    position: relative;
+                .createListingSubBody4ListOption:hover {
+                    transition: 0.1s linear;
+                    border: 2px solid var(--black);
                 }
 
-                    .createListingBody3FooterUpperOverlay1 {
-                        height: 100%;
-                        background-color: var(--black);
+                .createListingSubBody4ListOptionLeft {
+                    height: 100%;
+                    width: 80%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                    .createListingSubBody4ListOptionLeftTitle {
                         width: 100%;
-                        left: -100%;
-                        transition: transform 600ms linear 0s;
-                        transform: translateX(20%);
-                        position: absolute;
-                    }
-                    .createListingBody3FooterUpperOverlay2 {
-                        height: 100%;
-                        background-color: var(--black);
-                    }
-                    .createListingBody3FooterUpperOverlay3 {
-                        height: 100%;
-                        background-color: var(--black);
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                        font-size: 17px;
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                        user-select: none;
                     }
 
-            .createListingBody3FooterLower {
-                height: calc(100% - 6px);
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0 50px;
-            }
+                    .createListingSubBody4ListOptionLeftDesc {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                        font-size: 14px;
+                        color: var(--gray);
+                        user-select: none;
+                    }
 
-            .createListingBody3FooterBackText {
-                font-size: 16px;
-                font-weight: bold;
-                text-decoration: underline;
-                cursor: pointer;
-                height: 40px;
-                border-radius: 10px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 0 10px;
-            }
+                .createListingSubBody4ListOptionRight {
+                    height: 100%;
+                    width: 20%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-end;
+                }
 
-            .createListingBody3FooterBackText:hover {
-                background-color: rgba(240, 240, 240, 0.5);
-            }
+                    .fa-solid.fa-house.createListingSubBody4ListOptionRightIcon {
+                        font-size: 28px;
+                        user-select: none;
+                    }
 
-            .createListingBody3FooterButton {
-                height: 50px;
-                width: 100px;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                background-color: var(--black);
-                color: white;
-                border-radius: 10px;
-                font-size: 16px;
-                font-weight: bold;
-                cursor: pointer;
-            }
+                    .fa-solid.fa-door-closed.createListingSubBody4ListOptionRightIcon {
+                        font-size: 28px;
+                        user-select: none;
+                    }
 
-            .createListingBody3FooterButton:hover {
-                background-color: black;
-            }
+                    .fa-solid.fa-people-arrows.createListingSubBody4ListOptionRightIcon {
+                        font-size: 28px;
+                        user-select: none;
+                    }
