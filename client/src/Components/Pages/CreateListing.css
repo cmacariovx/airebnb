@@ -203,6 +203,7 @@
                 border-radius: 10px;
                 font-size: 16px;
                 font-weight: bold;
+                cursor: pointer;
             }
 
             .createListingSubBody1Left {

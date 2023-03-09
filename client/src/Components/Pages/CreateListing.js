@@ -38,7 +38,7 @@ function CreateListing() {
                     </div>
                 </div>
             </div>}
-            <div className="createListingBody1">
+            {listingBodyId == 1 && <div className="createListingBody1">
                 <div className="createListingSubBody1">
                     <div className="createListingSubBody1Left">
                         <p className="createListingSubBody1LeftText">It's easy to get started on Airebnb</p>
@@ -87,7 +87,7 @@ function CreateListing() {
                 <div className="createListingBody1Footer">
                     <button className="createListingBody1FooterButton">Get started</button>
                 </div>
-            </div>
+            </div>}
         </div>
     )
 }
