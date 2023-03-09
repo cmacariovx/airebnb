@@ -88,6 +88,18 @@ function CreateListing() {
                     <button className="createListingBody1FooterButton">Get started</button>
                 </div>
             </div>}
+            <div className="createListingBody2">
+                <div className="createListingSubBody2">
+                    <div className="createListingSubBody2Left">
+                        <p className="createListingSubBody2LeftStepText">Step 1</p>
+                        <p className="createListingSubBody2LeftTellUsText">Tell us about your place</p>
+                        <p className="createListingSubBody2LeftDescText">In this step, we'll ask you which type of property you have and if guests will book the entire place or just a room. Then let us know the location and how many guests can stay.</p>
+                    </div>
+                    <div className="createListingSubBody2Right">
+
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

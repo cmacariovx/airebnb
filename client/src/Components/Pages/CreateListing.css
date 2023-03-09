@@ -289,4 +289,92 @@
                         .createListingSubBody1RightPicture {
                             height: 120px;
                             width: auto;
+                            user-select: none;
                         }
+
+/* ---------------------------------------------------------------------------------------------- */
+
+    .createListingBody2 {
+        min-height: 600px;
+        height: calc(100vh - 100px);
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .createListingSubBody2 {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 0 80px;
+            padding-bottom: 100px;
+        }
+
+            .createListingSubBody2Left {
+                height: 100%;
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+            }
+
+                .createListingSubBody2LeftStepText {
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-bottom: 20px;
+                }
+
+                .createListingSubBody2LeftTellUsText {
+                    width: 60%;
+                    font-size: 42px;
+                    font-weight: bold;
+                    margin-bottom: 20px;
+                }
+
+                .createListingSubBody2LeftDescText {
+                    font-size: 18px;
+                    line-height: 1.6;
+                }
+
+            .createListingSubBody2Right {
+                height: 100%;
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+        .createListingBody2Footer {
+            height: 86px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            position: absolute;
+            bottom: 0;
+            padding: 0 50px;
+            border-top: 6px solid rgba(160, 160, 160, 0.4);
+        }
+
+            .createListingBody2FooterButton {
+                height: 50px;
+                width: 150px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                background-color: var(--pink);
+                color: white;
+                border-radius: 10px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+            }
