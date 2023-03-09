@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 
 import PlacesAutocomplete, {
     geocodeByAddress,
@@ -17,9 +17,7 @@ import staticMap from '../../Images/staticmap.png'
 function CreateListing() {
     const listingBodyId = window.location.pathname.slice(15)
 
-    function changeValue() {
-
-    }
+    let [searchTerm, setSearchTerm] = useState("")
 
     return (
         <div className="createListingContainer">
@@ -172,8 +170,8 @@ function CreateListing() {
                     </div>
                     <div className="createListingSubBody5Body">
                         <PlacesAutocomplete
-                            value={"150"}
-                            onChange={changeValue}
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e)}
                         >
                             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                 <div className="createListingSubBody5BodyInputContainer">
@@ -186,8 +184,7 @@ function CreateListing() {
                                         })}
                                     />
                                     <div className="autocomplete-dropdown-container" id="autocompleteDropdown">
-                                        {loading && <p>Loading...</p>}
-
+                                        {/* {loading && <p>Loading...</p>} */}
                                         {suggestions.map(suggestion => {
                                             const className = suggestion.active ? 'suggestion-item--active'
                                             : 'suggestion-item';

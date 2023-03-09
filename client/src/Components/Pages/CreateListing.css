@@ -765,9 +765,14 @@
                     padding-left: 80px;
                 }
 
+                .location-search-input:focus {
+                    border-radius: 20px;
+                    border: 2px solid var(--black);
+                }
+
                     .autocomplete-dropdown-container {
                         width: 100%;
-                        display: none;
+                        display: flex;
                         flex-direction: column;
                         justify-content: center;
                         align-items: center;
