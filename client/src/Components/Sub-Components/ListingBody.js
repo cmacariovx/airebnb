@@ -14,7 +14,9 @@ function ListingBody() {
     const navigate = useNavigate()
 
     let map
+    let autocomplete
     // const loader = new Loader({
+    //     //    create a fetch request to back end and let server use apikey and change key
     //     apiKey: "process.env.REACT_APP_GOOGLE_API_KEY",
     //     version: "weekly",
     // });
@@ -23,10 +25,10 @@ function ListingBody() {
     //     // geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
     //     //     coords = [data.results[0].geometry.bounds.Ia.hi, data.results[0].geometry.bounds.Ua.hi]
     //     // })
-    //     map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
-    //         center: { lat: 35.5951, lng: -82.5515 },
-    //         zoom: 16,
-    //     });
+    //     // map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
+    //     //     center: { lat: 35.5951, lng: -82.5515 },
+    //     //     zoom: 16,
+    //     // });
     // });
 
     function toProfileHandler() {

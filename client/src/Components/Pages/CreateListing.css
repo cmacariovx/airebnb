@@ -666,3 +666,110 @@
                         font-size: 28px;
                         user-select: none;
                     }
+
+                    /* ---------------------------------------------------------------------------------------------- */
+
+.createListingBody5 {
+    min-height: 600px;
+    height: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    .createListingSubBody5 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 300px;
+        padding-bottom: 150px;
+    }
+
+        .createListingSubBody5Header {
+            height: 150px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+            .createListingSubBody5HeaderTitle {
+                font-size: 32px;
+                font-weight: bold;
+                margin-bottom: 15px;
+            }
+
+            .createListingSubBody5HeaderDesc {
+                font-size: 16px;
+                color: var(--gray);
+            }
+
+        .createListingSubBody5Body {
+            height: 90%;
+            width: 100%;
+            background-image: url('../../Images/staticmap.png');
+            background-size: cover;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: flex-start;
+            border-radius: 20px;
+            padding: 40px 40px;
+        }
+
+            .createListingSubBody5BodyInputContainer {
+                height: 70px;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+            }
+
+            .createListingSubBody5BodyInputContainerLower {
+                height: 100%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+                .fa-location-dot {
+                    font-size: 22px;
+                    position: absolute;
+                    left: 40px;
+                }
+
+                .location-search-input {
+                    height: 70px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    background-color: white;
+                    border-radius: 50px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    padding: 10px 40px;
+                    padding-left: 80px;
+                }
+
+                    .autocomplete-dropdown-container {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: white;
+                        border-radius: 10px;
+                    }

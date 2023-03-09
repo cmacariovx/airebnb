@@ -1,4 +1,9 @@
-import React from "react";
+import React from "react"
+
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng,
+} from 'react-places-autocomplete'
 
 import './CreateListing.css'
 
@@ -7,10 +12,15 @@ import airbnbMiniPic1 from '../../Images/airbnbListingPic1.png'
 import airbnbMiniPic2 from '../../Images/airbnbListingPic2.png'
 import airbnbMiniPic3 from '../../Images/airbnbListingPic3.png'
 import airbnbListing2Pic from '../../Images/airbnbListing2.png'
+import staticMap from '../../Images/staticmap.png'
 
 function CreateListing() {
     const listingBodyId = window.location.pathname.slice(15)
-    console.log(listingBodyId)
+
+    function changeValue() {
+
+    }
+
     return (
         <div className="createListingContainer">
             <div className="createListingHeader">
@@ -156,7 +166,53 @@ function CreateListing() {
             </div>}
             <div className="createListingBody5">
                 <div className="createListingSubBody5">
+                    <div className="createListingSubBody5Header">
+                        <p className="createListingSubBody5HeaderTitle">Where's your place located?</p>
+                        <p className="createListingSubBody5HeaderDesc">Your address is only shared with guests after they’ve made a reservation.</p>
+                    </div>
+                    <div className="createListingSubBody5Body">
+                        <PlacesAutocomplete
+                            value={""}
+                            onChange={changeValue}
+                        >
+                            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                                <div className="createListingSubBody5BodyInputContainer">
+                                <i className="fa-solid fa-location-dot"></i>
+                                <div className="createListingSubBody5BodyInputContainerLower">
+                                    <input
+                                        {...getInputProps({
+                                            placeholder: 'Enter your address',
+                                            className: 'location-search-input',
+                                        })}
+                                    />
+                                    <div className="autocomplete-dropdown-container">
+                                        {loading && <div>Loading...</div>}
 
+                                        {suggestions.map(suggestion => {
+                                            const className = suggestion.active ? 'suggestion-item--active'
+                                            : 'suggestion-item';
+
+                                            // inline style for demonstration purpose
+                                            const style = suggestion.active ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                                            : { backgroundColor: '#ffffff', cursor: 'pointer' };
+
+                                            return (
+                                            <div
+                                                {...getSuggestionItemProps(suggestion, {
+                                                className,
+                                                style,
+                                                })}
+                                            >
+                                                <span>{suggestion.description}</span>
+                                            </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            </div>
+                            )}
+                        </PlacesAutocomplete>
+                    </div>
                 </div>
             </div>
             {listingBodyId >= 2 && <div className="createListingBody2Footer">
