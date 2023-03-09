@@ -89,7 +89,7 @@ function CreateListing() {
                     <button className="createListingBody1FooterButton">Get started</button>
                 </div>
             </div>}
-            <div className="createListingBody2">
+            {listingBodyId == 2 && <div className="createListingBody2">
                 <div className="createListingSubBody2">
                     <div className="createListingSubBody2Left">
                         <p className="createListingSubBody2LeftStepText">Step 1</p>
@@ -117,7 +117,43 @@ function CreateListing() {
                         <button className="createListingBody2FooterButton">Next</button>
                     </div>
                 </div>
-            </div>
+            </div>}
+            {listingBodyId == 3 && <div className="createListingBody3">
+                <div className="createListingSubBody3">
+                    <p className="createListingSubBody3Title">Which of these best describes your place?</p>
+                    <div className="createListingSubBody3List">
+                        <div className="createListingSubBody3ListOption">
+                            <i className="fa-solid fa-house createListingSubBody3ListOptionIcon"></i>
+                            <p className="createListingSubBody3ListOptionText">House</p>
+                        </div>
+                        <div className="createListingSubBody3ListOption">
+                            <i className="fa-solid fa-building createListingSubBody3ListOptionIcon"></i>
+                            <p className="createListingSubBody3ListOptionText">Apartment</p>
+                        </div>
+                        <div className="createListingSubBody3ListOption">
+                            <i class="fa-solid fa-hotel createListingSubBody3ListOptionIcon"></i>
+                            <p className="createListingSubBody3ListOptionText">Hotel</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="createListingBody3Footer">
+                    <div className="createListingBody3FooterUpper">
+                        <div className="createListingBody3FooterUpperLine">
+                            <div className="createListingBody3FooterUpperOverlay1"/>
+                        </div>
+                        <div className="createListingBody3FooterUpperLine">
+                            <div className="createListingBody3FooterUpperOverlay2"/>
+                        </div>
+                        <div className="createListingBody3FooterUpperLine">
+                            <div className="createListingBody3FooterUpperOverlay3"/>
+                        </div>
+                    </div>
+                    <div className="createListingBody3FooterLower">
+                        <p className="createListingBody3FooterBackText">Back</p>
+                        <button className="createListingBody3FooterButton">Next</button>
+                    </div>
+                </div>
+            </div>}
         </div>
     )
 }
