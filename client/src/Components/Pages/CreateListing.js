@@ -172,6 +172,14 @@ function CreateListing() {
                         <PlacesAutocomplete
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e)}
+                            searchOptions={{
+                                bounds: {
+                                    east: -66.9513812,
+                                    north: 49.3457868,
+                                    south: 24.7433195,
+                                    west: -124.7844079,
+                                }
+                            }}
                         >
                             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                 <div className="createListingSubBody5BodyInputContainer">
