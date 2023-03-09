@@ -172,7 +172,7 @@ function CreateListing() {
                     </div>
                     <div className="createListingSubBody5Body">
                         <PlacesAutocomplete
-                            value={""}
+                            value={"150"}
                             onChange={changeValue}
                         >
                             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
@@ -185,27 +185,31 @@ function CreateListing() {
                                             className: 'location-search-input',
                                         })}
                                     />
-                                    <div className="autocomplete-dropdown-container">
-                                        {loading && <div>Loading...</div>}
+                                    <div className="autocomplete-dropdown-container" id="autocompleteDropdown">
+                                        {loading && <p>Loading...</p>}
 
                                         {suggestions.map(suggestion => {
                                             const className = suggestion.active ? 'suggestion-item--active'
                                             : 'suggestion-item';
 
-                                            // inline style for demonstration purpose
-                                            const style = suggestion.active ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                                            : { backgroundColor: '#ffffff', cursor: 'pointer' };
-
                                             return (
                                             <div
                                                 {...getSuggestionItemProps(suggestion, {
-                                                className,
-                                                style,
+                                                className
                                                 })}
+                                                key={suggestion.index}
                                             >
-                                                <span>{suggestion.description}</span>
+                                                <div className="suggestionItemLeft">
+                                                    <div className="buildingIconContainer">
+                                                        <i className="fa-solid fa-building building1"></i>
+                                                    </div>
+                                                </div>
+                                                <div className="suggestionItemRight">
+                                                    <p className="suggestionAddress">{suggestion.formattedSuggestion.mainText}</p>
+                                                    <p className="suggestionCityState">{suggestion.formattedSuggestion.secondaryText}</p>
+                                                </div>
                                             </div>
-                                            );
+                                            )
                                         })}
                                     </div>
                                 </div>

@@ -725,12 +725,12 @@
         }
 
             .createListingSubBody5BodyInputContainer {
-                height: 70px;
+                height: 100%;
                 width: 100%;
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
-                align-items: center;
+                align-items: flex-start;
                 position: relative;
             }
 
@@ -739,7 +739,7 @@
                 width: 100%;
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
+                justify-content: flex-start;
                 align-items: center;
             }
 
@@ -747,6 +747,7 @@
                     font-size: 22px;
                     position: absolute;
                     left: 40px;
+                    margin-top: 23px;
                 }
 
                 .location-search-input {
@@ -766,10 +767,78 @@
 
                     .autocomplete-dropdown-container {
                         width: 100%;
-                        display: flex;
+                        display: none;
                         flex-direction: column;
                         justify-content: center;
                         align-items: center;
                         background-color: white;
                         border-radius: 10px;
                     }
+
+                        .suggestion-item {
+                            height: 70px;
+                            width: 100%;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: flex-start;
+                            align-items: center;
+                            background-color: white;
+                            border-radius: 10px;
+                            padding: 10px 20px;
+                        }
+
+
+                            .suggestionItemLeft {
+                                height: 100%;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: flex-start;
+                                align-items: center;
+                                margin-right: 20px;
+                            }
+
+                                .buildingIconContainer {
+                                    height: 40px;
+                                    width: 40px;
+                                    display: flex;
+                                    flex-direction: row;
+                                    justify-content: center;
+                                    align-items: center;
+                                    border-radius: 50%;
+                                    background-color: rgba(222, 222, 222, 0.2);
+                                    padding: 5px;
+                                }
+
+                                    .building1 {
+                                        font-size: 16px;
+                                    }
+
+                            .suggestionItemRight {
+                                height: 100%;
+                                width: 50%;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                align-items: flex-start;
+                            }
+
+                                .suggestionAddress {
+                                    font-size: 16px;
+                                }
+
+                                .suggestionCityState {
+                                    font-size: 14px;
+                                }
+
+                        .suggestion-item--active {
+                            height: 70px;
+                            width: 100%;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: flex-start;
+                            align-items: center;
+                            cursor: pointer;
+                            background-color: rgba(160, 160, 160, 0.4);
+                            border-radius: 10px;
+                            padding: 10px 20px;
+                        }
