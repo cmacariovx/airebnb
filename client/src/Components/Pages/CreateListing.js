@@ -6,6 +6,7 @@ import airbnbMiniLogo from '../../Images/airbnb-512.png'
 import airbnbMiniPic1 from '../../Images/airbnbListingPic1.png'
 import airbnbMiniPic2 from '../../Images/airbnbListingPic2.png'
 import airbnbMiniPic3 from '../../Images/airbnbListingPic3.png'
+import airbnbListing2Pic from '../../Images/airbnbListing2.png'
 
 function CreateListing() {
     const listingBodyId = window.location.pathname.slice(15)
@@ -96,7 +97,24 @@ function CreateListing() {
                         <p className="createListingSubBody2LeftDescText">In this step, we'll ask you which type of property you have and if guests will book the entire place or just a room. Then let us know the location and how many guests can stay.</p>
                     </div>
                     <div className="createListingSubBody2Right">
-
+                        <img src={airbnbListing2Pic} className="createListingSubBody2RightImg"/>
+                    </div>
+                </div>
+                <div className="createListingBody2Footer">
+                    <div className="createListingBody2FooterUpper">
+                        <div className="createListingBody2FooterUpperLine">
+                            <div className="createListingBody2FooterUpperOverlay1"/>
+                        </div>
+                        <div className="createListingBody2FooterUpperLine">
+                            <div className="createListingBody2FooterUpperOverlay2"/>
+                        </div>
+                        <div className="createListingBody2FooterUpperLine">
+                            <div className="createListingBody2FooterUpperOverlay3"/>
+                        </div>
+                    </div>
+                    <div className="createListingBody2FooterLower">
+                        <p className="createListingBody2FooterBackText">Back</p>
+                        <button className="createListingBody2FooterButton">Next</button>
                     </div>
                 </div>
             </div>

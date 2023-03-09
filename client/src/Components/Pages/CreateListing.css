@@ -322,23 +322,25 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: flex-start;
+                padding-right: 20px;
             }
 
                 .createListingSubBody2LeftStepText {
-                    font-size: 18px;
+                    font-size: 17px;
                     font-weight: bold;
                     margin-bottom: 20px;
                 }
 
                 .createListingSubBody2LeftTellUsText {
                     width: 60%;
-                    font-size: 42px;
+                    font-size: 44px;
                     font-weight: bold;
                     margin-bottom: 20px;
                 }
 
                 .createListingSubBody2LeftDescText {
-                    font-size: 18px;
+                    width: 90%;
+                    font-size: 17px;
                     line-height: 1.6;
                 }
 
@@ -349,32 +351,102 @@
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+                padding-left: 20px;
             }
+
+                .createListingSubBody2RightImg {
+                    height: 460px;
+                    width: auto;
+                    user-select: none;
+                    -webkit-user-drag: none;
+                }
 
         .createListingBody2Footer {
             height: 86px;
             width: 100%;
             display: flex;
-            flex-direction: row;
-            justify-content: flex-end;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
             position: absolute;
             bottom: 0;
-            padding: 0 50px;
-            border-top: 6px solid rgba(160, 160, 160, 0.4);
         }
+
+            .createListingBody2FooterUpper {
+                min-height: 6px;
+                height: 6px;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                .createListingBody2FooterUpperLine {
+                    height: 100%;
+                    width: 33%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    background-color: rgba(160, 160, 160, 0.35);
+                }
+
+                    .createListingBody2FooterUpperOverlay1 {
+                        height: 100%;
+                        background-color: var(--black);
+                    }
+                    .createListingBody2FooterUpperOverlay2 {
+                        height: 100%;
+                        background-color: var(--black);
+                    }
+                    .createListingBody2FooterUpperOverlay3 {
+                        height: 100%;
+                        background-color: var(--black);
+                    }
+
+            .createListingBody2FooterLower {
+                height: calc(100% - 6px);
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 50px;
+            }
+
+            .createListingBody2FooterBackText {
+                font-size: 16px;
+                font-weight: bold;
+                text-decoration: underline;
+                cursor: pointer;
+                height: 40px;
+                border-radius: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 0 10px;
+            }
+
+            .createListingBody2FooterBackText:hover {
+                background-color: rgba(240, 240, 240, 0.5);
+            }
 
             .createListingBody2FooterButton {
                 height: 50px;
-                width: 150px;
+                width: 100px;
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
-                background-color: var(--pink);
+                background-color: var(--black);
                 color: white;
                 border-radius: 10px;
                 font-size: 16px;
                 font-weight: bold;
                 cursor: pointer;
+            }
+
+            .createListingBody2FooterButton:hover {
+                background-color: black;
             }
