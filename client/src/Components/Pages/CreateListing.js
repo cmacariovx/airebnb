@@ -15,29 +15,30 @@ import airbnbMiniPic2 from '../../Images/airbnbListingPic2.png'
 import airbnbMiniPic3 from '../../Images/airbnbListingPic3.png'
 import airbnbListing2Pic from '../../Images/airbnbListing2.png'
 import staticMap from '../../Images/staticmap.png'
+import airbnbMapMarker from '../../Images/airbnbMapMarker.png'
+import airbnbMapMarker2 from '../../Images/airbnbMapMarker2.png'
+import airbnbMapMarker3 from '../../Images/airbnbMapMarker3.png'
 
 function CreateListing() {
     const listingBodyId = window.location.pathname.slice(15)
 
     let [searchTerm, setSearchTerm] = useState("")
 
-    let map
-    let geocoder
-    let coords
-
     const loader = new Loader({
         apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
         version: "weekly",
-    });
+    })
 
     loader.load().then((google) => {
-        geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
-            coords = [data.results[0].geometry.bounds.Ia.hi, data.results[0].geometry.bounds.Ua.hi]
+        let coords
+
+        let geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
+            coords = [data.results[0].geometry.bounds.Ja.hi, data.results[0].geometry.bounds.Va.hi]
+            console.log(coords)
         })
-        map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
+        let map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
             center: { lat: 35.5951, lng: -82.5515 },
-            zoom: 16,
-            streetView: false,
+            zoom: 15,
             zoomControl: false,
             scrollwheel: false,
             rotateControl: false,
@@ -45,8 +46,38 @@ function CreateListing() {
             gestureHandling: 'none',
             clickableIcons: false,
             fullscreenControl: false,
-        });
-    });
+        })
+
+        let icon = {
+            url: airbnbMapMarker3,
+            scaledSize: new google.maps.Size(80, 80)
+        }
+
+        let mapStyling = [
+            {
+                featureType: "poi",
+                elementType: "labels",
+                stylers: [
+                  { visibility: "off" }
+                ]
+              },
+              {
+                featureType: "road",
+                elementType: "labels",
+                stylers: [
+                  { visibility: "off" }
+                ]
+              }
+          ]
+
+        let marker = new google.maps.Marker({
+            position: new google.maps.LatLng(35.5951, -82.5515),
+            map: map
+        })
+
+        marker.setIcon(icon)
+        map.set("styles", mapStyling)
+    })
 
     return (
         <div className="createListingContainer">
@@ -253,7 +284,7 @@ function CreateListing() {
                     </div>
                 </div>
             </div>}
-            <div className="createListingBody6">
+            {listingBodyId == 6 && <div className="createListingBody6">
                 <div className="createListingSubBody6">
                     <div className="createListingSubBody6Header">
                         <p className="createListingSubBody6Header1">Confirm your address</p>
@@ -272,12 +303,10 @@ function CreateListing() {
                         </div>
                     </div>
                     <div className="createListingSubBody6MapContainer">
-                        <div className="createListingSubBody6Map" id="listingBodyMainMapContainer">
-
-                        </div>
+                        <div className="createListingSubBody6Map" id="listingBodyMainMapContainer"/>
                     </div>
                 </div>
-            </div>
+            </div>}
             {listingBodyId >= 2 && <div className="createListingBody2Footer">
                     <div className="createListingBody2FooterUpper">
                         <div className="createListingBody2FooterUpperLine">
