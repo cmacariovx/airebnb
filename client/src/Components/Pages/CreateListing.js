@@ -324,6 +324,64 @@ function CreateListing() {
                     </div>
                 </div>
             </div>}
+            {listingBodyId == 8 && <div className="createListingBody8">
+                <div className="createListingSubBody8">
+                    <div className="createListingSubBody8Header">
+                        <p className="createListingSubBody8Header1">Share some basics about your place</p>
+                        <p className="createListingSubBody8Header2">You'll add more details later, like bed types.</p>
+                    </div>
+                    <div className="createListingSubBody8Body">
+                        <div className="createListingSubBody8OptionContainer">
+                            <p className="createListingSubBody8OptionText">Guests</p>
+                            <div className="createListingSubBody8OptionRight">
+                                <div className="createListingSubBody8OptionRightIconContainer">
+                                    <i className="fa-solid fa-minus createListingSubBody8OptionRightIcon"></i>
+                                </div>
+                                <p className="createListingSubBody8OptionText2">0</p>
+                                <div className="createListingSubBody8OptionRightIconContainer">
+                                    <i className="fa-solid fa-plus createListingSubBody8OptionRightIcon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="createListingSubBody8OptionContainer">
+                            <p className="createListingSubBody8OptionText">Bedrooms</p>
+                            <div className="createListingSubBody8OptionRight">
+                                <div className="createListingSubBody8OptionRightIconContainer">
+                                    <i className="fa-solid fa-minus createListingSubBody8OptionRightIcon"></i>
+                                </div>
+                                <p className="createListingSubBody8OptionText2">0</p>
+                                <div className="createListingSubBody8OptionRightIconContainer">
+                                    <i className="fa-solid fa-plus createListingSubBody8OptionRightIcon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="createListingSubBody8OptionContainer">
+                            <p className="createListingSubBody8OptionText">Beds</p>
+                            <div className="createListingSubBody8OptionRight">
+                                <div className="createListingSubBody8OptionRightIconContainer">
+                                    <i className="fa-solid fa-minus createListingSubBody8OptionRightIcon"></i>
+                                </div>
+                                <p className="createListingSubBody8OptionText2">0</p>
+                                <div className="createListingSubBody8OptionRightIconContainer">
+                                    <i className="fa-solid fa-plus createListingSubBody8OptionRightIcon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="createListingSubBody8OptionContainer2">
+                            <p className="createListingSubBody8OptionText">Bathrooms</p>
+                            <div className="createListingSubBody8OptionRight">
+                                <div className="createListingSubBody8OptionRightIconContainer">
+                                    <i className="fa-solid fa-minus createListingSubBody8OptionRightIcon"></i>
+                                </div>
+                                <p className="createListingSubBody8OptionText2">0</p>
+                                <div className="createListingSubBody8OptionRightIconContainer">
+                                    <i className="fa-solid fa-plus createListingSubBody8OptionRightIcon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>}
             {listingBodyId >= 2 && <div className="createListingBody2Footer">
                     <div className="createListingBody2FooterUpper">
                         <div className="createListingBody2FooterUpperLine">

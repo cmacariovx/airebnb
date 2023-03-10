@@ -1076,3 +1076,130 @@
                 align-items: center;
                 border-radius: 20px;
             }
+
+/* ---------------------------------------------------------------------------------------------- */
+
+.createListingBody8 {
+    min-height: 600px;
+    height: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    .createListingSubBody8 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 300px;
+        padding-bottom: 150px;
+    }
+
+        .createListingSubBody8Header {
+            height: 150px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+            .createListingSubBody8Header1 {
+                font-size: 32px;
+                font-weight: bold;
+                margin-bottom: 15px;
+            }
+
+            .createListingSubBody8Header2 {
+                font-size: 17px;
+                color: var(--gray);
+            }
+
+            .createListingSubBody8Body {
+                height: 325px;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+                .createListingSubBody8OptionContainer {
+                    height: 25%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    border-bottom: 1px solid rgba(160, 160, 160, 0.2);
+                }
+
+                .createListingSubBody8OptionContainer2 {
+                    height: 25%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                    .createListingSubBody8OptionText {
+                        height: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                        font-size: 18px;
+                        width: 50%;
+                    }
+                    .createListingSubBody8OptionText2 {
+                        height: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                        font-size: 16px;
+                        margin-left: 20px;
+                        margin-right: 20px;
+                    }
+
+                    .createListingSubBody8OptionRight {
+                        height: 100%;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-end;
+                        align-items: center;
+                    }
+
+                        .createListingSubBody8OptionRightIconContainer {
+                            min-height: 30px;
+                            min-width: 30px;
+                            height: 30px;
+                            width: 30px;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 50%;
+                            border: 1px solid rgba(160, 160, 160, 0.8);
+                            cursor: pointer;
+                            padding: 5px;
+                        }
+
+                            .fa-solid.fa-minus.createListingSubBody8OptionRightIcon {
+                                font-size: 15px;
+                                color: var(--gray);
+                                margin-top: 1px;
+                            }
+
+                            .fa-solid.fa-plus.createListingSubBody8OptionRightIcon {
+                                font-size: 15px;
+                                color: var(--gray);
+                            }
