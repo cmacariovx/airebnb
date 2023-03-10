@@ -667,7 +667,7 @@
                         user-select: none;
                     }
 
-                    /* ---------------------------------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------------------------------- */
 
 .createListingBody5 {
     min-height: 600px;
@@ -847,3 +847,135 @@
                             border-radius: 10px;
                             padding: 10px 20px;
                         }
+
+/* ---------------------------------------------------------------------------------------------- */
+
+.createListingBody6 {
+    min-height: 600px;
+    height: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    .createListingSubBody6 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 300px;
+        padding-bottom: 200px;
+    }
+
+        .createListingSubBody6Header {
+            height: 150px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+            .createListingSubBody6Header1 {
+                font-size: 32px;
+                font-weight: bold;
+                margin-bottom: 15px;
+            }
+
+            .createListingSubBody6Header2 {
+                font-size: 17px;
+                color: var(--gray);
+            }
+
+        .createListingSubBody6Form {
+            height: 274px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            border: 1.5px solid rgba(160, 160, 160, 0.4);
+        }
+
+            .createListingSubBody6Input {
+                height: 20%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 10px;
+                font-size: 16px;
+                border-bottom: 1.5px solid rgba(160, 160, 160, 0.4);
+            }
+
+                .createListingSubBody6Input2 {
+                    height: 100%;
+                    width: 50%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding: 10px;
+                    font-size: 16px;
+                }
+
+                .createListingSubBody6Input3 {
+                    height: 100%;
+                    width: 50%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding: 10px;
+                    font-size: 16px;
+                    border-left: 1.5px solid rgba(160, 160, 160, 0.4);
+                }
+
+                .createListingSubBody6Input4 {
+                    height: 20%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding: 10px;
+                    font-size: 16px;
+                }
+
+            .createListingSubBody6FormHorizontalContainer {
+                height: 20%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                border-bottom: 1.5px solid rgba(160, 160, 160, 0.4);
+            }
+
+        .createListingSubBody6MapContainer {
+            height: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            border-top: 1px solid rgba(160, 160, 160, 0.4);
+        }
+
+            .createListingSubBody6Map {
+                height: 325px;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                border-radius: 10px;
+            }

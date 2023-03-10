@@ -5,6 +5,8 @@ import PlacesAutocomplete, {
     getLatLng,
 } from 'react-places-autocomplete'
 
+import { Loader } from "@googlemaps/js-api-loader"
+
 import './CreateListing.css'
 
 import airbnbMiniLogo from '../../Images/airbnb-512.png'
@@ -18,6 +20,33 @@ function CreateListing() {
     const listingBodyId = window.location.pathname.slice(15)
 
     let [searchTerm, setSearchTerm] = useState("")
+
+    let map
+    let geocoder
+    let coords
+
+    const loader = new Loader({
+        apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+        version: "weekly",
+    });
+
+    loader.load().then((google) => {
+        geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
+            coords = [data.results[0].geometry.bounds.Ia.hi, data.results[0].geometry.bounds.Ua.hi]
+        })
+        map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
+            center: { lat: 35.5951, lng: -82.5515 },
+            zoom: 16,
+            streetView: false,
+            zoomControl: false,
+            scrollwheel: false,
+            rotateControl: false,
+            scaleControl: false,
+            gestureHandling: 'none',
+            clickableIcons: false,
+            fullscreenControl: false,
+        });
+    });
 
     return (
         <div className="createListingContainer">
@@ -162,7 +191,7 @@ function CreateListing() {
                     </div>
                 </div>
             </div>}
-            <div className="createListingBody5">
+            {listingBodyId == 5 && <div className="createListingBody5">
                 <div className="createListingSubBody5">
                     <div className="createListingSubBody5Header">
                         <p className="createListingSubBody5HeaderTitle">Where's your place located?</p>
@@ -221,6 +250,31 @@ function CreateListing() {
                             </div>
                             )}
                         </PlacesAutocomplete>
+                    </div>
+                </div>
+            </div>}
+            <div className="createListingBody6">
+                <div className="createListingSubBody6">
+                    <div className="createListingSubBody6Header">
+                        <p className="createListingSubBody6Header1">Confirm your address</p>
+                        <p className="createListingSubBody6Header2">Your address is only shared with guests after they've made a reservation</p>
+                    </div>
+                    <div className="createListingSubBody6Form">
+                        <input className="createListingSubBody6Input" placeholder="Street"/>
+                        <input className="createListingSubBody6Input" placeholder="Apt, suite, etc. (Optional)"/>
+                        <input className="createListingSubBody6Input" placeholder="City"/>
+                        <div className="createListingSubBody6FormHorizontalContainer">
+                            <input className="createListingSubBody6Input2" placeholder="State"/>
+                            <input className="createListingSubBody6Input3" placeholder="Zip code"/>
+                        </div>
+                        <div className="createListingSubBody6Input4">
+                            <p className="createListingSubBody6InputText">United States - US</p>
+                        </div>
+                    </div>
+                    <div className="createListingSubBody6MapContainer">
+                        <div className="createListingSubBody6Map" id="listingBodyMainMapContainer">
+
+                        </div>
                     </div>
                 </div>
             </div>
