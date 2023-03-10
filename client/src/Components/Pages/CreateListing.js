@@ -24,60 +24,62 @@ function CreateListing() {
 
     let [searchTerm, setSearchTerm] = useState("")
 
-    const loader = new Loader({
+    if (listingBodyId == 6 || listingBodyId == 7) {
+        const loader = new Loader({
         apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
         version: "weekly",
-    })
-
-    loader.load().then((google) => {
-        let coords
-
-        let geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
-            coords = [data.results[0].geometry.bounds.Ja.hi, data.results[0].geometry.bounds.Va.hi]
-            console.log(coords)
-        })
-        let map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
-            center: { lat: 35.5951, lng: -82.5515 },
-            zoom: 15,
-            zoomControl: false,
-            scrollwheel: false,
-            rotateControl: false,
-            scaleControl: false,
-            gestureHandling: 'none',
-            clickableIcons: false,
-            fullscreenControl: false,
         })
 
-        let icon = {
-            url: airbnbMapMarker3,
-            scaledSize: new google.maps.Size(80, 80)
-        }
+        loader.load().then((google) => {
+            let coords
 
-        let mapStyling = [
-            {
-                featureType: "poi",
-                elementType: "labels",
-                stylers: [
-                  { visibility: "off" }
-                ]
-              },
-              {
-                featureType: "road",
-                elementType: "labels",
-                stylers: [
-                  { visibility: "off" }
-                ]
-              }
-          ]
+            let geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
+                coords = [data.results[0].geometry.bounds.Ja.hi, data.results[0].geometry.bounds.Va.hi]
+                console.log(coords)
+            })
+            let map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
+                center: { lat: 35.5951, lng: -82.5515 },
+                zoom: 15,
+                zoomControl: listingBodyId === 6 ? false : true,
+                scrollwheel: listingBodyId === 6 ? false : true,
+                rotateControl: false,
+                scaleControl: false,
+                gestureHandling: listingBodyId === 6 ? 'none' : true,
+                clickableIcons: false,
+                fullscreenControl: false,
+            })
 
-        let marker = new google.maps.Marker({
-            position: new google.maps.LatLng(35.5951, -82.5515),
-            map: map
+            let icon = {
+                url: airbnbMapMarker3,
+                scaledSize: new google.maps.Size(80, 80)
+            }
+
+            let mapStyling = [
+                {
+                    featureType: "poi",
+                    elementType: "labels",
+                    stylers: [
+                    { visibility: "off" }
+                    ]
+                },
+                {
+                    featureType: "road",
+                    elementType: "labels",
+                    stylers: [
+                    { visibility: "off" }
+                    ]
+                }
+            ]
+
+            let marker = new google.maps.Marker({
+                position: new google.maps.LatLng(35.5951, -82.5515),
+                map: map
+            })
+
+            marker.setIcon(icon)
+            map.set("styles", mapStyling)
         })
-
-        marker.setIcon(icon)
-        map.set("styles", mapStyling)
-    })
+    }
 
     return (
         <div className="createListingContainer">
@@ -243,7 +245,7 @@ function CreateListing() {
                         >
                             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
                                 <div className="createListingSubBody5BodyInputContainer">
-                                <i className="fa-solid fa-location-dot"></i>
+                                <i className="fa-solid fa-location-dot fld"></i>
                                 <div className="createListingSubBody5BodyInputContainerLower">
                                     <input
                                         {...getInputProps({
@@ -288,7 +290,7 @@ function CreateListing() {
                 <div className="createListingSubBody6">
                     <div className="createListingSubBody6Header">
                         <p className="createListingSubBody6Header1">Confirm your address</p>
-                        <p className="createListingSubBody6Header2">Your address is only shared with guests after they've made a reservation</p>
+                        <p className="createListingSubBody6Header2">Your address is only shared with guests after they've made a reservation.</p>
                     </div>
                     <div className="createListingSubBody6Form">
                         <input className="createListingSubBody6Input" placeholder="Street"/>
@@ -304,6 +306,21 @@ function CreateListing() {
                     </div>
                     <div className="createListingSubBody6MapContainer">
                         <div className="createListingSubBody6Map" id="listingBodyMainMapContainer"/>
+                    </div>
+                </div>
+            </div>}
+            {listingBodyId == 7 && <div className="createListingBody7">
+                <div className="createListingSubBody7">
+                    <div className="createListingSubBody7Header">
+                        <p className="createListingSubBody7Header1">Is the pin in the right spot?</p>
+                        <p className="createListingSubBody7Header2">Your address is only shared with guests after they've made a reservation.</p>
+                    </div>
+                    <div className="createListingSubBody7MapContainer">
+                        <div className="createListingSubBody7MapAddress">
+                            <i className="fa-solid fa-location-dot createListingSubBody7MapAddressIcon"></i>
+                            <p className="createListingSubBody7MapAddressText">170 Merrimon Ave, Asheville, NC 28787</p>
+                        </div>
+                        <div className="createListingSubBody7Map" id="listingBodyMainMapContainer"/>
                     </div>
                 </div>
             </div>}
