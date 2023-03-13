@@ -1203,3 +1203,175 @@
                                 font-size: 15px;
                                 color: var(--gray);
                             }
+
+/* ---------------------------------------------------------------------------------------------- */
+
+.createListingBody9 {
+    min-height: 600px;
+    height: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    .createListingSubBody9 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0 80px;
+        padding-bottom: 125px;
+    }
+
+        .createListingSubBody9Left {
+            height: 100%;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+            .createListingSubBody9LeftUpper {
+                font-size: 17px;
+                font-weight: bold;
+                width: 100%;
+                margin-bottom: 22px;
+            }
+
+            .createListingSubBody9LeftMiddle {
+                font-size: 44px;
+                font-weight: bold;
+                width: 70%;
+                margin-bottom: 22px;
+            }
+
+            .createListingSubBody9LeftLower {
+                font-size: 17px;
+                width: 80%;
+                line-height: 1.6;
+            }
+
+        .createListingSubBody9Right {
+            height: 100%;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+            .createListingSubBody9RightPic {
+                height: 450px;
+                width: auto;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+
+            /* ---------------------------------------------------------------------------------------------- */
+
+    .createListingBody10 {
+        min-height: 600px;
+        height: calc(100vh - 100px);
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .createListingSubBody10 {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 300px;
+            padding-bottom: 150px;
+        }
+
+            .createListingSubBody10Title {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                font-size: 32px;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+
+            .createListingSubBody10SubTitle {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                font-size: 17px;
+                margin-bottom: 40px;
+                color: var(--gray);
+            }
+
+            .createListingSubBody10List {
+                height: 400px;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                .createListingSubBody10ListRow {
+                    height: 30%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                    .createListingSubBody10ListOption {
+                        height: 100px;
+                        width: 200px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        border: 1px solid rgba(160, 160, 160, 0.35);
+                        border-radius: 10px;
+                        padding: 10px 20px;
+                        cursor: pointer;
+                        transition: 0.1s linear;
+                    }
+
+                        .createListingSubBody10ListOption2 {
+                            height: 100px;
+                            width: 200px;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: flex-start;
+                            transition: 0.1s linear;
+                        }
+
+                    .createListingSubBody10ListOption:hover {
+                        transition: 0.1s linear;
+                        border: 2px solid var(--black);
+                    }
+
+                        .createListingSubBody10ListOptionIcon {
+                            font-size: 24px !important;
+                            margin-bottom: 20px !important;
+                        }
+
+                        .createListingSubBody10ListOptionText {
+                            font-size: 16px;
+                            font-weight: bold;
+                        }

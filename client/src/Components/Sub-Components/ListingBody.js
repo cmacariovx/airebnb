@@ -15,55 +15,55 @@ function ListingBody() {
     const navigate = useNavigate()
 
     let autocomplete
-    const loader = new Loader({
-        apiKey: "process.env.REACT_APP_GOOGLE_API_KEY",
-        version: "weekly",
-    });
+    // const loader = new Loader({
+    //     apiKey: "process.env.REACT_APP_GOOGLE_API_KEY",
+    //     version: "weekly",
+    // });
 
-    loader.load().then((google) => {
-        let geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
-            let coords = [data.results[0].geometry.bounds.Ia.hi, data.results[0].geometry.bounds.Ua.hi]
-        })
-        let map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
-            center: { lat: 35.5951, lng: -82.5515 },
-            zoom: 15,
-            zoomControl: true,
-            scrollwheel: false,
-            rotateControl: false,
-            scaleControl: false,
-            fullscreenControl: false,
-        })
+    // loader.load().then((google) => {
+    //     let geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
+    //         let coords = [data.results[0].geometry.bounds.Ia.hi, data.results[0].geometry.bounds.Ua.hi]
+    //     })
+    //     let map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
+    //         center: { lat: 35.5951, lng: -82.5515 },
+    //         zoom: 15,
+    //         zoomControl: true,
+    //         scrollwheel: false,
+    //         rotateControl: false,
+    //         scaleControl: false,
+    //         fullscreenControl: false,
+    //     })
 
-        let icon = {
-            url: airbnbMapMarker2,
-            scaledSize: new google.maps.Size(60, 60)
-        }
+    //     let icon = {
+    //         url: airbnbMapMarker2,
+    //         scaledSize: new google.maps.Size(60, 60)
+    //     }
 
-        let mapStyling = [
-            {
-                featureType: "poi",
-                elementType: "labels",
-                stylers: [
-                  { visibility: "off" }
-                ]
-              },
-              {
-                featureType: "road",
-                elementType: "labels",
-                stylers: [
-                  { visibility: "off" }
-                ]
-              }
-          ]
+    //     let mapStyling = [
+    //         {
+    //             featureType: "poi",
+    //             elementType: "labels",
+    //             stylers: [
+    //               { visibility: "off" }
+    //             ]
+    //           },
+    //           {
+    //             featureType: "road",
+    //             elementType: "labels",
+    //             stylers: [
+    //               { visibility: "off" }
+    //             ]
+    //           }
+    //       ]
 
-        let marker = new google.maps.Marker({
-            position: new google.maps.LatLng(35.5951, -82.5515),
-            map: map
-        })
+    //     let marker = new google.maps.Marker({
+    //         position: new google.maps.LatLng(35.5951, -82.5515),
+    //         map: map
+    //     })
 
-        marker.setIcon(icon)
-        map.set("styles", mapStyling)
-    });
+    //     marker.setIcon(icon)
+    //     map.set("styles", mapStyling)
+    // });
 
     function toProfileHandler() {
         navigate("/profile/" + "userId")

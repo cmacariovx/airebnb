@@ -14,6 +14,7 @@ import airbnbMiniPic1 from '../../Images/airbnbListingPic1.png'
 import airbnbMiniPic2 from '../../Images/airbnbListingPic2.png'
 import airbnbMiniPic3 from '../../Images/airbnbListingPic3.png'
 import airbnbListing2Pic from '../../Images/airbnbListing2.png'
+import airbnbStep2 from '../../Images/airbnbStep2.png'
 import staticMap from '../../Images/staticmap.png'
 import airbnbMapMarker from '../../Images/airbnbMapMarker.png'
 import airbnbMapMarker2 from '../../Images/airbnbMapMarker2.png'
@@ -382,6 +383,65 @@ function CreateListing() {
                     </div>
                 </div>
             </div>}
+            {listingBodyId == 9 && <div className="createListingBody9">
+                <div className="createListingSubBody9">
+                    <div className="createListingSubBody9Left">
+                        <p className="createListingSubBody9LeftUpper">Step 2</p>
+                        <p className="createListingSubBody9LeftMiddle">Make your place stand out</p>
+                        <p className="createListingSubBody9LeftLower">In this step, you’ll add some of the amenities your place offers, plus 5 or more photos. Then, you’ll create a title and description.</p>
+                    </div>
+                    <div className="createListingSubBody9Right">
+                        <img src={airbnbStep2} className="createListingSubBody9RightPic"/>
+                    </div>
+                </div>
+            </div>}
+            <div className="createListingBody10">
+                <div className="createListingSubBody10">
+                    <p className="createListingSubBody10Title">Tell guests what your place has to offer</p>
+                    <p className="createListingSubBody10SubTitle">You can add more amenities after you publish your listing.</p>
+                    <div className="createListingSubBody10List">
+                        <div className="createListingSubBody10ListRow">
+                            <div className="createListingSubBody10ListOption">
+                                <i className="fa-solid fa-wifi createListingSubBody10ListOptionIcon"></i>
+                                <p className="createListingSubBody10ListOptionText">Wifi</p>
+                            </div>
+                            <div className="createListingSubBody10ListOption">
+                                <i class="fa-solid fa-key createListingSubBody10ListOptionIcon"></i>
+                                <p className="createListingSubBody10ListOptionText">Self check-in</p>
+                            </div>
+                            <div className="createListingSubBody10ListOption">
+                                <i class="fa-solid fa-tv createListingSubBody10ListOptionIcon"></i>
+                                <p className="createListingSubBody10ListOptionText">TV</p>
+                            </div>
+                        </div>
+                        <div className="createListingSubBody10ListRow">
+                            <div className="createListingSubBody10ListOption">
+                                <i className="fa-solid fa-snowflake createListingSubBody10ListOptionIcon"></i>
+                                <p className="createListingSubBody10ListOptionText">Air conditioning</p>
+                            </div>
+                            <div className="createListingSubBody10ListOption">
+                                <i className="fa-solid fa-thermometer-three-quarters createListingSubBody10ListOptionIcon"></i>
+                                <p className="createListingSubBody10ListOptionText">Heating</p>
+                            </div>
+                            <div className="createListingSubBody10ListOption">
+                                <i className="fa-solid fa-bell createListingSubBody10ListOptionIcon"></i>
+                                <p className="createListingSubBody10ListOptionText">Smoke alarm</p>
+                            </div>
+                        </div>
+                        <div className="createListingSubBody10ListRow">
+                            <div className="createListingSubBody10ListOption">
+                                <i className="fa-solid fa-shirt createListingSubBody10ListOptionIcon"></i>
+                                <p className="createListingSubBody10ListOptionText">Washer & Dryer</p>
+                            </div>
+                            <div className="createListingSubBody10ListOption">
+                                <i className="fa-solid fa-bottle-droplet createListingSubBody10ListOptionIcon"></i>
+                                <p className="createListingSubBody10ListOptionText">Essentials</p>
+                            </div>
+                            <div className="createListingSubBody10ListOption2"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {listingBodyId >= 2 && <div className="createListingBody2Footer">
                     <div className="createListingBody2FooterUpper">
                         <div className="createListingBody2FooterUpperLine">
