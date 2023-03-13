@@ -19,6 +19,11 @@ import staticMap from '../../Images/staticmap.png'
 import airbnbMapMarker from '../../Images/airbnbMapMarker.png'
 import airbnbMapMarker2 from '../../Images/airbnbMapMarker2.png'
 import airbnbMapMarker3 from '../../Images/airbnbMapMarker3.png'
+import spill1 from '../../Images/spill1.png'
+import spill2 from '../../Images/spill2.png'
+import spill3 from '../../Images/spill3.png'
+import spill4 from '../../Images/spill4.png'
+import spill5 from '../../Images/spill5.png'
 
 function CreateListing() {
     const listingBodyId = window.location.pathname.slice(15)
@@ -395,7 +400,7 @@ function CreateListing() {
                     </div>
                 </div>
             </div>}
-            <div className="createListingBody10">
+            {listingBodyId == 10 && <div className="createListingBody10">
                 <div className="createListingSubBody10">
                     <p className="createListingSubBody10Title">Tell guests what your place has to offer</p>
                     <p className="createListingSubBody10SubTitle">You can add more amenities after you publish your listing.</p>
@@ -438,6 +443,37 @@ function CreateListing() {
                                 <p className="createListingSubBody10ListOptionText">Essentials</p>
                             </div>
                             <div className="createListingSubBody10ListOption2"/>
+                        </div>
+                    </div>
+                </div>
+            </div>}
+            <div className="createListingBody11">
+                <div className="createListingSubBody11">
+                    <p className="createListingBody11Title">Ta-da! How does this look?</p>
+                    <div className="createListingBody11Body">
+                        <div className="createListingBody11CoverPicContainer">
+                            <div className="createListingBody11CoverPicTextContainer">
+                                <p className="createListingBody11CoverPicText">Cover Photo</p>
+                            </div>
+                            <div className="createListingBody11CoverPicMainContainer">
+                                <img src={spill1} className="createListingBody11CoverPic"/>
+                            </div>
+                        </div>
+                        <div className="createListingBody11SubPicContainer">
+                            <div className="createListingBody11SubPicMainContainer">
+                                <img src={spill2} className="createListingBody11SubPic"/>
+                            </div>
+                            <div className="createListingBody11SubPicMainContainer">
+                                <img src={spill3} className="createListingBody11SubPic"/>
+                            </div>
+                        </div>
+                        <div className="createListingBody11SubPicContainer">
+                            <div className="createListingBody11SubPicMainContainer">
+                                <img src={spill4} className="createListingBody11SubPic"/>
+                            </div>
+                            <div className="createListingBody11SubPicMainContainer">
+                                <img src={spill5} className="createListingBody11SubPic"/>
+                            </div>
                         </div>
                     </div>
                 </div>

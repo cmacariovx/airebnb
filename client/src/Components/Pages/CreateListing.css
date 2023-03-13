@@ -1375,3 +1375,129 @@
                             font-size: 16px;
                             font-weight: bold;
                         }
+
+/* ---------------------------------------------------------------------------------------------- */
+
+.createListingBody11 {
+    min-height: 600px;
+    height: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    .createListingSubBody11 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0 250px;
+        padding-bottom: 125px;
+    }
+
+        .createListingBody11Title {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 40px;
+            user-select: none;
+        }
+
+        .createListingBody11Body {
+            height: calc(90% - 50px);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 15px;
+        }
+
+            .createListingBody11CoverPicContainer {
+                height: 50%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+            }
+
+                .createListingBody11CoverPicTextContainer {
+                    height: 35px;
+                    width: 95px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: white;
+                    border-radius: 5px;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    padding: 3px;
+                    margin-top: 20px;
+                    margin-left: 20px;
+                }
+
+                    .createListingBody11CoverPicText {
+                        font-size: 13px;
+                        font-weight: bold;
+                    }
+
+                .createListingBody11CoverPicMainContainer {
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                    .createListingBody11CoverPic {
+                        height: 100%;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        object-fit: cover;
+                    }
+
+            .createListingBody11SubPicContainer {
+                height: 25%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 15px;
+            }
+
+                .createListingBody11SubPicMainContainer {
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                    .createListingBody11SubPic {
+                        height: 100%;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        object-fit: cover;
+                    }
