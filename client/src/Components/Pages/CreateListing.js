@@ -15,6 +15,7 @@ import airbnbMiniPic2 from '../../Images/airbnbListingPic2.png'
 import airbnbMiniPic3 from '../../Images/airbnbListingPic3.png'
 import airbnbListing2Pic from '../../Images/airbnbListing2.png'
 import airbnbStep2 from '../../Images/airbnbStep2.png'
+import airbnbStep3 from '../../Images/abnbpic3.png'
 import staticMap from '../../Images/staticmap.png'
 import airbnbMapMarker from '../../Images/airbnbMapMarker.png'
 import airbnbMapMarker2 from '../../Images/airbnbMapMarker2.png'
@@ -24,11 +25,18 @@ import spill2 from '../../Images/spill2.png'
 import spill3 from '../../Images/spill3.png'
 import spill4 from '../../Images/spill4.png'
 import spill5 from '../../Images/spill5.png'
+import homePic from '../../Images/home1.jpg'
 
 function CreateListing() {
     const listingBodyId = window.location.pathname.slice(15)
 
     let [searchTerm, setSearchTerm] = useState("")
+    let [priceCounter, setPriceCounter] = useState(150)
+
+    function increment(sign) {
+        if (sign == "-" && priceCounter > 5) setPriceCounter(prev => prev - 5)
+        else if (sign == "+" && priceCounter < 995) setPriceCounter(prev => prev + 5)
+    }
 
     if (listingBodyId == 6 || listingBodyId == 7) {
         const loader = new Loader({
@@ -447,7 +455,7 @@ function CreateListing() {
                     </div>
                 </div>
             </div>}
-            <div className="createListingBody11">
+            {listingBodyId == 11 && <div className="createListingBody11">
                 <div className="createListingSubBody11">
                     <p className="createListingBody11Title">Ta-da! How does this look?</p>
                     <div className="createListingBody11Body">
@@ -477,7 +485,109 @@ function CreateListing() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>}
+            {listingBodyId == 12 && <div className="createListingBody12">
+                <div className="createListingSubBody12">
+                    <p className="createListingSubBody12Title">Now, let's give your house a title</p>
+                    <p className="createListingSubBody12SubTitle">Short titles work best. Have fun with it—you can always change it later.</p>
+                    <textarea rows="5" maxLength="32" className="createListingSubBody12TextArea"/>
+                    <p className="createListingSubBody12CounterText">0/32</p>
+                </div>
+            </div>}
+            {listingBodyId == 13 && <div className="createListingBody13">
+                <div className="createListingSubBody13">
+                    <p className="createListingSubBody13Title">Create your description</p>
+                    <p className="createListingSubBody13SubTitle">Share what makes your place special.</p>
+                    <textarea rows="7" maxLength="500" className="createListingSubBody13TextArea"/>
+                </div>
+            </div>}
+            {listingBodyId == 14 && <div className="createListingBody14">
+                <div className="createListingSubBody14">
+                    <div className="createListingSubBody14Left">
+                        <p className="createListingSubBody14LeftUpper">Step 3</p>
+                        <p className="createListingSubBody14LeftMiddle">Finish up and publish</p>
+                        <p className="createListingSubBody14LeftLower">Finally, you’ll choose if you'd like to start with an experienced guest, then you'll set your nightly price. Answer a few quick questions and publish when you're ready.</p>
+                    </div>
+                    <div className="createListingSubBody14Right">
+                        <img src={airbnbStep3} className="createListingSubBody14RightPic"/>
+                    </div>
+                </div>
+            </div>}
+            {listingBodyId == 15 && <div className="createListingBody15">
+                <div className="createListingSubBody15">
+                    <p className="createListingSubBody15Title">Choose who to welcome for your first reservation</p>
+                    <p className="createListingSubBody15SubTitle">After your first guest, anyone can book your place.</p>
+                    <div className="createListingSubBody15OptionContainer">
+                        <div className="createListingSubBody15OptionContainerLeft">
+                            <div className="createListingSubBody15OptionContainerLeftCircleContainer">
+                                <div className="createListingSubBody15OptionContainerLeftCircleMid">
+                                    <div className="createListingSubBody15OptionContainerLeftCircleLast"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="createListingSubBody15OptionContainerRight">
+                            <p className="createListingSubBody15OptionContainerRightTitle">Any Airbnb guest</p>
+                            <p className="createListingSubBody15OptionContainerRightSubTitle">Get reservations faster when you welcome anyone from the Airbnb community.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>}
+            {listingBodyId == 16 && <div className="createListingBody16">
+                <div className="createListingSubBody16">
+                    <p className="createListingSubBody16Title">Now, set your price</p>
+                    <p className="createListingSubBody16SubTitle">You can change it anytime.</p>
+                    <div className="createListingSubBody16PriceContainer">
+                        <div className="createListingSubBody16PriceContainerMain">
+                            <div className="createListingSubBody16PriceSignContainer" onClick={() => increment("-")}>
+                                <p className="createListingSubBody16PriceSign">-</p>
+                            </div>
+                            <div className="createListingSubBody16PriceCounterContainer">
+                                <p className="createListingSubBody16PriceCounter">${priceCounter}</p>
+                            </div>
+                            <div className="createListingSubBody16PriceSignContainer" onClick={() => increment("+")}>
+                                <p className="createListingSubBody16PriceSign">+</p>
+                            </div>
+                        </div>
+                        <p className="createListingSubBody16PerNightText">per night</p>
+                    </div>
+                </div>
+            </div>}
+            {listingBodyId == 17 && <div className="createListingBody17">
+                <div className="createListingSubBody17">
+                    <p className="createListingSubBody17Title">Review your listing</p>
+                    <p className="createListingSubBody17SubTitle">Here's what we'll show to guests. Make sure everything looks good.</p>
+                    <div className="createListingSubBody17ReviewContainer">
+                        <div className="createListingSubBody17ReviewContainerLeft">
+                            <div className="createListingSubBody17ReviewContainerLeftCard">
+                                <img src={homePic} className="createListingSubBody17ReviewContainerLeftCardPic"/>
+                                <div className="createListingSubBody17ReviewContainerLeftCardTextContainer">
+                                    <p className="createListingSubBody17ReviewContainerLeftCardText2">hi</p>
+                                    <div className="createListingSubBody17ReviewContainerLeftCardReviewContainer">
+                                        <p className="createListingSubBody17ReviewContainerLeftCardText">New</p>
+                                        <i className="fa-solid fa-star createListingSubBody17ReviewContainerLeftCardText"></i>
+                                    </div>
+                                </div>
+                                <div className="createListingSubBody17ReviewContainerLeftCardTextContainer2">
+                                    <p className="createListingSubBody17ReviewContainerLeftCardText2">$120</p>
+                                    <p className="createListingSubBody17ReviewContainerLeftCardText3">night</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="createListingSubBody17ReviewContainerRight">
+                            <p className="createListingSubBody17ReviewContainerRightTitle">What's next?</p>
+                            <div className="createListingSubBody17ReviewContainerRightOption">
+                                <div className="createListingSubBody17ReviewContainerRightOptionLeft">
+                                    <i className="fa-regular fa-calendar createListingSubBody17ReviewContainerRightOptionLeft"></i>
+                                </div>
+                                <div className="createListingSubBody17ReviewContainerRightOptionRight">
+                                    <p className="createListingSubBody17ReviewContainerRightOptionRightText1">Set up your calendar</p>
+                                    <p className="createListingSubBody17ReviewContainerRightOptionRightText2">Choose which dates your listing is available. It will be visible 24 hours after you publish</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>}
             {listingBodyId >= 2 && <div className="createListingBody2Footer">
                     <div className="createListingBody2FooterUpper">
                         <div className="createListingBody2FooterUpperLine">

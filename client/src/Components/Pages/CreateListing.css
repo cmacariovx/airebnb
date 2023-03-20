@@ -1501,3 +1501,600 @@
                         align-items: center;
                         object-fit: cover;
                     }
+
+/* ---------------------------------------------------------------------------------------------- */
+
+.createListingBody12 {
+    min-height: 600px;
+    height: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    .createListingSubBody12 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 300px;
+        padding-bottom: 150px;
+    }
+
+        .createListingSubBody12Title {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .createListingSubBody12SubTitle {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .createListingSubBody12TextArea {
+            min-height: 185px;
+            min-width: 100%;
+            max-width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border: 1.5px solid rgba(160, 160, 160, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .createListingSubBody12TextArea:focus {
+            border: 2px solid var(--black);
+        }
+
+/* ---------------------------------------------------------------------------------------------- */
+
+.createListingBody13 {
+    min-height: 600px;
+    height: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    .createListingSubBody13 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 300px;
+        padding-bottom: 150px;
+    }
+
+        .createListingSubBody13Title {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .createListingSubBody13SubTitle {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .createListingSubBody13TextArea {
+            min-height: 250px;
+            min-width: 100%;
+            max-width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border: 1.5px solid rgba(160, 160, 160, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .createListingSubBody13TextArea:focus {
+            border: 2px solid var(--black);
+        }
+
+/* ---------------------------------------------------------------------------------------------- */
+
+.createListingBody14 {
+    min-height: 600px;
+    height: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    .createListingSubBody14 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 0 80px;
+        padding-bottom: 110px;
+    }
+
+        .createListingSubBody14Left {
+            height: 100%;
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+            .createListingSubBody14LeftUpper {
+                font-size: 17px;
+                font-weight: bold;
+                width: 100%;
+                margin-bottom: 22px;
+            }
+
+            .createListingSubBody14LeftMiddle {
+                font-size: 44px;
+                font-weight: bold;
+                width: 70%;
+                margin-bottom: 22px;
+            }
+
+            .createListingSubBody14LeftLower {
+                font-size: 17px;
+                width: 90%;
+                line-height: 1.6;
+            }
+
+        .createListingSubBody14Right {
+            height: 100%;
+            width: 52%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+            .createListingSubBody14RightPic {
+                height: 470px;
+                width: auto;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+
+/* ---------------------------------------------------------------------------------------------- */
+
+.createListingBody15 {
+    min-height: 600px;
+    height: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    .createListingSubBody15 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 300px;
+        padding-bottom: 150px;
+    }
+
+        .createListingSubBody15Title {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .createListingSubBody15SubTitle {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .createListingSubBody15OptionContainer {
+            height: 110px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            border: 1px solid rgba(160, 160, 160, 0.4);
+            padding: 20px;
+            cursor: pointer;
+        }
+
+            .createListingSubBody15OptionContainerLeft {
+                height: 100%;
+                min-width: 50px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: flex-start;
+                margin-right: 10px;
+                padding-top: 12px;
+            }
+
+                .createListingSubBody15OptionContainerLeftCircleContainer {
+                    min-height: 24px;
+                    min-width: 24px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 50%;
+                    border: 1px solid rgba(160, 160, 160, 0.4);
+                }
+
+                    .createListingSubBody15OptionContainerLeftCircleMid {
+                        min-height: 24px;
+                        min-width: 24px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 50%;
+                        background-color: var(--black);
+                    }
+
+                    .createListingSubBody15OptionContainerLeftCircleLast {
+                        min-height: 8px;
+                        min-width: 8px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 50%;
+                        background-color: white;
+                    }
+
+            .createListingSubBody15OptionContainerRight {
+                height: 100%;
+                width: calc(100% - 50px);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+            }
+
+                .createListingSubBody15OptionContainerRightTitle {
+                    font-size: 17px;
+                    font-weight: bold;
+                    margin-bottom: 7px;
+                    user-select: none;
+                }
+
+                .createListingSubBody15OptionContainerRightSubTitle {
+                    font-size: 13px;
+                    color: var(--gray);
+                    user-select: none;
+                }
+
+/* ---------------------------------------------------------------------------------------------- */
+
+.createListingBody16 {
+    min-height: 600px;
+    height: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    .createListingSubBody16 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 300px;
+        padding-bottom: 200px;
+    }
+
+        .createListingSubBody16Title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .createListingSubBody16SubTitle {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .createListingSubBody16PriceContainer {
+            height: 200px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(232, 232, 232, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(160, 160, 160, 0.2);
+        }
+
+            .createListingSubBody16PriceContainerMain {
+                height: 180px;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                .createListingSubBody16PriceSignContainer {
+                    min-height: 50px;
+                    min-width: 50px;
+                    border-radius: 50%;
+                    background-color: white;
+                    border: 1px solid rgba(160, 160, 160, 0.6);
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    margin-left: 10px;
+                    margin-right: 10px;
+                    cursor: pointer;
+                }
+
+                .createListingSubBody16PriceSignContainer:hover {
+                    border: 1px solid var(--black);
+                }
+
+                    .createListingSubBody16PriceSign {
+                        font-size: 20px;
+                        font-weight: bold;
+                        color: var(--gray);
+                        user-select: none;
+                    }
+
+                .createListingSubBody16PriceCounterContainer {
+                    height: 100px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: white;
+                    border-radius: 10px;
+                    border: 1.5px solid rgba(160, 160, 160, 0.6);
+                    margin-left: 15px;
+                    margin-right: 15px;
+                }
+
+                    .createListingSubBody16PriceCounter {
+                        font-size: 40px;
+                        font-weight: bold;
+                        user-select: none;
+                    }
+
+                .createListingSubBody16PerNightText {
+                    font-weight: 16px;
+                    user-select: none;
+                }
+
+/* ---------------------------------------------------------------------------------------------- */
+
+.createListingBody17 {
+    min-height: 600px;
+    height: calc(100vh - 100px);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+    .createListingSubBody17 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 200px;
+        padding-bottom: 150px;
+    }
+
+        .createListingSubBody17Title {
+            font-size: 46px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .createListingSubBody17SubTitle {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 50px;
+            width: 100%;
+        }
+
+        .createListingSubBody17ReviewContainer {
+            height: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .createListingSubBody17ReviewContainerLeft {
+                height: 100%;
+                width: 50%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+                .createListingSubBody17ReviewContainerLeftCard {
+                    height: 400px;
+                    width: 360px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: center;
+                    border-radius: 15px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                    padding: 15px;
+                }
+
+                    .createListingSubBody17ReviewContainerLeftCardPic {
+                        height: 80%;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 15px;
+                        margin-bottom: 10px;
+                    }
+
+                    .createListingSubBody17ReviewContainerLeftCardTextContainer {
+                        height: 10%;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                    }
+
+                    .createListingSubBody17ReviewContainerLeftCardTextContainer2 {
+                        height: 10%;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-start;
+                        align-items: center;
+                    }
+
+                    .createListingSubBody17ReviewContainerLeftCardText {
+                        font-size: 14px;
+                        margin-right: 2px;
+                    }
+
+                    .createListingSubBody17ReviewContainerLeftCardText3 {
+                        font-size: 15px;
+                        margin-right: 2px;
+                    }
+
+                    .createListingSubBody17ReviewContainerLeftCardText2 {
+                        font-size: 15px;
+                        font-weight: bold;
+                        margin-right: 4px;
+                    }
+
+                    .fa-solid.fa-star.createListingSubBody17ReviewContainerLeftCardText {
+                        font-size: 12px;
+                        margin-bottom: 1px;
+                    }
+
+                    .createListingSubBody17ReviewContainerLeftCardReviewContainer {
+                        height: 100%;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-end;
+                        align-items: center;
+                    }
+
+            .createListingSubBody17ReviewContainerRight {
+                height: 100%;
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding: 40px 0;
+                padding-left: 20px;
+            }
+
+                .createListingSubBody17ReviewContainerRightTitle {
+                    font-size: 22px;
+                    font-weight: bold;
+                    width: 100%;
+                    margin-bottom: 20px;
+                }
+
+                .createListingSubBody17ReviewContainerRightOption {
+                    height: 80px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .createListingSubBody17ReviewContainerRightOptionLeft {
+                    height: 100%;
+                    min-width: 50px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding-bottom: 14px;
+                }
+
+                    .fa-regular.fa-calendar.createListingSubBody17ReviewContainerRightOptionLeft {
+                        font-size: 32px;
+                    }
+
+                .createListingSubBody17ReviewContainerRightOptionRight {
+                    height: 100%;
+                    width: calc(100% - 50px);
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                    .createListingSubBody17ReviewContainerRightOptionRightText1 {
+                        font-size: 18px;
+                        font-weight: bold;
+                        width: 100%;
+                        margin-bottom: 4px;
+                    }
+
+                    .createListingSubBody17ReviewContainerRightOptionRightText2 {
+                        font-size: 14px;
+                        color: var(--gray);
+                        width: 100%;
+                    }
