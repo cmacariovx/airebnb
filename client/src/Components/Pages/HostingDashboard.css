@@ -1,0 +1,224 @@
+.hostingDashboardContainer {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+    .hostingDashboardHeaderContainer {
+        height: 70px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        border-bottom: 1px solid rgba(160, 160, 160, 0.4);
+        margin-bottom: 40px;
+    }
+
+        .hostingDashboardHeaderLogo {
+            height: 32px;
+            width: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hostingDashboardProfileContainer {
+            min-height: 44px;
+            min-width: 44px;
+            height: 44px;
+            width: 44px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            border: 1px solid rgba(160, 160, 160, 0.4);
+            cursor: pointer;
+        }
+
+            .hostingDashboardProfilePic {
+                height: 36px;
+                width: 36px;
+                border-radius: 50%;
+            }
+
+    .hostingDashboardWelcomeContainer {
+        height: 200px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px 80px;
+    }
+
+        .hostingDashboardWelcomeText {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .hostingDashboardWelcomeOptionsContainer {
+            height: 80%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+            .hostingDashboardWelcomeOption {
+                height: 60px;
+                width: 200px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                border-radius: 10px;
+                border: 1px solid rgba(160, 160, 160, 0.4);
+                cursor: pointer;
+                padding: 20px;
+            }
+
+            .hostingDashboardWelcomeOptionHeader {
+                font-size: 15px;
+                font-weight: bold;
+            }
+
+    .hostingDashboardReservationsContainer {
+        min-height: 300px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 20px 80px;
+    }
+
+        .hostingDashboardReservationsTitle {
+            height: 30px;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .hostingDashboardReservationsButtons {
+            height: 50px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+            .hostingDashboardReservationsButton {
+                height: 40px;
+                border-radius: 20px;
+                border: 1px solid rgba(160, 160, 160, 0.4);
+                padding: 10px 20px;
+                margin-right: 10px;
+                cursor: pointer;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                transition: 0.1s linear;
+            }
+
+            .hostingDashboardReservationsButton:hover {
+                transition: 0.1s linear;
+                border: 1px solid var(--black);
+            }
+
+        .hostingDashboardReservationsOptionsContainer {
+            min-height: 200px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            border-radius: 10px;
+        }
+
+            .hostingDashboardReservationsOptionContainer {
+                min-height: 80px;
+                width: 250px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                padding: 24px;
+                border: 1px solid rgba(160, 160, 160, 0.4);
+                border-radius: 10px;
+            }
+
+            .hostingDashboardReservationsOptionsContainer2 {
+                min-height: 200px;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(224, 224, 224, 0.3);
+                border-radius: 10px;
+            }
+
+                .hostingDashboardReservationsOptionsContainerEmpty {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .hostingDashboardReservationsOptionsContainerEmptyCheck {
+                    font-size: 26px;
+                    margin-bottom: 20px;
+                }
+
+                .hostingDashboardReservationsOptionsContainerEmptyText {
+                    font-size: 14px;
+                    width: 200px;
+                    text-align: center;
+                }
+
+    .hostingDashboardListingsContainer {
+        min-height: 300px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px 80px;
+    }
+
+        .hostingDashboardListingsTitle {
+            height: 30px;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .hostingDashboardListings {
+            min-height: 200px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            border-radius: 10px;
+        }
+
+            .hostingDashboardListingContainer {
+                height: 100%;
+                width: 275px;
+                margin-right: 60px;
+                margin-bottom: 20px;
+            }
