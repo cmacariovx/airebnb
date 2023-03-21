@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from "react-router"
-import { LoadScript, GoogleMap, StandaloneSearchBox } from '@react-google-maps/api'
 
 import './HomeHeader.css'
 
@@ -8,14 +7,33 @@ import airbnbLogo from '../../Images/airbnbLogo.png'
 import personalPic from '../../Images/personalPic.jpg'
 
 function HomeHeader(props) {
-    const apiKey = process.env.REACT_APP_GOOGLE_API_KEY
-
     const homePage = props.homePage
     const profilePage = props.profilePage ? props.profilePage : null
 
     const [searchHeaderOpen, setSearchHeaderOpen] = useState(false)
+    const [searchResults, setSearchResults] = useState([])
+    const [autocompleteService, setAutocompleteService] = useState(null)
 
     const navigate = useNavigate()
+    const inputRef = useRef()
+
+    const handleScriptLoad = () => {
+      if (window.google) {
+        setAutocompleteService(new window.google.maps.places.AutocompleteService())
+      }
+    };
+
+    const searchPlaces = (input) => {
+        if (autocompleteService && input) {
+          autocompleteService.getPlacePredictions({ input }, setSearchResults)
+        } else {
+          setSearchResults([])
+        }
+    };
+
+    useEffect(() => {
+        handleScriptLoad()
+    }, [])
 
     function toHomeHandler() {
         if (homePage) {
@@ -92,7 +110,12 @@ function HomeHeader(props) {
                 <div className="homeHeader2SearchDropdown">
                     <div className="homeHeader2SearchDropdownWhere">
                         <p className="homeHeader2SearchDropdownSubHeader">Where</p>
-                        <input className="homeHeader2SearchDropdownSubInput" placeholder="Search destinations"></input>
+                        <input ref={inputRef}
+                            className="homeHeader2SearchDropdownSubInput"
+                            placeholder="Search destinations"
+                            onChange={(e) => searchPlaces(e.target.value)}
+                        >
+                        </input>
                     </div>
                     <div className="homeHeader2SearchDropdownCheckIn">
                         <p className="homeHeader2SearchDropdownSubHeader">Check in</p>
@@ -112,7 +135,11 @@ function HomeHeader(props) {
                 </div>
                 <div className="homeHeader2SearchDropdownBackdrop" onClick={() => setSearchHeaderOpen(false)}></div>
                 <div className="homeHeader2SearchDropdownPlacesContainer">
-
+                    {searchResults.map((result, index) => (
+                        <div key={index} className="homeHeader2SearchDropdownPlaceContainer">
+                        {result.description}
+                        </div>
+                    ))}
                 </div>
             </div>}
         </div>
