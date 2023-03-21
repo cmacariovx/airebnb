@@ -197,6 +197,7 @@
             font-size: 13.4px;
             color: var(--black);
             font-weight: bold;
+            width: 100%;
         }
 
         .homeHeader2SearchDropdownSubInput::placeholder {

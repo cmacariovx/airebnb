@@ -16,6 +16,25 @@ function HomeHeader(props) {
     const [searchResults, setSearchResults] = useState([])
     const [autocompleteService, setAutocompleteService] = useState(null)
 
+    const [activeDropdown, setActiveDropdown] = useState(null);
+
+    const handleWhereClick = () => {
+        setActiveDropdown(activeDropdown === "where" ? null : "where")
+      }
+
+      const handleCheckInClick = () => {
+        setActiveDropdown(activeDropdown === "checkIn" ? null : "checkIn")
+      }
+
+      const handleCheckOutClick = () => {
+        setActiveDropdown(activeDropdown === "checkOut" ? null : "checkOut")
+      }
+
+      const handleWhoClick = () => {
+        setActiveDropdown(activeDropdown === "who" ? null : "who")
+      }
+
+
     const navigate = useNavigate()
     const inputRef = useRef()
 
@@ -118,7 +137,7 @@ function HomeHeader(props) {
             </div>}
             {homePage && searchHeaderOpen && <div className="homeHeader2SearchDropdownContainer">
                 <div className="homeHeader2SearchDropdown">
-                    <div className="homeHeader2SearchDropdownWhere">
+                    <div className="homeHeader2SearchDropdownWhere" onClick={handleWhereClick}>
                         <p className="homeHeader2SearchDropdownSubHeader">Where</p>
                         <input ref={inputRef}
                             className="homeHeader2SearchDropdownSubInput"
@@ -127,15 +146,15 @@ function HomeHeader(props) {
                         >
                         </input>
                     </div>
-                    <div className="homeHeader2SearchDropdownCheckIn">
+                    <div className="homeHeader2SearchDropdownCheckIn" onClick={handleCheckInClick}>
                         <p className="homeHeader2SearchDropdownSubHeader">Check in</p>
                         <p className="homeHeader2SearchDropdownSubText">Add dates</p>
                     </div>
-                    <div className="homeHeader2SearchDropdownCheckOut">
+                    <div className="homeHeader2SearchDropdownCheckOut" onClick={handleCheckOutClick}>
                         <p className="homeHeader2SearchDropdownSubHeader">Check out</p>
                         <p className="homeHeader2SearchDropdownSubText">Add dates</p>
                     </div>
-                    <div className="homeHeader2SearchDropdownWho">
+                    <div className="homeHeader2SearchDropdownWho" onClick={handleWhoClick}>
                         <p className="homeHeader2SearchDropdownSubHeader">Who</p>
                         <p className="homeHeader2SearchDropdownSubText">Add guests</p>
                     </div>
@@ -144,7 +163,7 @@ function HomeHeader(props) {
                     </div>
                 </div>
                 <div className="homeHeader2SearchDropdownBackdrop" onClick={() => setSearchHeaderOpen(false)}></div>
-                {searchResults.length > 0 && <div className="homeHeader2SearchDropdownPlacesContainer">
+                {activeDropdown === "where" && searchResults && searchResults.length > 0 && <div className="homeHeader2SearchDropdownPlacesContainer">
                     {searchResults.map((result, index) => (
                         <div key={index} className="homeHeader2SearchDropdownPlaceContainer">
                             <i className="fa-solid fa-location-dot homeHeader2SearchDropdownPlaceIcon"></i>
@@ -152,14 +171,17 @@ function HomeHeader(props) {
                         </div>
                     ))}
                 </div>}
-                <div className="homeHeader2SearchDropdownCalendarsContainer">
+                {activeDropdown === "checkIn" || activeDropdown === "checkOut" ? <div className="homeHeader2SearchDropdownCalendarsContainer">
                     <div className="homeHeader2SearchDropdownCalendars">
                         <Calendar ref={calendarRef}/>
                     </div>
                     <div className="listingBodyMainLeftCalendarFooterTextContainer2" onClick={handleClearDates}>
                         <p className="listingBodyMainLeftCalendarFooterText2">Clear dates</p>
                     </div>
-                </div>
+                </div> : null}
+                {activeDropdown === "who" && <div className="homeHeader2SearchDropdownGuestsContainer">
+
+                </div>}
             </div>}
         </div>
     )
