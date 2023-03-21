@@ -49,6 +49,41 @@
     width: 100%;
 }
 
+.homeHeaderProfileDropdownContainer {
+    min-height: 180px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 40px;
+    top: 80px;
+    background-color: white;
+    border-radius: 10px;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+    .homeHeaderProfileDropdownOption {
+        height: 60px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        cursor: pointer;
+        padding: 10px 20px;
+    }
+
+    .homeHeaderProfileDropdownOption:hover {
+        background-color: rgba(172, 172, 172, 0.2);
+    }
+
+        .homeHeaderProfileDropdownOptionText {
+            font-size: 14px;
+        }
+
 .homeHeader2SearchDropdownPlacesContainer {
     height: 400px;
     width: 350px;
@@ -261,11 +296,6 @@
         border-right: 1px solid rgba(172, 172, 172, 0.3);
     }
 
-    .homeHeader2SearchDropdownWhere:hover {
-        background-color: rgba(172, 172, 172, 0.1);
-        border-radius: 50px;
-    }
-
     .homeHeader2SearchDropdownCheckIn {
         height: 100%;
         width: 15%;
@@ -275,11 +305,6 @@
         align-items: flex-start;
         padding: 10px 20px;
         border-right: 1px solid rgba(172, 172, 172, 0.3);
-    }
-
-    .homeHeader2SearchDropdownCheckIn:hover {
-        background-color: rgba(172, 172, 172, 0.1);
-        border-radius: 50px;
     }
 
         .homeHeader2SearchDropdownSubHeader {
@@ -316,11 +341,6 @@
         border-right: 1px solid rgba(172, 172, 172, 0.3);
     }
 
-    .homeHeader2SearchDropdownCheckOut:hover {
-        background-color: rgba(172, 172, 172, 0.1);
-        border-radius: 50px;
-    }
-
     .homeHeader2SearchDropdownWho {
         height: 100%;
         width: 30%;
@@ -329,11 +349,6 @@
         justify-content: center;
         align-items: flex-start;
         padding: 10px 20px;
-    }
-
-    .homeHeader2SearchDropdownWho:hover {
-        background-color: rgba(172, 172, 172, 0.1);
-        border-radius: 50px;
     }
 
     .homeHeader2SearchDropdownSearchContainer {

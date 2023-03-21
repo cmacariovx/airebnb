@@ -76,6 +76,32 @@ function HomeHeader(props) {
         }
     }
 
+    const profileDropdownRef = useRef()
+
+    const handleClickOutside = (event) => {
+        if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
+            setActiveProfileDropdown(false)
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+    }, [])
+
+    const handleScroll = () => {
+        setSearchHeaderOpen(false)
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll)
+        return () => {
+          window.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
+
     return (
         <div className={homePage ? "homeHeaderContainer" : "homeHeaderContainerListing"}>
             <div className={homePage ? "homeHeader1Container" : "homeHeader1Container2"}>
@@ -110,11 +136,22 @@ function HomeHeader(props) {
                     <div className="homeHeader1AddHomeContainer" onClick={() => navigate("/hostingDashboard")}>
                         <p className="homeHeader1AddHomeText">Airbnb your home</p>
                     </div>
-                    <div className="homeHeader1UserContainer">
+                    <div className="homeHeader1UserContainer" onClick={() => setActiveProfileDropdown(true)}>
                         <i className="fa-solid fa-bars homeHeader1UserMenuBars"></i>
                         <img src={personalPic} className="homeHeader1UserPicture"></img>
                     </div>
                 </div>
+                {activeProfileDropdown && <div className='homeHeaderProfileDropdownContainer' ref={profileDropdownRef}>
+                    <div className='homeHeaderProfileDropdownOption'>
+                        <p className='homeHeaderProfileDropdownOptionText'>Profile</p>
+                    </div>
+                    <div className='homeHeaderProfileDropdownOption'>
+                        <p className='homeHeaderProfileDropdownOptionText'>Saved</p>
+                    </div>
+                    <div className='homeHeaderProfileDropdownOption'>
+                        <p className='homeHeaderProfileDropdownOptionText'>Log out</p>
+                    </div>
+                </div>}
             </div>
             {homePage && !searchHeaderOpen && <div className="homeHeader2Container">
                 <div className="homeHeader2CategoriesContainer">
@@ -136,7 +173,7 @@ function HomeHeader(props) {
                     </div>
                 </div>
             </div>}
-            {homePage && searchHeaderOpen && <div className="homeHeader2SearchDropdownContainer">
+            {(homePage || !profilePage) && searchHeaderOpen && <div className="homeHeader2SearchDropdownContainer">
                 <div className="homeHeader2SearchDropdown">
                     <div className="homeHeader2SearchDropdownWhere" onClick={handleWhereClick}>
                         <p className="homeHeader2SearchDropdownSubHeader">Where</p>
