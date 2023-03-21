@@ -1,13 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 
 import './Calendar.css'
 
 function Calendar() {
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth();
-    const currentYear = currentDate.getFullYear();
-    const nextMonth = (currentMonth + 1) % 12;
-    const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear;
+    const currentDate = new Date()
+    const currentMonth = currentDate.getMonth()
+    const currentYear = currentDate.getFullYear()
+    const nextMonth = (currentMonth + 1) % 12
+    const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear
+
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+    const [startDate, setStartDate] = useState(null)
+    const [endDate, setEndDate] = useState(null)
+    const [hoverDate, setHoverDate] = useState(null)
+
+    const onDayClick = (day, month, year) => {
+        const selectedDate = new Date(year, month, day)
+
+        if (!startDate) {
+            setStartDate(selectedDate)
+        }
+        else if (!endDate) {
+            if (selectedDate < startDate) {
+                setEndDate(startDate)
+                setStartDate(selectedDate)
+            }
+            else if (selectedDate > startDate) {
+                setEndDate(selectedDate)
+            }
+            else {
+                setStartDate(null)
+            }
+        }
+        else {
+            if (selectedDate.getTime() === startDate.getTime()) {
+                setStartDate(endDate)
+                setEndDate(null)
+            } else if (selectedDate.getTime() === endDate.getTime()) {
+                setEndDate(null)
+            } else {
+                setStartDate(selectedDate)
+                setEndDate(null)
+            }
+        }
+    }
+
+    const onDayHover = (day, month, year) => {
+        setHoverDate(new Date(year, month, day))
+    }
+
+    const isInSelectedRange = (day, month, year) => {
+        const date = new Date(year, month, day)
+        if (!startDate || !endDate) return false
+
+        const minDate = startDate < endDate ? startDate : endDate
+        const maxDate = startDate > endDate ? startDate : endDate
+
+        return date > minDate && date < maxDate
+    }
 
     function generateCalendar(month, year) {
         const firstDayOfMonth = new Date(year, month, 1).getDay()
@@ -20,10 +71,10 @@ function Calendar() {
 
             for (let i = 0; i < 7; i++) {
                 if (currentDay > 0 && currentDay <= lastDateOfMonth) {
-                week.push(currentDay)
+                    week.push(currentDay)
                 }
                 else {
-                week.push(null)
+                    week.push(null)
                 }
 
                 currentDay++
@@ -35,28 +86,42 @@ function Calendar() {
         return calendar
     }
 
-    const renderCalendarTable = (monthData) => (
+    const renderCalendarTable = (monthData, month, year) => (
         <table className={"calendar"}>
-          <thead>
+        <thead>
             <tr>
-              <th>Su</th>
-              <th>Mo</th>
-              <th>Tu</th>
-              <th>We</th>
-              <th>Th</th>
-              <th>Fr</th>
-              <th>Sa</th>
+                <th>Su</th>
+                <th>Mo</th>
+                <th>Tu</th>
+                <th>We</th>
+                <th>Th</th>
+                <th>Fr</th>
+                <th>Sa</th>
             </tr>
-          </thead>
-          <tbody>
+        </thead>
+        <tbody>
             {monthData.map((week, index) => (
-              <tr key={index}>
-                {week.map((day, index) => (
-                  <td key={index}>{day}</td>
-                ))}
-              </tr>
+                <tr key={index}>
+                    {week.map((day, index) => {
+                        const isSelectedStart = day && startDate && startDate.getDate() === day && startDate.getMonth() === month && startDate.getFullYear() === year
+                        const isSelectedEnd = day && endDate && endDate.getDate() === day && endDate.getMonth() === month && endDate.getFullYear() === year
+                        const isHovered = day && hoverDate && hoverDate.getDate() === day && hoverDate.getMonth() === month && hoverDate.getFullYear() === year
+                        const inRange = day && isInSelectedRange(day, month, year)
+                        const cellClassName = day ? (isSelectedStart || isSelectedEnd ? 'selected' : inRange ? 'in-range' : 'day') : 'empty'
+                        return (
+                        <td
+                            key={index}
+                            className={cellClassName}
+                            onMouseEnter={day ? () => onDayHover(day, month, year) : null}
+                            onClick={day ? () => onDayClick(day, month, year) : null}
+                        >
+                            {day}
+                        </td>
+                        )
+                    })}
+                </tr>
             ))}
-          </tbody>
+        </tbody>
         </table>
     )
 
@@ -67,7 +132,7 @@ function Calendar() {
         <div className="calendarContainer">
             <div className="calendarMonthContainer">
                 <div className="calendarLeftMonthContainer">
-                    <p className="calendarLeftMonthText">March 2023</p>
+                    <p className="calendarLeftMonthText">{months[currentMonth] + " " + currentYear}</p>
                     <div className="calendarLeftArrowContainer">
                         <div className="calendarLeftArrowCircleContainer">
                             <i className="fa-solid fa-chevron-left calendarLeftArrow"></i>
@@ -75,7 +140,7 @@ function Calendar() {
                     </div>
                 </div>
                 <div className="calendarRightMonthContainer">
-                    <p className="calendarRightMonthText">April 2023</p>
+                    <p className="calendarRightMonthText">{months[nextMonth] + " " + currentYear}</p>
                     <div className="calendarRightArrowContainer">
                         <div className="calendarRightArrowCircleContainer">
                             <i className="fa-solid fa-chevron-right calendarRightArrow"></i>
@@ -85,10 +150,10 @@ function Calendar() {
             </div>
             <div className="calendarBodyContainer">
                 <div className="calendarLeftBodyContainer">
-                    {renderCalendarTable(leftCalendarData)}
+                    {renderCalendarTable(leftCalendarData, currentMonth, currentYear)}
                 </div>
                 <div className="calendarRightBodyContainer">
-                    {renderCalendarTable(rightCalendarData)}
+                    {renderCalendarTable(rightCalendarData, nextMonth, currentYear)}
                 </div>
             </div>
         </div>

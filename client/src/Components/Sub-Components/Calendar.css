@@ -194,6 +194,19 @@
                 color: var(--gray);
             }
 
-            .calendar td:hover {
+            .calendar td.day:hover {
                 border: 1.5px solid var(--black);
             }
+
+            .calendar td.day {
+                cursor: pointer;
+              }
+
+              .calendar td.selected {
+                background-color: black;
+                color: white;
+              }
+
+              .calendar td.in-range {
+                background-color: gray;
+              }
