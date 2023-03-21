@@ -61,7 +61,8 @@
     top: 100px;
     background-color: white;
     border-radius: 20px;
-    overflow-y: hidden;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .homeHeader2SearchDropdownCalendarsContainer {
@@ -78,6 +79,95 @@
     border-radius: 20px;
     overflow-y: hidden;
 }
+
+.homeHeader2SearchDropdownGuestsContainer {
+    height: 400px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 210px;
+    top: 100px;
+    background-color: white;
+    border-radius: 20px;
+    overflow-y: hidden;
+    padding: 20px 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.homeHeader2SearchDropdownGuestContainer {
+    height: 25%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(172, 172, 172, 0.3);
+}
+
+.homeHeader2SearchDropdownGuestContainer2 {
+    height: 25%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .homeHeader2SearchDropdownGuestContainerLeft {
+        height: 100%;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+        .homeHeader2SearchDropdownGuestContainerLeftText1 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .homeHeader2SearchDropdownGuestContainerLeftText2 {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+    .homeHeader2SearchDropdownGuestContainerRight {
+        height: 100%;
+        width: 50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+        .homeHeader2SearchDropdownGuestContainerRightIconContainer {
+            min-height: 35px;
+            min-width: 35px;
+            border-radius: 50%;
+            border: 1px solid rgba(172, 172, 172, 0.3);
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+            .homeHeader2SearchDropdownGuestContainerRightIcon {
+                font-size: 20px;
+                font-weight: bold;
+                color: var(--gray);
+            }
+
+            .homeHeader2SearchDropdownGuestContainerRightNumber {
+                font-size: 16px;
+                margin-left: 15px;
+                margin-right: 15px;
+            }
 
     .homeHeader2SearchDropdownCalendars {
         min-height: 80%;

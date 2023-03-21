@@ -16,7 +16,9 @@ function HomeHeader(props) {
     const [searchResults, setSearchResults] = useState([])
     const [autocompleteService, setAutocompleteService] = useState(null)
 
-    const [activeDropdown, setActiveDropdown] = useState(null);
+    const [activeDropdown, setActiveDropdown] = useState(null)
+
+    const [activeProfileDropdown, setActiveProfileDropdown] = useState(false)
 
     const handleWhereClick = () => {
         setActiveDropdown("where")
@@ -179,7 +181,74 @@ function HomeHeader(props) {
                     </div>
                 </div> : null}
                 {activeDropdown === "who" && <div className="homeHeader2SearchDropdownGuestsContainer">
+                    <div className='homeHeader2SearchDropdownGuestContainer'>
+                        <div className='homeHeader2SearchDropdownGuestContainerLeft'>
+                            <p className='homeHeader2SearchDropdownGuestContainerLeftText1'>Adults</p>
+                            <p className='homeHeader2SearchDropdownGuestContainerLeftText2'>Ages 13 or above</p>
+                        </div>
+                        <div className='homeHeader2SearchDropdownGuestContainerRight'>
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                                <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>-</p>
+                            </div>
 
+                                <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>0</p>
+
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                                <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>+</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='homeHeader2SearchDropdownGuestContainer'>
+                        <div className='homeHeader2SearchDropdownGuestContainerLeft'>
+                            <p className='homeHeader2SearchDropdownGuestContainerLeftText1'>Children</p>
+                            <p className='homeHeader2SearchDropdownGuestContainerLeftText2'>Ages 2-12</p>
+                        </div>
+                        <div className='homeHeader2SearchDropdownGuestContainerRight'>
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                                <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>-</p>
+                            </div>
+
+                                <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>0</p>
+
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                                <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>+</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='homeHeader2SearchDropdownGuestContainer'>
+                        <div className='homeHeader2SearchDropdownGuestContainerLeft'>
+                            <p className='homeHeader2SearchDropdownGuestContainerLeftText1'>Infants</p>
+                            <p className='homeHeader2SearchDropdownGuestContainerLeftText2'>Under 2</p>
+                        </div>
+                        <div className='homeHeader2SearchDropdownGuestContainerRight'>
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                                <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>-</p>
+                            </div>
+
+                                <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>0</p>
+
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                                <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>+</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='homeHeader2SearchDropdownGuestContainer2'>
+                        <div className='homeHeader2SearchDropdownGuestContainerLeft'>
+                            <p className='homeHeader2SearchDropdownGuestContainerLeftText1'>Pets</p>
+                            <p className='homeHeader2SearchDropdownGuestContainerLeftText2'>Service Animals Included</p>
+                        </div>
+                        <div className='homeHeader2SearchDropdownGuestContainerRight'>
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                                <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>-</p>
+                            </div>
+
+                                <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>0</p>
+
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                                <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>+</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>}
             </div>}
         </div>
