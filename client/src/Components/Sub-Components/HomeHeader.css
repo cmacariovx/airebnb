@@ -1,9 +1,9 @@
 .homeHeaderContainer {
-    height: 200px;
+    height: 180px;
     width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     position: sticky;
     position: -webkit-sticky !important;
@@ -25,7 +25,7 @@
 }
 
 .homeHeader2SearchDropdown {
-    height: 70px;
+    height: 65px;
     width: 800px;
     display: flex;
     flex-direction: row;
@@ -35,9 +35,91 @@
     padding: 10px 20px;
     cursor: pointer;
     transition: 0.1s linear;
-    border: 1px solid rgba(112, 112, 112, 0.1);
-    background-color: rgba(172, 172, 172, 0.2);
+    border: 1px solid rgba(112, 112, 112, 0.2);
+    /* background-color: rgba(172, 172, 172, 0.2); */
+    background-color: white;
+    position: relative;
 }
+
+.homeHeader2SearchDropdownBackdrop {
+    position: absolute;
+    top: 100px;
+    background-color: rgba(0, 0, 0, 0.2);
+    min-height: 100vh;
+    width: 100%;
+}
+
+    .homeHeader2SearchDropdownWhere {
+        height: 100%;
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 10px 20px;
+        border-right: 1px solid rgba(172, 172, 172, 0.3);
+    }
+
+    .homeHeader2SearchDropdownCheckIn {
+        height: 100%;
+        width: 15%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 10px 20px;
+        border-right: 1px solid rgba(172, 172, 172, 0.3);
+    }
+
+        .homeHeader2SearchDropdownSubHeader {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .homeHeader2SearchDropdownSubText {
+            font-size: 13.4px;
+            color: rgb(168, 168, 168)
+        }
+
+    .homeHeader2SearchDropdownCheckOut {
+        height: 100%;
+        width: 15%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 10px 20px;
+        border-right: 1px solid rgba(172, 172, 172, 0.3);
+    }
+
+    .homeHeader2SearchDropdownWho {
+        height: 100%;
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 10px 20px;
+    }
+
+    .homeHeader2SearchDropdownSearchContainer {
+        min-height: 45px;
+        min-width: 45px;
+        background-color: var(--pink);
+        border-radius: 50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        right: 10px;
+    }
+
+        .fa-solid.fa-magnifying-glass.homeHeader2SearchDropdownSearchIcon {
+            color: white;
+            font-size: 16px;
+        }
 
 .homeHeaderContainer2 {
     height: 300px;
@@ -286,7 +368,7 @@
                 }
 
     .homeHeader2Container {
-        height: 120px;
+        height: 100px;
         width: 100%;
         display: flex;
         flex-direction: row;

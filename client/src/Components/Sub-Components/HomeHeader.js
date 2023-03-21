@@ -64,7 +64,7 @@ function HomeHeader(props) {
                     </div>
                 </div>
             </div>
-            {homePage && <div className="homeHeader2Container">
+            {homePage && !searchHeaderOpen && <div className="homeHeader2Container">
                 <div className="homeHeader2CategoriesContainer">
                     <div className="homeHeader2CategoryContainer">
                         <i className="fa-solid fa-umbrella-beach homeHeader2CategoryIcon"></i>
@@ -84,11 +84,31 @@ function HomeHeader(props) {
                     </div>
                 </div>
             </div>}
-            {/* {homePage && searchHeaderOpen} */}
+            {homePage && searchHeaderOpen &&
             <div className="homeHeader2SearchDropdownContainer">
                 <div className="homeHeader2SearchDropdown">
+                    <div className="homeHeader2SearchDropdownWhere">
+                        <p className="homeHeader2SearchDropdownSubHeader">Where</p>
+                        <p className="homeHeader2SearchDropdownSubText">Search destinations</p>
+                    </div>
+                    <div className="homeHeader2SearchDropdownCheckIn">
+                        <p className="homeHeader2SearchDropdownSubHeader">Check in</p>
+                        <p className="homeHeader2SearchDropdownSubText">Add dates</p>
+                    </div>
+                    <div className="homeHeader2SearchDropdownCheckOut">
+                        <p className="homeHeader2SearchDropdownSubHeader">Check out</p>
+                        <p className="homeHeader2SearchDropdownSubText">Add dates</p>
+                    </div>
+                    <div className="homeHeader2SearchDropdownWho">
+                        <p className="homeHeader2SearchDropdownSubHeader">Who</p>
+                        <p className="homeHeader2SearchDropdownSubText">Add guests</p>
+                    </div>
+                    <div className="homeHeader2SearchDropdownSearchContainer">
+                        <i className="fa-solid fa-magnifying-glass homeHeader2SearchDropdownSearchIcon"></i>
+                    </div>
                 </div>
-            </div>
+                <div className="homeHeader2SearchDropdownBackdrop"></div>
+            </div>}
         </div>
     )
 }
