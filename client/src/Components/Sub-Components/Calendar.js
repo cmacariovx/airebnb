@@ -4,8 +4,8 @@ import './Calendar.css'
 
 const Calendar = React.forwardRef((props, ref) => {
     const currentDate = new Date()
-    const currentMonth = currentDate.getMonth()
-    const currentYear = currentDate.getFullYear()
+    const [currentYear, setCurrentYear] = useState(currentDate.getFullYear())
+    const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth())
     const nextMonth = (currentMonth + 1) % 12
     const nextYear = currentMonth === 11 ? currentYear + 1 : currentYear
 
@@ -14,6 +14,32 @@ const Calendar = React.forwardRef((props, ref) => {
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
     const [hoverDate, setHoverDate] = useState(null)
+
+    const handleLeftArrowClick = () => {
+        if (currentMonth === currentDate.getMonth() && currentYear === currentDate.getFullYear()) {
+            return;
+        }
+
+        if (currentMonth > 0) {
+            setCurrentMonth(currentMonth - 1);
+        } else if (currentYear > currentDate.getFullYear()) {
+            setCurrentMonth(11);
+            setCurrentYear(currentYear - 1);
+        }
+    };
+
+    const handleRightArrowClick = () => {
+        if (currentMonth === currentDate.getMonth() && currentYear === currentDate.getFullYear() + 1) {
+            return;
+        }
+
+        if (currentMonth < 11) {
+            setCurrentMonth(currentMonth + 1);
+        } else if (currentYear < currentDate.getFullYear() + 1) {
+            setCurrentMonth(0);
+            setCurrentYear(currentYear + 1);
+        }
+    };
 
     const clearDates = () => {
         setStartDate(null);
@@ -143,15 +169,15 @@ const Calendar = React.forwardRef((props, ref) => {
                 <div className="calendarLeftMonthContainer">
                     <p className="calendarLeftMonthText">{months[currentMonth] + " " + currentYear}</p>
                     <div className="calendarLeftArrowContainer">
-                        <div className="calendarLeftArrowCircleContainer">
+                        <div className="calendarLeftArrowCircleContainer" onClick={handleLeftArrowClick}>
                             <i className="fa-solid fa-chevron-left calendarLeftArrow"></i>
                         </div>
                     </div>
                 </div>
                 <div className="calendarRightMonthContainer">
-                    <p className="calendarRightMonthText">{months[nextMonth] + " " + currentYear}</p>
+                    <p className="calendarRightMonthText">{months[(currentMonth + 1) % 12] + " " + (currentMonth === 11 ? currentYear + 1 : currentYear)}</p>
                     <div className="calendarRightArrowContainer">
-                        <div className="calendarRightArrowCircleContainer">
+                        <div className="calendarRightArrowCircleContainer" onClick={handleRightArrowClick}>
                             <i className="fa-solid fa-chevron-right calendarRightArrow"></i>
                         </div>
                     </div>

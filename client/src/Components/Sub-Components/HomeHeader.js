@@ -6,6 +6,8 @@ import './HomeHeader.css'
 import airbnbLogo from '../../Images/airbnbLogo.png'
 import personalPic from '../../Images/personalPic.jpg'
 
+import Calendar from './Calendar'
+
 function HomeHeader(props) {
     const homePage = props.homePage
     const profilePage = props.profilePage ? props.profilePage : null
@@ -18,18 +20,19 @@ function HomeHeader(props) {
     const inputRef = useRef()
 
     const handleScriptLoad = () => {
-      if (window.google) {
-        setAutocompleteService(new window.google.maps.places.AutocompleteService())
-      }
-    };
+        if (window.google) {
+            setAutocompleteService(new window.google.maps.places.AutocompleteService())
+        }
+    }
 
     const searchPlaces = (input) => {
         if (autocompleteService && input) {
-          autocompleteService.getPlacePredictions({ input }, setSearchResults)
-        } else {
-          setSearchResults([])
+            autocompleteService.getPlacePredictions({ input, types: ['(regions)'], componentRestrictions: { country: 'us' } }, setSearchResults)
         }
-    };
+        else {
+            setSearchResults([])
+        }
+    }
 
     useEffect(() => {
         handleScriptLoad()
@@ -42,6 +45,14 @@ function HomeHeader(props) {
         }
         else {
             navigate("/")
+        }
+    }
+
+    const calendarRef = useRef()
+
+    const handleClearDates = () => {
+        if (calendarRef.current) {
+            calendarRef.current.clearDates()
         }
     }
 
@@ -105,8 +116,7 @@ function HomeHeader(props) {
                     </div>
                 </div>
             </div>}
-            {homePage && searchHeaderOpen &&
-            <div className="homeHeader2SearchDropdownContainer">
+            {homePage && searchHeaderOpen && <div className="homeHeader2SearchDropdownContainer">
                 <div className="homeHeader2SearchDropdown">
                     <div className="homeHeader2SearchDropdownWhere">
                         <p className="homeHeader2SearchDropdownSubHeader">Where</p>
@@ -134,12 +144,21 @@ function HomeHeader(props) {
                     </div>
                 </div>
                 <div className="homeHeader2SearchDropdownBackdrop" onClick={() => setSearchHeaderOpen(false)}></div>
-                <div className="homeHeader2SearchDropdownPlacesContainer">
+                {searchResults.length > 0 && <div className="homeHeader2SearchDropdownPlacesContainer">
                     {searchResults.map((result, index) => (
                         <div key={index} className="homeHeader2SearchDropdownPlaceContainer">
-                        {result.description}
+                            <i className="fa-solid fa-location-dot homeHeader2SearchDropdownPlaceIcon"></i>
+                            <p className="homeHeader2SearchDropdownPlaceText">{result.description}</p>
                         </div>
                     ))}
+                </div>}
+                <div className="homeHeader2SearchDropdownCalendarsContainer">
+                    <div className="homeHeader2SearchDropdownCalendars">
+                        <Calendar ref={calendarRef}/>
+                    </div>
+                    <div className="listingBodyMainLeftCalendarFooterTextContainer2" onClick={handleClearDates}>
+                        <p className="listingBodyMainLeftCalendarFooterText2">Clear dates</p>
+                    </div>
                 </div>
             </div>}
         </div>

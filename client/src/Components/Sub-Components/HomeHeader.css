@@ -60,18 +60,105 @@
     left: 210px;
     top: 100px;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 20px;
+    overflow-y: hidden;
 }
 
-    .homeHeader2SearchDropdownPlaceContainer {
-        height: 60px;
+.homeHeader2SearchDropdownCalendarsContainer {
+    height: 450px;
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 212px;
+    top: 100px;
+    background-color: white;
+    border-radius: 20px;
+    overflow-y: hidden;
+}
+
+    .homeHeader2SearchDropdownCalendars {
+        min-height: 80%;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .listingBodyMainLeftCalendarFooterTextContainer2 {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        cursor: pointer;
+        -webkit-user-drag: none;
+        user-select: none;
+        padding: 0 80px;
+    }
+
+    .listingBodyMainLeftCalendarFooterText2 {
+        height: 35px;
+        width: 90px;
+        border-radius: 5px;
+        font-size: 13.5px;
+        font-weight: bold;
+        text-decoration: underline;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        color: var(--black);
+        padding: 5px;
+        transition: 0.1s linear;
     }
+
+    .listingBodyMainLeftCalendarFooterText2:hover {
+        background-color: rgba(165, 165, 165, 0.1);
+    }
+
+    .listingBodyMainLeftCalendarFooterText2:active {
+        height: 34px;
+        width: 88px;
+        font-size: 13px;
+        transition: 0.1s linear;
+        margin-right: 1px;
+    }
+
+    .homeHeader2SearchDropdownPlaceContainer {
+        min-height: 60px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        color: var(--black);
+        padding: 10px 30px;
+        cursor: pointer;
+    }
+
+    .homeHeader2SearchDropdownPlaceContainer:hover {
+        background-color: rgb(236, 236, 236);
+    }
+
+        .fa-solid.fa-location-dot.homeHeader2SearchDropdownPlaceIcon {
+            min-height: 40px;
+            min-width: 40px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(236, 236, 236);
+            border-radius: 10px;
+            font-size: 20px;
+            margin-right: 20px;
+        }
+
+        .homeHeader2SearchDropdownPlaceText {
+            font-size: 15px;
+        }
 
     .homeHeader2SearchDropdownWhere {
         height: 100%;
