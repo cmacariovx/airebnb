@@ -53,7 +53,7 @@ function HomeHeader(props) {
                     </div>}
                 </div>
                 <div className="homeHeader1RightContainer">
-                    <div className="homeHeader1AddHomeContainer">
+                    <div className="homeHeader1AddHomeContainer" onClick={() => navigate("/hostingDashboard")}>
                         <p className="homeHeader1AddHomeText">Airbnb your home</p>
                     </div>
                     <div className="homeHeader1UserContainer">

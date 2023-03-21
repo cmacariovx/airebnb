@@ -5,12 +5,15 @@ import './HostingDashboard.css'
 import ListingCard from "../Sub-Components/ListingCard"
 import logo from '../../Images/airbnbLogoMain.png'
 import personalPic from '../../Images/personalPic.jpg'
+import { useNavigate } from "react-router";
 
 function HostingDashboard() {
+    const navigate = useNavigate()
+
     return (
         <div className="hostingDashboardContainer">
             <header className="hostingDashboardHeaderContainer">
-                <img src={logo} className="hostingDashboardHeaderLogo"/>
+                <img src={logo} className="hostingDashboardHeaderLogo" onClick={() => navigate("/")}/>
                 <div className="hostingDashboardProfileContainer">
                     <img src={personalPic} className="hostingDashboardProfilePic"/>
                 </div>
@@ -18,7 +21,7 @@ function HostingDashboard() {
             <div className="hostingDashboardWelcomeContainer">
                 <p className="hostingDashboardWelcomeText">Welcome back, Carlos</p>
                 <div className="hostingDashboardWelcomeOptionsContainer">
-                    <div className="hostingDashboardWelcomeOption">
+                    <div className="hostingDashboardWelcomeOption" onClick={() => navigate("/createListing/1")}>
                         <p className="hostingDashboardWelcomeOptionHeader">Create a new listing</p>
                     </div>
                 </div>
@@ -47,22 +50,22 @@ function HostingDashboard() {
                 <p className="hostingDashboardListingsTitle">Your listings</p>
                 <div className="hostingDashboardListings">
                     <div className="hostingDashboardListingContainer">
-                        <ListingCard hostingDashboard={true}/>
+                        <ListingCard/>
                     </div>
                     <div className="hostingDashboardListingContainer">
-                        <ListingCard hostingDashboard={true}/>
+                        <ListingCard/>
                     </div>
                     <div className="hostingDashboardListingContainer">
-                        <ListingCard hostingDashboard={true}/>
+                        <ListingCard/>
                     </div>
                     <div className="hostingDashboardListingContainer">
-                        <ListingCard hostingDashboard={true}/>
+                        <ListingCard/>
                     </div>
                     <div className="hostingDashboardListingContainer">
-                        <ListingCard hostingDashboard={true}/>
+                        <ListingCard/>
                     </div>
                     <div className="hostingDashboardListingContainer">
-                        <ListingCard hostingDashboard={true}/>
+                        <ListingCard/>
                     </div>
                 </div>
             </div>

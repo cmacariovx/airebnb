@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 import PlacesAutocomplete, {
     geocodeByAddress,
@@ -26,9 +26,35 @@ import spill3 from '../../Images/spill3.png'
 import spill4 from '../../Images/spill4.png'
 import spill5 from '../../Images/spill5.png'
 import homePic from '../../Images/home1.jpg'
+import { useNavigate } from "react-router"
 
 function CreateListing() {
-    const listingBodyId = window.location.pathname.slice(15)
+    const [listingBodyId, setListingBodyId] = useState(+window.location.pathname.slice(15))
+
+    const navigate = useNavigate()
+
+    // 6 (3 - 8)
+    // 4 (10 - 13)
+    // 3 (15 - 17)
+
+    const [barProgress1, setBarProgress1] = useState(0)
+    const [barProgress2, setBarProgress2] = useState(0)
+    const [barProgress3, setBarProgress3] = useState(0)
+
+    useEffect(() => {
+        if (listingBodyId >= 3 && listingBodyId <= 8) {
+          setBarProgress1(100 / 6);
+        }
+
+        if (listingBodyId >= 10 && listingBodyId <= 13) {
+          setBarProgress2(100 / 4);
+        }
+
+        if (listingBodyId >= 15 && listingBodyId <= 17) {
+          setBarProgress3(100 / 3);
+        }
+      }, [listingBodyId])
+
 
     let [searchTerm, setSearchTerm] = useState("")
     let [priceCounter, setPriceCounter] = useState(150)
@@ -93,6 +119,16 @@ function CreateListing() {
             marker.setIcon(icon)
             map.set("styles", mapStyling)
         })
+    }
+
+    function toBack() {
+        navigate("/createListing/" + (listingBodyId - 1))
+        setListingBodyId(prev => prev - 1)
+    }
+
+    function toFront() {
+        navigate("/createListing/" + (listingBodyId + 1))
+        setListingBodyId(prev => prev + 1)
     }
 
     return (
@@ -170,7 +206,7 @@ function CreateListing() {
                     </div>
                 </div>
                 <div className="createListingBody1Footer">
-                    <button className="createListingBody1FooterButton">Get started</button>
+                    <button className="createListingBody1FooterButton" onClick={toFront}>Get started</button>
                 </div>
             </div>}
             {listingBodyId == 2 && <div className="createListingBody2">
@@ -591,7 +627,7 @@ function CreateListing() {
             {listingBodyId >= 2 && <div className="createListingBody2Footer">
                     <div className="createListingBody2FooterUpper">
                         <div className="createListingBody2FooterUpperLine">
-                            <div className="createListingBody2FooterUpperOverlay1" style={{transform: "translateX(20%)"}}/>
+                            <div className="createListingBody2FooterUpperOverlay1" style={{transform: "translateX(" + barProgress1 + "%)"}}/>
                         </div>
                         <div className="createListingBody2FooterUpperLine">
                             <div className="createListingBody2FooterUpperOverlay2"/>
@@ -601,8 +637,8 @@ function CreateListing() {
                         </div>
                     </div>
                     <div className="createListingBody2FooterLower">
-                        <p className="createListingBody2FooterBackText">Back</p>
-                        <button className="createListingBody2FooterButton">Next</button>
+                        <p className="createListingBody2FooterBackText" onClick={toBack}>Back</p>
+                        <button className="createListingBody2FooterButton" onClick={toFront}>Next</button>
                     </div>
             </div>}
         </div>
