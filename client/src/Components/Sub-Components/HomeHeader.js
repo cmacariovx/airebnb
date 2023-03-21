@@ -19,21 +19,20 @@ function HomeHeader(props) {
     const [activeDropdown, setActiveDropdown] = useState(null);
 
     const handleWhereClick = () => {
-        setActiveDropdown(activeDropdown === "where" ? null : "where")
-      }
+        setActiveDropdown("where")
+    }
 
-      const handleCheckInClick = () => {
-        setActiveDropdown(activeDropdown === "checkIn" ? null : "checkIn")
-      }
+    const handleCheckInClick = () => {
+        setActiveDropdown("checkIn")
+    }
 
-      const handleCheckOutClick = () => {
-        setActiveDropdown(activeDropdown === "checkOut" ? null : "checkOut")
-      }
+    const handleCheckOutClick = () => {
+        setActiveDropdown("checkOut")
+    }
 
-      const handleWhoClick = () => {
-        setActiveDropdown(activeDropdown === "who" ? null : "who")
-      }
-
+    const handleWhoClick = () => {
+        setActiveDropdown("who")
+    }
 
     const navigate = useNavigate()
     const inputRef = useRef()

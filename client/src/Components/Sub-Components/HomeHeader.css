@@ -171,6 +171,11 @@
         border-right: 1px solid rgba(172, 172, 172, 0.3);
     }
 
+    .homeHeader2SearchDropdownWhere:hover {
+        background-color: rgba(172, 172, 172, 0.1);
+        border-radius: 50px;
+    }
+
     .homeHeader2SearchDropdownCheckIn {
         height: 100%;
         width: 15%;
@@ -180,6 +185,11 @@
         align-items: flex-start;
         padding: 10px 20px;
         border-right: 1px solid rgba(172, 172, 172, 0.3);
+    }
+
+    .homeHeader2SearchDropdownCheckIn:hover {
+        background-color: rgba(172, 172, 172, 0.1);
+        border-radius: 50px;
     }
 
         .homeHeader2SearchDropdownSubHeader {
@@ -216,6 +226,11 @@
         border-right: 1px solid rgba(172, 172, 172, 0.3);
     }
 
+    .homeHeader2SearchDropdownCheckOut:hover {
+        background-color: rgba(172, 172, 172, 0.1);
+        border-radius: 50px;
+    }
+
     .homeHeader2SearchDropdownWho {
         height: 100%;
         width: 30%;
@@ -224,6 +239,11 @@
         justify-content: center;
         align-items: flex-start;
         padding: 10px 20px;
+    }
+
+    .homeHeader2SearchDropdownWho:hover {
+        background-color: rgba(172, 172, 172, 0.1);
+        border-radius: 50px;
     }
 
     .homeHeader2SearchDropdownSearchContainer {
