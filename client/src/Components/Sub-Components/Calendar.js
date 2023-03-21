@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useImperativeHandle } from "react";
 
 import './Calendar.css'
 
-function Calendar() {
+const Calendar = React.forwardRef((props, ref) => {
     const currentDate = new Date()
     const currentMonth = currentDate.getMonth()
     const currentYear = currentDate.getFullYear()
@@ -14,6 +14,15 @@ function Calendar() {
     const [startDate, setStartDate] = useState(null)
     const [endDate, setEndDate] = useState(null)
     const [hoverDate, setHoverDate] = useState(null)
+
+    const clearDates = () => {
+        setStartDate(null);
+        setEndDate(null);
+      };
+
+      useImperativeHandle(ref, () => ({
+        clearDates,
+      }))
 
     const onDayClick = (day, month, year) => {
         const selectedDate = new Date(year, month, day)
@@ -158,6 +167,6 @@ function Calendar() {
             </div>
         </div>
     )
-}
+})
 
 export default Calendar

@@ -32,10 +32,6 @@
             -webkit-user-drag: none;
         }
 
-            .calendarLeftArrowCircleContainer:hover {
-                background-color: rgba(150, 150, 150, 0.2);
-            }
-
             .calendarLeftArrowContainer {
                 height: 100%;
                 width: 100%;
@@ -62,7 +58,7 @@
                 }
 
                     .calendarLeftArrowCircleContainer:hover {
-                        background-color: rgba(160, 160, 160, 0.2);
+                        background-color: rgba(210, 210, 210, 0.2);
                     }
 
                 .fa-solid.fa-chevron-left.calendarLeftArrow {
@@ -121,7 +117,7 @@
                     }
 
                         .calendarRightArrowCircleContainer:hover {
-                            background-color: rgba(150, 150, 150, 0.1);
+                            background-color: rgba(210, 210, 210, 0.2);
                         }
 
                     .fa-solid.fa-chevron-right.calendarRightArrow {
@@ -208,5 +204,5 @@
               }
 
               .calendar td.in-range {
-                background-color: gray;
+                background-color: rgba(210, 210, 210, 0.3);
               }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 
 import './ListingBody.css'
 
@@ -14,7 +14,18 @@ import { Loader } from "@googlemaps/js-api-loader"
 function ListingBody() {
     const navigate = useNavigate()
 
+    const calendarRef = useRef()
+
+    const handleClearDates = () => {
+        if (calendarRef.current) {
+            calendarRef.current.clearDates()
+        }
+    }
+
+    // wrap in useEffect -----------------------------------
+
     let autocomplete
+
     // const loader = new Loader({
     //     apiKey: "process.env.REACT_APP_GOOGLE_API_KEY",
     //     version: "weekly",
@@ -242,10 +253,10 @@ function ListingBody() {
                             <p className="listingBodyMainLeftCalendarTitleText">Select check-in date</p>
                         </div>
                         <div className="listingBodyMainLeftCalendarBodyContainer">
-                            <Calendar/>
+                            <Calendar ref={calendarRef}/>
                         </div>
                         <div className="listingBodyMainLeftCalendarFooterContainer">
-                            <div className="listingBodyMainLeftCalendarFooterTextContainer">
+                            <div className="listingBodyMainLeftCalendarFooterTextContainer" onClick={handleClearDates}>
                                 <p className="listingBodyMainLeftCalendarFooterText">Clear dates</p>
                             </div>
                         </div>
