@@ -127,13 +127,13 @@
                 }
 
                     .homeHeader1SearchText1 {
-                        font-size: 14px;
+                        font-size: 13.5px;
                         font-weight: bold;
                         color: var(--black);
                     }
 
                     .homeHeader1SearchText2 {
-                        font-size: 14px;
+                        font-size: 13.5px;
                         color: var(--gray);
                         font-weight: normal;
                     }

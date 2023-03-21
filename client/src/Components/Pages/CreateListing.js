@@ -153,7 +153,7 @@ function CreateListing() {
                     </div>
                     <div className="createListingBodyStartNewContainer">
                         <p className="createListingBodyStartNewTitle">Start a new listing</p>
-                        <div className="createListingBodyStartNewOptionContainer">
+                        <div className="createListingBodyStartNewOptionContainer" onClick={toFront}>
                             <div className="createListingBodyStartNewOptionLeft">
                                 <i className="fa-solid fa-house createListingBodyStartNewOptionLeftIcon"></i>
                                 <p className="createListingBodyStartNewOptionMiddleText">Create a new listing</p>
