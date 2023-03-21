@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router";
 
 import './HomeHeader.css'
@@ -9,6 +9,8 @@ import personalPic from '../../Images/personalPic.jpg'
 function HomeHeader(props) {
     const homePage = props.homePage
     const profilePage = props.profilePage ? props.profilePage : null
+
+    const [searchHeaderOpen, setSearchHeaderOpen] = useState(false)
 
     const navigate = useNavigate()
 
@@ -29,7 +31,7 @@ function HomeHeader(props) {
                     <img src={airbnbLogo} className="homeHeader1Logo" onClick={toHomeHandler}/>
                 </div>
                 <div className="homeHeader1SearchContainer">
-                    {(homePage && !profilePage) && <div className="homeHeader1Search">
+                    {(homePage && !profilePage) && <div className="homeHeader1Search" onClick={() => setSearchHeaderOpen(true)}>
                         <div className="homeHeader1AnywhereContainer">
                             <p className="homeHeader1SearchText1">Anywhere</p>
                         </div>
@@ -43,7 +45,7 @@ function HomeHeader(props) {
                             <i className="fa-solid fa-magnifying-glass homeHeader1SearchButton"></i>
                         </div>
                     </div>}
-                    {(!homePage && !profilePage) && <div className="homeHeader2Search">
+                    {(!homePage && !profilePage) && <div className="homeHeader2Search" onClick={() => setSearchHeaderOpen(true)}>
                         <div className="homeHeader1StartSearchContainer">
                             <p className="homeHeader1StartSearchText">Start your search</p>
                         </div>
@@ -82,6 +84,11 @@ function HomeHeader(props) {
                     </div>
                 </div>
             </div>}
+            {/* {homePage && searchHeaderOpen} */}
+            <div className="homeHeader2SearchDropdownContainer">
+                <div className="homeHeader2SearchDropdown">
+                </div>
+            </div>
         </div>
     )
 }
