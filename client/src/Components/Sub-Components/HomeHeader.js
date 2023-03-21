@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import React, { useState, useRef, useEffect } from 'react'
+import { useNavigate } from "react-router"
+import { LoadScript, GoogleMap, StandaloneSearchBox } from '@react-google-maps/api'
 
 import './HomeHeader.css'
 
@@ -7,6 +8,8 @@ import airbnbLogo from '../../Images/airbnbLogo.png'
 import personalPic from '../../Images/personalPic.jpg'
 
 function HomeHeader(props) {
+    const apiKey = process.env.REACT_APP_GOOGLE_API_KEY
+
     const homePage = props.homePage
     const profilePage = props.profilePage ? props.profilePage : null
 
@@ -89,7 +92,7 @@ function HomeHeader(props) {
                 <div className="homeHeader2SearchDropdown">
                     <div className="homeHeader2SearchDropdownWhere">
                         <p className="homeHeader2SearchDropdownSubHeader">Where</p>
-                        <p className="homeHeader2SearchDropdownSubText">Search destinations</p>
+                        <input className="homeHeader2SearchDropdownSubInput" placeholder="Search destinations"></input>
                     </div>
                     <div className="homeHeader2SearchDropdownCheckIn">
                         <p className="homeHeader2SearchDropdownSubHeader">Check in</p>
@@ -107,7 +110,10 @@ function HomeHeader(props) {
                         <i className="fa-solid fa-magnifying-glass homeHeader2SearchDropdownSearchIcon"></i>
                     </div>
                 </div>
-                <div className="homeHeader2SearchDropdownBackdrop"></div>
+                <div className="homeHeader2SearchDropdownBackdrop" onClick={() => setSearchHeaderOpen(false)}></div>
+                <div className="homeHeader2SearchDropdownPlacesContainer">
+
+                </div>
             </div>}
         </div>
     )

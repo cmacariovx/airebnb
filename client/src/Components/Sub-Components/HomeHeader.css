@@ -44,9 +44,23 @@
 .homeHeader2SearchDropdownBackdrop {
     position: absolute;
     top: 100px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.3);
     min-height: 100vh;
     width: 100%;
+}
+
+.homeHeader2SearchDropdownPlacesContainer {
+    height: 400px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 210px;
+    top: 100px;
+    background-color: white;
+    border-radius: 10px;
 }
 
     .homeHeader2SearchDropdownWhere {
@@ -80,6 +94,17 @@
         .homeHeader2SearchDropdownSubText {
             font-size: 13.4px;
             color: rgb(168, 168, 168)
+        }
+
+        .homeHeader2SearchDropdownSubInput {
+            font-size: 13.4px;
+            color: var(--black);
+            font-weight: bold;
+        }
+
+        .homeHeader2SearchDropdownSubInput::placeholder {
+            color: rgb(168, 168, 168);
+            font-weight: normal;
         }
 
     .homeHeader2SearchDropdownCheckOut {
