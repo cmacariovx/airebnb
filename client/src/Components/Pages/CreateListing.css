@@ -384,7 +384,7 @@
 
                 .createListingBody2FooterUpperLine {
                     height: 100%;
-                    width: 33%;
+                    width: 100%;
                     display: flex;
                     flex-direction: row;
                     justify-content: flex-start;
@@ -393,25 +393,11 @@
                     position: relative;
                 }
 
-                    .createListingBody2FooterUpperOverlay1 {
+                    .createListingBody2FooterUpperOverlay {
                         height: 100%;
                         background-color: var(--black);
                         width: 100%;
                         left: -100%;
-                        transform: translateX(0%);
-                        transition: transform 600ms linear 0s;
-                        position: absolute;
-                    }
-                    .createListingBody2FooterUpperOverlay2 {
-                        height: 100%;
-                        background-color: var(--black);
-                        transform: translateX(0%);
-                        transition: transform 600ms linear 0s;
-                        position: absolute;
-                    }
-                    .createListingBody2FooterUpperOverlay3 {
-                        height: 100%;
-                        background-color: var(--black);
                         transform: translateX(0%);
                         transition: transform 600ms linear 0s;
                         position: absolute;

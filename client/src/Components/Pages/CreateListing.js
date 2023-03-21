@@ -33,27 +33,31 @@ function CreateListing() {
 
     const navigate = useNavigate()
 
-    // 6 (3 - 8)
-    // 4 (10 - 13)
-    // 3 (15 - 17)
-
     const [barProgress1, setBarProgress1] = useState(0)
-    const [barProgress2, setBarProgress2] = useState(0)
-    const [barProgress3, setBarProgress3] = useState(0)
 
     useEffect(() => {
-        if (listingBodyId >= 3 && listingBodyId <= 8) {
-          setBarProgress1(100 / 6);
+        if (listingBodyId < 0 || listingBodyId > 17) navigate("/hostingDashboard")
+
+        if (listingBodyId < 3) {
+            setBarProgress1(0)
         }
 
-        if (listingBodyId >= 10 && listingBodyId <= 13) {
-          setBarProgress2(100 / 4);
+        if (listingBodyId >= 3 && listingBodyId <= 17) {
+          setBarProgress1((100 / 15) * (listingBodyId - 2))
+        }
+    }, [listingBodyId])
+
+    useEffect(() => {
+        const handlePopState = () => {
+          setListingBodyId(+window.location.pathname.slice(15))
         }
 
-        if (listingBodyId >= 15 && listingBodyId <= 17) {
-          setBarProgress3(100 / 3);
+        window.addEventListener("popstate", handlePopState)
+
+        return () => {
+          window.removeEventListener("popstate", handlePopState)
         }
-      }, [listingBodyId])
+      }, [])
 
 
     let [searchTerm, setSearchTerm] = useState("")
@@ -627,13 +631,7 @@ function CreateListing() {
             {listingBodyId >= 2 && <div className="createListingBody2Footer">
                     <div className="createListingBody2FooterUpper">
                         <div className="createListingBody2FooterUpperLine">
-                            <div className="createListingBody2FooterUpperOverlay1" style={{transform: "translateX(" + barProgress1 + "%)"}}/>
-                        </div>
-                        <div className="createListingBody2FooterUpperLine">
-                            <div className="createListingBody2FooterUpperOverlay2"/>
-                        </div>
-                        <div className="createListingBody2FooterUpperLine">
-                            <div className="createListingBody2FooterUpperOverlay3"/>
+                            <div className="createListingBody2FooterUpperOverlay" style={{transform: "translateX(" + barProgress1 + "%)"}}/>
                         </div>
                     </div>
                     <div className="createListingBody2FooterLower">

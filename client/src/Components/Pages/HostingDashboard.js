@@ -21,7 +21,7 @@ function HostingDashboard() {
             <div className="hostingDashboardWelcomeContainer">
                 <p className="hostingDashboardWelcomeText">Welcome back, Carlos</p>
                 <div className="hostingDashboardWelcomeOptionsContainer">
-                    <div className="hostingDashboardWelcomeOption" onClick={() => navigate("/createListing/1")}>
+                    <div className="hostingDashboardWelcomeOption" onClick={() => navigate("/createListing/0")}>
                         <p className="hostingDashboardWelcomeOptionHeader">Create a new listing</p>
                     </div>
                 </div>
