@@ -28,6 +28,7 @@ function ProfileBody() {
                     </div>
                     <div className="profileBodyRightIntroAboutContainer">
                         <p className="profileBodyRightIntroAboutText">About</p>
+                        <p className="profileBodyRightIntroAboutDesc">Full Stack Software Engineer</p>
                         <div className="profileBodyRightIntroLivesContainer">
                             <i className="fa-solid fa-house profileBodyRightIntroLivesHouse"></i>
                             <p className="profileBodyRightIntroLivesText">Lives in Asheville, NC</p>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 
 import './ListingBody.css'
 
@@ -15,7 +15,7 @@ function ListingBody() {
     const navigate = useNavigate()
 
     const [checkInContainerVisible, setCheckInContainerVisible] = useState(false)
-    const [guestsContainerVisible, setGuestsContainerVisible] = useState(false);
+    const [guestsContainerVisible, setGuestsContainerVisible] = useState(false)
 
     const stickyContainerRef = useRef()
     const guestsContainerRef = useRef()
@@ -156,39 +156,45 @@ function ListingBody() {
     }
 
     const offsetTop = 700
-    const topOffset = 200
+    const topOffset = 186
+    const topOffset2 = 334
     const absoluteTopCheckIn = 800
     const absoluteGuests = 950
+
+    const applyStickyPositioning = useCallback(() => {
+        const scrollY = window.pageYOffset;
+
+        if (scrollY >= 1600) {
+            setCheckInContainerVisible(false)
+            setGuestsContainerVisible(false)
+        } else if (scrollY >= offsetTop) {
+            if (checkInContainerVisible && checkInContainerRef.current) {
+                checkInContainerRef.current.style.position = 'fixed'
+                checkInContainerRef.current.style.top = `${topOffset}px`
+            }
+
+            if (guestsContainerVisible && guestsContainerRef.current) {
+                guestsContainerRef.current.style.position = 'fixed'
+                guestsContainerRef.current.style.top = `${topOffset2}px`
+            }
+        }
+        else {
+            if (checkInContainerVisible && checkInContainerRef.current) {
+                checkInContainerRef.current.style.position = 'absolute'
+                checkInContainerRef.current.style.top = `${absoluteTopCheckIn}px`
+            }
+
+            if (guestsContainerVisible && guestsContainerRef.current) {
+                guestsContainerRef.current.style.position = 'absolute'
+                guestsContainerRef.current.style.top = `${absoluteGuests}px`
+            }
+        }
+    }, [checkInContainerVisible, guestsContainerVisible])
 
     useEffect(() => {
         if (stickyContainerRef.current) {
             const handleScroll = () => {
-                const scrollY = window.pageYOffset
-                console.log(scrollY)
-
-                // if scrollY is > 1500
-                if (scrollY >= offsetTop) {
-                    if (checkInContainerVisible && checkInContainerRef.current) {
-                        checkInContainerRef.current.style.position = 'fixed'
-                        checkInContainerRef.current.style.top = `${topOffset}px`
-                    }
-
-                    if (guestsContainerVisible && guestsContainerRef.current) {
-                        guestsContainerRef.current.style.position = 'fixed'
-                        guestsContainerRef.current.style.top = `${topOffset}px`
-                    }
-                }
-                else {
-                    if (checkInContainerVisible && checkInContainerRef.current) {
-                        checkInContainerRef.current.style.position = 'absolute'
-                        checkInContainerRef.current.style.top = `${absoluteTopCheckIn}px`
-                    }
-
-                    if (guestsContainerVisible && guestsContainerRef.current) {
-                        guestsContainerRef.current.style.position = 'absolute'
-                        guestsContainerRef.current.style.top = `${absoluteGuests}px`
-                    }
-                }
+                applyStickyPositioning()
             }
 
             window.addEventListener('scroll', handleScroll)
@@ -197,7 +203,13 @@ function ListingBody() {
                 window.removeEventListener('scroll', handleScroll)
             }
         }
-    }, [stickyContainerRef.current, checkInContainerVisible, guestsContainerVisible])
+    }, [stickyContainerRef.current, applyStickyPositioning])
+
+    useEffect(() => {
+        if (stickyContainerRef.current) {
+            applyStickyPositioning()
+        }
+    }, [checkInContainerVisible, guestsContainerVisible, applyStickyPositioning])
 
     return (
         <div className="listingBodyContainer">
@@ -295,7 +307,9 @@ function ListingBody() {
                             </div>
                         </div>
                         <div className="listingBodyMainRightHostedRightContainer">
-                            <img src={personalPic} className="listingBodyMainRightHostedRightImage"/>
+                            <a href="#profileAnchor">
+                                <img src={personalPic} className="listingBodyMainRightHostedRightImage"/>
+                            </a>
                         </div>
                     </div>
                     <div className="listingBodyMainLeftCheckContainer">
@@ -807,6 +821,7 @@ function ListingBody() {
 
                 </div>
             </div>
+            <a id="profileAnchor"></a>
             <div className="listingBodyHostedByContainer">
                 <div className="listingBodyHostedByContainerMainLeft">
                     <div className="listingBodyHostedByProfileContainer">
