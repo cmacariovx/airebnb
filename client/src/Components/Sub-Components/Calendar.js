@@ -2,7 +2,7 @@ import React, { useState, useImperativeHandle, useEffect } from "react";
 
 import './Calendar.css'
 
-const Calendar = React.forwardRef((props, ref) => {
+const Calendar = React.forwardRef(({ onDateChange, selectedStartDate, selectedEndDate }, ref) => {
     const currentDate = new Date()
     const [currentYear, setCurrentYear] = useState(currentDate.getFullYear())
     const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth())
@@ -11,8 +11,8 @@ const Calendar = React.forwardRef((props, ref) => {
 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
-    const [startDate, setStartDate] = useState(null)
-    const [endDate, setEndDate] = useState(null)
+    const [startDate, setStartDate] = useState(selectedStartDate)
+    const [endDate, setEndDate] = useState(selectedEndDate)
     const [hoverDate, setHoverDate] = useState(null)
 
     const handleLeftArrowClick = () => {
@@ -55,7 +55,7 @@ const Calendar = React.forwardRef((props, ref) => {
 
         if (!startDate) {
             setStartDate(selectedDate)
-            props.onDateChange(selectedDate, endDate)
+            onDateChange(selectedDate, endDate)
         }
         else if (!endDate) {
             if (selectedDate < startDate) {
@@ -68,7 +68,7 @@ const Calendar = React.forwardRef((props, ref) => {
             else {
                 setStartDate(null)
             }
-            props.onDateChange(startDate, endDate)
+            onDateChange(startDate, endDate)
         }
         else {
             if (selectedDate.getTime() === startDate.getTime()) {
@@ -82,7 +82,7 @@ const Calendar = React.forwardRef((props, ref) => {
                 setStartDate(selectedDate)
                 setEndDate(null)
             }
-            props.onDateChange(startDate, endDate)
+            onDateChange(startDate, endDate)
         }
     }
 
@@ -169,8 +169,10 @@ const Calendar = React.forwardRef((props, ref) => {
     const rightCalendarData = generateCalendar(nextMonth, nextYear)
 
     useEffect(() => {
-        props.onDateChange(startDate, endDate)
-    }, [startDate, endDate])
+        if (onDateChange) {
+            onDateChange(startDate, endDate)
+        }
+    }, [startDate, endDate, onDateChange, selectedStartDate, selectedEndDate])
 
     return (
         <div className="calendarContainer">

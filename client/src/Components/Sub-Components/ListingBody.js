@@ -14,6 +14,50 @@ import { Loader } from "@googlemaps/js-api-loader"
 function ListingBody() {
     const navigate = useNavigate()
 
+
+    const [selectedStartDate, setSelectedStartDate] = useState(null)
+    const [selectedEndDate, setSelectedEndDate] = useState(null)
+
+    const calendarKey1 = `calendar1-${selectedStartDate}-${selectedEndDate}`
+    const calendarKey2 = `calendar2-${selectedStartDate}-${selectedEndDate}`
+    
+    const [adultsCounter, setAdultsCounter] = useState(0)
+    const [childrenCounter, setChildrenCounter] = useState(0)
+    const [infantsCounter, setInfantsCounter] = useState(0)
+    const [petCounter, setPetCounter] = useState(0)
+
+    function increment(counter, operator) {
+        if (counter === 'adults') {
+            if (operator === "-" && adultsCounter > 0) setAdultsCounter((prev) => prev - 1)
+            if (operator === "+" && adultsCounter < 10) setAdultsCounter((prev) => prev + 1)
+        }
+        if (counter === 'children') {
+            if (operator === "-" && childrenCounter > 0) setChildrenCounter((prev) => prev - 1)
+            if (operator === "+" && childrenCounter < 10) setChildrenCounter((prev) => prev + 1)
+        }
+        if (counter === 'infants') {
+            if (operator === "-" && infantsCounter > 0) setInfantsCounter((prev) => prev - 1)
+            if (operator === "+" && infantsCounter < 10) setInfantsCounter((prev) => prev + 1)
+        }
+        if (counter === 'pets') {
+            if (operator === "-" && petCounter > 0) setPetCounter((prev) => prev - 1)
+            if (operator === "+" && petCounter < 10) setPetCounter((prev) => prev + 1)
+        }
+    }
+
+    const handleDateChange = (startDate, endDate) => {
+        setSelectedStartDate((prevStartDate) => startDate)
+        setSelectedEndDate((prevEndDate) => endDate)
+    }
+
+    const formatDate = (date) => {
+        if (!date) return "Not selected"
+        const month = date.getMonth() + 1
+        const day = date.getDate()
+        const year = date.getFullYear()
+        return `${month}/${day}/${year}`
+    }
+
     const [checkInContainerVisible, setCheckInContainerVisible] = useState(false)
     const [guestsContainerVisible, setGuestsContainerVisible] = useState(false)
 
@@ -49,8 +93,6 @@ function ListingBody() {
     const handleLowerClick = () => {
         setCheckInContainerVisible(false)
         setGuestsContainerVisible(true)
-        const scrollY = window.pageYOffset
-        console.log(scrollY)
     }
 
     const handleUpperClick = () => {
@@ -101,7 +143,7 @@ function ListingBody() {
 
     useEffect(() => {
         const loader = new Loader({
-            apiKey: "process.env.REACT_APP_GOOGLE_API_KEY",
+            apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
             version: "weekly",
         })
 
@@ -164,7 +206,7 @@ function ListingBody() {
     const applyStickyPositioning = useCallback(() => {
         const scrollY = window.pageYOffset;
 
-        if (scrollY >= 1600) {
+        if (scrollY >= 1700) {
             setCheckInContainerVisible(false)
             setGuestsContainerVisible(false)
         } else if (scrollY >= offsetTop) {
@@ -423,7 +465,8 @@ function ListingBody() {
                             <p className="listingBodyMainLeftCalendarTitleText">Select check-in date</p>
                         </div>
                         <div className="listingBodyMainLeftCalendarBodyContainer">
-                            <Calendar ref={calendarRef}/>
+                            <Calendar key={calendarKey1} onDateChange={handleDateChange} selectedStartDate={selectedStartDate}
+                            selectedEndDate={selectedEndDate} ref={calendarRef}/>
                         </div>
                         <div className="listingBodyMainLeftCalendarFooterContainer">
                             <div className="listingBodyMainLeftCalendarFooterTextContainer" onClick={handleClearDates}>
@@ -443,17 +486,18 @@ function ListingBody() {
                                 <div className="listingBodyMainRightCheckBodyContainerMainUpper2">
                                     <div className="listingBodyMainRightCheckBodyContainerMainUpperLeft2">
                                         <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInText2">CHECK-IN</p>
-                                        <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText2">Add date</p>
+                                        <p className={!selectedStartDate ?"listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText2" : "listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText22"}>{selectedStartDate ? formatDate(selectedStartDate) : "Add date"}</p>
                                     </div>
                                     <div className="listingBodyMainRightCheckBodyContainerMainUpperRight2">
                                         <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInText2">CHECKOUT</p>
-                                        <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText2">Add date</p>
+                                        <p className={!selectedEndDate ?"listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText2" : "listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText22"}>{selectedEndDate ? formatDate(selectedEndDate) : "Add date"}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className="listingBodyMainRightCheckInContainerLower">
-                            <Calendar ref={calendarRef2}/>
+                            <Calendar key={calendarKey2} onDateChange={handleDateChange} selectedStartDate={selectedStartDate}
+                            selectedEndDate={selectedEndDate} ref={calendarRef2}/>
                             <div className="listingBodyMainLeftCalendarFooterTextContainer3" onClick={handleClearDates2}>
                                 <p className="listingBodyMainLeftCalendarFooterText3">Clear dates</p>
                             </div>
@@ -467,13 +511,13 @@ function ListingBody() {
                                 <p className='homeHeader2SearchDropdownGuestContainerLeftText4'>Ages 13 or above</p>
                             </div>
                             <div className='homeHeader2SearchDropdownGuestContainerRight2'>
-                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("adults", "-")}>
                                     <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>-</p>
                                 </div>
 
-                                    <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>0</p>
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>{adultsCounter}</p>
 
-                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("adults", "+")}>
                                     <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>+</p>
                                 </div>
                             </div>
@@ -484,13 +528,13 @@ function ListingBody() {
                                 <p className='homeHeader2SearchDropdownGuestContainerLeftText4'>Ages 2-12</p>
                             </div>
                             <div className='homeHeader2SearchDropdownGuestContainerRight2'>
-                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("children", "-")}>
                                     <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>-</p>
                                 </div>
 
-                                    <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>0</p>
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>{childrenCounter}</p>
 
-                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("children", "+")}>
                                     <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>+</p>
                                 </div>
                             </div>
@@ -501,13 +545,13 @@ function ListingBody() {
                                 <p className='homeHeader2SearchDropdownGuestContainerLeftText4'>Under 2</p>
                             </div>
                             <div className='homeHeader2SearchDropdownGuestContainerRight2'>
-                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("infants", "-")}>
                                     <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>-</p>
                                 </div>
 
-                                    <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>0</p>
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>{infantsCounter}</p>
 
-                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("infants", "+")}>
                                     <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>+</p>
                                 </div>
                             </div>
@@ -518,13 +562,13 @@ function ListingBody() {
                                 <p className='homeHeader2SearchDropdownGuestContainerLeftText4'>Service Animals Included</p>
                             </div>
                             <div className='homeHeader2SearchDropdownGuestContainerRight2'>
-                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("pets", "-")}>
                                     <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>-</p>
                                 </div>
 
-                                    <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>0</p>
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>{petCounter}</p>
 
-                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("pets", "+")}>
                                     <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>+</p>
                                 </div>
                             </div>
@@ -551,11 +595,11 @@ function ListingBody() {
                                 <div className="listingBodyMainRightCheckBodyContainerMainUpper" onClick={handleUpperClick}>
                                     <div className="listingBodyMainRightCheckBodyContainerMainUpperLeft">
                                         <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInText">CHECK-IN</p>
-                                        <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText">3/3/2023</p>
+                                        <p className={!selectedStartDate ? "listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText" : "listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText2"}>{selectedStartDate ? formatDate(selectedStartDate) : "Add date"}</p>
                                     </div>
                                     <div className="listingBodyMainRightCheckBodyContainerMainUpperRight">
                                         <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInText">CHECKOUT</p>
-                                        <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText">3/7/2023</p>
+                                        <p className={!selectedEndDate ? "listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText" : "listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText2"}>{selectedEndDate ? formatDate(selectedEndDate) : "Add date"}</p>
                                     </div>
                                 </div>
                                 <div className="listingBodyMainRightCheckBodyContainerMainLower" onClick={handleLowerClick}>

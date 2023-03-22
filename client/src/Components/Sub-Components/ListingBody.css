@@ -1041,6 +1041,11 @@
                             color: var(--gray);
                         }
 
+                        .listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText22 {
+                            font-size: 14px;
+                            color: var(--black);
+                        }
+
                     .listingBodyMainRightCheckBodyContainerMainUpperRight2 {
                         height: 100%;
                         width: 50%;
@@ -1098,6 +1103,12 @@
 
                             .listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText {
                                 font-size: 14px;
+                                color: var(--gray);
+                            }
+
+                            .listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText2 {
+                                font-size: 14px;
+                                color: var(--black);
                             }
 
                         .listingBodyMainRightCheckBodyContainerMainUpperRight {
