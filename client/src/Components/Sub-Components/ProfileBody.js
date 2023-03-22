@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import './ProfileBody.css'
 
@@ -7,6 +7,17 @@ import homePic from '../../Images/home1.jpg'
 import ProfileListingCard from "./ProfileListingCard";
 
 function ProfileBody() {
+    const [activeIndex, setActiveIndex] = useState(0);
+    const listings = [<ProfileListingCard />, <ProfileListingCard />, <ProfileListingCard />, <ProfileListingCard />]
+
+    const handlePrevClick = () => {
+        setActiveIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : listings.length - 1))
+    }
+
+    const handleNextClick = () => {
+        setActiveIndex((prevIndex) => (prevIndex < listings.length - 1 ? prevIndex + 1 : 0))
+    }
+
     return (
         <div className="profileBodyContainer">
             <div className="profileBodyLeftContainer">
@@ -38,13 +49,13 @@ function ProfileBody() {
                 <div className="profileBodyListingsContainer">
                     <p className="profileBodyListingsHeaderText">Carlos' Listings</p>
                     <div className="profileBodyListingsBodyContainer">
-                        <ProfileListingCard/>
-                        <ProfileListingCard/>
+                        {listings[activeIndex]}
+                        {listings[(activeIndex + 1) % listings.length]}
                         <div className="profileBodyListingsBodyOverlayContainer">
-                            <div className="profileBodyListingsBodyOverlayArrowContainer">
+                            <div className="profileBodyListingsBodyOverlayArrowContainer" onClick={handlePrevClick}>
                                 <i className="fa-solid fa-chevron-left profileBodyListingsBodyOverlayArrow"></i>
                             </div>
-                            <div className="profileBodyListingsBodyOverlayArrowContainer">
+                            <div className="profileBodyListingsBodyOverlayArrowContainer" onClick={handleNextClick}>
                                 <i className="fa-solid fa-chevron-right profileBodyListingsBodyOverlayArrow"></i>
                             </div>
                         </div>

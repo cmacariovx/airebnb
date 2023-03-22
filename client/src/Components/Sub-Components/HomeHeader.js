@@ -12,6 +12,8 @@ function HomeHeader(props) {
     const homePage = props.homePage
     const profilePage = props.profilePage ? props.profilePage : null
 
+    const [currentPlace, setCurrentPlace] = useState("")
+
     const [searchHeaderOpen, setSearchHeaderOpen] = useState(false)
     const [searchResults, setSearchResults] = useState([])
     const [autocompleteService, setAutocompleteService] = useState(null)
@@ -54,6 +56,11 @@ function HomeHeader(props) {
         }
     }
 
+    function setPlace(place) {
+        setCurrentPlace(place)
+        inputRef.current.value = place
+    }
+
     useEffect(() => {
         handleScriptLoad()
     }, [])
@@ -83,6 +90,17 @@ function HomeHeader(props) {
             setActiveProfileDropdown(false)
         }
     }
+
+    const debounce = (func, delay) => {
+        let debounceTimer
+        return (...args) => {
+            const context = this
+            clearTimeout(debounceTimer)
+            debounceTimer = setTimeout(() => func.apply(context, args), delay)
+        }
+    }
+
+    const debouncedSearchPlaces = debounce(searchPlaces, 300)
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside)
@@ -180,7 +198,7 @@ function HomeHeader(props) {
                         <input ref={inputRef}
                             className="homeHeader2SearchDropdownSubInput"
                             placeholder="Search destinations"
-                            onChange={(e) => searchPlaces(e.target.value)}
+                            onChange={(e) => debouncedSearchPlaces(e.target.value)}
                         >
                         </input>
                     </div>
@@ -203,7 +221,7 @@ function HomeHeader(props) {
                 <div className="homeHeader2SearchDropdownBackdrop" onClick={() => setSearchHeaderOpen(false)}></div>
                 {activeDropdown === "where" && searchResults && searchResults.length > 0 && <div className="homeHeader2SearchDropdownPlacesContainer">
                     {searchResults.map((result, index) => (
-                        <div key={index} className="homeHeader2SearchDropdownPlaceContainer">
+                        <div key={index} className="homeHeader2SearchDropdownPlaceContainer" onClick={() => setPlace(result.description)}>
                             <i className="fa-solid fa-location-dot homeHeader2SearchDropdownPlaceIcon"></i>
                             <p className="homeHeader2SearchDropdownPlaceText">{result.description}</p>
                         </div>

@@ -70,8 +70,7 @@ function CreateListing() {
 
     if (listingBodyId == 6 || listingBodyId == 7) {
         const loader = new Loader({
-        apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-        version: "weekly",
+            apiKey: "AIzaSyBFJz6zYSkAB1APFxHzmiGBoCkn0Ylron0",
         })
 
         loader.load().then((google) => {
