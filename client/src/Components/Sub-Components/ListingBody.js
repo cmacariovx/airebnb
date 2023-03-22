@@ -17,6 +17,7 @@ function ListingBody() {
     const [checkInContainerVisible, setCheckInContainerVisible] = useState(false)
     const [guestsContainerVisible, setGuestsContainerVisible] = useState(false);
 
+    const stickyContainerRef = useRef()
     const guestsContainerRef = useRef()
     const checkInContainerRef = useRef()
 
@@ -153,21 +154,64 @@ function ListingBody() {
         navigate("/profile/" + "userId")
     }
 
+    const offsetTop = 80
+
+    useEffect(() => {
+        console.log(checkInContainerRef.current)
+        // checkInContainerRef doesnt exist until you spawn it in with click
+        // it doesnt register that its on until you click it in, click it off, then click it back in
+        if (stickyContainerRef.current && (checkInContainerRef.current || guestsContainerRef.current)) {
+            console.log(55)
+            const handleScroll = () => {
+                const scrollY = window.pageYOffset
+
+                if (scrollY >= offsetTop) {
+                    if (checkInContainerRef) {
+                        checkInContainerRef.current.style.position = 'fixed'
+                        checkInContainerRef.current.style.top = `${offsetTop}px`
+                    }
+
+                    if (guestsContainerRef) {
+                        guestsContainerRef.current.style.position = 'fixed'
+                        guestsContainerRef.current.style.top = `${offsetTop}px`
+                    }
+                }
+                else {
+                    if (checkInContainerRef) {
+                        checkInContainerRef.current.style.position = 'absolute'
+                        checkInContainerRef.current.style.top = '0'
+                    }
+
+                    if (guestsContainerRef) {
+                        guestsContainerRef.current.style.position = 'absolute'
+                        guestsContainerRef.current.style.top = '0'
+                    }
+                }
+            }
+
+            window.addEventListener('scroll', handleScroll)
+
+            return () => {
+                window.removeEventListener('scroll', handleScroll)
+            }
+        }
+    }, [stickyContainerRef.current, checkInContainerRef.current, guestsContainerRef.current])
+
     return (
         <div className="listingBodyContainer">
             <div className="floatingListingHeader" id="floatingListingHeader">
                 <div className="floatingListingHeaderLeft">
                     <a className="floatingListingNavContainer" href="#photosAnchor">
-                        <a className="floatingListingNavText">Photos</a>
+                        <p className="floatingListingNavText">Photos</p>
                     </a>
                     <a className="floatingListingNavContainer" href="#amenitiesAnchor">
-                        <a className="floatingListingNavText">Amenities</a>
+                        <p className="floatingListingNavText">Amenities</p>
                     </a>
                     <a className="floatingListingNavContainer" href="#reviewsAnchor">
-                        <a className="floatingListingNavText">Reviews</a>
+                        <p className="floatingListingNavText">Reviews</p>
                     </a>
                     <a className="floatingListingNavContainer" href="#locationAnchor">
-                        <a className="floatingListingNavText">Location</a>
+                        <p className="floatingListingNavText">Location</p>
                     </a>
                 </div>
                 <div className="floatingListingHeaderRight" id="floatingListingHeaderRight">
@@ -372,7 +416,7 @@ function ListingBody() {
                         </div>
                     </div>
                 </div>
-                <div className="listingBodyMainRightContainer">
+                <div className="listingBodyMainRightContainer" ref={stickyContainerRef}>
                     {checkInContainerVisible && <div className="listingBodyMainRightCheckInContainer" ref={checkInContainerRef}>
                         <div className="listingBodyMainRightCheckInContainerUpper">
                             <div className="listingBodyMainRightCheckInContainerUpperLeft">
