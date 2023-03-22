@@ -9,6 +9,158 @@
     margin: 20px 0;
 }
 
+.floatingListingHeader {
+    height: 80px;
+    width: 100%;
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    background-color: white;
+    z-index: 100;
+    border-bottom: 1.5px solid rgba(160, 160, 160, 0.2);
+    padding: 0 80px;
+}
+
+    .floatingListingHeaderLeft {
+        height: 100%;
+        min-width: 400px;
+        width: 400px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+        .floatingListingNavContainer {
+            height: 100%;
+            min-width: 50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin-right: 25px;
+        }
+
+        .floatingListingNavContainer:hover {
+            border-bottom: 4px solid var(--black);
+            margin-top: 4px;
+            transition: linear 0.1s;
+        }
+
+        .floatingListingNavText {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+    .floatingListingHeaderRight {
+        height: 100%;
+        min-width: 300px;
+        width: 300px;
+        display: none;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+        .floatingListingHeaderRightLeft {
+            height: 100%;
+            min-width: 10%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .floatingListingHeaderRightLeftUpper {
+                height: 30%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+                .floatingListingHeaderRightLeftUpperPriceText {
+                    font-size: 15px;
+                    font-weight: bold;
+                    margin-right: 4px;
+                }
+
+                .floatingListingHeaderRightLeftUpperNightText {
+                    font-size: 14px;
+                }
+
+            .floatingListingHeaderRightLeftLower {
+                height: 30%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+                .floatingListReviewContainer {
+                    height: 100%;
+                    min-width: 10%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+
+                .fa-solid.fa-star.floatingListingStar {
+                    font-size: 10px;
+                    margin-bottom: 2px;
+                    margin-right: 3px;
+                }
+
+                .floatingListingReviewText {
+                    font-size: 11px;
+                    font-weight: bold;
+                }
+
+                .floatingListingDotText {
+                    font-size: 8px;
+                    margin-left: 3px;
+                    margin-right: 3px;
+                }
+
+                .floatingListingReviewCountText {
+                    font-size: 11px;
+                    font-weight: bold;
+                    color: var(--gray);
+                    text-decoration: underline;
+                }
+
+        .floatingListingHeaderRightRight {
+            height: 100%;
+            width: 50%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .floatingListingReserveButton {
+                height: 50px;
+                width: 110px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                background-color: var(--pink);
+                border-radius: 10px;
+                color: white;
+                font-weight: bold;
+                font-size: 15px;
+                cursor: pointer;
+            }
+
+
     .listingBodyIntroContainer {
         height: 80px;
         width: 100%;
@@ -655,6 +807,249 @@
                 margin-bottom: 20px;
                 margin-top: 10px;
             }
+
+            .listingBodyMainRightCheckInContainer {
+                height: 550px;
+                width: 650px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                position: absolute;
+                right: 80px;
+                top: 800px;
+                background-color: white;
+                border-radius: 20px;
+                overflow-y: hidden;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.12);
+                z-index: 99;
+                padding: 30px;
+            }
+
+                .listingBodyMainRightCheckInContainerUpper {
+                    height: 15%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                    .listingBodyMainRightCheckInContainerUpperLeft {
+                        height: 100%;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                    }
+
+                        .listingBodyMainRightCheckInContainerUpperLeftText1 {
+                            font-size: 18px;
+                            font-weight: bold;
+                            margin-bottom: 8px;
+                        }
+
+                        .listingBodyMainRightCheckInContainerUpperLeftText2 {
+                            font-size: 14px;
+                            color: var(--gray);
+                        }
+
+
+                    .listingBodyMainRightCheckInContainerUpperRight {
+                        height: 100%;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                .listingBodyMainRightCheckInContainerLower {
+                    height: 80%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .homeHeader2SearchDropdownGuestsContainer2 {
+                    height: 400px;
+                    width: 310px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    position: absolute;
+                    top: 950px;
+                    background-color: white;
+                    border-radius: 10px;
+                    overflow-y: hidden;
+                    padding: 20px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    z-index: 99;
+                }
+
+                .homeHeader2SearchDropdownGuestContainer2 {
+                    height: 25%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    border-bottom: 1px solid rgba(172, 172, 172, 0.3);
+                }
+
+                .homeHeader2SearchDropdownGuestContainer3 {
+                    height: 25%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                    .homeHeader2SearchDropdownGuestContainerLeft2 {
+                        height: 100%;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                    }
+
+                        .homeHeader2SearchDropdownGuestContainerLeftText3 {
+                            font-size: 16px;
+                            font-weight: bold;
+                            margin-bottom: 7px;
+                        }
+
+                        .homeHeader2SearchDropdownGuestContainerLeftText4 {
+                            font-size: 13px;
+                            color: var(--gray);
+                        }
+
+                    .homeHeader2SearchDropdownGuestContainerRight2 {
+                        height: 100%;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-end;
+                        align-items: center;
+                    }
+
+                        .homeHeader2SearchDropdownGuestContainerRightIconContainer2 {
+                            min-height: 35px;
+                            min-width: 35px;
+                            border-radius: 50%;
+                            border: 1px solid rgba(172, 172, 172, 0.3);
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: center;
+                            cursor: pointer;
+                        }
+
+                            .homeHeader2SearchDropdownGuestContainerRightIcon2 {
+                                font-size: 20px;
+                                font-weight: bold;
+                                color: var(--gray);
+                            }
+
+                            .homeHeader2SearchDropdownGuestContainerRightNumber2 {
+                                font-size: 16px;
+                                margin-left: 15px;
+                                margin-right: 15px;
+                            }
+
+                .listingBodyMainLeftCalendarFooterTextContainer3 {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-end;
+                    align-items: center;
+                    cursor: pointer;
+                    -webkit-user-drag: none;
+                    user-select: none;
+                }
+
+                .listingBodyMainLeftCalendarFooterText3 {
+                    height: 35px;
+                    width: 90px;
+                    border-radius: 5px;
+                    font-size: 13.5px;
+                    font-weight: bold;
+                    text-decoration: underline;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 5px;
+                    transition: 0.1s linear;
+                }
+
+                .listingBodyMainLeftCalendarFooterText3:hover {
+                    background-color: rgba(165, 165, 165, 0.1);
+                }
+
+                .listingBodyMainLeftCalendarFooterText3:active {
+                    height: 34px;
+                    width: 88px;
+                    font-size: 13px;
+                    transition: 0.1s linear;
+                    margin-right: 1px;
+                }
+
+                .listingBodyMainRightCheckBodyContainerMainUpper2 {
+                    height: 60px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                    user-select: none;
+                    border: 1px solid var(--black);
+                    border-radius: 10px;
+                }
+
+                .listingBodyMainRightCheckBodyContainerMainUpper2:active {
+                    border: 2px solid black;
+                    border-radius: 8px;
+                }
+
+                    .listingBodyMainRightCheckBodyContainerMainUpperLeft2 {
+                        height: 100%;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        border-right: 1px solid rgba(100, 100, 100, 0.5);
+                        padding: 10px;
+                    }
+
+                        .listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInText2 {
+                            font-size: 10px;
+                            font-weight: bold;
+                            margin-bottom: 5px;
+                        }
+
+                        .listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText2 {
+                            font-size: 14px;
+                            color: var(--gray);
+                        }
+
+                    .listingBodyMainRightCheckBodyContainerMainUpperRight2 {
+                        height: 100%;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        padding: 10px;
+                    }
 
                 .listingBodyMainRightCheckBodyContainerMain {
                     height: 100%;

@@ -14,13 +14,86 @@ import { Loader } from "@googlemaps/js-api-loader"
 function ListingBody() {
     const navigate = useNavigate()
 
+    const [checkInContainerVisible, setCheckInContainerVisible] = useState(false)
+    const [guestsContainerVisible, setGuestsContainerVisible] = useState(false);
+
+    const guestsContainerRef = useRef()
+    const checkInContainerRef = useRef()
+
+    let [floatingHeader, setFloatingHeader] = useState()
+    let [floatingHeaderRight, setFloatingHeaderRight] = useState()
+
+    const h = document.documentElement
+    const b = document.body
+    const st = 'scrollTop'
+    const sh = 'scrollHeight';
+
+    useEffect(() => {
+        if (document.readyState !== "loading") {
+            setFloatingHeader(document.getElementById("floatingListingHeader"))
+            setFloatingHeaderRight(document.getElementById("floatingListingHeaderRight"))
+        }
+    }, [])
+
+    document.addEventListener("scroll", (e) => {
+        let percent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+
+        if (floatingHeader && percent <= 22) floatingHeader.style.display = "none"
+        if (floatingHeader && percent > 22 && percent < 49) floatingHeader.style.display = "flex"
+
+        if (floatingHeaderRight && percent < 60) floatingHeaderRight.style.display = "none"
+        if (floatingHeaderRight && percent > 60) floatingHeaderRight.style.display = "flex"
+    })
+
+    const handleLowerClick = () => {
+        setCheckInContainerVisible(false)
+        setGuestsContainerVisible(true)
+    }
+
+    const handleUpperClick = () => {
+        setCheckInContainerVisible(!checkInContainerVisible)
+        setGuestsContainerVisible(false)
+    }
+
+    const handleClickOutside = (event) => {
+        if (
+          checkInContainerRef.current &&
+          !checkInContainerRef.current.contains(event.target)
+        ) {
+          setCheckInContainerVisible(false)
+        }
+
+        if (
+          guestsContainerRef.current &&
+          !guestsContainerRef.current.contains(event.target)
+        ) {
+          setGuestsContainerVisible(false)
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside)
+
+        return () => {
+          document.removeEventListener('mousedown', handleClickOutside)
+        }
+    }, [])
+
     const calendarRef = useRef()
+    const calendarRef2 = useRef()
 
     const handleClearDates = () => {
         if (calendarRef.current) {
             calendarRef.current.clearDates()
         }
     }
+
+    const handleClearDates2 = () => {
+        if (calendarRef2.current) {
+            calendarRef2.current.clearDates()
+        }
+    }
+
 
     let autocomplete
 
@@ -31,9 +104,9 @@ function ListingBody() {
         })
 
         loader.load().then((google) => {
-            let geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
-                let coords = [data.results[0].geometry.bounds.Ia.hi, data.results[0].geometry.bounds.Ua.hi]
-            })
+            // let geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
+            //     let coords = [data.results[0].geometry.bounds.Ia.hi, data.results[0].geometry.bounds.Ua.hi]
+            // })
             let map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
                 center: { lat: 35.5951, lng: -82.5515 },
                 zoom: 15,
@@ -82,6 +155,42 @@ function ListingBody() {
 
     return (
         <div className="listingBodyContainer">
+            <div className="floatingListingHeader" id="floatingListingHeader">
+                <div className="floatingListingHeaderLeft">
+                    <a className="floatingListingNavContainer" href="#photosAnchor">
+                        <a className="floatingListingNavText">Photos</a>
+                    </a>
+                    <a className="floatingListingNavContainer" href="#amenitiesAnchor">
+                        <a className="floatingListingNavText">Amenities</a>
+                    </a>
+                    <a className="floatingListingNavContainer" href="#reviewsAnchor">
+                        <a className="floatingListingNavText">Reviews</a>
+                    </a>
+                    <a className="floatingListingNavContainer" href="#locationAnchor">
+                        <a className="floatingListingNavText">Location</a>
+                    </a>
+                </div>
+                <div className="floatingListingHeaderRight" id="floatingListingHeaderRight">
+                    <div className="floatingListingHeaderRightLeft">
+                        <div className="floatingListingHeaderRightLeftUpper">
+                            <p className="floatingListingHeaderRightLeftUpperPriceText">$175</p>
+                            <p className="floatingListingHeaderRightLeftUpperNightText">night</p>
+                        </div>
+                        <div className="floatingListingHeaderRightLeftLower">
+                            <div className="floatingListReviewContainer">
+                                <i className="fa-solid fa-star floatingListingStar"></i>
+                                <p className="floatingListingReviewText">4.93</p>
+                            </div>
+                            <p className="floatingListingDotText">•</p>
+                            <a className="floatingListingReviewCountText">653 reviews</a>
+                        </div>
+                    </div>
+                    <div className="floatingListingHeaderRightRight">
+                        <button className="floatingListingReserveButton">Reserve</button>
+                    </div>
+                </div>
+            </div>
+            <a id="photosAnchor"></a>
             <div className="listingBodyIntroContainer">
                 <div className="listingBodyTitleContainer">
                     <p className="listingBodyTitleText">Modern Mansion</p>
@@ -173,6 +282,7 @@ function ListingBody() {
                     <div className="listingBodyMainLeftDescriptionContainer">
                         <p className="listingBodyMainLeftDescriptionText">This tree house is very unique. It features two separate sleeping quarters to give renters the ability to accommodate more friends and enjoy time together but also have private time at night. Its 25 feet up in the trees and has plenty of nature coming through and around the decks. Its also has all the amenities one would want for comfort in the main house with heat/ AC, TV, Shower, and Toilet. The bunk house also has TV/DVD, heat and AC. Come enjoy nature at its best.</p>
                     </div>
+                    <a id="amenitiesAnchor"></a>
                     <div className="listingBodyMainLeftAmenitiesContainer">
                         <div className="listingBodyMainLeftAmenitiesTitleContainer">
                             <p className="listingBodyMainLeftAmenitiesTitleText">What this place offers</p>
@@ -263,6 +373,104 @@ function ListingBody() {
                     </div>
                 </div>
                 <div className="listingBodyMainRightContainer">
+                    {checkInContainerVisible && <div className="listingBodyMainRightCheckInContainer" ref={checkInContainerRef}>
+                        <div className="listingBodyMainRightCheckInContainerUpper">
+                            <div className="listingBodyMainRightCheckInContainerUpperLeft">
+                                <p className="listingBodyMainRightCheckInContainerUpperLeftText1">Select dates</p>
+                                <p className="listingBodyMainRightCheckInContainerUpperLeftText2">Add your travel dates for exact pricing</p>
+                            </div>
+                            <div className="listingBodyMainRightCheckInContainerUpperRight">
+                                <div className="listingBodyMainRightCheckBodyContainerMainUpper2">
+                                    <div className="listingBodyMainRightCheckBodyContainerMainUpperLeft2">
+                                        <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInText2">CHECK-IN</p>
+                                        <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText2">Add date</p>
+                                    </div>
+                                    <div className="listingBodyMainRightCheckBodyContainerMainUpperRight2">
+                                        <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInText2">CHECKOUT</p>
+                                        <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText2">Add date</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="listingBodyMainRightCheckInContainerLower">
+                            <Calendar ref={calendarRef2}/>
+                            <div className="listingBodyMainLeftCalendarFooterTextContainer3" onClick={handleClearDates2}>
+                                <p className="listingBodyMainLeftCalendarFooterText3">Clear dates</p>
+                            </div>
+                        </div>
+                    </div>}
+
+                    {guestsContainerVisible && <div className="homeHeader2SearchDropdownGuestsContainer2" ref={guestsContainerRef}>
+                        <div className='homeHeader2SearchDropdownGuestContainer2'>
+                            <div className='homeHeader2SearchDropdownGuestContainerLeft2'>
+                                <p className='homeHeader2SearchDropdownGuestContainerLeftText3'>Adults</p>
+                                <p className='homeHeader2SearchDropdownGuestContainerLeftText4'>Ages 13 or above</p>
+                            </div>
+                            <div className='homeHeader2SearchDropdownGuestContainerRight2'>
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>-</p>
+                                </div>
+
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>0</p>
+
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>+</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='homeHeader2SearchDropdownGuestContainer2'>
+                            <div className='homeHeader2SearchDropdownGuestContainerLeft2'>
+                                <p className='homeHeader2SearchDropdownGuestContainerLeftText3'>Children</p>
+                                <p className='homeHeader2SearchDropdownGuestContainerLeftText4'>Ages 2-12</p>
+                            </div>
+                            <div className='homeHeader2SearchDropdownGuestContainerRight2'>
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>-</p>
+                                </div>
+
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>0</p>
+
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>+</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='homeHeader2SearchDropdownGuestContainer2'>
+                            <div className='homeHeader2SearchDropdownGuestContainerLeft2'>
+                                <p className='homeHeader2SearchDropdownGuestContainerLeftText3'>Infants</p>
+                                <p className='homeHeader2SearchDropdownGuestContainerLeftText4'>Under 2</p>
+                            </div>
+                            <div className='homeHeader2SearchDropdownGuestContainerRight2'>
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>-</p>
+                                </div>
+
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>0</p>
+
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>+</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='homeHeader2SearchDropdownGuestContainer3'>
+                            <div className='homeHeader2SearchDropdownGuestContainerLeft2'>
+                                <p className='homeHeader2SearchDropdownGuestContainerLeftText3'>Pets</p>
+                                <p className='homeHeader2SearchDropdownGuestContainerLeftText4'>Service Animals Included</p>
+                            </div>
+                            <div className='homeHeader2SearchDropdownGuestContainerRight2'>
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>-</p>
+                                </div>
+
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>0</p>
+
+                                <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2'>
+                                    <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>+</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>}
+
                     <div className="listingBodyMainRightCheckContainer">
                         <div className="listingBodyMainRightCheckHeaderContainer">
                             <div className="listingBodyMainRightCheckHeaderLeft">
@@ -280,7 +488,7 @@ function ListingBody() {
                         </div>
                         <div className="listingBodyMainRightCheckBodyContainer">
                             <div className="listingBodyMainRightCheckBodyContainerMain">
-                                <div className="listingBodyMainRightCheckBodyContainerMainUpper">
+                                <div className="listingBodyMainRightCheckBodyContainerMainUpper" onClick={handleUpperClick}>
                                     <div className="listingBodyMainRightCheckBodyContainerMainUpperLeft">
                                         <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInText">CHECK-IN</p>
                                         <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText">3/3/2023</p>
@@ -290,7 +498,7 @@ function ListingBody() {
                                         <p className="listingBodyMainRightCheckBodyContainerMainUpperLeftCheckInDateText">3/7/2023</p>
                                     </div>
                                 </div>
-                                <div className="listingBodyMainRightCheckBodyContainerMainLower">
+                                <div className="listingBodyMainRightCheckBodyContainerMainLower" onClick={handleLowerClick}>
                                     <div className="listingBodyMainRightCheckBodyContainerMainLowerLeft">
                                         <p className="listingBodyMainRightCheckBodyContainerMainLowerLeftGuestsText">GUESTS</p>
                                         <p className="listingBodyMainRightCheckBodyContainerMainLowerLeftGuestsNumText">1 guest</p>
