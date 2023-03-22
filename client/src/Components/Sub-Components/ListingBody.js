@@ -20,7 +20,7 @@ function ListingBody() {
 
     const calendarKey1 = `calendar1-${selectedStartDate}-${selectedEndDate}`
     const calendarKey2 = `calendar2-${selectedStartDate}-${selectedEndDate}`
-    
+
     const [adultsCounter, setAdultsCounter] = useState(0)
     const [childrenCounter, setChildrenCounter] = useState(0)
     const [infantsCounter, setInfantsCounter] = useState(0)
@@ -33,15 +33,15 @@ function ListingBody() {
         }
         if (counter === 'children') {
             if (operator === "-" && childrenCounter > 0) setChildrenCounter((prev) => prev - 1)
-            if (operator === "+" && childrenCounter < 10) setChildrenCounter((prev) => prev + 1)
+            if (operator === "+" && childrenCounter < 4) setChildrenCounter((prev) => prev + 1)
         }
         if (counter === 'infants') {
             if (operator === "-" && infantsCounter > 0) setInfantsCounter((prev) => prev - 1)
-            if (operator === "+" && infantsCounter < 10) setInfantsCounter((prev) => prev + 1)
+            if (operator === "+" && infantsCounter < 4) setInfantsCounter((prev) => prev + 1)
         }
         if (counter === 'pets') {
             if (operator === "-" && petCounter > 0) setPetCounter((prev) => prev - 1)
-            if (operator === "+" && petCounter < 10) setPetCounter((prev) => prev + 1)
+            if (operator === "+" && petCounter < 4) setPetCounter((prev) => prev + 1)
         }
     }
 
@@ -573,6 +573,7 @@ function ListingBody() {
                                 </div>
                             </div>
                         </div>
+                        <p className="homeHeader2SearchDropdownGuestContainer4">This place has a maximum of 4 guests, not including infants. Pets aren't allowed.</p>
                     </div>}
 
                     <div className="listingBodyMainRightCheckContainer">
@@ -605,7 +606,7 @@ function ListingBody() {
                                 <div className="listingBodyMainRightCheckBodyContainerMainLower" onClick={handleLowerClick}>
                                     <div className="listingBodyMainRightCheckBodyContainerMainLowerLeft">
                                         <p className="listingBodyMainRightCheckBodyContainerMainLowerLeftGuestsText">GUESTS</p>
-                                        <p className="listingBodyMainRightCheckBodyContainerMainLowerLeftGuestsNumText">1 guest</p>
+                                        <p className="listingBodyMainRightCheckBodyContainerMainLowerLeftGuestsNumText">{(adultsCounter > 0 || childrenCounter > 0 || infantsCounter > 0 || petCounter > 0) ? (adultsCounter + childrenCounter) + " guests, " + (infantsCounter) + " infants, " + (petCounter) + " pets" : "1 guest"}</p>
                                     </div>
                                     <i className="fa-solid fa-chevron-down listingBodyMainRightCheckBodyContainerMainLowerLeftChevronDown"></i>
                                 </div>

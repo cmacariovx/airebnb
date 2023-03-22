@@ -251,7 +251,7 @@ function HomeHeader(props) {
                     </div>
                     <div className="homeHeader2SearchDropdownWho" onClick={handleWhoClick}>
                         <p className="homeHeader2SearchDropdownSubHeader">Who</p>
-                        <p className={(adultsCounter > 0 || childrenCounter > 0 || infantsCounter > 0 || petCounter > 0) ? "homeHeader2SearchDropdownSubText2" : "homeHeader2SearchDropdownSubText"}>{(adultsCounter > 0 || childrenCounter > 0 || infantsCounter > 0 || petCounter > 0) ? (adultsCounter + childrenCounter) + " guests, " + (infantsCounter) + " infants, " + (petCounter) + " pets": "Add dates"}</p>
+                        <p className={(adultsCounter > 0 || childrenCounter > 0 || infantsCounter > 0 || petCounter > 0) ? "homeHeader2SearchDropdownSubText2" : "homeHeader2SearchDropdownSubText"}>{(adultsCounter > 0 || childrenCounter > 0 || infantsCounter > 0 || petCounter > 0) ? (adultsCounter + childrenCounter) + " guests, " + (infantsCounter) + " infants, " + (petCounter) + " pets": "Add guests"}</p>
                     </div>
                     <div className="homeHeader2SearchDropdownSearchContainer">
                         <i className="fa-solid fa-magnifying-glass homeHeader2SearchDropdownSearchIcon"></i>

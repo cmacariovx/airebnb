@@ -1,0 +1,649 @@
+.checkoutContainer {
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
+    padding-top: 100px;
+}
+
+.checkoutContainerLeft {
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkoutContainerRight {
+    min-height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    align-self: normal;
+}
+
+    .checkoutContainerRightCard {
+        min-height: 520px;
+        height: 520px;
+        width: 450px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 10px;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 250px;
+        margin-bottom: 55px;
+        padding: 0 24px;
+        padding-bottom: 0px;
+        border: 1px solid rgba(165, 165, 165, 0.4);
+    }
+
+        .checkoutContainerRightCard1 {
+            height: 25%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid rgba(160, 160, 160, 0.4);
+            padding: 20px 0;
+        }
+
+            .checkoutContainerRightCard1Left {
+                height: 100%;
+                width: 30%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+
+                .checkoutContainerRightCard1Pic {
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    object-fit: cover;
+                    border-radius: 10px;
+                }
+
+            .checkoutContainerRightCard1Right {
+                height: 100%;
+                width: 70%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-left: 15px;
+            }
+
+                .checkoutContainerRightCard1RightText1 {
+                    height: 20%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    font-size: 12px;
+                    color: var(--gray);
+                    margin-bottom: 5px;
+                }
+
+                .checkoutContainerRightCard1RightText2 {
+                    height: 60%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    font-size: 13px;
+                }
+
+                .checkoutContainerRightCard1RightTextContainer {
+                    height: 20%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+
+                    .fa-solid.fa-star.checkoutContainerRightCard1RightTextContainerIcon {
+                        font-size: 11px;
+                        margin-right: 4px;
+                    }
+
+                    .checkoutContainerRightCard1RightText3 {
+                        font-size: 11px;
+                        font-weight: bold;
+                        margin-right: 4px;
+                    }
+
+                    .checkoutContainerRightCard1RightText4 {
+                        font-size: 11px;
+                        color: var(--gray);
+                    }
+
+
+        .checkoutContainerRightCard2 {
+            height: 15%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            border-bottom: 1px solid rgba(160, 160, 160, 0.4);
+        }
+
+            .checkoutContainerRightCard2Text {
+                font-size: 15px;
+                margin-right: 4px;
+            }
+
+            .checkoutContainerRightCard2Pic {
+                height: 13px;
+                width: auto;
+                margin-bottom: 1px;
+            }
+
+        .checkoutContainerRightCard3 {
+            height: 45%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid rgba(160, 160, 160, 0.4);
+            padding: 10px 0;
+        }
+
+            .checkoutContainerRightCard3Title {
+                height: 25%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+                .checkoutContainerRightCard3TitleText {
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+            .checkoutContainerRightCard3Body {
+                height: 75%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                .checkoutContainerRightCard3BodyStatContainer {
+                    height: 25%;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+
+                    .checkoutContainerRightCard3BodyStatContainerLeftText {
+                        font-size: 15px;
+                        text-decoration: underline;
+                    }
+
+                    .checkoutContainerRightCard3BodyStatContainerRightText {
+                        font-size: 15px;
+                    }
+
+        .checkoutContainerRightCard4 {
+            height: 15%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .checkoutContainerRightCard4TotalText {
+                font-size: 15px;
+                font-weight: bold;
+            }
+
+            .checkoutContainerRightCard4TotalAmount {
+                font-size: 15px;
+                font-weight: bold;
+            }
+
+    .checkoutTitleContainer {
+        height: 100px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .checkoutTitleIconContainer {
+            min-height: 50px;
+            min-width: 50px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .checkoutTitleIconContainer:hover {
+            background-color: rgba(224, 224, 224, 0.2);
+        }
+
+            .fa-solid.fa-chevron-left.checkoutTitleIcon {
+                font-size: 16px;
+            }
+
+        .checkoutTitle {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+    .checkoutYourTripContainer {
+        height: 220px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid rgba(160, 160, 160, 0.4);
+        padding: 20px 0;
+        margin-bottom: 30px;
+    }
+
+        .checkoutYourTripText {
+            font-size: 22px;
+            font-weight: bold;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .checkoutYourTripStatContainer {
+            height: 60px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+            .checkoutYourTripStat1 {
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 7px;
+            }
+
+            .checkoutYourTripStat2 {
+                font-size: 16px;
+            }
+
+    .checkoutChoosePaymentContainer {
+        min-height: 140px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 30px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid rgba(160, 160, 160, 0.4);
+    }
+
+        .checkoutChoosePaymentText {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            width: 100%;
+            justify-content: flex-start;
+        }
+
+        .checkoutPayInFullConainer {
+            height: 80px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid var(--black);
+        }
+
+            .checkoutPayInFullUpper {
+                height: 50%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+                .checkoutPayInFullText1 {
+                    font-size: 15px;
+                    font-weight: bold;
+                    width: 50%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+
+                .checkoutPayInFullUpperRight {
+                    width: 50%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-end;
+                    align-items: center;
+                }
+
+                    .checkoutPayInFullUpperRightAmount {
+                        font-size: 15px;
+                        font-weight: bold;
+                        margin-right: 8px;
+                    }
+
+                    .leftCircleContainer {
+                        min-height: 22px;
+                        min-width: 22px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 50%;
+                        border: 1px solid rgba(160, 160, 160, 0.4);
+                    }
+
+                        .leftCircleMid {
+                            min-height: 22px;
+                            min-width: 22px;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 50%;
+                            background-color: var(--black);
+                        }
+
+                            .leftCircleLast {
+                                min-height: 8px;
+                                min-width: 8px;
+                                display: flex;
+                                flex-direction: row;
+                                justify-content: center;
+                                align-items: center;
+                                border-radius: 50%;
+                                background-color: white;
+                            }
+
+            .checkoutPayInFullText2 {
+                height: 50%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                font-size: 16px;
+                color: var(--gray);
+            }
+
+    .checkoutPaymentInfoContainer {
+        min-height: 400px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid rgba(160, 160, 160, 0.4);
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+
+        .checkoutPayementInfoHeader {
+            height: 60px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+            .checkoutPaymentInfoText {
+                font-size: 22px;
+                font-weight: bold;
+                width: 50%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+            .checkoutPaymentInfoImages {
+                height: 20px;
+                width: 50%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+            }
+
+                .checkoutPaymentInfoImage {
+                    height: 10px;
+                    width: auto;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    margin-right: 4px;
+                }
+
+        .checkoutPaymentContainer1 {
+            height: 60px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(160, 160, 160, 0.4);
+        }
+
+            .fa-credit-card {
+                font-size: 24px;
+                margin-right: 15px;
+            }
+
+        .checkoutPaymentContainer2 {
+            height: 120px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(160, 160, 160, 0.4);
+        }
+
+        .checkoutPaymentContainer2Upper {
+            height: 50%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(160, 160, 160, 0.4);
+        }
+
+            .checkoutPaymentContainerSubText {
+                font-size: 12px;
+                color: var(--gray);
+                user-select: none;
+            }
+
+            .checkoutPaymentContainerText {
+                font-size: 16px;
+                color: var(--black);
+                user-select: none;
+            }
+
+        .checkoutPaymentContainer2Lower {
+            height: 50%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid rgba(160, 160, 160, 0.4);
+        }
+
+        .checkoutPaymentContainer2LowerLeft {
+            height: 100%;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 10px 12px;
+            border-right: 1px solid rgba(160, 160, 160, 0.4);
+        }
+
+        .checkoutPaymentContainer2LowerRight {
+            height: 100%;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 10px 12px;
+        }
+
+        .checkoutPaymentContainer3 {
+            height: 60px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 10px 12px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(160, 160, 160, 0.4);
+        }
+
+        .checkoutPaymentContainer4 {
+            height: 60px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 10px 12px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(160, 160, 160, 0.4);
+        }
+
+    .checkoutCancellationPolicyContainer {
+        min-height: 100px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(160, 160, 160, 0.4);
+        margin-bottom: 20px;
+    }
+
+        .checkoutCancellationPolicyText1 {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .checkoutCancellationPolicyText2 {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+    .checkoutButtonContainer {
+        height: 80px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .checkoutButton {
+        height: 55px;
+        width: 200px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        background-color: var(--pink);
+        font-weight: bold;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .checkoutHeader {
+        height: 80px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        background-color: white;
+        z-index: 99;
+        padding: 10px 40px;
+        border-bottom: 1px solid rgba(160, 160, 160, 0.4);
+    }
+
+        .checkoutHeaderImage {
+            height: 32px;
+            width: auto;
+        }
+
+    .bottom {
+        position: fixed;
+        bottom: 0;
+        z-index: 99;
+    }

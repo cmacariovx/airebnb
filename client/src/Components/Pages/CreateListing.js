@@ -68,18 +68,27 @@ function CreateListing() {
         else if (sign == "+" && priceCounter < 995) setPriceCounter(prev => prev + 5)
     }
 
-    if (listingBodyId == 6 || listingBodyId == 7) {
+    const [googleAPI, setGoogleAPI] = useState(null)
+
+    useEffect(() => {
         const loader = new Loader({
-            apiKey: "AIzaSyBFJz6zYSkAB1APFxHzmiGBoCkn0Ylron0",
+          apiKey: "AIzaSyBFJz6zYSkAB1APFxHzmiGBoCkn0Ylron0",
         })
 
         loader.load().then((google) => {
-            let coords
+            setGoogleAPI(google)
+        })
+    }, [])
 
-            let geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
-                coords = [data.results[0].geometry.bounds.Ja.hi, data.results[0].geometry.bounds.Va.hi]
-                console.log(coords)
-            })
+    useEffect(() => {
+        if ((listingBodyId == 6 || listingBodyId == 7) && googleAPI) {
+            let coords
+            const google = googleAPI
+
+            // let geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
+            //     coords = [data.results[0].geometry.bounds.Ja.hi, data.results[0].geometry.bounds.Va.hi]
+            //     console.log(coords)
+            // })
             let map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
                 center: { lat: 35.5951, lng: -82.5515 },
                 zoom: 15,
@@ -121,8 +130,8 @@ function CreateListing() {
 
             marker.setIcon(icon)
             map.set("styles", mapStyling)
-        })
-    }
+        }
+    }, [listingBodyId, googleAPI])
 
     function toBack() {
         navigate("/createListing/" + (listingBodyId - 1))

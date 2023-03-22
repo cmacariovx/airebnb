@@ -10,6 +10,7 @@ import Listing from './Components/Pages/Listing'
 import Profile from './Components/Pages/Profile'
 import CreateListing from './Components/Pages/CreateListing'
 import HostingDashboard from './Components/Pages/HostingDashboard'
+import Checkout from './Components/Pages/Checkout'
 
 import AppPrivateRoutes from './AppRoutes/AppPrivateRoutes'
 import AppPublicRoutes from'./AppRoutes/AppPublicRoutes'
@@ -66,6 +67,7 @@ function App() {
             <Route path='/profile/:userId' element={<Profile/>} />
             <Route path='/createListing/:createListingBodyId' element={<CreateListing/>} />
             <Route path='/hostingDashboard' exact element={<HostingDashboard/>}/>
+            <Route path='/checkout/:id' element={<Checkout/>}/>
           </Route>
 
           <Route element={<AppPrivateRoutes isLoadingLogin={loadingLogin}/>}>
