@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle } from "react";
+import React, { useState, useImperativeHandle, useEffect } from "react";
 
 import './Calendar.css'
 
@@ -17,14 +17,14 @@ const Calendar = React.forwardRef((props, ref) => {
 
     const handleLeftArrowClick = () => {
         if (currentMonth === currentDate.getMonth() && currentYear === currentDate.getFullYear()) {
-            return;
+            return
         }
 
         if (currentMonth > 0) {
             setCurrentMonth(currentMonth - 1);
         } else if (currentYear > currentDate.getFullYear()) {
             setCurrentMonth(11);
-            setCurrentYear(currentYear - 1);
+            setCurrentYear(currentYear - 1)
         }
     };
 
@@ -37,7 +37,7 @@ const Calendar = React.forwardRef((props, ref) => {
             setCurrentMonth(currentMonth + 1);
         } else if (currentYear < currentDate.getFullYear() + 1) {
             setCurrentMonth(0);
-            setCurrentYear(currentYear + 1);
+            setCurrentYear(currentYear + 1)
         }
     };
 
@@ -55,6 +55,7 @@ const Calendar = React.forwardRef((props, ref) => {
 
         if (!startDate) {
             setStartDate(selectedDate)
+            props.onDateChange(selectedDate, endDate)
         }
         else if (!endDate) {
             if (selectedDate < startDate) {
@@ -67,17 +68,21 @@ const Calendar = React.forwardRef((props, ref) => {
             else {
                 setStartDate(null)
             }
+            props.onDateChange(startDate, endDate)
         }
         else {
             if (selectedDate.getTime() === startDate.getTime()) {
                 setStartDate(endDate)
                 setEndDate(null)
-            } else if (selectedDate.getTime() === endDate.getTime()) {
+            }
+            else if (selectedDate.getTime() === endDate.getTime()) {
                 setEndDate(null)
-            } else {
+            }
+            else {
                 setStartDate(selectedDate)
                 setEndDate(null)
             }
+            props.onDateChange(startDate, endDate)
         }
     }
 
@@ -162,6 +167,10 @@ const Calendar = React.forwardRef((props, ref) => {
 
     const leftCalendarData = generateCalendar(currentMonth, currentYear)
     const rightCalendarData = generateCalendar(nextMonth, nextYear)
+
+    useEffect(() => {
+        props.onDateChange(startDate, endDate)
+    }, [startDate, endDate])
 
     return (
         <div className="calendarContainer">

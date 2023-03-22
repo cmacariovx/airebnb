@@ -319,6 +319,12 @@
             color: rgb(168, 168, 168)
         }
 
+        .homeHeader2SearchDropdownSubText2 {
+            font-size: 13.4px;
+            color: var(--black);
+            font-weight: bold;
+        }
+
         .homeHeader2SearchDropdownSubInput {
             font-size: 13.4px;
             color: var(--black);

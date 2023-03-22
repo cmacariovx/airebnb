@@ -12,6 +12,45 @@ function HomeHeader(props) {
     const homePage = props.homePage
     const profilePage = props.profilePage ? props.profilePage : null
 
+    const [adultsCounter, setAdultsCounter] = useState(0)
+    const [childrenCounter, setChildrenCounter] = useState(0)
+    const [infantsCounter, setInfantsCounter] = useState(0)
+    const [petCounter, setPetCounter] = useState(0)
+
+    const [selectedStartDate, setSelectedStartDate] = useState(null)
+    const [selectedEndDate, setSelectedEndDate] = useState(null)
+
+    const handleDateChange = (startDate, endDate) => {
+        setSelectedStartDate(startDate)
+        setSelectedEndDate(endDate)
+    }
+
+    const formatDate = (date) => {
+        if (!date) return "Not selected"
+        const month = date.toLocaleString("en-US", { month: "short" })
+        const day = date.getDate()
+        return `${month} ${day}`
+    }
+
+    function increment(counter, operator) {
+        if (counter === 'adults') {
+            if (operator === "-" && adultsCounter > 0) setAdultsCounter((prev) => prev - 1)
+            if (operator === "+" && adultsCounter < 10) setAdultsCounter((prev) => prev + 1)
+        }
+        if (counter === 'children') {
+            if (operator === "-" && childrenCounter > 0) setChildrenCounter((prev) => prev - 1)
+            if (operator === "+" && childrenCounter < 10) setChildrenCounter((prev) => prev + 1)
+        }
+        if (counter === 'infants') {
+            if (operator === "-" && infantsCounter > 0) setInfantsCounter((prev) => prev - 1)
+            if (operator === "+" && infantsCounter < 10) setInfantsCounter((prev) => prev + 1)
+        }
+        if (counter === 'pets') {
+            if (operator === "-" && petCounter > 0) setPetCounter((prev) => prev - 1)
+            if (operator === "+" && petCounter < 10) setPetCounter((prev) => prev + 1)
+        }
+    }
+
     const [currentPlace, setCurrentPlace] = useState("")
 
     const [searchHeaderOpen, setSearchHeaderOpen] = useState(false)
@@ -204,15 +243,15 @@ function HomeHeader(props) {
                     </div>
                     <div className="homeHeader2SearchDropdownCheckIn" onClick={handleCheckInClick}>
                         <p className="homeHeader2SearchDropdownSubHeader">Check in</p>
-                        <p className="homeHeader2SearchDropdownSubText">Add dates</p>
+                        <p className={!selectedStartDate ? "homeHeader2SearchDropdownSubText": "homeHeader2SearchDropdownSubText2"}>{selectedStartDate ? formatDate(selectedStartDate) : "Add dates"}</p>
                     </div>
                     <div className="homeHeader2SearchDropdownCheckOut" onClick={handleCheckOutClick}>
                         <p className="homeHeader2SearchDropdownSubHeader">Check out</p>
-                        <p className="homeHeader2SearchDropdownSubText">Add dates</p>
+                        <p className={!selectedEndDate ? "homeHeader2SearchDropdownSubText": "homeHeader2SearchDropdownSubText2"}>{selectedEndDate ? formatDate(selectedEndDate) : "Add dates"}</p>
                     </div>
                     <div className="homeHeader2SearchDropdownWho" onClick={handleWhoClick}>
                         <p className="homeHeader2SearchDropdownSubHeader">Who</p>
-                        <p className="homeHeader2SearchDropdownSubText">Add guests</p>
+                        <p className={(adultsCounter > 0 || childrenCounter > 0 || infantsCounter > 0 || petCounter > 0) ? "homeHeader2SearchDropdownSubText2" : "homeHeader2SearchDropdownSubText"}>{(adultsCounter > 0 || childrenCounter > 0 || infantsCounter > 0 || petCounter > 0) ? (adultsCounter + childrenCounter) + " guests, " + (infantsCounter) + " infants, " + (petCounter) + " pets": "Add dates"}</p>
                     </div>
                     <div className="homeHeader2SearchDropdownSearchContainer">
                         <i className="fa-solid fa-magnifying-glass homeHeader2SearchDropdownSearchIcon"></i>
@@ -229,7 +268,7 @@ function HomeHeader(props) {
                 </div>}
                 {activeDropdown === "checkIn" || activeDropdown === "checkOut" ? <div className="homeHeader2SearchDropdownCalendarsContainer">
                     <div className="homeHeader2SearchDropdownCalendars">
-                        <Calendar ref={calendarRef}/>
+                        <Calendar onDateChange={handleDateChange} ref={calendarRef}/>
                     </div>
                     <div className="listingBodyMainLeftCalendarFooterTextContainer2" onClick={handleClearDates}>
                         <p className="listingBodyMainLeftCalendarFooterText2">Clear dates</p>
@@ -242,13 +281,13 @@ function HomeHeader(props) {
                             <p className='homeHeader2SearchDropdownGuestContainerLeftText2'>Ages 13 or above</p>
                         </div>
                         <div className='homeHeader2SearchDropdownGuestContainerRight'>
-                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("adults", "-")}>
                                 <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>-</p>
                             </div>
 
-                                <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>0</p>
+                                <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>{adultsCounter}</p>
 
-                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("adults", "+")}>
                                 <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>+</p>
                             </div>
                         </div>
@@ -259,13 +298,13 @@ function HomeHeader(props) {
                             <p className='homeHeader2SearchDropdownGuestContainerLeftText2'>Ages 2-12</p>
                         </div>
                         <div className='homeHeader2SearchDropdownGuestContainerRight'>
-                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("children", "-")}>
                                 <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>-</p>
                             </div>
 
-                                <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>0</p>
+                                <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>{childrenCounter}</p>
 
-                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("children", "+")}>
                                 <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>+</p>
                             </div>
                         </div>
@@ -276,13 +315,13 @@ function HomeHeader(props) {
                             <p className='homeHeader2SearchDropdownGuestContainerLeftText2'>Under 2</p>
                         </div>
                         <div className='homeHeader2SearchDropdownGuestContainerRight'>
-                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("infants", "-")}>
                                 <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>-</p>
                             </div>
 
-                                <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>0</p>
+                                <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>{infantsCounter}</p>
 
-                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("infants", "+")}>
                                 <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>+</p>
                             </div>
                         </div>
@@ -293,13 +332,13 @@ function HomeHeader(props) {
                             <p className='homeHeader2SearchDropdownGuestContainerLeftText2'>Service Animals Included</p>
                         </div>
                         <div className='homeHeader2SearchDropdownGuestContainerRight'>
-                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("pets", "-")}>
                                 <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>-</p>
                             </div>
 
-                                <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>0</p>
+                                <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>{petCounter}</p>
 
-                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer'>
+                            <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("pets", "+")}>
                                 <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>+</p>
                             </div>
                         </div>
