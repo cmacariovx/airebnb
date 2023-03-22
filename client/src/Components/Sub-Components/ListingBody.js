@@ -49,6 +49,8 @@ function ListingBody() {
     const handleLowerClick = () => {
         setCheckInContainerVisible(false)
         setGuestsContainerVisible(true)
+        const scrollY = window.pageYOffset
+        console.log(scrollY)
     }
 
     const handleUpperClick = () => {
@@ -94,7 +96,6 @@ function ListingBody() {
             calendarRef2.current.clearDates()
         }
     }
-
 
     let autocomplete
 
@@ -154,37 +155,38 @@ function ListingBody() {
         navigate("/profile/" + "userId")
     }
 
-    const offsetTop = 80
+    const offsetTop = 700
+    const topOffset = 200
+    const absoluteTopCheckIn = 800
+    const absoluteGuests = 950
 
     useEffect(() => {
-        console.log(checkInContainerRef.current)
-        // checkInContainerRef doesnt exist until you spawn it in with click
-        // it doesnt register that its on until you click it in, click it off, then click it back in
-        if (stickyContainerRef.current && (checkInContainerRef.current || guestsContainerRef.current)) {
-            console.log(55)
+        if (stickyContainerRef.current) {
             const handleScroll = () => {
                 const scrollY = window.pageYOffset
+                console.log(scrollY)
 
+                // if scrollY is > 1500
                 if (scrollY >= offsetTop) {
-                    if (checkInContainerRef) {
+                    if (checkInContainerVisible && checkInContainerRef.current) {
                         checkInContainerRef.current.style.position = 'fixed'
-                        checkInContainerRef.current.style.top = `${offsetTop}px`
+                        checkInContainerRef.current.style.top = `${topOffset}px`
                     }
 
-                    if (guestsContainerRef) {
+                    if (guestsContainerVisible && guestsContainerRef.current) {
                         guestsContainerRef.current.style.position = 'fixed'
-                        guestsContainerRef.current.style.top = `${offsetTop}px`
+                        guestsContainerRef.current.style.top = `${topOffset}px`
                     }
                 }
                 else {
-                    if (checkInContainerRef) {
+                    if (checkInContainerVisible && checkInContainerRef.current) {
                         checkInContainerRef.current.style.position = 'absolute'
-                        checkInContainerRef.current.style.top = '0'
+                        checkInContainerRef.current.style.top = `${absoluteTopCheckIn}px`
                     }
 
-                    if (guestsContainerRef) {
+                    if (guestsContainerVisible && guestsContainerRef.current) {
                         guestsContainerRef.current.style.position = 'absolute'
-                        guestsContainerRef.current.style.top = '0'
+                        guestsContainerRef.current.style.top = `${absoluteGuests}px`
                     }
                 }
             }
@@ -195,7 +197,7 @@ function ListingBody() {
                 window.removeEventListener('scroll', handleScroll)
             }
         }
-    }, [stickyContainerRef.current, checkInContainerRef.current, guestsContainerRef.current])
+    }, [stickyContainerRef.current, checkInContainerVisible, guestsContainerVisible])
 
     return (
         <div className="listingBodyContainer">
