@@ -18,7 +18,9 @@ function ImageUpload(props) {
         fileReader.readAsDataURL(image)
     }, [image])
 
-    function chooseImageHandler() {
+    function chooseImageHandler(event) {
+        event.preventDefault()
+        event.stopPropagation()
         imageRef.current.click()
     }
 

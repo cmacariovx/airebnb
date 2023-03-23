@@ -8,7 +8,7 @@ function AppPublicRoutes(props) {
     // prevents loading of auth token (false null read) from redirecting too early
     if (!props.isLoadingLogin) {
         return (
-            !auth.token ? <Outlet /> : <Navigate to="/"/>
+            !auth.token ? <Outlet /> : null
             // was rerouting away from profile page on first render before the second one
         )
     }

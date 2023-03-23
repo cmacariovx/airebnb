@@ -9,7 +9,7 @@ function AppPrivateRoutes(props) {
     // -- if login is loading wait
     if (!props.isLoadingLogin) {
         return (
-            auth.token ? <Outlet /> : <Navigate to="/"/>
+            auth.token ? <Outlet /> : null
             // fails first time before second render with auth token possibly rerouting away from profile page on first render
             // before the second one
 

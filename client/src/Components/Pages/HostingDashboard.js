@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 
 import './HostingDashboard.css'
 
@@ -6,10 +6,12 @@ import ListingCard from "../Sub-Components/ListingCard"
 import logo from '../../Images/airbnbLogoMain.png'
 import personalPic from '../../Images/personalPic.jpg'
 import { useNavigate } from "react-router";
+import { AuthContext } from "../../Context/Auth-Context";
 
 function HostingDashboard() {
     const [activeProfileDropdown, setActiveProfileDropdown] = useState(false)
     const navigate = useNavigate()
+    const auth = useContext(AuthContext)
 
     const profileDropdownRef = useRef()
 
@@ -34,15 +36,19 @@ function HostingDashboard() {
                     <img src={personalPic} className="hostingDashboardProfilePic"/>
                 </div>
                 {activeProfileDropdown && <div className='homeHeaderProfileDropdownContainer2' ref={profileDropdownRef}>
-                    <div className='homeHeaderProfileDropdownOption2'>
-                        <p className='homeHeaderProfileDropdownOptionText2'>Profile</p>
-                    </div>
-                    <div className='homeHeaderProfileDropdownOption2'>
-                        <p className='homeHeaderProfileDropdownOptionText2'>Saved</p>
-                    </div>
-                    <div className='homeHeaderProfileDropdownOption2'>
-                        <p className='homeHeaderProfileDropdownOptionText2'>Log out</p>
-                    </div>
+                    {auth.isLoggedIn &&
+                        <React.Fragment>
+                            <div className='homeHeaderProfileDropdownOption' onClick={() => navigate("/profile/" + auth.userId)}>
+                                <p className='homeHeaderProfileDropdownOptionText'>Profile</p>
+                            </div>
+                            <div className='homeHeaderProfileDropdownOption'>
+                                <p className='homeHeaderProfileDropdownOptionText'>Saved</p>
+                            </div>
+                            <div className='homeHeaderProfileDropdownOption' onClick={() => auth.logout()}>
+                                <p className='homeHeaderProfileDropdownOptionText'>Log out</p>
+                            </div>
+                        </React.Fragment>
+                    }
                 </div>}
             </header>
             <div className="hostingDashboardWelcomeContainer">

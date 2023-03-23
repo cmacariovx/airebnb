@@ -32,7 +32,17 @@ function App() {
     setProfilePicture(profilePicture)
     setEmail(email)
 
-    localStorage.setItem('userDataAirebnb', JSON.stringify({userId: uid, firstName: firstName, lastName: lastName, token: token, profilePicture: profilePicture, email: email}))
+    localStorage.setItem(
+      "userDataAirebnb",
+      JSON.stringify({
+        userId: uid,
+        token: token,
+        firstName: firstName,
+        lastName: lastName,
+        profilePicture: profilePicture,
+        email: email,
+      })
+    )
   }, [])
 
   const logout = useCallback(() => {
@@ -41,14 +51,21 @@ function App() {
     setLastNameAuth(null)
     setToken(null)
     setProfilePicture(null)
-    setEmail(email)
-    localStorage.removeItem('userDataAirebnb')
+    setEmail(null)
+    localStorage.removeItem("userDataAirebnb")
   }, [])
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userDataAirebnb'))
     if (storedData && storedData.token) {
-      login(storedData.userId, storedData.firstName, storedData.lastName, storedData.token, storedData.profilePicture, storedData.email)
+      login(
+        storedData.userId,
+        storedData.token,
+        storedData.firstName,
+        storedData.lastName,
+        storedData.profilePicture,
+        storedData.email
+      )
     }
     setLoadingLogin(false)
   }, [login])
@@ -69,21 +86,24 @@ function App() {
         }}
       >
         <Routes>
-          <Route element={<AppPublicRoutes isLoadingLogin={loadingLogin}/>}>
+          {!token && <Route element={<AppPublicRoutes isLoadingLogin={loadingLogin}/>}>
+            <Route path='/' exact element={<Home/>} />
+            <Route path='/listing/:listingId' element={<Listing/>} />
+            <Route path='/profile/:userId' element={<Profile/>} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Route>}
+
+          {token && <Route element={<AppPrivateRoutes isLoadingLogin={loadingLogin}/>}>
             <Route path='/' exact element={<Home/>} />
             <Route path='/listing/:listingId' element={<Listing/>} />
             <Route path='/profile/:userId' element={<Profile/>} />
             <Route path='/createListing/:createListingBodyId' element={<CreateListing/>} />
-            <Route path='/hostingDashboard' exact element={<HostingDashboard/>}/>
             <Route path='/checkout/:id' element={<Checkout/>}/>
-          </Route>
-
-          <Route element={<AppPrivateRoutes isLoadingLogin={loadingLogin}/>}>
-            <Route path='/' exact element={<Home/>} />
-          </Route>
+            <Route path='/hostingDashboard' exact element={<HostingDashboard/>}/>
+            <Route path="*" element={<Navigate to="/" />} />
+          </Route>}
         </Routes>
       </AuthContext.Provider>
-
     </div>
   )
 }

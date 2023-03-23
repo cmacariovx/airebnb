@@ -5,7 +5,7 @@ import ImageUpload from "../Sub-Components/ImageUpload";
 
 import './Signup.css'
 
-function Signup() {
+function Signup({ closeSignup, showErrorModal }) {
     const firstNameInputRef = useRef()
     const lastNameInputRef = useRef()
     const emailInputRef = useRef()
@@ -13,7 +13,7 @@ function Signup() {
 
     const [image, setImage] = useState(null)
     const [isSigningUp, setIsSigningUp] = useState(false)
-    const [isFormValid, setIsFormValid] = useState(false)
+    const [isFormValid, setIsFormValid] = useState(true)
 
     const auth = useContext(AuthContext)
 
@@ -22,20 +22,39 @@ function Signup() {
     }
 
     function validateForm() {
-        const firstNameValid = firstNameInputRef.current.value.length <= 16
-        const lastNameValid = lastNameInputRef.current.value.length <= 16
-        const emailValid = emailIsValid(emailInputRef.current.value) && emailInputRef.current.value.length <= 254
-        const passwordValid = passwordInputRef.current.value.length >= 6
-        const imageValid = image !== null
+        const errors = []
 
-        return firstNameValid && lastNameValid && emailValid && passwordValid && imageValid
-    }
+        if (!/^[A-Za-z]+$/.test(firstNameInputRef.current.value) || firstNameInputRef.current.value.length > 16) {
+            errors.push("First name must only contain letters and be no longer than 16 characters.")
+        }
+
+        if (!/^[A-Za-z]+$/.test(lastNameInputRef.current.value) || lastNameInputRef.current.value.length > 16) {
+            errors.push("Last name must only contain letters and be no longer than 16 characters.")
+        }
+
+        if (!emailIsValid(emailInputRef.current.value) || emailInputRef.current.value.length > 254) {
+            errors.push("Invalid email address. Make sure it's properly formatted and no longer than 254 characters.")
+        }
+
+        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/.test(passwordInputRef.current.value)) {
+            errors.push("Password must contain at least one uppercase letter, one lowercase letter, one number, one symbol and be at least 6 characters long.")
+        }
+
+        if (image === null) {
+            errors.push("Please upload an image.")
+        }
+
+        return errors
+      }
 
     async function signupUserHandler(event) {
         event.preventDefault()
 
-        if (!validateForm()) {
+        const errors = validateForm()
+
+        if (errors.length > 0) {
             setIsFormValid(false)
+            showErrorModal(errors)
             return
         }
 
@@ -48,7 +67,7 @@ function Signup() {
 
         formData.append('firstName', firstNameInputRef.current.value)
         formData.append('lastName', lastNameInputRef.current.value)
-        formData.append('email', emailInputRef.current.value)
+        formData.append('email', emailInputRef.current.value.toLowerCase())
         formData.append('password', passwordInputRef.current.value)
         formData.append('imageId', date)
         formData.append('image', image, date)
@@ -60,7 +79,12 @@ function Signup() {
 
         const data = await response.json()
 
-        auth.login(data.userId, data.token, data.firstName, data.lastName, data.profilePicture, data.email)
+        if (data.error) {
+            showErrorModal([data.error])
+        }
+        else {
+            auth.login(data.userId, data.token, data.firstName, data.lastName, data.profilePicture, data.email)
+        }
     }
 
     function onImageUpload(isValid, uploadedImage) {
@@ -70,16 +94,16 @@ function Signup() {
     }
 
     return (
-        <div className="signupBackdrop">
+        <div className="signupBackdrop" onClick={closeSignup}>
             <div className="signupPageContainer">
-                <form onSubmit={signupUserHandler} className="signupContainer">
+                <form onSubmit={signupUserHandler} className="signupContainer" onClick={(e) => e.stopPropagation()}>
                     <p className="signupPageTitle">Welcome to Airbnb</p>
 
                     <label className="signupLabelContainer">
-                        <input className="signupInputContainer" ref={firstNameInputRef} type="text" maxLength="16" placeholder="First name" required />
+                        <input className="signupInputContainer" ref={firstNameInputRef} type="text" minLength="2" maxLength="16" placeholder="First name" required />
                     </label>
                     <label className="signupLabelContainer">
-                        <input className="signupInputContainer" ref={lastNameInputRef} type="text" maxLength="16" placeholder="Last name"required />
+                        <input className="signupInputContainer" ref={lastNameInputRef} type="text" minLength="2" maxLength="16" placeholder="Last name" required />
                     </label>
                     <label className="signupLabelContainer">
                         <input className="signupInputContainer" ref={emailInputRef} type="email" maxLength="254" placeholder="Email" required />
@@ -90,9 +114,8 @@ function Signup() {
                     <label className="signupLabelContainer">
                         <ImageUpload onValid={onImageUpload} />
                     </label>
-                    <button className="signupSubmitButton" type="submit" disabled={!isFormValid}>Sign Up</button>
+                    <button className="signupSubmitButton" type="submit">Sign up</button>
                 </form>
-                {!isFormValid && <p>Please check your inputs and try again.</p>}
             </div>
         </div>
     )

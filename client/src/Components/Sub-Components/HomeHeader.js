@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useContext } from 'react'
 import { useNavigate } from "react-router"
 
 import './HomeHeader.css'
@@ -8,10 +8,16 @@ import personalPic from '../../Images/personalPic.jpg'
 
 import Signup from '../Pages/Signup'
 import Calendar from './Calendar'
+import Login from '../Pages/Login'
+import ErrorModal from './ErrorModal'
+
+import { AuthContext } from '../../Context/Auth-Context'
 
 function HomeHeader(props) {
     const homePage = props.homePage
     const profilePage = props.profilePage ? props.profilePage : null
+
+    const auth = useContext(AuthContext)
 
     const [adultsCounter, setAdultsCounter] = useState(0)
     const [childrenCounter, setChildrenCounter] = useState(0)
@@ -24,9 +30,39 @@ function HomeHeader(props) {
     const [showSignup, setShowSignup] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
 
+    const [showErrorModal, setShowErrorModal] = useState(false)
+    const [errorMessages, setErrorMessages] = useState([])
+
+    function showSignupHandler() {
+        if (showLogin) setShowLogin(false)
+        setShowSignup(true)
+    }
+
+    function showLoginHandler() {
+        if (showSignup) setShowSignup(false)
+        setShowLogin(true)
+    }
+
     const handleDateChange = (startDate, endDate) => {
         setSelectedStartDate(startDate)
         setSelectedEndDate(endDate)
+    }
+
+    function closeSignup() {
+        setShowSignup(false)
+    }
+
+    function closeLogin() {
+        setShowLogin(false)
+    }
+
+    const showError = (errors) => {
+        setErrorMessages(errors)
+        setShowErrorModal(true)
+    }
+
+    const closeModal = () => {
+        setShowErrorModal(false)
     }
 
     const formatDate = (date) => {
@@ -203,21 +239,27 @@ function HomeHeader(props) {
                     </div>
                 </div>
                 {activeProfileDropdown && <div className='homeHeaderProfileDropdownContainer' ref={profileDropdownRef}>
-                    {/* <div className='homeHeaderProfileDropdownOption'>
-                        <p className='homeHeaderProfileDropdownOptionText'>Profile</p>
-                    </div>
-                    <div className='homeHeaderProfileDropdownOption'>
-                        <p className='homeHeaderProfileDropdownOptionText'>Saved</p>
-                    </div>
-                    <div className='homeHeaderProfileDropdownOption'>
-                        <p className='homeHeaderProfileDropdownOptionText'>Log out</p>
-                    </div> */}
-                    <div className='homeHeaderProfileDropdownOption'>
-                        <p className='homeHeaderProfileDropdownOptionText'>Log in</p>
-                    </div>
-                    <div className='homeHeaderProfileDropdownOption'>
-                        <p className='homeHeaderProfileDropdownOptionText'>Sign up</p>
-                    </div>
+                    {auth.isLoggedIn ?
+                        <React.Fragment>
+                            <div className='homeHeaderProfileDropdownOption' onClick={() => navigate("/profile/" + auth.userId)}>
+                                <p className='homeHeaderProfileDropdownOptionText'>Profile</p>
+                            </div>
+                            <div className='homeHeaderProfileDropdownOption'>
+                                <p className='homeHeaderProfileDropdownOptionText'>Saved</p>
+                            </div>
+                            <div className='homeHeaderProfileDropdownOption' onClick={() => auth.logout()}>
+                                <p className='homeHeaderProfileDropdownOptionText'>Log out</p>
+                            </div>
+                        </React.Fragment> :
+                        <React.Fragment>
+                            <div className='homeHeaderProfileDropdownOption' onClick={showLoginHandler}>
+                                <p className='homeHeaderProfileDropdownOptionText'>Log in</p>
+                            </div>
+                            <div className='homeHeaderProfileDropdownOption' onClick={showSignupHandler}>
+                                <p className='homeHeaderProfileDropdownOptionText'>Sign up</p>
+                            </div>
+                        </React.Fragment>
+                    }
                 </div>}
             </div>
             {homePage && !searchHeaderOpen && <div className="homeHeader2Container">
@@ -355,7 +397,11 @@ function HomeHeader(props) {
                     </div>
                 </div>}
             </div>}
-            <Signup />
+            {showSignup && <Signup closeSignup={closeSignup} showErrorModal={showError}/>}
+            {showLogin && <Login closeLogin={closeLogin} showErrorModal={showError}/>}
+            {showErrorModal && (
+                <ErrorModal errors={errorMessages} closeModal={closeModal} />
+            )}
         </div>
     )
 }
