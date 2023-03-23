@@ -5,8 +5,6 @@ import PlacesAutocomplete, {
     getLatLng,
 } from 'react-places-autocomplete'
 
-import { Loader } from "@googlemaps/js-api-loader"
-
 import './CreateListing.css'
 
 import airbnbMiniLogo from '../../Images/airbnb-512.png'
@@ -30,6 +28,9 @@ import { useNavigate } from "react-router"
 
 function CreateListing() {
     const [listingBodyId, setListingBodyId] = useState(+window.location.pathname.slice(15))
+    // const [allOptions, setAllOptions] = useState({})
+    // or bool for all options
+
 
     const navigate = useNavigate()
 
@@ -38,12 +39,17 @@ function CreateListing() {
     useEffect(() => {
         if (listingBodyId < 0 || listingBodyId > 17) navigate("/hostingDashboard")
 
+        // else if (Object.keys(allOptions).length === 0) {
+        //     setListingBodyId(0)
+        //     navigate("/createListing/0")
+        // }
+
         if (listingBodyId < 3) {
             setBarProgress1(0)
         }
 
         if (listingBodyId >= 3 && listingBodyId <= 17) {
-          setBarProgress1((100 / 15) * (listingBodyId - 2))
+            setBarProgress1((100 / 15) * (listingBodyId - 2))
         }
     }, [listingBodyId])
 
@@ -68,22 +74,10 @@ function CreateListing() {
         else if (sign == "+" && priceCounter < 995) setPriceCounter(prev => prev + 5)
     }
 
-    const [googleAPI, setGoogleAPI] = useState(null)
-
     useEffect(() => {
-        const loader = new Loader({
-          apiKey: "AIzaSyBFJz6zYSkAB1APFxHzmiGBoCkn0Ylron0",
-        })
-
-        loader.load().then((google) => {
-            setGoogleAPI(google)
-        })
-    }, [])
-
-    useEffect(() => {
-        if ((listingBodyId == 6 || listingBodyId == 7) && googleAPI) {
+        if ((listingBodyId == 6 || listingBodyId == 7) && window.google) {
             let coords
-            const google = googleAPI
+            const google = window.google
 
             // let geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
             //     coords = [data.results[0].geometry.bounds.Ja.hi, data.results[0].geometry.bounds.Va.hi]
@@ -131,7 +125,7 @@ function CreateListing() {
             marker.setIcon(icon)
             map.set("styles", mapStyling)
         }
-    }, [listingBodyId, googleAPI])
+    }, [listingBodyId, window.google])
 
     function toBack() {
         navigate("/createListing/" + (listingBodyId - 1))
@@ -150,7 +144,7 @@ function CreateListing() {
                     <img src={airbnbMiniLogo} className="createListingHeaderLogo"/>
                 </div>
                 <div className="createListingHeaderRight">
-                    <button className="createListingHeaderRightButton">Exit</button>
+                    <button className="createListingHeaderRightButton" onClick={() => navigate("/hostingDashboard")}>Exit</button>
                 </div>
             </div>
 

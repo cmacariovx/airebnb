@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import './HostingDashboard.css'
 
@@ -8,15 +8,42 @@ import personalPic from '../../Images/personalPic.jpg'
 import { useNavigate } from "react-router";
 
 function HostingDashboard() {
+    const [activeProfileDropdown, setActiveProfileDropdown] = useState(false)
     const navigate = useNavigate()
+
+    const profileDropdownRef = useRef()
+
+    const handleClickOutside = (event) => {
+        if (profileDropdownRef.current && !profileDropdownRef.current.contains(event.target)) {
+            setActiveProfileDropdown(false)
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+    }, [])
 
     return (
         <div className="hostingDashboardContainer">
             <header className="hostingDashboardHeaderContainer">
                 <img src={logo} className="hostingDashboardHeaderLogo" onClick={() => navigate("/")}/>
-                <div className="hostingDashboardProfileContainer">
+                <div className="hostingDashboardProfileContainer" onClick={() => setActiveProfileDropdown(true)}>
                     <img src={personalPic} className="hostingDashboardProfilePic"/>
                 </div>
+                {activeProfileDropdown && <div className='homeHeaderProfileDropdownContainer2' ref={profileDropdownRef}>
+                    <div className='homeHeaderProfileDropdownOption2'>
+                        <p className='homeHeaderProfileDropdownOptionText2'>Profile</p>
+                    </div>
+                    <div className='homeHeaderProfileDropdownOption2'>
+                        <p className='homeHeaderProfileDropdownOptionText2'>Saved</p>
+                    </div>
+                    <div className='homeHeaderProfileDropdownOption2'>
+                        <p className='homeHeaderProfileDropdownOptionText2'>Log out</p>
+                    </div>
+                </div>}
             </header>
             <div className="hostingDashboardWelcomeContainer">
                 <p className="hostingDashboardWelcomeText">Welcome back, Carlos</p>

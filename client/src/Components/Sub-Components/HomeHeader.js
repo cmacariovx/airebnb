@@ -6,6 +6,7 @@ import './HomeHeader.css'
 import airbnbLogo from '../../Images/airbnbLogo.png'
 import personalPic from '../../Images/personalPic.jpg'
 
+import Signup from '../Pages/Signup'
 import Calendar from './Calendar'
 
 function HomeHeader(props) {
@@ -19,6 +20,9 @@ function HomeHeader(props) {
 
     const [selectedStartDate, setSelectedStartDate] = useState(null)
     const [selectedEndDate, setSelectedEndDate] = useState(null)
+
+    const [showSignup, setShowSignup] = useState(false)
+    const [showLogin, setShowLogin] = useState(false)
 
     const handleDateChange = (startDate, endDate) => {
         setSelectedStartDate(startDate)
@@ -199,7 +203,7 @@ function HomeHeader(props) {
                     </div>
                 </div>
                 {activeProfileDropdown && <div className='homeHeaderProfileDropdownContainer' ref={profileDropdownRef}>
-                    <div className='homeHeaderProfileDropdownOption'>
+                    {/* <div className='homeHeaderProfileDropdownOption'>
                         <p className='homeHeaderProfileDropdownOptionText'>Profile</p>
                     </div>
                     <div className='homeHeaderProfileDropdownOption'>
@@ -207,6 +211,12 @@ function HomeHeader(props) {
                     </div>
                     <div className='homeHeaderProfileDropdownOption'>
                         <p className='homeHeaderProfileDropdownOptionText'>Log out</p>
+                    </div> */}
+                    <div className='homeHeaderProfileDropdownOption'>
+                        <p className='homeHeaderProfileDropdownOptionText'>Log in</p>
+                    </div>
+                    <div className='homeHeaderProfileDropdownOption'>
+                        <p className='homeHeaderProfileDropdownOptionText'>Sign up</p>
                     </div>
                 </div>}
             </div>
@@ -345,6 +355,7 @@ function HomeHeader(props) {
                     </div>
                 </div>}
             </div>}
+            <Signup />
         </div>
     )
 }

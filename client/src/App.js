@@ -17,32 +17,38 @@ import AppPublicRoutes from'./AppRoutes/AppPublicRoutes'
 
 function App() {
   const [userId, setUserId] = useState(null)
-  const [usernameAuth, setUsernameAuth] = useState(null)
+  const [firstNameAuth, setFirstNameAuth] = useState(null)
+  const [lastNameAuth, setLastNameAuth] = useState(null)
   const [token, setToken] = useState(null)
   const [profilePicture, setProfilePicture] = useState(null)
+  const [email, setEmail] = useState(null)
   const [loadingLogin, setLoadingLogin] = useState(true)
 
-  const login = useCallback((uid, token, username, profilePicture) => {
+  const login = useCallback((uid, token, firstName, lastName, profilePicture, email) => {
     setUserId(uid)
-    setUsernameAuth(username)
+    setFirstNameAuth(firstName)
+    setLastNameAuth(lastName)
     setToken(token)
     setProfilePicture(profilePicture)
+    setEmail(email)
 
-    localStorage.setItem('userDataAirebnb', JSON.stringify({userId: uid, username: username, token: token, profilePicture: profilePicture}))
+    localStorage.setItem('userDataAirebnb', JSON.stringify({userId: uid, firstName: firstName, lastName: lastName, token: token, profilePicture: profilePicture, email: email}))
   }, [])
 
   const logout = useCallback(() => {
     setUserId(null)
-    setUsernameAuth(null)
+    setFirstNameAuth(null)
+    setLastNameAuth(null)
     setToken(null)
     setProfilePicture(null)
+    setEmail(email)
     localStorage.removeItem('userDataAirebnb')
   }, [])
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userDataAirebnb'))
     if (storedData && storedData.token) {
-      login(storedData.userId, storedData.username, storedData.token, storedData.profilePicture)
+      login(storedData.userId, storedData.firstName, storedData.lastName, storedData.token, storedData.profilePicture, storedData.email)
     }
     setLoadingLogin(false)
   }, [login])
@@ -53,9 +59,11 @@ function App() {
         value={{
           isLoggedIn: !!token,
           userId: userId,
-          username: usernameAuth,
+          firstName: firstNameAuth,
+          lastName: lastNameAuth,
           token: token,
           profilePicture: profilePicture,
+          email: email,
           login: login,
           logout: logout
         }}

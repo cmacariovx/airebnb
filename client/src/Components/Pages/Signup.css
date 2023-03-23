@@ -1,0 +1,94 @@
+.signupBackdrop {
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 99;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.signupPageContainer {
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 99;
+}
+
+.signupContainer {
+        height: 600px;
+        width: 500px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        background-color: white;
+        border-radius: 10px;
+        position: absolute;
+        padding: 30px 40px;
+        padding-bottom: 20px;
+    }
+
+    .signupPageTitle {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: var(--black);
+        margin-bottom: 20px;
+    }
+
+    .signupLabelContainer {
+        height: 60px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .signupInputContainer {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: 16px;
+        color: var(--black);
+        border: 1.5px solid rgba(160, 160, 160, 0.4);
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+
+    .signupInputContainer::placeholder {
+        color: var(--gray);
+    }
+
+    .signupSubmitButton {
+        min-height: 50px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+        border-radius: 10px;
+        padding: 10px 20px;
+        background-color: var(--pink);
+        cursor: pointer;
+    }
