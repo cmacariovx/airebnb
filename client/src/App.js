@@ -98,7 +98,7 @@ function App() {
             <Route path='/listing/:listingId' element={<Listing/>} />
             <Route path='/profile/:userId' element={<Profile/>} />
             <Route path='/createListing/:createListingBodyId' element={<CreateListing/>} />
-            <Route path='/checkout/:id' element={<Checkout/>}/>
+            <Route path='/checkout' element={<Checkout/>}/>
             <Route path='/hostingDashboard' exact element={<HostingDashboard/>}/>
             <Route path="*" element={<Navigate to="/" />} />
           </Route>}

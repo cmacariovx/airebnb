@@ -42,16 +42,23 @@ const Calendar = React.forwardRef(({ onDateChange, selectedStartDate, selectedEn
     };
 
     const clearDates = () => {
-        setStartDate(null);
-        setEndDate(null);
-      };
+        setStartDate(null)
+        setEndDate(null)
+      }
 
       useImperativeHandle(ref, () => ({
         clearDates,
       }))
 
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+
     const onDayClick = (day, month, year) => {
         const selectedDate = new Date(year, month, day)
+
+        if (selectedDate <= today) {
+            return
+        }
 
         if (!startDate) {
             setStartDate(selectedDate)
@@ -147,7 +154,16 @@ const Calendar = React.forwardRef(({ onDateChange, selectedStartDate, selectedEn
                         const isSelectedEnd = day && endDate && endDate.getDate() === day && endDate.getMonth() === month && endDate.getFullYear() === year
                         const isHovered = day && hoverDate && hoverDate.getDate() === day && hoverDate.getMonth() === month && hoverDate.getFullYear() === year
                         const inRange = day && isInSelectedRange(day, month, year)
-                        const cellClassName = day ? (isSelectedStart || isSelectedEnd ? 'selected' : inRange ? 'in-range' : 'day') : 'empty'
+                        const isDisabled = day && new Date(year, month, day) <= today
+                        const cellClassName = day
+                        ? isSelectedStart || isSelectedEnd
+                            ? "selected"
+                            : inRange
+                            ? "in-range"
+                            : isDisabled
+                            ? "disabled"
+                            : "day"
+                        : "empty"
                         return (
                         <td
                             key={index}

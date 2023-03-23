@@ -8,27 +8,29 @@ import aircoverLogo from '../../Images/aircover.png'
 import airbnbMapMarker2 from '../../Images/airbnbMapMarker2.png'
 import Calendar from "./Calendar";
 import { Navigate, useNavigate } from "react-router";
+import ErrorModal from "./ErrorModal";
 
 import { Loader } from "@googlemaps/js-api-loader"
 
 function ListingBody() {
     const navigate = useNavigate()
 
-
     const [selectedStartDate, setSelectedStartDate] = useState(null)
     const [selectedEndDate, setSelectedEndDate] = useState(null)
+
+    const [error, setError] = useState(null)
 
     const calendarKey1 = `calendar1-${selectedStartDate}-${selectedEndDate}`
     const calendarKey2 = `calendar2-${selectedStartDate}-${selectedEndDate}`
 
-    const [adultsCounter, setAdultsCounter] = useState(0)
+    const [adultsCounter, setAdultsCounter] = useState(1)
     const [childrenCounter, setChildrenCounter] = useState(0)
     const [infantsCounter, setInfantsCounter] = useState(0)
     const [petCounter, setPetCounter] = useState(0)
 
     function increment(counter, operator) {
         if (counter === 'adults') {
-            if (operator === "-" && adultsCounter > 0) setAdultsCounter((prev) => prev - 1)
+            if (operator === "-" && adultsCounter > 1) setAdultsCounter((prev) => prev - 1)
             if (operator === "+" && adultsCounter < 10) setAdultsCounter((prev) => prev + 1)
         }
         if (counter === 'children') {
@@ -253,6 +255,36 @@ function ListingBody() {
         }
     }, [checkInContainerVisible, guestsContainerVisible, applyStickyPositioning])
 
+    function toCheckoutHandler() {
+        if (selectedStartDate && selectedEndDate && adultsCounter > 0) {
+            const queryParams = new URLSearchParams({
+                start: selectedStartDate.toISOString(),
+                end: selectedEndDate.toISOString(),
+                adults: adultsCounter,
+                children: childrenCounter,
+                infants: infantsCounter,
+                pets: petCounter,
+            })
+
+            navigate("/checkout/?" + queryParams.toString())
+        }
+        else {
+            let errorMessage = 'Error: '
+            if (!selectedStartDate || !selectedEndDate) {
+                errorMessage += 'Please select start and end dates.'
+            }
+            if (adultsCounter < 1) {
+                errorMessage += ' Please select at least one adult.'
+            }
+
+            setError(errorMessage)
+        }
+    }
+
+    const closeModal = () => {
+        setError(false)
+    }
+
     return (
         <div className="listingBodyContainer">
             <div className="floatingListingHeader" id="floatingListingHeader">
@@ -286,7 +318,7 @@ function ListingBody() {
                         </div>
                     </div>
                     <div className="floatingListingHeaderRightRight">
-                        <button className="floatingListingReserveButton">Reserve</button>
+                        <button className="floatingListingReserveButton" onClick={toCheckoutHandler}>Reserve</button>
                     </div>
                 </div>
             </div>
@@ -606,14 +638,14 @@ function ListingBody() {
                                 <div className="listingBodyMainRightCheckBodyContainerMainLower" onClick={handleLowerClick}>
                                     <div className="listingBodyMainRightCheckBodyContainerMainLowerLeft">
                                         <p className="listingBodyMainRightCheckBodyContainerMainLowerLeftGuestsText">GUESTS</p>
-                                        <p className="listingBodyMainRightCheckBodyContainerMainLowerLeftGuestsNumText">{(adultsCounter > 0 || childrenCounter > 0 || infantsCounter > 0 || petCounter > 0) ? (adultsCounter + childrenCounter) + " guests, " + (infantsCounter) + " infants, " + (petCounter) + " pets" : "1 guest"}</p>
+                                        <p className="listingBodyMainRightCheckBodyContainerMainLowerLeftGuestsNumText">{(adultsCounter > 1 || childrenCounter > 0 || infantsCounter > 0 || petCounter > 0) ? (adultsCounter + childrenCounter) + " guests, " + (infantsCounter) + " infants, " + (petCounter) + " pets" : "1 guest"}</p>
                                     </div>
                                     <i className="fa-solid fa-chevron-down listingBodyMainRightCheckBodyContainerMainLowerLeftChevronDown"></i>
                                 </div>
                             </div>
                         </div>
                         <div className="listingBodyMainRightCheckButtonContainer">
-                            <button className="listingBodyMainRightCheckButton">Reserve</button>
+                            <button className="listingBodyMainRightCheckButton" onClick={toCheckoutHandler}>Reserve</button>
                         </div>
                         <p className="listingBodyMainRightCheckDisclaimerText">You won't be charged yet</p>
                         <div className="listingBodyMainRightCheckFeesContainer">
@@ -899,6 +931,7 @@ function ListingBody() {
                     <p className="listingBodyExploreOption">Beverly Hills</p>
                 </div>
             </div>
+            {error && <ErrorModal errors={[error]} closeModal={closeModal} />}
         </div>
     )
 }

@@ -4,7 +4,7 @@ import './ErrorModal.css'
 
 function ErrorModal({ errors, closeModal }) {
     return (
-        <div className="errorModalBackDrop" onClick={closeModal}>
+        <div className="errorModalBackDrop" onClick={(e) => {e.stopPropagation(); closeModal();}}>
             <div className="errorModal" onClick={(e) => e.stopPropagation()}>
                 <ul>
                     {errors.map((error, index) => (

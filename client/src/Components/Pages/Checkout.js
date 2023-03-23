@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useSearchParams } from "react-router-dom";
 
 import amexLogo from '../../Images/amexLogo.svg'
 import visaLogo from '../../Images/visaLogo.svg'
@@ -13,7 +14,31 @@ import home from '../../Images/home1.jpg'
 import './Checkout.css'
 
 function Checkout() {
+    const [searchParams] = useSearchParams()
+    const [selectedStartDate, setSelectedStartDate] = useState(null)
+    const [selectedEndDate, setSelectedEndDate] = useState(null)
+    const [adultsCounter, setAdultsCounter] = useState(null)
+    const [childrenCounter, setChildrenCounter] = useState(null)
+    const [infantsCounter, setInfantsCounter] = useState(null)
+    const [petCounter, setPetCounter] = useState(null)
+
+    useEffect(() => {
+        setSelectedStartDate(new Date(searchParams.get('start')))
+        setSelectedEndDate(new Date(searchParams.get('end')))
+        setAdultsCounter(parseInt(searchParams.get('adults')))
+        setChildrenCounter(parseInt(searchParams.get('children')))
+        setInfantsCounter(parseInt(searchParams.get('infants')))
+        setPetCounter(parseInt(searchParams.get('pets')))
+    }, [searchParams])
+
     const navigate = useNavigate()
+
+    const formatDate = (date) => {
+        if (!date) return "Not selected"
+        const month = date.toLocaleString("en-US", { month: "short" })
+        const day = date.getDate()
+        return `${month} ${day}`
+    }
 
     function toLinkedInProfile(event) {
         event.preventDefault()
@@ -37,11 +62,11 @@ function Checkout() {
                     <p className="checkoutYourTripText">Your trip</p>
                     <div className="checkoutYourTripStatContainer">
                         <p className="checkoutYourTripStat1">Dates</p>
-                        <p className="checkoutYourTripStat2">Apr 10 - 14</p>
+                        <p className="checkoutYourTripStat2">{formatDate(selectedStartDate) + " - " + formatDate(selectedEndDate)}</p>
                     </div>
                     <div className="checkoutYourTripStatContainer">
                         <p className="checkoutYourTripStat1">Guests</p>
-                        <p className="checkoutYourTripStat2">4 guests, 5 infants, 0 pets</p>
+                        <p className="checkoutYourTripStat2">{(adultsCounter + childrenCounter) + (adultsCounter + childrenCounter <= 1 ? " guest, " : " guests, ") + (infantsCounter) + " infants, " + (petCounter) + " pets"}</p>
                     </div>
                 </div>
                 <div className="checkoutChoosePaymentContainer">

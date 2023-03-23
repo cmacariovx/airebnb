@@ -206,3 +206,14 @@
               .calendar td.in-range {
                 background-color: rgba(210, 210, 210, 0.3);
               }
+
+              .calendar td.disabled {
+                color: #c1c1c1;
+                text-decoration: line-through;
+                cursor: not-allowed;
+              }
+
+              .calendar td.disabled:hover {
+                background-color: transparent;
+                border: none;
+              }
