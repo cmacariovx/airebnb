@@ -640,6 +640,7 @@
         .checkoutHeaderImage {
             height: 32px;
             width: auto;
+            cursor: pointer;
         }
 
     .bottom {

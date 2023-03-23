@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router";
 
 import amexLogo from '../../Images/amexLogo.svg'
 import visaLogo from '../../Images/visaLogo.svg'
@@ -12,6 +13,8 @@ import home from '../../Images/home1.jpg'
 import './Checkout.css'
 
 function Checkout() {
+    const navigate = useNavigate()
+
     function toLinkedInProfile(event) {
         event.preventDefault()
         window.open("https://www.linkedin.com/in/carlos-macariooo/")
@@ -20,7 +23,7 @@ function Checkout() {
     return (
         <div className="checkoutContainer">
             <div className="checkoutHeader">
-                <img src={airbnbLogo} className="checkoutHeaderImage"/>
+                <img src={airbnbLogo} className="checkoutHeaderImage" onClick={() => navigate("/")}/>
             </div>
 
             <div className="checkoutContainerLeft">
