@@ -85,6 +85,11 @@ function CreateListing() {
         fileReader.readAsDataURL(file)
     }
 
+    const isValidZipCode = (zipCode) => {
+        const zipCodePattern = /^\d{5}$/
+        return zipCodePattern.test(zipCode)
+    }
+
     const getNextIncompleteListingBodyId = () => {
         if (
           !placeType &&
@@ -112,7 +117,7 @@ function CreateListing() {
         if (!placeType && visitedSteps.includes(3)) return 3
         if (!placeSize && visitedSteps.includes(4)) return 4
         if (!placeAddress && visitedSteps.includes(5)) return 5
-        if (!placeZipCode && visitedSteps.includes(6)) return 6
+        if (!isValidZipCode(placeZipCode) && visitedSteps.includes(6)) return 6
         if (
           (!placeMaxGuests || !placeBedrooms || !placeBeds || !placeBathrooms) &&
           visitedSteps.includes(8)
@@ -381,7 +386,7 @@ function CreateListing() {
             "placePriceData",
             JSON.stringify({
                 priceCounter,
-                cleaningFee: Math.floor(priceCounter * (Math.ceil(Math.random() * 50) / 100)),
+                cleaningFee: Math.floor(priceCounter * (Math.ceil(Math.random() * 30) / 100)),
                 airbnbFee: Math.floor(priceCounter * 0.15),
             })
         )
@@ -891,7 +896,7 @@ function CreateListing() {
                 <div className="createListingSubBody12">
                     <p className="createListingSubBody12Title">Now, let's give your house a title</p>
                     <p className="createListingSubBody12SubTitle">Short titles work best. Have fun with it—you can always change it later.</p>
-                    <textarea rows="5" maxLength="32" className="createListingSubBody12TextArea" onChange={(e) => setPlaceTitle(e.target.value)} defaultValue={placeTitle || ''}/>
+                    <textarea rows="5" maxLength="32" className="createListingSubBody12TextArea" onChange={(e) => setPlaceTitle(e.target.value)} defaultValue={placeTitle || ''} minLength={5}/>
                     <p className="createListingSubBody12CounterText">0/32</p>
                 </div>
             </div>}
@@ -899,7 +904,7 @@ function CreateListing() {
                 <div className="createListingSubBody13">
                     <p className="createListingSubBody13Title">Create your description</p>
                     <p className="createListingSubBody13SubTitle">Share what makes your place special.</p>
-                    <textarea rows="7" maxLength="500" className="createListingSubBody13TextArea" onChange={(e) => setPlaceDesc(e.target.value)} defaultValue={placeDesc || ''}/>
+                    <textarea rows="7" maxLength="500" className="createListingSubBody13TextArea" onChange={(e) => setPlaceDesc(e.target.value)} defaultValue={placeDesc || ''} minLength={10}/>
                 </div>
             </div>}
             {listingBodyId == 14 && <div className="createListingBody14">
