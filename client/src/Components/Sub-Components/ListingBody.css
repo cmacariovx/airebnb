@@ -1265,7 +1265,7 @@
                 }
 
     .listingBodyReviewsContainer {
-        height: 900px;
+        height: auto;
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -1277,7 +1277,7 @@
     }
 
         .listingBodyReviewsHeaderContainer {
-            height: 10%;
+            min-height: 100px;
             width: 100%;
             display: flex;
             flex-direction: row;
@@ -1318,12 +1318,13 @@
             }
 
         .listingBodyReviewStatsContainer {
-            height: 15%;
+            height: 120px;
             width: 100%;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 20px;
         }
 
             .listingBodyReviewStatsContainerLeft {
@@ -1396,7 +1397,8 @@
                         }
 
         .listingBodyReviewsBodyContainer {
-            height: 75%;
+            height: auto;
+            max-height: 900px;
             width: 100%;
             display: flex;
             flex-direction: row;
@@ -1405,6 +1407,7 @@
             margin-top: 30px;
             overflow-x: hidden;
             overflow-y: auto;
+            align-items: stretch;
         }
 
         .listingBodyReviewsBodyContainer::-webkit-scrollbar {
@@ -1431,6 +1434,7 @@
                 justify-content: flex-start;
                 align-items: center;
                 padding-right: 100px;
+                flex-grow: 1;
             }
 
             .listingBodyReviewsBodyContainerRight {
@@ -1441,6 +1445,7 @@
                 justify-content: flex-start;
                 align-items: center;
                 padding-right: 100px;
+                flex-grow: 1;
             }
 
                 .listingBodyFullReviewContainer {

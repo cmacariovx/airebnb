@@ -21,6 +21,11 @@ function ListingBody() {
     const [fetchingHost, setFetchingHost] = useState(false)
     const [listingId, setListingId] = useState(window.location.pathname.slice(9))
     const [totalDays, setTotalDays] = useState(0)
+    const [reviews, setReviews] = useState([])
+    const [leftReviews, setLeftReviews] = useState([])
+    const [rightReviews, setRightReviews] = useState([])
+    const [averageRating, setAverageRating] = useState(null)
+    const [averageRatings, setAverageRatings] = useState(null)
 
     useEffect(() => {
         async function fetchListing() {
@@ -38,9 +43,12 @@ function ListingBody() {
 
             const data = await response.json()
 
-            if (!data.error) setListing(data.listing)
-            setFetchingListing(false)
+            if (!data.error) {
+                setListing(data.listing)
+                setReviews(data.listing.reviewsData.reviews)
+            }
 
+            setFetchingListing(false)
             return data
         }
 
@@ -74,6 +82,23 @@ function ListingBody() {
         }
     }, [listing])
 
+    function splitReviews() {
+        const leftReviewsArr = []
+        const rightReviewsArr = []
+
+        listing.reviewsData.reviews.forEach((review, index) => {
+            if (index % 2 === 0) leftReviewsArr.push(review)
+            else rightReviewsArr.push(review)
+        })
+
+        setLeftReviews(leftReviewsArr)
+        setRightReviews(rightReviewsArr)
+    }
+
+    useEffect(() => {
+        if (!fetchingListing && listing && reviews.length > 0) splitReviews()
+    }, [listing])
+
     const [selectedStartDate, setSelectedStartDate] = useState(null)
     const [selectedEndDate, setSelectedEndDate] = useState(null)
 
@@ -101,8 +126,10 @@ function ListingBody() {
             if (operator === "+" && infantsCounter < 4) setInfantsCounter((prev) => prev + 1)
         }
         if (counter === 'pets') {
-            if (operator === "-" && petCounter > 0) setPetCounter((prev) => prev - 1)
-            if (operator === "+" && petCounter < 4) setPetCounter((prev) => prev + 1)
+            if (listing && listing.placeMaxData.placePets) {
+                if (operator === "-" && petCounter > 0) setPetCounter((prev) => prev - 1)
+                if (operator === "+" && petCounter < 4) setPetCounter((prev) => prev + 1)
+            }
         }
     }
 
@@ -118,6 +145,14 @@ function ListingBody() {
         const day = date.getDate()
         const year = date.getFullYear()
         return `${month}/${day}/${year}`
+    }
+
+    const formatDate2 = (timestamp) => {
+        if (!timestamp) return "--"
+        const date = new Date(timestamp * 1000)
+        const month = date.toLocaleString("en-US", { month: "long" })
+        const year = date.getFullYear()
+        return `${month} ${year}`
     }
 
     const [checkInContainerVisible, setCheckInContainerVisible] = useState(false)
@@ -335,18 +370,70 @@ function ListingBody() {
         setError(false)
     }
 
-    function calculateAverageRating(reviews) {
-        if (reviews && reviews.length > 0) {
-            const totalStars = reviews.reduce((sum, review) => sum + review.stars, 0)
-            return (totalStars / reviews.length).toFixed(2)
-        } else {
-            return "New"
+    function calculateAverageRatings(reviews) {
+        if (reviews.length === 0) {
+            return {
+                cleanlinessRating: 0,
+                accuracyRating: 0,
+                communicationRating: 0,
+                locationRating: 0,
+                checkInRating: 0,
+                valueRating: 0,
+            }
         }
+
+        const sumRatings = reviews.reduce(
+            (sum, review) => ({
+                cleanlinessRating: sum.cleanlinessRating + review.cleanlinessRating,
+                accuracyRating: sum.accuracyRating + review.accuracyRating,
+                communicationRating: sum.communicationRating + review.communicationRating,
+                locationRating: sum.locationRating + review.locationRating,
+                checkInRating: sum.checkInRating + review.checkInRating,
+                valueRating: sum.valueRating + review.valueRating,
+            }),
+            {
+                cleanlinessRating: 0,
+                accuracyRating: 0,
+                communicationRating: 0,
+                locationRating: 0,
+                checkInRating: 0,
+                valueRating: 0,
+            }
+        )
+
+        const averageRatings = {
+            cleanlinessRating: (sumRatings.cleanlinessRating / reviews.length).toFixed(1),
+            accuracyRating: (sumRatings.accuracyRating / reviews.length).toFixed(1),
+            communicationRating: (sumRatings.communicationRating / reviews.length).toFixed(1),
+            locationRating: (sumRatings.locationRating / reviews.length).toFixed(1),
+            checkInRating: (sumRatings.checkInRating / reviews.length).toFixed(1),
+            valueRating: (sumRatings.valueRating / reviews.length).toFixed(1),
+        }
+
+        return averageRatings
     }
 
-    let averageRating
-    if (listing) averageRating = calculateAverageRating(listing.reviewsData.reviews)
-    else averageRating = "-"
+    function calculateAverageRating(reviews) {
+        if (reviews && reviews.length > 0) {
+            let averageRatings = calculateAverageRatings(reviews)
+            setAverageRatings(averageRatings)
+            const totalStars =
+                parseFloat(averageRatings.cleanlinessRating) +
+                parseFloat(averageRatings.accuracyRating) +
+                parseFloat(averageRatings.communicationRating) +
+                parseFloat(averageRatings.locationRating) +
+                parseFloat(averageRatings.checkInRating) +
+                parseFloat(averageRatings.valueRating)
+
+            const overallRating = (totalStars / (reviews.length * 6)).toFixed(2)
+            return overallRating
+        }
+        else return "New"
+    }
+
+    useEffect(() => {
+        if (reviews.length > 0) setAverageRating(calculateAverageRating(reviews))
+    }, [reviews])
 
     return (
         <div className="listingBodyContainer">
@@ -411,50 +498,50 @@ function ListingBody() {
             </div>
             <div className="listingBodyImagesContainer">
                 <div className="listingBodyMainImageContainer">
-                    <div
+                    {/* <div
                         className="listingBodyMainImage"
                         style={{
                             backgroundImage: (!fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[0]})`
                             : "none",
                         }}
-                    />
+                    /> */}
                 </div>
                 <div className="listingBodySubImageContainer" id="listingBodySubImage1">
-                    <div className="listingBodySubImage"
+                    {/* <div className="listingBodySubImage"
                         style={{
                             backgroundImage: (!fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[1]})`
                             : "none",
                         }}
-                    />
+                    /> */}
                 </div>
                 <div className="listingBodySubImageContainer" id="listingBodySubImage2">
-                    <div className="listingBodySubImage"
+                    {/* <div className="listingBodySubImage"
                         style={{
                             backgroundImage: (!fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[2]})`
                             : "none",
                         }}
-                    />
+                    /> */}
                 </div>
                 <div className="listingBodySubImageContainer" id="listingBodySubImage3">
-                    <div className="listingBodySubImage"
+                    {/* <div className="listingBodySubImage"
                         style={{
                             backgroundImage: (!fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[3]})`
                             : "none",
                         }}
-                    />
+                    /> */}
                 </div>
                 <div className="listingBodySubImageContainer" id="listingBodySubImage4">
-                    <div className="listingBodySubImage"
+                    {/* <div className="listingBodySubImage"
                         style={{
                             backgroundImage: (!fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[4]})`
                             : "none",
                         }}
-                    />
+                    /> */}
                 </div>
             </div>
             <div className="listingBodyMainContainer">
@@ -462,39 +549,43 @@ function ListingBody() {
                     <div className="listingBodyMainLeftHostedContainer">
                         <div className="listingBodyMainLeftHostedLeftContainer">
                             <div className="listingBodyMainLeftHostedLeftTitleContainer">
-                                <p className="listingBodyMainLeftHostedLeftTitleText">House hosted by Carlos</p>
+                                <p className="listingBodyMainLeftHostedLeftTitleText">{(!fetchingHost && host) &&"House hosted by " + host.firstName}</p>
                             </div>
                             <div className="listingBodyMainLeftHostedLeftInfoContainer">
-                                <p className="listingBodyMainLeftHostedLeftInfoText">8 guests</p>
+                                <p className="listingBodyMainLeftHostedLeftInfoText">{(!fetchingListing && listing) &&
+                                listing.placeMaxData.placeMaxGuests + " guests"}</p>
                                 <p className="listingBodyMainLeftHostedLeftDotText">•</p>
-                                <p className="listingBodyMainLeftHostedLeftInfoText">4 bedrooms</p>
+                                <p className="listingBodyMainLeftHostedLeftInfoText">{(!fetchingListing && listing) &&
+                                listing.placeMaxData.placeBedrooms + " bedrooms"}</p>
                                 <p className="listingBodyMainLeftHostedLeftDotText">•</p>
-                                <p className="listingBodyMainLeftHostedLeftInfoText">4 beds</p>
+                                <p className="listingBodyMainLeftHostedLeftInfoText">{(!fetchingListing && listing) &&
+                                listing.placeMaxData.placeBeds + " beds"}</p>
                                 <p className="listingBodyMainLeftHostedLeftDotText">•</p>
-                                <p className="listingBodyMainLeftHostedLeftInfoText">4 bath</p>
+                                <p className="listingBodyMainLeftHostedLeftInfoText">{(!fetchingListing && listing) &&
+                                listing.placeMaxData.placeBathrooms + " bath"}</p>
                             </div>
                         </div>
                         <div className="listingBodyMainRightHostedRightContainer">
                             <a href="#profileAnchor">
-                                <img src={personalPic} className="listingBodyMainRightHostedRightImage"/>
+                                <img src={(!fetchingHost && host) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + host.profilePicture) : null} className="listingBodyMainRightHostedRightImage"/>
                             </a>
                         </div>
                     </div>
                     <div className="listingBodyMainLeftCheckContainer">
-                        <div className="listingBodyMainLeftCheckSubContainer">
+                        {listing && listing.placeAmenitiesData.selfCheckIn && <div className="listingBodyMainLeftCheckSubContainer">
                             <div className="listingBodyMainLeftCheckSubLeftContainer">
                                 <i className="fa-solid fa-door-closed listingBodyMainLeftCheckSubLeftDoor"></i>
                             </div>
                             <div className="listingBodyMainLeftCheckSubRightContainer">
                                 <p className="listingBodyMainLeftCheckSubRightText">Self check-in</p>
                             </div>
-                        </div>
+                        </div>}
                         <div className="listingBodyMainLeftCheckSubContainer">
                             <div className="listingBodyMainLeftCheckSubLeftContainer">
                                 <i className="fa-solid fa-calendar listingBodyMainLeftCheckSubLeftCalendar"></i>
                             </div>
                             <div className="listingBodyMainLeftCheckSubRightContainer">
-                                <p className="listingBodyMainLeftCheckSubRightText">Free cancellation before Feb 28</p>
+                                <p className="listingBodyMainLeftCheckSubRightText">Free cancellation within 72 hours</p>
                             </div>
                         </div>
                     </div>
@@ -508,7 +599,8 @@ function ListingBody() {
                         </div>
                     </div>
                     <div className="listingBodyMainLeftDescriptionContainer">
-                        <p className="listingBodyMainLeftDescriptionText">This tree house is very unique. It features two separate sleeping quarters to give renters the ability to accommodate more friends and enjoy time together but also have private time at night. Its 25 feet up in the trees and has plenty of nature coming through and around the decks. Its also has all the amenities one would want for comfort in the main house with heat/ AC, TV, Shower, and Toilet. The bunk house also has TV/DVD, heat and AC. Come enjoy nature at its best.</p>
+                        <p className="listingBodyMainLeftDescriptionText">{(!fetchingListing && listing) &&
+                        listing.placeGeneralData.placeDesc}</p>
                     </div>
                     <a id="amenitiesAnchor"></a>
                     <div className="listingBodyMainLeftAmenitiesContainer">
@@ -517,72 +609,72 @@ function ListingBody() {
                         </div>
                         <div className="listingBodyMainLeftAmenitiesListContainer">
                             <div className="listingBodyMainLeftAmenitiesListLeftContainer">
-                                <div className="listingBodyMainLeftAmenityContainer">
+                                {(!fetchingListing && listing && listing.placeAmenitiesData.wifi) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-wifi listingBodyMainLeftAmenity"></i>
                                     </div>
                                     <div className="listingBodyMainLeftAmenityRightContainer">
                                         <p className="listingBodyMainLeftAmenityText">Wifi</p>
                                     </div>
-                                </div>
-                                <div className="listingBodyMainLeftAmenityContainer">
+                                </div>}
+                                {(!fetchingListing && listing && listing.placeAmenitiesData.heating) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-temperature-three-quarters listingBodyMainLeftAmenity"></i>
                                     </div>
                                     <div className="listingBodyMainLeftAmenityRightContainer">
                                         <p className="listingBodyMainLeftAmenityText">Heating</p>
                                     </div>
-                                </div>
-                                <div className="listingBodyMainLeftAmenityContainer">
+                                </div>}
+                                {(!fetchingListing && listing && listing.placeAmenitiesData.washerDryer) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-shirt listingBodyMainLeftAmenity"></i>
                                     </div>
                                     <div className="listingBodyMainLeftAmenityRightContainer">
                                         <p className="listingBodyMainLeftAmenityText">Washer & Dryer</p>
                                     </div>
-                                </div>
-                                <div className="listingBodyMainLeftAmenityContainer">
+                                </div>}
+                                {(!fetchingListing && listing && listing.placeAmenitiesData.selfCheckIn) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-key listingBodyMainLeftAmenity"></i>
                                     </div>
                                     <div className="listingBodyMainLeftAmenityRightContainer">
                                         <p className="listingBodyMainLeftAmenityText">Self check-in</p>
                                     </div>
-                                </div>
+                                </div>}
                             </div>
                             <div className="listingBodyMainLeftAmenitiesListRightContainer">
-                                <div className="listingBodyMainLeftAmenityContainer">
+                                {(!fetchingListing && listing && listing.placeAmenitiesData.tv) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-tv listingBodyMainLeftAmenity"></i>
                                     </div>
                                     <div className="listingBodyMainLeftAmenityRightContainer">
                                         <p className="listingBodyMainLeftAmenityText">TV</p>
                                     </div>
-                                </div>
-                                <div className="listingBodyMainLeftAmenityContainer">
+                                </div>}
+                                {(!fetchingListing && listing && listing.placeAmenitiesData.ac) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-snowflake listingBodyMainLeftAmenity"></i>
                                     </div>
                                     <div className="listingBodyMainLeftAmenityRightContainer">
                                         <p className="listingBodyMainLeftAmenityText">Air conditioning</p>
                                     </div>
-                                </div>
-                                <div className="listingBodyMainLeftAmenityContainer">
+                                </div>}
+                                {(!fetchingListing && listing && listing.placeAmenitiesData.essentials) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-bottle-droplet listingBodyMainLeftAmenity"></i>
                                     </div>
                                     <div className="listingBodyMainLeftAmenityRightContainer">
                                         <p className="listingBodyMainLeftAmenityText">Essentials</p>
                                     </div>
-                                </div>
-                                <div className="listingBodyMainLeftAmenityContainer">
+                                </div>}
+                                {(!fetchingListing && listing && listing.placeAmenitiesData.smokeAlarm) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-bell listingBodyMainLeftAmenity"></i>
                                     </div>
                                     <div className="listingBodyMainLeftAmenityRightContainer">
                                         <p className="listingBodyMainLeftAmenityText">Smoke alarm</p>
                                     </div>
-                                </div>
+                                </div>}
                             </div>
                         </div>
                     </div>
@@ -640,9 +732,7 @@ function ListingBody() {
                                 <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("adults", "-")}>
                                     <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>-</p>
                                 </div>
-
                                     <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>{adultsCounter}</p>
-
                                 <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("adults", "+")}>
                                     <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>+</p>
                                 </div>
@@ -689,17 +779,17 @@ function ListingBody() {
                             </div>
                             <div className='homeHeader2SearchDropdownGuestContainerRight2'>
                                 <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("pets", "-")}>
-                                    <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>-</p>
+                                    {(!fetchingListing && listing && listing.placeMaxData.placePets) && <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>-</p>}
                                 </div>
 
                                     <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>{petCounter}</p>
 
                                 <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("pets", "+")}>
-                                    <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>+</p>
+                                    {(!fetchingListing && listing && listing.placeMaxData.placePets) && <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>+</p>}
                                 </div>
                             </div>
                         </div>
-                        <p className="homeHeader2SearchDropdownGuestContainer4">This place has a maximum of 4 guests, not including infants. Pets aren't allowed.</p>
+                        <p className="homeHeader2SearchDropdownGuestContainer4">{(!fetchingListing && listing) && `This place has a maximum of ${listing.placeMaxData.placeMaxGuests} guests, not including infants. Pets ${listing.placeMaxData.placePets ? "are allowed." : "aren't allowed."}`}</p>
                     </div>}
 
                     <div className="listingBodyMainRightCheckContainer">
@@ -780,27 +870,48 @@ function ListingBody() {
                             <p className="listingBodyReviewStatLabel">Cleanliness</p>
                             <div className="listingBodyReviewBarContainer">
                                 <div className="listingBodyReviewBar">
-                                    <div className="listingBodyReviewBarFiller"/>
+                                    <div
+                                        className="listingBodyReviewBarFiller"
+                                        style={{
+                                            width: `${(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
+                                            ? averageRatings.cleanlinessRating * 20
+                                            : 0}%`,
+                                        }}
+                                    />
                                 </div>
-                                <p className="listingBodyReviewNumber">4.9</p>
+                                <p className="listingBodyReviewNumber">{(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.cleanlinessRating}</p>
                             </div>
                         </div>
                         <div className="listingBodyReviewStatContainer">
                             <p className="listingBodyReviewStatLabel">Communication</p>
                             <div className="listingBodyReviewBarContainer">
                                 <div className="listingBodyReviewBar">
-                                    <div className="listingBodyReviewBarFiller"/>
+                                    <div
+                                        className="listingBodyReviewBarFiller"
+                                        style={{
+                                            width: `${(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
+                                            ? averageRatings.communicationRating * 20
+                                            : 0}%`,
+                                        }}
+                                    />
                                 </div>
-                                <p className="listingBodyReviewNumber">4.9</p>
+                                <p className="listingBodyReviewNumber">{(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.communicationRating}</p>
                             </div>
                         </div>
                         <div className="listingBodyReviewStatContainer">
                             <p className="listingBodyReviewStatLabel">Check-in</p>
                             <div className="listingBodyReviewBarContainer">
                                 <div className="listingBodyReviewBar">
-                                    <div className="listingBodyReviewBarFiller"/>
+                                    <div
+                                        className="listingBodyReviewBarFiller"
+                                        style={{
+                                            width: `${(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
+                                            ? averageRatings.checkInRating * 20
+                                            : 0}%`,
+                                        }}
+                                    />
                                 </div>
-                                <p className="listingBodyReviewNumber">4.9</p>
+                                <p className="listingBodyReviewNumber">{(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.checkInRating}</p>
                             </div>
                         </div>
                     </div>
@@ -809,176 +920,88 @@ function ListingBody() {
                             <p className="listingBodyReviewStatLabel">Accuracy</p>
                             <div className="listingBodyReviewBarContainer">
                                 <div className="listingBodyReviewBar">
-                                    <div className="listingBodyReviewBarFiller"/>
+                                <div
+                                        className="listingBodyReviewBarFiller"
+                                        style={{
+                                            width: `${(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
+                                            ? averageRatings.accuracyRating * 20
+                                            : 0}%`,
+                                        }}
+                                    />
                                 </div>
-                                <p className="listingBodyReviewNumber">4.9</p>
+                                <p className="listingBodyReviewNumber">{(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.accuracyRating}</p>
                             </div>
                         </div>
                         <div className="listingBodyReviewStatContainer">
                             <p className="listingBodyReviewStatLabel">Location</p>
                             <div className="listingBodyReviewBarContainer">
                                 <div className="listingBodyReviewBar">
-                                    <div className="listingBodyReviewBarFiller"/>
+                                    <div
+                                        className="listingBodyReviewBarFiller"
+                                        style={{
+                                            width: `${(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
+                                            ? averageRatings.locationRating * 20
+                                            : 0}%`,
+                                        }}
+                                    />
                                 </div>
-                                <p className="listingBodyReviewNumber">4.9</p>
+                                <p className="listingBodyReviewNumber">{(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.locationRating}</p>
                             </div>
                         </div>
                         <div className="listingBodyReviewStatContainer">
                             <p className="listingBodyReviewStatLabel">Value</p>
                             <div className="listingBodyReviewBarContainer">
                                 <div className="listingBodyReviewBar">
-                                    <div className="listingBodyReviewBarFiller"/>
+                                    <div
+                                        className="listingBodyReviewBarFiller"
+                                        style={{
+                                            width: `${(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
+                                            ? averageRatings.valueRating * 20
+                                            : 0}%`,
+                                        }}
+                                    />
                                 </div>
-                                <p className="listingBodyReviewNumber">4.9</p>
+                                <p className="listingBodyReviewNumber">{(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.valueRating}</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="listingBodyReviewsBodyContainer">
                     <div className="listingBodyReviewsBodyContainerLeft">
-                        <div className="listingBodyFullReviewContainer">
-                            <div className="listingBodyFullReviewProfileContainer">
+                        {(!fetchingListing && listing && leftReviews.length > 0) && leftReviews.map((review) => (
+                            <div key={review._id} className="listingBodyFullReviewContainer">
+                                <div className="listingBodyFullReviewProfileContainer">
                                 <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={personalPic} className="fullReviewProfilePic"/>
+                                    <img src={(!fetchingListing && listing) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + review.creatorProfilePicture) : null} className="fullReviewProfilePic" />
                                 </div>
                                 <div className="listingBodyFullReviewProfileContainerRight">
-                                    <p className="fullReviewProfileName">Carlos</p>
-                                    <p className="fullReviewPostMonth">March 2023</p>
+                                    <p className="fullReviewProfileName">{review.creatorFirstName}</p>
+                                    <p className="fullReviewPostMonth">{formatDate2(review.postedDate)}</p>
+                                </div>
+                                </div>
+                                <div className="listingBodyFullReviewDescContainer">
+                                    <p className="listingBodyFullReviewDesc">{review.description}</p>
                                 </div>
                             </div>
-                            <div className="listingBodyFullReviewDescContainer">
-                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
-                            </div>
-                        </div>
-                        <div className="listingBodyFullReviewContainer">
-                            <div className="listingBodyFullReviewProfileContainer">
-                                <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={personalPic} className="fullReviewProfilePic"/>
-                                </div>
-                                <div className="listingBodyFullReviewProfileContainerRight">
-                                    <p className="fullReviewProfileName">Carlos</p>
-                                    <p className="fullReviewPostMonth">March 2023</p>
-                                </div>
-                            </div>
-                            <div className="listingBodyFullReviewDescContainer">
-                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
-                            </div>
-                        </div>
-                        <div className="listingBodyFullReviewContainer">
-                            <div className="listingBodyFullReviewProfileContainer">
-                                <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={personalPic} className="fullReviewProfilePic"/>
-                                </div>
-                                <div className="listingBodyFullReviewProfileContainerRight">
-                                    <p className="fullReviewProfileName">Carlos</p>
-                                    <p className="fullReviewPostMonth">March 2023</p>
-                                </div>
-                            </div>
-                            <div className="listingBodyFullReviewDescContainer">
-                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
-                            </div>
-                        </div>
-                        <div className="listingBodyFullReviewContainer">
-                            <div className="listingBodyFullReviewProfileContainer">
-                                <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={personalPic} className="fullReviewProfilePic"/>
-                                </div>
-                                <div className="listingBodyFullReviewProfileContainerRight">
-                                    <p className="fullReviewProfileName">Carlos</p>
-                                    <p className="fullReviewPostMonth">March 2023</p>
-                                </div>
-                            </div>
-                            <div className="listingBodyFullReviewDescContainer">
-                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
-                            </div>
-                        </div>
-                        <div className="listingBodyFullReviewContainer">
-                            <div className="listingBodyFullReviewProfileContainer">
-                                <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={personalPic} className="fullReviewProfilePic"/>
-                                </div>
-                                <div className="listingBodyFullReviewProfileContainerRight">
-                                    <p className="fullReviewProfileName">Carlos</p>
-                                    <p className="fullReviewPostMonth">March 2023</p>
-                                </div>
-                            </div>
-                            <div className="listingBodyFullReviewDescContainer">
-                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                     <div className="listingBodyReviewsBodyContainerRight">
-                        <div className="listingBodyFullReviewContainer">
-                            <div className="listingBodyFullReviewProfileContainer">
+                        {(!fetchingListing && listing && rightReviews.length > 0) && rightReviews.map((review) => (
+                            <div key={review._id} className="listingBodyFullReviewContainer">
+                                <div className="listingBodyFullReviewProfileContainer">
                                 <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={personalPic} className="fullReviewProfilePic"/>
+                                    <img src={review.creatorProfilePicture} className="fullReviewProfilePic" />
                                 </div>
                                 <div className="listingBodyFullReviewProfileContainerRight">
-                                    <p className="fullReviewProfileName">Carlos</p>
-                                    <p className="fullReviewPostMonth">March 2023</p>
+                                    <p className="fullReviewProfileName">{review.creatorFirstName}</p>
+                                    <p className="fullReviewPostMonth">{review.postedDate}</p>
+                                </div>
+                                </div>
+                                <div className="listingBodyFullReviewDescContainer">
+                                    <p className="listingBodyFullReviewDesc">{review.description}</p>
                                 </div>
                             </div>
-                            <div className="listingBodyFullReviewDescContainer">
-                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
-                            </div>
-                        </div>
-                        <div className="listingBodyFullReviewContainer">
-                            <div className="listingBodyFullReviewProfileContainer">
-                                <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={personalPic} className="fullReviewProfilePic"/>
-                                </div>
-                                <div className="listingBodyFullReviewProfileContainerRight">
-                                    <p className="fullReviewProfileName">Carlos</p>
-                                    <p className="fullReviewPostMonth">March 2023</p>
-                                </div>
-                            </div>
-                            <div className="listingBodyFullReviewDescContainer">
-                                {/* char limit of 170 */}
-                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
-                            </div>
-                        </div>
-                        <div className="listingBodyFullReviewContainer">
-                            <div className="listingBodyFullReviewProfileContainer">
-                                <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={personalPic} className="fullReviewProfilePic"/>
-                                </div>
-                                <div className="listingBodyFullReviewProfileContainerRight">
-                                    <p className="fullReviewProfileName">Carlos</p>
-                                    <p className="fullReviewPostMonth">March 2023</p>
-                                </div>
-                            </div>
-                            <div className="listingBodyFullReviewDescContainer">
-                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
-                            </div>
-                        </div>
-                        <div className="listingBodyFullReviewContainer">
-                            <div className="listingBodyFullReviewProfileContainer">
-                                <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={personalPic} className="fullReviewProfilePic"/>
-                                </div>
-                                <div className="listingBodyFullReviewProfileContainerRight">
-                                    <p className="fullReviewProfileName">Carlos</p>
-                                    <p className="fullReviewPostMonth">March 2023</p>
-                                </div>
-                            </div>
-                            <div className="listingBodyFullReviewDescContainer">
-                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
-                            </div>
-                        </div>
-                        <div className="listingBodyFullReviewContainer">
-                            <div className="listingBodyFullReviewProfileContainer">
-                                <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={personalPic} className="fullReviewProfilePic"/>
-                                </div>
-                                <div className="listingBodyFullReviewProfileContainerRight">
-                                    <p className="fullReviewProfileName">Carlos</p>
-                                    <p className="fullReviewPostMonth">March 2023</p>
-                                </div>
-                            </div>
-                            <div className="listingBodyFullReviewDescContainer">
-                                <p className="listingBodyFullReviewDesc">We stayed for a quick night on our way home from Disney with our kids and my mom. it was perfect. Mom had her own spot to sleep, and the kids enjoyed the treehouse.</p>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -997,10 +1020,10 @@ function ListingBody() {
                 <div className="listingBodyHostedByContainerMainLeft">
                     <div className="listingBodyHostedByProfileContainer">
                         <div className="listingBodyHostedByContainerLeft">
-                            <img src={personalPic} className="listingBodyHostedByProfilePicture" onClick={toProfileHandler}/>
+                            <img src={(!fetchingHost && host) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + host.profilePicture) : null} className="listingBodyHostedByProfilePicture" onClick={toProfileHandler}/>
                         </div>
                         <div className="listingBodyHostedByContainerRight">
-                            <p className="listingBodyHostedByContainerRightHostedByText">Hosted by Carlos</p>
+                            <p className="listingBodyHostedByContainerRightHostedByText">{(!fetchingHost && host) && `Hosted by ${host.firstName}`}</p>
                             <p className="listingBodyHostedByContainerRightDateJoinedText">Joined in March 2023</p>
                         </div>
                     </div>

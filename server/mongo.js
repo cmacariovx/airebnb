@@ -127,6 +127,13 @@ async function fetchListing(req, res, next) {
 
         let result = await db.collection("listings").findOne({_id: new ObjectId(listingId)})
 
+        if (result) {
+            const reviewIds = result.reviewsData.reviews.map(id => new ObjectId(id))
+            const reviews = await db.collection("reviews").find({_id: {$in: reviewIds}}).toArray()
+
+            result.reviewsData.reviews = reviews
+        }
+
         client.close()
 
         res.status(200).json({ message: "Listings fetched successfully.", listing: result })
