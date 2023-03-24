@@ -19,16 +19,21 @@ async function createListing (req, res, next) {
 
     const listingData = {
         placeGeneralData,
-        bookings,
         placePriceData,
         placeMaxData,
         placeLocationData,
         placeAmenitiesData,
         reviewsData,
-        imageIds
+        imageIds,
+        bookings
     }
 
     let createListingResult = await mongo.createListing(req, res, next, listingData)
 }
 
+async function fetchListings(req, res, next) {
+    let fetchListingResult = await mongo.fetchListings(req, res, next)
+}
+
 exports.createListing = createListing
+exports.fetchListings = fetchListings

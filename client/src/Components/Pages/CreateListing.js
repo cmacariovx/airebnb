@@ -383,11 +383,6 @@ function CreateListing() {
         )
 
         formData.append(
-            "bookings",
-            JSON.stringify({})
-        )
-
-        formData.append(
             "placePriceData",
             JSON.stringify({
                 priceCounter,
@@ -443,6 +438,11 @@ function CreateListing() {
                 reviews: [],
                 reviewsCount: 0,
             })
+        )
+
+        formData.append(
+            "bookings",
+            JSON.stringify({})
         )
 
         Object.entries(images).forEach(([key, imageObj], index) => {

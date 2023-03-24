@@ -5,8 +5,11 @@ const fileUpload = require("../middleware/file-upload")
 
 const router = express.Router()
 
+router.post("/fetch", listingControllers.fetchListings)
+
 router.use(checkAuth)
 
 router.post("/create", fileUpload.fields(), listingControllers.createListing)
+
 
 module.exports = router

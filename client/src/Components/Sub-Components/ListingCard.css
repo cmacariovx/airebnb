@@ -21,7 +21,9 @@
         background-image: url("../../Images/home1.jpg");
         background-repeat: no-repeat;
         background-size: cover;
+        background-position: center;
         object-fit: cover;
+        object-position: center;
     }
 
 
@@ -123,6 +125,7 @@
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 2px;
         }
 
             .listingCardInfoLocationContainer {
@@ -136,8 +139,7 @@
 
                 .listingCardInfoLocationText {
                     font-size: 14px;
-                    font-weight: bold;
-                    color: var(--black);
+                    color: var(--gray);
                 }
 
             .listingCardInfoReviewContainer {
@@ -161,7 +163,7 @@
                     color: var(--black);
                 }
 
-        .listingCardInfoMilesAwayContainer {
+        .listingCardInfoTitleContainer {
             height: 25%;
             width: 100%;
             display: flex;
@@ -170,9 +172,10 @@
             align-items: center;
         }
 
-            .listingCardInfoMilesAwayText {
+            .listingCardInfoTitleText {
                 font-size: 14px;
-                color: var(--gray);
+                font-weight: bold;
+                margin-bottom: 4px;
             }
 
         .listingCardInfoAvailableDateContainer {

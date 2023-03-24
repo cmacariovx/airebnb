@@ -93,6 +93,31 @@ async function createListing(req, res, next, listingData) {
     }
 }
 
+async function fetchListings(req, res, next) {
+    const client = new MongoClient(mongoUrl)
+    const { page } = req.body
+    const listingsPerPage = 20
+
+    try {
+        await client.connect()
+        const db = client.db("airebnb")
+
+        let result = await db.collection("listings")
+            .find()
+            .skip(page * listingsPerPage)
+            .limit(listingsPerPage)
+            .toArray()
+
+        client.close()
+
+        res.status(200).json({ message: "Listings fetched successfully.", listings: result })
+    }
+    catch (error) {
+        res.status(500).json({ error: "Sorry! Could not fetch listings, please try again." })
+    }
+}
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
 exports.createListing = createListing
+exports.fetchListings = fetchListings
