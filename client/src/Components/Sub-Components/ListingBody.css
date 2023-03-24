@@ -322,6 +322,7 @@
                 background-image: url(../../Images/home1.jpg);
                 background-repeat: no-repeat;
                 background-size: cover;
+                background-position: center;
                 transition: 0.1s linear;
             }
 
@@ -339,6 +340,7 @@
                 background-image: url(../../Images/home1.jpg);
                 background-repeat: no-repeat;
                 background-size: cover;
+                background-position: center;
                 transition: 0.1s linear;
             }
 

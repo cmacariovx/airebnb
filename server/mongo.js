@@ -117,7 +117,47 @@ async function fetchListings(req, res, next) {
     }
 }
 
+async function fetchListing(req, res, next) {
+    const client = new MongoClient(mongoUrl)
+    const { listingId } = req.body
+
+    try {
+        await client.connect()
+        const db = client.db("airebnb")
+
+        let result = await db.collection("listings").findOne({_id: new ObjectId(listingId)})
+
+        client.close()
+
+        res.status(200).json({ message: "Listings fetched successfully.", listing: result })
+    }
+    catch (error) {
+        res.status(500).json({ error: "Sorry! Could not fetch listings, please try again." })
+    }
+}
+
+async function fetchHost(req, res, next) {
+    const client = new MongoClient(mongoUrl)
+    const { hostId } = req.body
+
+    try {
+        await client.connect()
+        const db = client.db("airebnb")
+
+        let result = await db.collection("users").findOne({_id: new ObjectId(hostId)})
+
+        client.close()
+
+        res.status(200).json({ message: "Host fetched successfully.", host: result })
+    }
+    catch (error) {
+        res.status(500).json({ error: "Sorry! Could not fetch host, please try again." })
+    }
+}
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
 exports.createListing = createListing
 exports.fetchListings = fetchListings
+exports.fetchListing = fetchListing
+exports.fetchHost = fetchHost

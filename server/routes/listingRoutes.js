@@ -7,6 +7,10 @@ const router = express.Router()
 
 router.post("/fetch", listingControllers.fetchListings)
 
+router.post("/fetchSingle", listingControllers.fetchListing)
+
+router.post("/fetchHost", listingControllers.fetchHost)
+
 router.use(checkAuth)
 
 router.post("/create", fileUpload.fields(), listingControllers.createListing)

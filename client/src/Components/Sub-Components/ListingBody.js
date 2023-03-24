@@ -15,6 +15,65 @@ import { Loader } from "@googlemaps/js-api-loader"
 function ListingBody() {
     const navigate = useNavigate()
 
+    const [listing, setListing] = useState(null)
+    const [host, setHost] = useState(null)
+    const [fetchingListing, setFetchingListing] = useState(false)
+    const [fetchingHost, setFetchingHost] = useState(false)
+    const [listingId, setListingId] = useState(window.location.pathname.slice(9))
+    const [totalDays, setTotalDays] = useState(0)
+
+    useEffect(() => {
+        async function fetchListing() {
+            setFetchingListing(true)
+
+            const response = await fetch("http://localhost:5000/" + "listing/fetchSingle", {
+                method: "POST",
+                body: JSON.stringify({
+                    listingId: listingId
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+
+            const data = await response.json()
+
+            if (!data.error) setListing(data.listing)
+            setFetchingListing(false)
+
+            return data
+        }
+
+        if (listingId) {
+            fetchListing()
+        }
+    }, [listingId])
+
+    useEffect(() => {
+        async function fetchHost(hostId) {
+            setFetchingHost(true)
+            const response = await fetch("http://localhost:5000/" + "listing/fetchHost", {
+                method: "POST",
+                body: JSON.stringify({
+                    hostId: hostId,
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+
+            const data = await response.json()
+
+            if (!data.error) setHost(data.host)
+            setFetchingHost(false)
+            return data
+        }
+
+        if (listing && listing.placeGeneralData.host) {
+            fetchHost(listing.placeGeneralData.host)
+        }
+    }, [listing])
+
     const [selectedStartDate, setSelectedStartDate] = useState(null)
     const [selectedEndDate, setSelectedEndDate] = useState(null)
 
@@ -47,9 +106,10 @@ function ListingBody() {
         }
     }
 
-    const handleDateChange = (startDate, endDate) => {
+    const handleDateChange = (startDate, endDate, days) => {
         setSelectedStartDate((prevStartDate) => startDate)
         setSelectedEndDate((prevEndDate) => endDate)
+        setTotalDays((prevDays) => days)
     }
 
     const formatDate = (date) => {
@@ -141,20 +201,12 @@ function ListingBody() {
         }
     }
 
-    let autocomplete
-
     useEffect(() => {
-        const loader = new Loader({
-            apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-            version: "weekly",
-        })
+        if (listing && window.google) {
+            const google = window.google
 
-        loader.load().then((google) => {
-            // let geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
-            //     let coords = [data.results[0].geometry.bounds.Ia.hi, data.results[0].geometry.bounds.Ua.hi]
-            // })
             let map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
-                center: { lat: 35.5951, lng: -82.5515 },
+                center: { lat: listing.placeLocationData.coordinates.lat, lng: listing.placeLocationData.coordinates.lng },
                 zoom: 15,
                 zoomControl: true,
                 scrollwheel: false,
@@ -165,35 +217,31 @@ function ListingBody() {
 
             let icon = {
                 url: airbnbMapMarker2,
-                scaledSize: new google.maps.Size(60, 60)
+                scaledSize: new google.maps.Size(60, 60),
             }
 
             let mapStyling = [
                 {
                     featureType: "poi",
                     elementType: "labels",
-                    stylers: [
-                      { visibility: "off" }
-                    ]
-                  },
-                  {
+                    stylers: [{ visibility: "off" }],
+                },
+                {
                     featureType: "road",
                     elementType: "labels",
-                    stylers: [
-                      { visibility: "off" }
-                    ]
-                  }
-              ]
+                    stylers: [{ visibility: "off" }],
+                },
+            ]
 
             let marker = new google.maps.Marker({
-                position: new google.maps.LatLng(35.5951, -82.5515),
-                map: map
+                position: new google.maps.LatLng(listing.placeLocationData.coordinates.lat, listing.placeLocationData.coordinates.lng),
+                map: map,
             })
 
             marker.setIcon(icon)
             map.set("styles", mapStyling)
-        })
-    }, [])
+        }
+    }, [window.google, listing])
 
     function toProfileHandler() {
         navigate("/profile/" + "userId")
@@ -249,6 +297,8 @@ function ListingBody() {
         }
     }, [stickyContainerRef.current, applyStickyPositioning])
 
+    console.log(totalDays)
+
     useEffect(() => {
         if (stickyContainerRef.current) {
             applyStickyPositioning()
@@ -285,6 +335,19 @@ function ListingBody() {
         setError(false)
     }
 
+    function calculateAverageRating(reviews) {
+        if (reviews && reviews.length > 0) {
+            const totalStars = reviews.reduce((sum, review) => sum + review.stars, 0)
+            return (totalStars / reviews.length).toFixed(2)
+        } else {
+            return "New"
+        }
+    }
+
+    let averageRating
+    if (listing) averageRating = calculateAverageRating(listing.reviewsData.reviews)
+    else averageRating = "-"
+
     return (
         <div className="listingBodyContainer">
             <div className="floatingListingHeader" id="floatingListingHeader">
@@ -305,16 +368,16 @@ function ListingBody() {
                 <div className="floatingListingHeaderRight" id="floatingListingHeaderRight">
                     <div className="floatingListingHeaderRightLeft">
                         <div className="floatingListingHeaderRightLeftUpper">
-                            <p className="floatingListingHeaderRightLeftUpperPriceText">$175</p>
+                            <p className="floatingListingHeaderRightLeftUpperPriceText">{listing ? "$" + listing.placePriceData.priceCounter : "Loading"}</p>
                             <p className="floatingListingHeaderRightLeftUpperNightText">night</p>
                         </div>
                         <div className="floatingListingHeaderRightLeftLower">
                             <div className="floatingListReviewContainer">
                                 <i className="fa-solid fa-star floatingListingStar"></i>
-                                <p className="floatingListingReviewText">4.93</p>
+                                <p className="floatingListingReviewText">{averageRating}</p>
                             </div>
                             <p className="floatingListingDotText">•</p>
-                            <a className="floatingListingReviewCountText">653 reviews</a>
+                            <a className="floatingListingReviewCountText">{(listing && !fetchingListing) && listing.reviewsData.reviewsCount + " reviews"}</a>
                         </div>
                     </div>
                     <div className="floatingListingHeaderRightRight">
@@ -325,18 +388,18 @@ function ListingBody() {
             <a id="photosAnchor"></a>
             <div className="listingBodyIntroContainer">
                 <div className="listingBodyTitleContainer">
-                    <p className="listingBodyTitleText">Modern Mansion</p>
+                    <p className="listingBodyTitleText">{(listing && !fetchingListing) && listing.placeGeneralData.placeTitle}</p>
                 </div>
                 <div className="listingBodyInfoContainer">
                     <div className="listingBodyInfoContainerLeft">
                         <div className="listingBodyReviewContainer">
                             <i className="fa-solid fa-star listingBodyStar"></i>
-                            <p className="listingBodyReviewText">4.93</p>
+                            <p className="listingBodyReviewText">{averageRating}</p>
                         </div>
                         <p className="listingBodyDotText">•</p>
-                        <a className="listingBodyReviewCountText" href="#reviewsAnchor">653 reviews</a>
+                        <a className="listingBodyReviewCountText" href="#reviewsAnchor">{(listing && !fetchingListing) && listing.reviewsData.reviewsCount + " reviews"}</a>
                         <p className="listingBodyDotText">•</p>
-                        <a className="listingBodyLocationText" href="#locationAnchor">Asheville, North Carolina</a>
+                        <a className="listingBodyLocationText" href="#locationAnchor">{(listing && !fetchingListing) && listing.placeLocationData.placeCity + ", " + listing.placeLocationData.placeState}</a>
                     </div>
                     <div className="listingBodyInfoContainerRight">
                         <div className="listingBodySaveContainer">
@@ -348,19 +411,50 @@ function ListingBody() {
             </div>
             <div className="listingBodyImagesContainer">
                 <div className="listingBodyMainImageContainer">
-                    <div className="listingBodyMainImage"/>
+                    <div
+                        className="listingBodyMainImage"
+                        style={{
+                            backgroundImage: (!fetchingListing && listing && listing.imageIds)
+                            ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[0]})`
+                            : "none",
+                        }}
+                    />
                 </div>
                 <div className="listingBodySubImageContainer" id="listingBodySubImage1">
-                    <div className="listingBodySubImage"/>
+                    <div className="listingBodySubImage"
+                        style={{
+                            backgroundImage: (!fetchingListing && listing && listing.imageIds)
+                            ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[1]})`
+                            : "none",
+                        }}
+                    />
                 </div>
                 <div className="listingBodySubImageContainer" id="listingBodySubImage2">
-                    <div className="listingBodySubImage"/>
+                    <div className="listingBodySubImage"
+                        style={{
+                            backgroundImage: (!fetchingListing && listing && listing.imageIds)
+                            ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[2]})`
+                            : "none",
+                        }}
+                    />
                 </div>
                 <div className="listingBodySubImageContainer" id="listingBodySubImage3">
-                    <div className="listingBodySubImage"/>
+                    <div className="listingBodySubImage"
+                        style={{
+                            backgroundImage: (!fetchingListing && listing && listing.imageIds)
+                            ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[3]})`
+                            : "none",
+                        }}
+                    />
                 </div>
                 <div className="listingBodySubImageContainer" id="listingBodySubImage4">
-                    <div className="listingBodySubImage"/>
+                    <div className="listingBodySubImage"
+                        style={{
+                            backgroundImage: (!fetchingListing && listing && listing.imageIds)
+                            ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[4]})`
+                            : "none",
+                        }}
+                    />
                 </div>
             </div>
             <div className="listingBodyMainContainer">
@@ -611,16 +705,16 @@ function ListingBody() {
                     <div className="listingBodyMainRightCheckContainer">
                         <div className="listingBodyMainRightCheckHeaderContainer">
                             <div className="listingBodyMainRightCheckHeaderLeft">
-                                <p className="listingBodyMainRightCheckHeaderLeftPriceText">$175</p>
+                                <p className="listingBodyMainRightCheckHeaderLeftPriceText">{listing ? "$" + listing.placePriceData.priceCounter : "--- "}</p>
                                 <p className="listingBodyMainRightCheckHeaderLeftNightText">night</p>
                             </div>
                             <div className="listingBodyMainRightCheckHeaderRight">
                                 <div className="listingBodyReviewContainer">
                                     <i className="fa-solid fa-star listingBodyStar"></i>
-                                    <p className="listingBodyReviewText">4.93</p>
+                                    <p className="listingBodyReviewText">{averageRating}</p>
                                 </div>
                                 <p className="listingBodyDotText">•</p>
-                                <a className="listingBodyReviewCountText2" href="#reviewsAnchor">653 reviews</a>
+                                <a className="listingBodyReviewCountText2" href="#reviewsAnchor">{listing ? listing.reviewsData.reviewsCount + " reviews" : "-"}</a>
                             </div>
                         </div>
                         <div className="listingBodyMainRightCheckBodyContainer">
@@ -650,22 +744,22 @@ function ListingBody() {
                         <p className="listingBodyMainRightCheckDisclaimerText">You won't be charged yet</p>
                         <div className="listingBodyMainRightCheckFeesContainer">
                             <div className="listingBodyMainRightCheckFeeContainer">
-                                <p className="listingBodyMainRightCheckFeeLeft">$175 x 2 nights</p>
-                                <p className="listingBodyMainRightCheckFeeRight">$350</p>
+                                <p className="listingBodyMainRightCheckFeeLeft">{(listing && !fetchingListing) && ["$", listing.placePriceData.priceCounter, " x ", totalDays, " nights"]}</p>
+                                <p className="listingBodyMainRightCheckFeeRight">{(listing && !fetchingListing) && ["$", listing.placePriceData.priceCounter * totalDays]}</p>
                             </div>
                             <div className="listingBodyMainRightCheckFeeContainer">
                                 <p className="listingBodyMainRightCheckFeeLeft">Cleaning fee</p>
-                                <p className="listingBodyMainRightCheckFeeRight">$50</p>
+                                <p className="listingBodyMainRightCheckFeeRight">{(listing && !fetchingListing) && ["$", listing.placePriceData.cleaningFee]}</p>
                             </div>
                             <div className="listingBodyMainRightCheckFeeContainer">
                                 <p className="listingBodyMainRightCheckFeeLeft">Airbnb service fee</p>
                                 {/* 14%-16% airbnb fee */}
-                                <p className="listingBodyMainRightCheckFeeRight">$56</p>
+                                <p className="listingBodyMainRightCheckFeeRight">{(listing && !fetchingListing) && ["$", listing.placePriceData.airbnbFee]}</p>
                             </div>
                         </div>
                         <div className="listingBodyMainRightCheckTotalContainer">
                             <p className="listingBodyMainRightCheckTotalLeft">Total before taxes</p>
-                            <p className="listingBodyMainRightCheckTotalRight">$456</p>
+                            <p className="listingBodyMainRightCheckTotalRight">{(listing && !fetchingListing) && ["$", ((listing.placePriceData.priceCounter * totalDays) + listing.placePriceData.cleaningFee + listing.placePriceData.airbnbFee)]}</p>
                         </div>
                     </div>
                 </div>
@@ -915,7 +1009,7 @@ function ListingBody() {
                         <p className="listingBodyReviewText4">110 Reviews</p>
                     </div>
                     <div className="listingBodyHostedByDuringStayContainer">
-                        <p className="listingBodyHostedByDuringStayTitle">During your stay</p>
+                        <p className="listingBodyHostedByDuringStayTitle">About</p>
                         <p className="listingBodyHostedByDuringStayDesc">I live 2 miles from the farm and have no problem helping guests when needed. I tend to stay away from the guests during their stay but try to be available whenever I can by phone or person when needed.</p>
                     </div>
                 </div>

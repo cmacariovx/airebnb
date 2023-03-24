@@ -35,5 +35,15 @@ async function fetchListings(req, res, next) {
     let fetchListingResult = await mongo.fetchListings(req, res, next)
 }
 
+async function fetchListing(req, res, next) {
+    let fetchListingResult = await mongo.fetchListing(req, res, next)
+}
+
+async function fetchHost(req, res, next) {
+    let fetchHostResult = await mongo.fetchHost(req, res, next)
+}
+
 exports.createListing = createListing
 exports.fetchListings = fetchListings
+exports.fetchListing = fetchListing
+exports.fetchHost = fetchHost

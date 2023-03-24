@@ -44,11 +44,11 @@ const Calendar = React.forwardRef(({ onDateChange, selectedStartDate, selectedEn
     const clearDates = () => {
         setStartDate(null)
         setEndDate(null)
-      }
+    }
 
-      useImperativeHandle(ref, () => ({
+    useImperativeHandle(ref, () => ({
         clearDates,
-      }))
+    }))
 
     const today = new Date()
     today.setHours(0, 0, 0, 0)
@@ -181,12 +181,24 @@ const Calendar = React.forwardRef(({ onDateChange, selectedStartDate, selectedEn
         </table>
     )
 
+    function calculateDaysBetween(start, end) {
+        if (!start || !end) {
+            return 0
+        }
+
+        const oneDay = 24 * 60 * 60 * 1000;
+        const diffDays = Math.round(Math.abs((start - end) / oneDay)) + 1
+
+        return diffDays
+    }
+
     const leftCalendarData = generateCalendar(currentMonth, currentYear)
     const rightCalendarData = generateCalendar(nextMonth, nextYear)
 
     useEffect(() => {
         if (onDateChange) {
-            onDateChange(startDate, endDate)
+            const days = calculateDaysBetween(startDate, endDate)
+            onDateChange(startDate, endDate, days)
         }
     }, [startDate, endDate, onDateChange, selectedStartDate, selectedEndDate])
 
