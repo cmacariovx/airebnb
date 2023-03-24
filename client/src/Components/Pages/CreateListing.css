@@ -445,8 +445,30 @@
                 cursor: pointer;
             }
 
+            .createListingBody2FooterButton2 {
+                height: 50px;
+                width: 100px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                background-color: var(--pink);
+                color: white;
+                border-radius: 10px;
+                font-size: 16px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: 0.1s linear;
+            }
+
             .createListingBody2FooterButton:hover {
+                transition: 0.1s linear;
                 background-color: black;
+            }
+
+            .createListingBody2FooterButton2:hover {
+                transition: 0.1s linear;
+                background-color: rgb(172, 11, 62);
             }
 
 /* ---------------------------------------------------------------------------------------------- */
@@ -500,6 +522,20 @@
                     justify-content: center;
                     align-items: flex-start;
                     border: 1px solid rgba(160, 160, 160, 0.35);
+                    border-radius: 10px;
+                    padding: 10px 20px;
+                    cursor: pointer;
+                    transition: 0.1s linear;
+                }
+
+                .createListingSubBody3ListOption2 {
+                    height: 100px;
+                    width: 200px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: flex-start;
+                    border: 2px solid var(--black);
                     border-radius: 10px;
                     padding: 10px 20px;
                     cursor: pointer;
@@ -586,6 +622,20 @@
                 justify-content: space-between;
                 align-items: center;
                 border: 1px solid rgba(160, 160, 160, 0.35);
+                border-radius: 10px;
+                padding: 20px 25px;
+                cursor: pointer;
+                transition: 0.1s linear;
+            }
+
+            .createListingSubBody4ListOption2 {
+                height: 105px;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                border: 2px solid var(--black);
                 border-radius: 10px;
                 padding: 20px 25px;
                 cursor: pointer;
@@ -899,6 +949,7 @@
                 padding: 10px;
                 font-size: 16px;
                 border-bottom: 1.5px solid rgba(160, 160, 160, 0.4);
+                user-select: none;
             }
 
                 .createListingSubBody6Input2 {
@@ -924,6 +975,10 @@
                     border-left: 1.5px solid rgba(160, 160, 160, 0.4);
                 }
 
+                .createListingSubBody6Input3::placeholder {
+                    color: rgba(255, 123, 123, 0.6);
+                }
+
                 .createListingSubBody6Input4 {
                     height: 20%;
                     width: 100%;
@@ -933,6 +988,19 @@
                     align-items: center;
                     padding: 10px;
                     font-size: 16px;
+                    user-select: none;
+                }
+
+                .createListingSubBody6Input5 {
+                    height: 100%;
+                    width: 50%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding: 10px;
+                    font-size: 16px;
+                    user-select: none;
                 }
 
             .createListingSubBody6FormHorizontalContainer {
@@ -1108,7 +1176,7 @@
             }
 
             .createListingSubBody8Body {
-                height: 325px;
+                height: 400px;
                 width: 100%;
                 display: flex;
                 flex-direction: column;
@@ -1187,6 +1255,16 @@
 
                             .fa-solid.fa-plus.createListingSubBody8OptionRightIcon {
                                 font-size: 15px;
+                                color: var(--gray);
+                            }
+                            
+                            .fa-solid.fa-chevron-left.createListingSubBody8OptionRightIcon {
+                                font-size: 14px;
+                                color: var(--gray);
+                            }
+
+                            .fa-solid.fa-chevron-right.createListingSubBody8OptionRightIcon {
+                                font-size: 14px;
                                 color: var(--gray);
                             }
 
@@ -1337,6 +1415,20 @@
                         transition: 0.1s linear;
                     }
 
+                    .createListingSubBody10ListOption3 {
+                        height: 100px;
+                        width: 200px;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: flex-start;
+                        border: 2px solid var(--black);
+                        border-radius: 10px;
+                        padding: 10px 20px;
+                        cursor: pointer;
+                        transition: 0.1s linear;
+                    }
+
                         .createListingSubBody10ListOption2 {
                             height: 100px;
                             width: 200px;
@@ -1447,6 +1539,8 @@
                     flex-direction: row;
                     justify-content: center;
                     align-items: center;
+                    border: 1px solid rgba(160, 160, 160, 0.6);
+                    overflow: hidden;
                 }
 
                     .createListingBody11CoverPic {
@@ -1476,6 +1570,9 @@
                     flex-direction: row;
                     justify-content: center;
                     align-items: center;
+                    border: 1px solid rgba(160, 160, 160, 0.6);
+                    position: relative;
+                    overflow: hidden;
                 }
 
                     .createListingBody11SubPic {
@@ -1486,6 +1583,17 @@
                         justify-content: center;
                         align-items: center;
                         object-fit: cover;
+                    }
+
+                    .loadedImage {
+                        height: 100%;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        object-fit: cover;
+                        object-position: center;
                     }
 
 /* ---------------------------------------------------------------------------------------------- */

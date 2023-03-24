@@ -1,18 +1,18 @@
-.imageUploadContainer {
+.imageUploadContainer2 {
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    border-bottom: 2px solid white;
+    position: absolute;
 }
 
-    .imageUploadInput {
+    .imageUploadInput2 {
         display: none;
     }
 
-    .imageUploadMainContainer {
+    .imageUploadMainContainer2 {
         height: 100%;
         width: 100%;
         display: flex;
@@ -21,27 +21,28 @@
         align-items: center;
     }
 
-        .imageUploadPreview {
+        .imageUploadPreview2 {
             height: 100%;
+            width: 100%;
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            margin-right: 20px;
+            overflow: hidden;
         }
 
-            .imagePreview {
-                max-height: 70px;
-                width: auto;
-                max-width: 200px;
-                border-radius: 5px;
+            .imagePreview2 {
+                height: 100%;
+                width: 100%;
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
+                object-fit: cover;
+                object-position: center;
             }
 
-        .imageUploadButton {
+        .imageUploadButton2 {
             min-height: 45px;
             min-width: 120px;
             display: flex;
@@ -58,12 +59,12 @@
         }
 
 @media screen and (max-width: 550px) {
-    .imageUploadButton {
+    .imageUploadButton2 {
         height: 40px;
         width: 80px;
     }
 
-    .imagePreview {
+    .imagePreview2 {
         aspect-ratio: 1 / 1;
         height: 60px;
         width: 60px;

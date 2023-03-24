@@ -75,5 +75,24 @@ async function userLogin(req, res, next, email, password) {
     }
 }
 
+async function createListing(req, res, next, listingData) {
+    const client = new MongoClient(mongoUrl)
+
+    try {
+        await client.connect()
+        const db = client.db("airebnb")
+
+        let result = await db.collection("listings").insertOne(listingData)
+
+        client.close()
+
+        return { status: 200, message: "Listing created successfully." }
+    }
+    catch (error) {
+        return { status: 500, message: "Sorry! Could not create listing, please try again." }
+    }
+}
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
+exports.createListing = createListing

@@ -183,6 +183,17 @@
             border-radius: 10px;
         }
 
+        .hostingDashboardReservationsOptionsContainer2 {
+            min-height: 200px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(224, 224, 224, 0.3);
+            border-radius: 10px;
+        }
+
             .hostingDashboardReservationsOptionContainer {
                 min-height: 80px;
                 width: 250px;
@@ -195,15 +206,9 @@
                 border-radius: 10px;
             }
 
-            .hostingDashboardReservationsOptionsContainer2 {
-                min-height: 200px;
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-                background-color: rgba(224, 224, 224, 0.3);
-                border-radius: 10px;
+            .hostingDashboardReservationsOptionText {
+                font-size: 16px;
+                line-height: 1.6;
             }
 
                 .hostingDashboardReservationsOptionsContainerEmpty {

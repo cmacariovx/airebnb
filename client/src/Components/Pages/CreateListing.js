@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext, useRef } from "react"
 
 import PlacesAutocomplete, {
     geocodeByAddress,
@@ -25,24 +25,146 @@ import spill4 from '../../Images/spill4.png'
 import spill5 from '../../Images/spill5.png'
 import homePic from '../../Images/home1.jpg'
 import { useNavigate } from "react-router"
+import { AuthContext } from "../../Context/Auth-Context"
+import ImageUpload2 from "../Sub-Components/ImageUpload2"
 
 function CreateListing() {
     const [listingBodyId, setListingBodyId] = useState(+window.location.pathname.slice(15))
-    // const [allOptions, setAllOptions] = useState({})
-    // or bool for all options
 
+    const auth = useContext(AuthContext)
 
     const navigate = useNavigate()
 
     const [barProgress1, setBarProgress1] = useState(0)
 
+    const [placeType, setPlaceType] = useState(null) // listingBodyId 3
+    const [placeSize, setPlaceSize] = useState(null) // listingBodyId 4
+    const [placeAddress, setPlaceAddress] = useState(null) // 5
+    const [placeCity, setPlaceCity] = useState(null) // 5
+    const [placeState, setPlaceState] = useState(null)
+    const [placeZipCode, setPlaceZipCode] = useState(null)
+    const [placeAptNum, setPlaceAptNum] = useState(null)
+    const [coordinates, setCoordinates] = useState(null)
+    const [placeMaxGuests, setPlaceMaxGuests] = useState(0) // 8
+    const [placeBedrooms, setPlaceBedrooms] = useState(0) //8
+    const [placeBeds, setPlaceBeds] = useState(0) // 8
+    const [placeBathrooms, setPlaceBathrooms] = useState(0) // 8
+    const [placePets, setPlacePets] = useState(true)
+    const [wifi, setWifi] = useState(false) // 10
+    const [selfCheckIn, setSelfCheckIn] = useState(false) // 10
+    const [tv, setTv] = useState(false) // 10
+    const [ac, setAc] = useState(false) // 10
+    const [heating, setHeating] = useState(false) // 10
+    const [smokeAlarm, setSmokeAlarm] = useState(false) // 10
+    const [washerDryer, setWasherDryer] = useState(false) // 10
+    const [essentials, setEssentials] = useState(false) // 10
+    const [images, setImages] = useState({}) // 11
+    const [placeTitle, setPlaceTitle] = useState(null) // 12
+    const [placeDesc, setPlaceDesc] = useState(null) // 13
+    const [anyGuest, setAnyGuest] = useState(true) // 15
+    const [visitedSteps, setVisitedSteps] = useState([0])
+    const [showDropdown, setShowDropdown] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+
+
+    const handleImageSelected = (key, file) => {
+        setImages((prevImages) => ({
+            ...prevImages,
+            [key]: file
+        }))
+    }
+    const getNextIncompleteListingBodyId = () => {
+        if (
+          !placeType &&
+          !placeSize &&
+          !placeAddress &&
+          !placeZipCode &&
+          (!placeMaxGuests ||
+          !placeBedrooms ||
+          !placeBeds ||
+          !placeBathrooms) &&
+          !wifi &&
+          !selfCheckIn &&
+          !tv &&
+          !ac &&
+          !heating &&
+          !smokeAlarm &&
+          !washerDryer &&
+          !essentials &&
+          !placeTitle &&
+          !placeDesc &&
+          visitedSteps.includes(0)
+        ) {
+          return 0
+        }
+        if (!placeType && visitedSteps.includes(3)) return 3
+        if (!placeSize && visitedSteps.includes(4)) return 4
+        if (!placeAddress && visitedSteps.includes(5)) return 5
+        if (!placeZipCode && visitedSteps.includes(6)) return 6
+        if (
+          (!placeMaxGuests || !placeBedrooms || !placeBeds || !placeBathrooms) &&
+          visitedSteps.includes(8)
+        ) {
+            return 8
+        }
+        if (
+          !wifi &&
+          !selfCheckIn &&
+          !tv &&
+          !ac &&
+          !heating &&
+          !smokeAlarm &&
+          !washerDryer &&
+          !essentials &&
+          visitedSteps.includes(10)
+        ) {
+            return 10
+        }
+        if (Object.keys(images).length < 5 && visitedSteps.includes(11)) return 11
+        if (!placeTitle && visitedSteps.includes(12)) return 12
+        if (!placeDesc && visitedSteps.includes(13)) return 13
+        return -1
+    }
+
+    useEffect(() => {
+        // If the user tries to access an invalid step, redirect to the hosting dashboard
+        if (listingBodyId < 0 || listingBodyId > 17) {
+            navigate("/hostingDashboard")
+        }
+        else if (!visitedSteps.includes(listingBodyId)) {
+            // If the user tries to access a step they haven't visited, redirect to the earliest incomplete step
+            const nextIncompleteListingBodyId = getNextIncompleteListingBodyId()
+            if (nextIncompleteListingBodyId !== -1) {
+                setListingBodyId(nextIncompleteListingBodyId);
+                navigate(`/createlisting/${nextIncompleteListingBodyId}`)
+            }
+        }
+        else {
+            // Update the progress bar as before
+            if (listingBodyId < 3) {
+                setBarProgress1(0)
+            }
+
+            if (listingBodyId >= 3 && listingBodyId <= 17) {
+                setBarProgress1((100 / 15) * (listingBodyId - 2))
+            }
+        }
+    }, [
+        listingBodyId,
+        navigate,
+        placeType,
+        placeSize,
+        placeAddress,
+        placeMaxGuests,
+        placeBedrooms,
+        placeBeds,
+        placeBathrooms,
+        placeTitle,
+        placeDesc
+    ])
+
     useEffect(() => {
         if (listingBodyId < 0 || listingBodyId > 17) navigate("/hostingDashboard")
-
-        // else if (Object.keys(allOptions).length === 0) {
-        //     setListingBodyId(0)
-        //     navigate("/createListing/0")
-        // }
 
         if (listingBodyId < 3) {
             setBarProgress1(0)
@@ -63,28 +185,53 @@ function CreateListing() {
         return () => {
           window.removeEventListener("popstate", handlePopState)
         }
-      }, [])
+    }, [])
 
+    const [image, setImage] = useState(null)
+
+    function onImageUpload(isValid, uploadedImage) {
+        if (isValid) {
+            setImage(uploadedImage)
+        }
+    }
 
     let [searchTerm, setSearchTerm] = useState("")
     let [priceCounter, setPriceCounter] = useState(150)
 
-    function increment(sign) {
+    function incrementPrice(sign) {
         if (sign == "-" && priceCounter > 5) setPriceCounter(prev => prev - 5)
         else if (sign == "+" && priceCounter < 995) setPriceCounter(prev => prev + 5)
     }
 
+    async function fetchCoordinates(address) {
+        const google = window.google
+        const geocoder = new google.maps.Geocoder()
+
+        geocoder.geocode({ address }, (results, status) => {
+          if (status === "OK") {
+            const lat = results[0].geometry.location.lat()
+            const lng = results[0].geometry.location.lng()
+            setCoordinates({ lat, lng })
+          } else {
+            console.error("Geocode was not successful for the following reason: " + status)
+          }
+        })
+    }
+
+    let fullAddress = `${placeAddress}, ${placeCity}, ${placeState}`
+
     useEffect(() => {
-        if ((listingBodyId == 6 || listingBodyId == 7) && window.google) {
-            let coords
+        if (listingBodyId === 6 && window.google) {
+            fetchCoordinates(fullAddress)
+        }
+    }, [listingBodyId, window.google])
+
+    useEffect(() => {
+        if ((listingBodyId == 6 || listingBodyId == 7) && window.google && coordinates) {
             const google = window.google
 
-            // let geocoder = new google.maps.Geocoder().geocode({address: "170 merrimon avenue"}).then((data) => {
-            //     coords = [data.results[0].geometry.bounds.Ja.hi, data.results[0].geometry.bounds.Va.hi]
-            //     console.log(coords)
-            // })
             let map = new google.maps.Map(document.getElementById("listingBodyMainMapContainer"), {
-                center: { lat: 35.5951, lng: -82.5515 },
+                center: { lat: coordinates.lat, lng: coordinates.lng },
                 zoom: 15,
                 zoomControl: listingBodyId === 6 ? false : true,
                 scrollwheel: listingBodyId === 6 ? false : true,
@@ -118,23 +265,206 @@ function CreateListing() {
             ]
 
             let marker = new google.maps.Marker({
-                position: new google.maps.LatLng(35.5951, -82.5515),
+                position: new google.maps.LatLng(coordinates.lat, coordinates.lng),
                 map: map
             })
 
             marker.setIcon(icon)
             map.set("styles", mapStyling)
         }
-    }, [listingBodyId, window.google])
+    }, [listingBodyId, window.google, coordinates])
 
     function toBack() {
-        navigate("/createListing/" + (listingBodyId - 1))
-        setListingBodyId(prev => prev - 1)
-    }
+        const previousStep = listingBodyId - 1
+        if (previousStep > 0 && visitedSteps.includes(previousStep)) {
+          navigate("/createListing/" + previousStep)
+          setListingBodyId((prev) => prev - 1)
+        }
+      }
 
     function toFront() {
-        navigate("/createListing/" + (listingBodyId + 1))
-        setListingBodyId(prev => prev + 1)
+        const nextStep = listingBodyId + 1
+        const nextIncompleteListingBodyId = getNextIncompleteListingBodyId()
+
+        // Steps without state
+        const stepsWithoutState = [0, 1, 2, 7, 9, 14, 15, 16, 17]
+
+        // Allow moving forward from steps without state
+        if (
+          stepsWithoutState.includes(listingBodyId) ||
+          visitedSteps.includes(nextStep) ||
+          nextIncompleteListingBodyId === -1 ||
+          nextIncompleteListingBodyId > listingBodyId + 1
+        ) {
+            navigate("/createListing/" + nextStep)
+            setListingBodyId(nextStep)
+            if (!visitedSteps.includes(nextStep)) {
+                setVisitedSteps((prev) => [...prev, nextStep])
+            }
+        }
+    }
+
+    function setPlaceAddressHandler(address, cityState) {
+        const cityStateArr = cityState.split(",")
+        setPlaceAddress(address)
+        setPlaceCity(cityStateArr[0])
+        setPlaceState(cityStateArr[1].trim())
+        setSearchTerm(address + " " + cityState)
+    }
+
+    let aptNumRef = useRef()
+    let zipCodeRef = useRef()
+
+    function increment(counter, operator) {
+        if (counter === 'guests') {
+            if (operator === "-" && placeMaxGuests > 0) setPlaceMaxGuests((prev) => prev - 1)
+            if (operator === "+" && placeMaxGuests < 10) setPlaceMaxGuests((prev) => prev + 1)
+        }
+        if (counter === 'bedrooms') {
+            if (operator === "-" && placeBedrooms > 0) setPlaceBedrooms((prev) => prev - 1)
+            if (operator === "+" && placeBedrooms < 10) setPlaceBedrooms((prev) => prev + 1)
+        }
+        if (counter === 'beds') {
+            if (operator === "-" && placeBeds > 0) setPlaceBeds((prev) => prev - 1)
+            if (operator === "+" && placeBeds < 10) setPlaceBeds((prev) => prev + 1)
+        }
+        if (counter === 'bathrooms') {
+            if (operator === "-" && placeBathrooms > 0) setPlaceBathrooms((prev) => prev - 1)
+            if (operator === "+" && placeBathrooms < 10) setPlaceBathrooms((prev) => prev + 1)
+        }
+    }
+
+    function setAmenityHandler(amenity) {
+        if (amenity === "wifi") setWifi(!wifi)
+        else if (amenity === "selfCheckIn") setSelfCheckIn(!selfCheckIn)
+        else if (amenity === "tv") setTv(!tv)
+        else if (amenity === "ac") setAc(!ac)
+        else if (amenity === "heating") setHeating(!heating)
+        else if (amenity === "smokeAlarm") setSmokeAlarm(!smokeAlarm)
+        else if (amenity === "washerDryer") setWasherDryer(!washerDryer)
+        else if (amenity === "essentials") setEssentials(!essentials)
+    }
+
+    async function createListing() {
+        setIsLoading(true)
+
+        const date = Date.now().toString()
+
+        const formData = new FormData()
+
+        formData.append(
+            "placeGeneralData",
+            JSON.stringify({
+                placeTitle,
+                placeDesc,
+                placeType,
+                placeSize,
+                host: auth.userId,
+            })
+        )
+
+        formData.append(
+            "placePriceData",
+            JSON.stringify({
+                priceCounter,
+                cleaningFee: priceCounter * (Math.ceil(Math.random() * 50) / 100),
+                airbnbFee: Math.floor(priceCounter * 0.15),
+            })
+        )
+
+        formData.append(
+            "placeMaxData",
+            JSON.stringify({
+                placeMaxGuests,
+                placeBedrooms,
+                placeBeds,
+                placeBathrooms,
+                placePets,
+                anyGuest,
+            })
+        )
+
+        formData.append(
+            "placeLocationData",
+            JSON.stringify({
+                placeAddress,
+                placeCity,
+                placeState,
+                placeZipCode,
+                placeAptNum,
+                coordinates: {
+                lat: coordinates.lat,
+                lng: coordinates.lng,
+                },
+            })
+        )
+
+        formData.append(
+            "placeAmenitiesData",
+            JSON.stringify({
+                wifi,
+                selfCheckIn,
+                tv,
+                ac,
+                heating,
+                smokeAlarm,
+                washerDryer,
+                essentials,
+            })
+        )
+
+        formData.append(
+            "reviewsData",
+            JSON.stringify({
+                reviews: [],
+                reviewsCount: 0,
+            })
+        )
+
+        Object.entries(images).forEach(([key, image], index) => {
+            let imagePrefix = ''
+
+            if (key === 'cover') {
+                imagePrefix = 'cover_'
+            }
+            else if (key === 'sub1') {
+                imagePrefix = 'sub1_'
+            }
+            else if (key === 'sub2') {
+                imagePrefix = 'sub2_'
+            }
+            else if (key === 'sub3') {
+                imagePrefix = 'sub3_'
+            }
+            else if (key === 'sub4') {
+                imagePrefix = 'sub4_'
+            }
+
+            const id = imagePrefix + date
+
+            console.log(images)
+            formData.append(`imageId${index}`, id)
+            formData.append(`image${index}`, image, id)
+        })
+
+
+        const response = await fetch("http://localhost:5000/" + "listing/create", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "Authorization": "Bearer " + auth.token,
+            },
+        })
+
+        const data = await response.json()
+        setIsLoading(false)
+
+        if (data) {
+            navigate("/hostingDashboard")
+            window.location.reload()
+        }
+
+        return data
     }
 
     return (
@@ -151,7 +481,7 @@ function CreateListing() {
             {listingBodyId == 0 && <div className="createListingBody0">
                 <div className="createListingSubBody0">
                     <div className="createListingBodyWelcomeContainer">
-                        <p className="createListingBodyWelcomeText">Welcome back, Carlos</p>
+                        <p className="createListingBodyWelcomeText">{"Welcome back, " + auth.firstName}</p>
                     </div>
                     <div className="createListingBodyStartNewContainer">
                         <p className="createListingBodyStartNewTitle">Start a new listing</p>
@@ -231,16 +561,16 @@ function CreateListing() {
                 <div className="createListingSubBody3">
                     <p className="createListingSubBody3Title">Which of these best describes your place?</p>
                     <div className="createListingSubBody3List">
-                        <div className="createListingSubBody3ListOption">
+                        <div className={placeType === "house" ? "createListingSubBody3ListOption2" : "createListingSubBody3ListOption"} onClick={() => setPlaceType("house")}>
                             <i className="fa-solid fa-house createListingSubBody3ListOptionIcon"></i>
                             <p className="createListingSubBody3ListOptionText">House</p>
                         </div>
-                        <div className="createListingSubBody3ListOption">
+                        <div className={placeType === "apartment" ? "createListingSubBody3ListOption2" : "createListingSubBody3ListOption"} onClick={() => setPlaceType("apartment")}>
                             <i className="fa-solid fa-building createListingSubBody3ListOptionIcon"></i>
                             <p className="createListingSubBody3ListOptionText">Apartment</p>
                         </div>
-                        <div className="createListingSubBody3ListOption">
-                            <i class="fa-solid fa-hotel createListingSubBody3ListOptionIcon"></i>
+                        <div className={placeType === "hotel" ? "createListingSubBody3ListOption2" : "createListingSubBody3ListOption"} onClick={() => setPlaceType("hotel")}>
+                            <i className="fa-solid fa-hotel createListingSubBody3ListOptionIcon"></i>
                             <p className="createListingSubBody3ListOptionText">Hotel</p>
                         </div>
                     </div>
@@ -250,7 +580,7 @@ function CreateListing() {
                 <div className="createListingSubBody4">
                     <p className="createListingSubBody4Title">What type of place will guests have?</p>
                     <div className="createListingSubBody4List">
-                        <div className="createListingSubBody4ListOption">
+                        <div className={placeSize === "entirePlace" ? "createListingSubBody4ListOption2" : "createListingSubBody4ListOption"} onClick={() => setPlaceSize("entirePlace")}>
                             <div className="createListingSubBody4ListOptionLeft">
                                 <p className="createListingSubBody4ListOptionLeftTitle">An entire place</p>
                                 <p className="createListingSubBody4ListOptionLeftDesc">Guests have the whole place to themselves.</p>
@@ -259,7 +589,7 @@ function CreateListing() {
                                 <i className="fa-solid fa-house createListingSubBody4ListOptionRightIcon"></i>
                             </div>
                         </div>
-                        <div className="createListingSubBody4ListOption">
+                        <div className={placeSize === "privateRoom" ? "createListingSubBody4ListOption2" : "createListingSubBody4ListOption"} onClick={() => setPlaceSize("privateRoom")}>
                             <div className="createListingSubBody4ListOptionLeft">
                                 <p className="createListingSubBody4ListOptionLeftTitle">A private room</p>
                                 <p className="createListingSubBody4ListOptionLeftDesc">Guests sleep in a private room but some areas may be shared with you or others.</p>
@@ -268,7 +598,7 @@ function CreateListing() {
                                 <i className="fa-solid fa-door-closed createListingSubBody4ListOptionRightIcon"></i>
                             </div>
                         </div>
-                        <div className="createListingSubBody4ListOption">
+                        <div className={placeSize === "sharedRoom" ? "createListingSubBody4ListOption2" : "createListingSubBody4ListOption"} onClick={() => setPlaceSize("sharedRoom")}>
                             <div className="createListingSubBody4ListOptionLeft">
                                 <p className="createListingSubBody4ListOptionLeftTitle">A shared room</p>
                                 <p className="createListingSubBody4ListOptionLeftDesc">Guests sleep in a room or common area that may be shared with you or others.</p>
@@ -289,14 +619,15 @@ function CreateListing() {
                     <div className="createListingSubBody5Body">
                         <PlacesAutocomplete
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e)}
+                            onChange={(e) => {
+                                setSearchTerm(e);
+                                setShowDropdown(true);
+                            }}
                             searchOptions={{
-                                bounds: {
-                                    east: -66.9513812,
-                                    north: 49.3457868,
-                                    south: 24.7433195,
-                                    west: -124.7844079,
-                                }
+                                componentRestrictions: {
+                                    country: "US"
+                                },
+                                types: ['address']
                             }}
                         >
                             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
@@ -309,8 +640,7 @@ function CreateListing() {
                                             className: 'location-search-input',
                                         })}
                                     />
-                                    <div className="autocomplete-dropdown-container" id="autocompleteDropdown">
-                                        {/* {loading && <p>Loading...</p>} */}
+                                    <div className="autocomplete-dropdown-container" id="autocompleteDropdown" style={{ display: showDropdown ? "flex" : "none" }}>
                                         {suggestions.map(suggestion => {
                                             const className = suggestion.active ? 'suggestion-item--active'
                                             : 'suggestion-item';
@@ -321,6 +651,10 @@ function CreateListing() {
                                                 className
                                                 })}
                                                 key={suggestion.index}
+                                                onClick={() => {
+                                                    setPlaceAddressHandler(suggestion.formattedSuggestion.mainText, suggestion.formattedSuggestion.secondaryText);
+                                                    setShowDropdown(false);
+                                                }}
                                             >
                                                 <div className="suggestionItemLeft">
                                                     <div className="buildingIconContainer">
@@ -349,12 +683,12 @@ function CreateListing() {
                         <p className="createListingSubBody6Header2">Your address is only shared with guests after they've made a reservation.</p>
                     </div>
                     <div className="createListingSubBody6Form">
-                        <input className="createListingSubBody6Input" placeholder="Street"/>
-                        <input className="createListingSubBody6Input" placeholder="Apt, suite, etc. (Optional)"/>
-                        <input className="createListingSubBody6Input" placeholder="City"/>
+                        <div className="createListingSubBody6Input">{placeAddress}</div>
+                        <input className="createListingSubBody6Input" placeholder="Apt, suite, etc. (Optional)" ref={aptNumRef} onChange={(e) => setPlaceAptNum(e.target.value)}/>
+                        <div className="createListingSubBody6Input">{placeCity}</div>
                         <div className="createListingSubBody6FormHorizontalContainer">
-                            <input className="createListingSubBody6Input2" placeholder="State"/>
-                            <input className="createListingSubBody6Input3" placeholder="Zip code"/>
+                            <div className="createListingSubBody6Input5">{placeState}</div>
+                            <input className="createListingSubBody6Input3" placeholder="Zip code" ref={zipCodeRef} onChange={(e) => setPlaceZipCode(e.target.value)} value={placeZipCode || ''}/>
                         </div>
                         <div className="createListingSubBody6Input4">
                             <p className="createListingSubBody6InputText">United States - US</p>
@@ -374,7 +708,7 @@ function CreateListing() {
                     <div className="createListingSubBody7MapContainer">
                         <div className="createListingSubBody7MapAddress">
                             <i className="fa-solid fa-location-dot createListingSubBody7MapAddressIcon"></i>
-                            <p className="createListingSubBody7MapAddressText">170 Merrimon Ave, Asheville, NC 28787</p>
+                            <p className="createListingSubBody7MapAddressText">{[placeAddress, ", ", placeCity, ", ", placeState, " ", placeZipCode]}</p>
                         </div>
                         <div className="createListingSubBody7Map" id="listingBodyMainMapContainer"/>
                     </div>
@@ -390,11 +724,11 @@ function CreateListing() {
                         <div className="createListingSubBody8OptionContainer">
                             <p className="createListingSubBody8OptionText">Guests</p>
                             <div className="createListingSubBody8OptionRight">
-                                <div className="createListingSubBody8OptionRightIconContainer">
+                                <div className="createListingSubBody8OptionRightIconContainer" onClick={() => increment("guests", "-")}>
                                     <i className="fa-solid fa-minus createListingSubBody8OptionRightIcon"></i>
                                 </div>
-                                <p className="createListingSubBody8OptionText2">0</p>
-                                <div className="createListingSubBody8OptionRightIconContainer">
+                                <p className="createListingSubBody8OptionText2">{placeMaxGuests}</p>
+                                <div className="createListingSubBody8OptionRightIconContainer" onClick={() => increment("guests", "+")}>
                                     <i className="fa-solid fa-plus createListingSubBody8OptionRightIcon"></i>
                                 </div>
                             </div>
@@ -402,11 +736,11 @@ function CreateListing() {
                         <div className="createListingSubBody8OptionContainer">
                             <p className="createListingSubBody8OptionText">Bedrooms</p>
                             <div className="createListingSubBody8OptionRight">
-                                <div className="createListingSubBody8OptionRightIconContainer">
+                                <div className="createListingSubBody8OptionRightIconContainer" onClick={() => increment("bedrooms", "-")}>
                                     <i className="fa-solid fa-minus createListingSubBody8OptionRightIcon"></i>
                                 </div>
-                                <p className="createListingSubBody8OptionText2">0</p>
-                                <div className="createListingSubBody8OptionRightIconContainer">
+                                <p className="createListingSubBody8OptionText2">{placeBedrooms}</p>
+                                <div className="createListingSubBody8OptionRightIconContainer" onClick={() => increment("bedrooms", "+")}>
                                     <i className="fa-solid fa-plus createListingSubBody8OptionRightIcon"></i>
                                 </div>
                             </div>
@@ -414,24 +748,36 @@ function CreateListing() {
                         <div className="createListingSubBody8OptionContainer">
                             <p className="createListingSubBody8OptionText">Beds</p>
                             <div className="createListingSubBody8OptionRight">
-                                <div className="createListingSubBody8OptionRightIconContainer">
+                                <div className="createListingSubBody8OptionRightIconContainer" onClick={() => increment("beds", "-")}>
                                     <i className="fa-solid fa-minus createListingSubBody8OptionRightIcon"></i>
                                 </div>
-                                <p className="createListingSubBody8OptionText2">0</p>
-                                <div className="createListingSubBody8OptionRightIconContainer">
+                                <p className="createListingSubBody8OptionText2">{placeBeds}</p>
+                                <div className="createListingSubBody8OptionRightIconContainer" onClick={() => increment("beds", "+")}>
+                                    <i className="fa-solid fa-plus createListingSubBody8OptionRightIcon"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="createListingSubBody8OptionContainer">
+                            <p className="createListingSubBody8OptionText">Bathrooms</p>
+                            <div className="createListingSubBody8OptionRight">
+                                <div className="createListingSubBody8OptionRightIconContainer" onClick={() => increment("bathrooms", "-")}>
+                                    <i className="fa-solid fa-minus createListingSubBody8OptionRightIcon"></i>
+                                </div>
+                                <p className="createListingSubBody8OptionText2">{placeBathrooms}</p>
+                                <div className="createListingSubBody8OptionRightIconContainer" onClick={() => increment("bathrooms", "+")}>
                                     <i className="fa-solid fa-plus createListingSubBody8OptionRightIcon"></i>
                                 </div>
                             </div>
                         </div>
                         <div className="createListingSubBody8OptionContainer2">
-                            <p className="createListingSubBody8OptionText">Bathrooms</p>
+                            <p className="createListingSubBody8OptionText">Pets</p>
                             <div className="createListingSubBody8OptionRight">
-                                <div className="createListingSubBody8OptionRightIconContainer">
-                                    <i className="fa-solid fa-minus createListingSubBody8OptionRightIcon"></i>
+                                <div className="createListingSubBody8OptionRightIconContainer" onClick={() => setPlacePets(!placePets)}>
+                                    <i className="fa-solid fa-chevron-left createListingSubBody8OptionRightIcon"></i>
                                 </div>
-                                <p className="createListingSubBody8OptionText2">0</p>
-                                <div className="createListingSubBody8OptionRightIconContainer">
-                                    <i className="fa-solid fa-plus createListingSubBody8OptionRightIcon"></i>
+                                <p className="createListingSubBody8OptionText2">{placePets ? "Allowed" : "Not Allowed"}</p>
+                                <div className="createListingSubBody8OptionRightIconContainer" onClick={() => setPlacePets(!placePets)}>
+                                    <i className="fa-solid fa-chevron-right createListingSubBody8OptionRightIcon"></i>
                                 </div>
                             </div>
                         </div>
@@ -456,39 +802,39 @@ function CreateListing() {
                     <p className="createListingSubBody10SubTitle">You can add more amenities after you publish your listing.</p>
                     <div className="createListingSubBody10List">
                         <div className="createListingSubBody10ListRow">
-                            <div className="createListingSubBody10ListOption">
+                            <div className={!wifi ? "createListingSubBody10ListOption" : "createListingSubBody10ListOption3"} onClick={() => setAmenityHandler("wifi")}>
                                 <i className="fa-solid fa-wifi createListingSubBody10ListOptionIcon"></i>
                                 <p className="createListingSubBody10ListOptionText">Wifi</p>
                             </div>
-                            <div className="createListingSubBody10ListOption">
-                                <i class="fa-solid fa-key createListingSubBody10ListOptionIcon"></i>
+                            <div className={!selfCheckIn ? "createListingSubBody10ListOption" : "createListingSubBody10ListOption3"} onClick={() => setAmenityHandler("selfCheckIn")}>
+                                <i className="fa-solid fa-key createListingSubBody10ListOptionIcon"></i>
                                 <p className="createListingSubBody10ListOptionText">Self check-in</p>
                             </div>
-                            <div className="createListingSubBody10ListOption">
-                                <i class="fa-solid fa-tv createListingSubBody10ListOptionIcon"></i>
+                            <div className={!tv ? "createListingSubBody10ListOption" : "createListingSubBody10ListOption3"} onClick={() => setAmenityHandler("tv")}>
+                                <i className="fa-solid fa-tv createListingSubBody10ListOptionIcon"></i>
                                 <p className="createListingSubBody10ListOptionText">TV</p>
                             </div>
                         </div>
                         <div className="createListingSubBody10ListRow">
-                            <div className="createListingSubBody10ListOption">
+                            <div className={!ac ? "createListingSubBody10ListOption" : "createListingSubBody10ListOption3"} onClick={() => setAmenityHandler("ac")}>
                                 <i className="fa-solid fa-snowflake createListingSubBody10ListOptionIcon"></i>
                                 <p className="createListingSubBody10ListOptionText">Air conditioning</p>
                             </div>
-                            <div className="createListingSubBody10ListOption">
+                            <div className={!heating ? "createListingSubBody10ListOption" : "createListingSubBody10ListOption3"} onClick={() => setAmenityHandler("heating")}>
                                 <i className="fa-solid fa-thermometer-three-quarters createListingSubBody10ListOptionIcon"></i>
                                 <p className="createListingSubBody10ListOptionText">Heating</p>
                             </div>
-                            <div className="createListingSubBody10ListOption">
+                            <div className={!smokeAlarm ? "createListingSubBody10ListOption" : "createListingSubBody10ListOption3"} onClick={() => setAmenityHandler("smokeAlarm")}>
                                 <i className="fa-solid fa-bell createListingSubBody10ListOptionIcon"></i>
                                 <p className="createListingSubBody10ListOptionText">Smoke alarm</p>
                             </div>
                         </div>
                         <div className="createListingSubBody10ListRow">
-                            <div className="createListingSubBody10ListOption">
+                            <div className={!washerDryer ? "createListingSubBody10ListOption" : "createListingSubBody10ListOption3"} onClick={() => setAmenityHandler("washerDryer")}>
                                 <i className="fa-solid fa-shirt createListingSubBody10ListOptionIcon"></i>
                                 <p className="createListingSubBody10ListOptionText">Washer & Dryer</p>
                             </div>
-                            <div className="createListingSubBody10ListOption">
+                            <div className={!essentials ? "createListingSubBody10ListOption" : "createListingSubBody10ListOption3"} onClick={() => setAmenityHandler("essentials")}>
                                 <i className="fa-solid fa-bottle-droplet createListingSubBody10ListOptionIcon"></i>
                                 <p className="createListingSubBody10ListOptionText">Essentials</p>
                             </div>
@@ -499,30 +845,30 @@ function CreateListing() {
             </div>}
             {listingBodyId == 11 && <div className="createListingBody11">
                 <div className="createListingSubBody11">
-                    <p className="createListingBody11Title">Ta-da! How does this look?</p>
+                    <p className="createListingBody11Title">Choose your place's images</p>
                     <div className="createListingBody11Body">
                         <div className="createListingBody11CoverPicContainer">
                             <div className="createListingBody11CoverPicTextContainer">
                                 <p className="createListingBody11CoverPicText">Cover Photo</p>
                             </div>
                             <div className="createListingBody11CoverPicMainContainer">
-                                <img src={spill1} className="createListingBody11CoverPic"/>
+                                {images.cover ? <img src={images.cover} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("cover", file)}/>}
                             </div>
                         </div>
                         <div className="createListingBody11SubPicContainer">
                             <div className="createListingBody11SubPicMainContainer">
-                                <img src={spill2} className="createListingBody11SubPic"/>
+                                {images.sub1 ? <img src={images.sub1} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("sub1", file)}/>}
                             </div>
                             <div className="createListingBody11SubPicMainContainer">
-                                <img src={spill3} className="createListingBody11SubPic"/>
+                                {images.sub2 ? <img src={images.sub2} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("sub2", file)}/>}
                             </div>
                         </div>
                         <div className="createListingBody11SubPicContainer">
                             <div className="createListingBody11SubPicMainContainer">
-                                <img src={spill4} className="createListingBody11SubPic"/>
+                                {images.sub3 ? <img src={images.sub3} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("sub3", file)}/>}
                             </div>
                             <div className="createListingBody11SubPicMainContainer">
-                                <img src={spill5} className="createListingBody11SubPic"/>
+                                {images.sub4 ? <img src={images.sub4} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("sub4", file)}/>}
                             </div>
                         </div>
                     </div>
@@ -532,7 +878,7 @@ function CreateListing() {
                 <div className="createListingSubBody12">
                     <p className="createListingSubBody12Title">Now, let's give your house a title</p>
                     <p className="createListingSubBody12SubTitle">Short titles work best. Have fun with it—you can always change it later.</p>
-                    <textarea rows="5" maxLength="32" className="createListingSubBody12TextArea"/>
+                    <textarea rows="5" maxLength="32" className="createListingSubBody12TextArea" onChange={(e) => setPlaceTitle(e.target.value)} defaultValue={placeTitle || ''}/>
                     <p className="createListingSubBody12CounterText">0/32</p>
                 </div>
             </div>}
@@ -540,7 +886,7 @@ function CreateListing() {
                 <div className="createListingSubBody13">
                     <p className="createListingSubBody13Title">Create your description</p>
                     <p className="createListingSubBody13SubTitle">Share what makes your place special.</p>
-                    <textarea rows="7" maxLength="500" className="createListingSubBody13TextArea"/>
+                    <textarea rows="7" maxLength="500" className="createListingSubBody13TextArea" onChange={(e) => setPlaceDesc(e.target.value)} defaultValue={placeDesc || ''}/>
                 </div>
             </div>}
             {listingBodyId == 14 && <div className="createListingBody14">
@@ -580,13 +926,13 @@ function CreateListing() {
                     <p className="createListingSubBody16SubTitle">You can change it anytime.</p>
                     <div className="createListingSubBody16PriceContainer">
                         <div className="createListingSubBody16PriceContainerMain">
-                            <div className="createListingSubBody16PriceSignContainer" onClick={() => increment("-")}>
+                            <div className="createListingSubBody16PriceSignContainer" onClick={() => incrementPrice("-")}>
                                 <p className="createListingSubBody16PriceSign">-</p>
                             </div>
                             <div className="createListingSubBody16PriceCounterContainer">
                                 <p className="createListingSubBody16PriceCounter">${priceCounter}</p>
                             </div>
-                            <div className="createListingSubBody16PriceSignContainer" onClick={() => increment("+")}>
+                            <div className="createListingSubBody16PriceSignContainer" onClick={() => incrementPrice("+")}>
                                 <p className="createListingSubBody16PriceSign">+</p>
                             </div>
                         </div>
@@ -601,16 +947,16 @@ function CreateListing() {
                     <div className="createListingSubBody17ReviewContainer">
                         <div className="createListingSubBody17ReviewContainerLeft">
                             <div className="createListingSubBody17ReviewContainerLeftCard">
-                                <img src={homePic} className="createListingSubBody17ReviewContainerLeftCardPic"/>
+                                <img src={images.cover} className="createListingSubBody17ReviewContainerLeftCardPic"/>
                                 <div className="createListingSubBody17ReviewContainerLeftCardTextContainer">
-                                    <p className="createListingSubBody17ReviewContainerLeftCardText2">hi</p>
+                                    <p className="createListingSubBody17ReviewContainerLeftCardText2">{placeTitle}</p>
                                     <div className="createListingSubBody17ReviewContainerLeftCardReviewContainer">
                                         <p className="createListingSubBody17ReviewContainerLeftCardText">New</p>
                                         <i className="fa-solid fa-star createListingSubBody17ReviewContainerLeftCardText"></i>
                                     </div>
                                 </div>
                                 <div className="createListingSubBody17ReviewContainerLeftCardTextContainer2">
-                                    <p className="createListingSubBody17ReviewContainerLeftCardText2">$120</p>
+                                    <p className="createListingSubBody17ReviewContainerLeftCardText2">{"$" + priceCounter}</p>
                                     <p className="createListingSubBody17ReviewContainerLeftCardText3">night</p>
                                 </div>
                             </div>
@@ -638,7 +984,7 @@ function CreateListing() {
                     </div>
                     <div className="createListingBody2FooterLower">
                         <p className="createListingBody2FooterBackText" onClick={toBack}>Back</p>
-                        <button className="createListingBody2FooterButton" onClick={toFront}>Next</button>
+                        <button className={listingBodyId === 17 ? "createListingBody2FooterButton2" : "createListingBody2FooterButton"} onClick={listingBodyId === 17 ? createListing : toFront}>{isLoading ? "Creating..." : listingBodyId === 17 ? "Create" : "Next"}</button>
                     </div>
             </div>}
         </div>

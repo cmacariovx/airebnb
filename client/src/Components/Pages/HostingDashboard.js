@@ -52,7 +52,7 @@ function HostingDashboard() {
                 </div>}
             </header>
             <div className="hostingDashboardWelcomeContainer">
-                <p className="hostingDashboardWelcomeText">Welcome back, Carlos</p>
+                <p className="hostingDashboardWelcomeText">{"Welcome back, " + auth.firstName}</p>
                 <div className="hostingDashboardWelcomeOptionsContainer">
                     <div className="hostingDashboardWelcomeOption" onClick={() => navigate("/createListing/0")}>
                         <p className="hostingDashboardWelcomeOptionHeader">Create a new listing</p>
@@ -69,7 +69,7 @@ function HostingDashboard() {
                 </div>
                 <div className="hostingDashboardReservationsOptionsContainer">
                     <div className="hostingDashboardReservationsOptionContainer">
-                        <p className="hostingDashboardReservationsOptionText">Carlos is checking out of Modern Mansion at 3:45PM.</p>
+                        <p className="hostingDashboardReservationsOptionText">Carlos is checking out of Modern Mansion today.</p>
                     </div>
                 </div>
                 {/* <div className="hostingDashboardReservationsOptionsContainer2">
