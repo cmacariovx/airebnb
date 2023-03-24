@@ -54,7 +54,7 @@
             color: white;
             border-radius: 5px;
             padding: 10px 20px;
-            background-color: rgb(255, 123, 152);
+            background-color: var(--black);
             cursor: pointer;
         }
 

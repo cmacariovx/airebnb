@@ -63,6 +63,12 @@ const fileUpload = multer({
 })
 
 module.exports = {
-    single: fileUpload.single('image'),
-    array: fileUpload.array('images', 5),
-}
+    single: () => fileUpload.single('image'),
+    fields: () => fileUpload.fields([
+        { name: 'image0', maxCount: 1 },
+        { name: 'image1', maxCount: 1 },
+        { name: 'image2', maxCount: 1 },
+        { name: 'image3', maxCount: 1 },
+        { name: 'image4', maxCount: 1 },
+    ]),
+};

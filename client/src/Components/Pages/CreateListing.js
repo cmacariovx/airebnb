@@ -39,6 +39,7 @@ function CreateListing() {
 
     const [placeType, setPlaceType] = useState(null) // listingBodyId 3
     const [placeSize, setPlaceSize] = useState(null) // listingBodyId 4
+    const [placeCategory, setPlaceCateogry] = useState(null)
     const [placeAddress, setPlaceAddress] = useState(null) // 5
     const [placeCity, setPlaceCity] = useState(null) // 5
     const [placeState, setPlaceState] = useState(null)
@@ -66,13 +67,24 @@ function CreateListing() {
     const [showDropdown, setShowDropdown] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
-
     const handleImageSelected = (key, file) => {
-        setImages((prevImages) => ({
-            ...prevImages,
-            [key]: file
-        }))
+        const fileReader = new FileReader()
+
+        fileReader.onload = () => {
+            const imageUrl = fileReader.result
+
+            setImages((prevImages) => ({
+                ...prevImages,
+                [key]: {
+                    url: imageUrl,
+                    file: file
+                }
+            }))
+        }
+
+        fileReader.readAsDataURL(file)
     }
+
     const getNextIncompleteListingBodyId = () => {
         if (
           !placeType &&
@@ -128,7 +140,7 @@ function CreateListing() {
 
     useEffect(() => {
         // If the user tries to access an invalid step, redirect to the hosting dashboard
-        if (listingBodyId < 0 || listingBodyId > 17) {
+        if (listingBodyId < 0) {
             navigate("/hostingDashboard")
         }
         else if (!visitedSteps.includes(listingBodyId)) {
@@ -164,8 +176,6 @@ function CreateListing() {
     ])
 
     useEffect(() => {
-        if (listingBodyId < 0 || listingBodyId > 17) navigate("/hostingDashboard")
-
         if (listingBodyId < 3) {
             setBarProgress1(0)
         }
@@ -282,7 +292,7 @@ function CreateListing() {
         }
       }
 
-    function toFront() {
+      function toFront() {
         const nextStep = listingBodyId + 1
         const nextIncompleteListingBodyId = getNextIncompleteListingBodyId()
 
@@ -291,15 +301,17 @@ function CreateListing() {
 
         // Allow moving forward from steps without state
         if (
-          stepsWithoutState.includes(listingBodyId) ||
-          visitedSteps.includes(nextStep) ||
-          nextIncompleteListingBodyId === -1 ||
-          nextIncompleteListingBodyId > listingBodyId + 1
+            stepsWithoutState.includes(listingBodyId) ||
+            visitedSteps.includes(nextStep) ||
+            nextIncompleteListingBodyId === -1 ||
+            nextIncompleteListingBodyId > listingBodyId + 1
         ) {
-            navigate("/createListing/" + nextStep)
-            setListingBodyId(nextStep)
-            if (!visitedSteps.includes(nextStep)) {
-                setVisitedSteps((prev) => [...prev, nextStep])
+            if (listingBodyId !== 17) { // Add this condition
+                navigate("/createListing/" + nextStep)
+                setListingBodyId(nextStep)
+                if (!visitedSteps.includes(nextStep)) {
+                    setVisitedSteps((prev) => [...prev, nextStep])
+                }
             }
         }
     }
@@ -359,6 +371,8 @@ function CreateListing() {
                 placeDesc,
                 placeType,
                 placeSize,
+                placeCategory,
+                datePosted: date,
                 host: auth.userId,
             })
         )
@@ -367,7 +381,7 @@ function CreateListing() {
             "placePriceData",
             JSON.stringify({
                 priceCounter,
-                cleaningFee: priceCounter * (Math.ceil(Math.random() * 50) / 100),
+                cleaningFee: Math.floor(priceCounter * (Math.ceil(Math.random() * 50) / 100)),
                 airbnbFee: Math.floor(priceCounter * 0.15),
             })
         )
@@ -421,7 +435,7 @@ function CreateListing() {
             })
         )
 
-        Object.entries(images).forEach(([key, image], index) => {
+        Object.entries(images).forEach(([key, imageObj], index) => {
             let imagePrefix = ''
 
             if (key === 'cover') {
@@ -442,9 +456,8 @@ function CreateListing() {
 
             const id = imagePrefix + date
 
-            console.log(images)
             formData.append(`imageId${index}`, id)
-            formData.append(`image${index}`, image, id)
+            formData.append(`image${index}`, imageObj.file, id)
         })
 
 
@@ -688,7 +701,7 @@ function CreateListing() {
                         <div className="createListingSubBody6Input">{placeCity}</div>
                         <div className="createListingSubBody6FormHorizontalContainer">
                             <div className="createListingSubBody6Input5">{placeState}</div>
-                            <input className="createListingSubBody6Input3" placeholder="Zip code" ref={zipCodeRef} onChange={(e) => setPlaceZipCode(e.target.value)} value={placeZipCode || ''}/>
+                            <input className="createListingSubBody6Input3" placeholder="Zip code" ref={zipCodeRef} onChange={(e) => setPlaceZipCode(e.target.value)} value={placeZipCode || ''} minLength={5} maxLength={5} type={"text"} pattern="\d{5}" required={true}/>
                         </div>
                         <div className="createListingSubBody6Input4">
                             <p className="createListingSubBody6InputText">United States - US</p>
@@ -852,23 +865,23 @@ function CreateListing() {
                                 <p className="createListingBody11CoverPicText">Cover Photo</p>
                             </div>
                             <div className="createListingBody11CoverPicMainContainer">
-                                {images.cover ? <img src={images.cover} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("cover", file)}/>}
+                                {images.cover ? <img src={images.cover.url} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("cover", file)}/>}
                             </div>
                         </div>
                         <div className="createListingBody11SubPicContainer">
                             <div className="createListingBody11SubPicMainContainer">
-                                {images.sub1 ? <img src={images.sub1} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("sub1", file)}/>}
+                                {images.sub1 ? <img src={images.sub1.url} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("sub1", file)}/>}
                             </div>
                             <div className="createListingBody11SubPicMainContainer">
-                                {images.sub2 ? <img src={images.sub2} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("sub2", file)}/>}
+                                {images.sub2 ? <img src={images.sub2.url} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("sub2", file)}/>}
                             </div>
                         </div>
                         <div className="createListingBody11SubPicContainer">
                             <div className="createListingBody11SubPicMainContainer">
-                                {images.sub3 ? <img src={images.sub3} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("sub3", file)}/>}
+                                {images.sub3 ? <img src={images.sub3.url} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("sub3", file)}/>}
                             </div>
                             <div className="createListingBody11SubPicMainContainer">
-                                {images.sub4 ? <img src={images.sub4} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("sub4", file)}/>}
+                                {images.sub4 ? <img src={images.sub4.url} className="loadedImage"/> : <ImageUpload2 onValid={onImageUpload} onImageSelected={file => handleImageSelected("sub4", file)}/>}
                             </div>
                         </div>
                     </div>
@@ -947,7 +960,7 @@ function CreateListing() {
                     <div className="createListingSubBody17ReviewContainer">
                         <div className="createListingSubBody17ReviewContainerLeft">
                             <div className="createListingSubBody17ReviewContainerLeftCard">
-                                <img src={images.cover} className="createListingSubBody17ReviewContainerLeftCardPic"/>
+                                <img src={images.cover ? images.cover.url : null} className="createListingSubBody17ReviewContainerLeftCardPic"/>
                                 <div className="createListingSubBody17ReviewContainerLeftCardTextContainer">
                                     <p className="createListingSubBody17ReviewContainerLeftCardText2">{placeTitle}</p>
                                     <div className="createListingSubBody17ReviewContainerLeftCardReviewContainer">
@@ -984,7 +997,13 @@ function CreateListing() {
                     </div>
                     <div className="createListingBody2FooterLower">
                         <p className="createListingBody2FooterBackText" onClick={toBack}>Back</p>
-                        <button className={listingBodyId === 17 ? "createListingBody2FooterButton2" : "createListingBody2FooterButton"} onClick={listingBodyId === 17 ? createListing : toFront}>{isLoading ? "Creating..." : listingBodyId === 17 ? "Create" : "Next"}</button>
+                        <button className={listingBodyId === 17 ? "createListingBody2FooterButton2" : "createListingBody2FooterButton"} onClick={async () => {
+                            if (listingBodyId === 17) {
+                                await createListing()
+                                } else {
+                                    toFront()
+                                }
+                            }}>{isLoading ? "Creating..." : listingBodyId === 17 ? "Create" : "Next"}</button>
                     </div>
             </div>}
         </div>

@@ -86,10 +86,10 @@ async function createListing(req, res, next, listingData) {
 
         client.close()
 
-        return { status: 200, message: "Listing created successfully." }
+        res.status(200).json({ message: "Listing created successfully." })
     }
     catch (error) {
-        return { status: 500, message: "Sorry! Could not create listing, please try again." }
+        res.status(500).json({ message: "Sorry! Could not create listing, please try again." })
     }
 }
 

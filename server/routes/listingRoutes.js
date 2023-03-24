@@ -7,6 +7,6 @@ const router = express.Router()
 
 router.use(checkAuth)
 
-router.post("/create", fileUpload.array, listingControllers.createListing)
+router.post("/create", fileUpload.fields(), listingControllers.createListing)
 
 module.exports = router
