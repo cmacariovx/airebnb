@@ -383,6 +383,11 @@ function CreateListing() {
         )
 
         formData.append(
+            "bookings",
+            JSON.stringify({})
+        )
+
+        formData.append(
             "placePriceData",
             JSON.stringify({
                 priceCounter,

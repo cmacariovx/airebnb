@@ -24,7 +24,7 @@ const fileUpload = multer({
         bucket: process.env.AWS_BUCKET_NAME,
         key: function (req, file, cb) {
             const ext = MIME_TYPE_MAP[file.mimetype]
-            cb(null, file.originalname + '.' + ext)
+            cb(null, file.originalname)
         }
     }),
     fileFilter: (req, file, cb) => {

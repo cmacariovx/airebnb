@@ -3,6 +3,7 @@ require("dotenv").config()
 
 async function createListing (req, res, next) {
     const placeGeneralData = JSON.parse(req.body.placeGeneralData)
+    const bookings= JSON.parse(req.body.bookings)
     const placePriceData = JSON.parse(req.body.placePriceData)
     const placeMaxData = JSON.parse(req.body.placeMaxData)
     const placeLocationData = JSON.parse(req.body.placeLocationData)
@@ -18,6 +19,7 @@ async function createListing (req, res, next) {
 
     const listingData = {
         placeGeneralData,
+        bookings,
         placePriceData,
         placeMaxData,
         placeLocationData,
