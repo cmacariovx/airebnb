@@ -108,7 +108,6 @@ async function fetchListings(req, res, next) {
             .limit(listingsPerPage)
             .toArray()
 
-        // Fetch all review IDs of the listings
         const allReviewIds = result.flatMap(listing => listing.reviewsData.reviews.map(id => new ObjectId(id)));
 
         const allReviews = await db.collection("reviews").find({_id: {$in: allReviewIds}}).toArray()
