@@ -10,6 +10,9 @@ import { AuthContext } from "../../Context/Auth-Context";
 
 function HostingDashboard() {
     const [activeProfileDropdown, setActiveProfileDropdown] = useState(false)
+    const [fetchingListings, setFetchingListings] = useState(false)
+    const [user, setUser] = useState(null)
+    const [listings, setListings] = useState([])
     const navigate = useNavigate()
     const auth = useContext(AuthContext)
 
@@ -21,8 +24,33 @@ function HostingDashboard() {
         }
     }
 
+    async function fetchPersonalListings() {
+        setFetchingListings(true)
+        const response = await fetch("http://localhost:5000/" + "listing/fetchPersonalListings", {
+            method: "POST",
+            body: JSON.stringify({
+                userId: auth.userId
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
+
+        const data = await response.json()
+
+        if (!data.error) {
+            setUser(data.user)
+            setListings(data.user.listings)
+        }
+
+        setFetchingListings(false)
+        return data
+    }
+
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside)
+        fetchPersonalListings()
         return () => {
             document.removeEventListener("mousedown", handleClickOutside)
         }
@@ -82,24 +110,11 @@ function HostingDashboard() {
             <div className="hostingDashboardListingsContainer">
                 <p className="hostingDashboardListingsTitle">Your listings</p>
                 <div className="hostingDashboardListings">
-                    {/* <div className="hostingDashboardListingContainer">
-                        <ListingCard/>
-                    </div>
-                    <div className="hostingDashboardListingContainer">
-                        <ListingCard/>
-                    </div>
-                    <div className="hostingDashboardListingContainer">
-                        <ListingCard/>
-                    </div>
-                    <div className="hostingDashboardListingContainer">
-                        <ListingCard/>
-                    </div>
-                    <div className="hostingDashboardListingContainer">
-                        <ListingCard/>
-                    </div>
-                    <div className="hostingDashboardListingContainer">
-                        <ListingCard/>
-                    </div> */}
+                    {(!fetchingListings && listings) && listings.map((listing, index) => (
+                        <div key={index} className="hostingDashboardListingContainer">
+                            <ListingCard key={listing._id} listing={listing} />
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

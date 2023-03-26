@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import './ListingCard.css'
 
 function ListingCard(props) {
+    console.log(props.listing)
     const navigate = useNavigate()
     const [listing, setListing] = useState(props.listing)
     const [averageRating, setAverageRating] = useState(null)

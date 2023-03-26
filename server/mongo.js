@@ -55,8 +55,7 @@ async function userLogin(req, res, next, email, password) {
 
         const token = jwt.sign(
             { userId: user._id.toString(), email: user.email },
-            jwtSecret,
-            { expiresIn: '24h' }
+            jwtSecret
         )
 
         client.close()
@@ -108,7 +107,7 @@ async function fetchListings(req, res, next) {
             .limit(listingsPerPage)
             .toArray()
 
-        const allReviewIds = result.flatMap(listing => listing.reviewsData.reviews.map(id => new ObjectId(id)));
+        const allReviewIds = result.flatMap(listing => listing.reviewsData.reviews.map(id => new ObjectId(id)))
 
         const allReviews = await db.collection("reviews").find({_id: {$in: allReviewIds}}).toArray()
 
@@ -217,11 +216,11 @@ async function bookReservation(req, res, next) {
         }
     }
     catch (error) {
-      console.error(error)
-      res.status(500).json({ error: { message: error.message } })
+        console.error(error)
+        res.status(500).json({ error: { message: error.message } })
     }
     finally {
-      await client.close()
+        await client.close()
     }
 }
 
@@ -262,6 +261,44 @@ const validateBooking = async (listingId, startDate, endDate) => {
     }
 }
 
+async function fetchPersonalListings(req, res, next) {
+    const { userId } = req.body
+
+    const client = new MongoClient(mongoUrl)
+
+    try {
+        await client.connect()
+        const db = client.db("airebnb")
+
+        const user = await db.collection("users").findOne({ _id: new ObjectId(userId) })
+
+        if (!user) {
+            throw new Error("User not found.")
+        }
+
+        const listingIds = user.listings.map(id => new ObjectId(id))
+
+        let listings = await db.collection("listings").find({ _id: { $in: listingIds } }).toArray()
+
+        for (let listing of listings) {
+            const reviewIds = listing.reviewsData.reviews.map(id => new ObjectId(id))
+            const reviews = await db.collection("reviews").find({ _id: { $in: reviewIds } }).toArray()
+            listing.reviewsData.reviews = reviews
+        }
+
+        user.listings = listings
+
+        client.close()
+
+        res.status(200).json({ message: "Listings fetched successfully.", user: user })
+    }
+    catch (error) {
+        client.close()
+        res.status(500).json({ error: { message: error.message } })
+    }
+}
+
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
 exports.createListing = createListing
@@ -270,3 +307,4 @@ exports.fetchListing = fetchListing
 exports.fetchHost = fetchHost
 exports.bookReservation = bookReservation
 exports.validateBooking = validateBooking
+exports.fetchPersonalListings = fetchPersonalListings

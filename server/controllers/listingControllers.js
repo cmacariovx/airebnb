@@ -46,8 +46,13 @@ async function bookReservation(req, res, next) {
     let bookReservationResult = await mongo.bookReservation(req, res, next)
 }
 
+async function fetchPersonalListings(req, res, next) {
+    let fetchPersonalListingsResult = await mongo.fetchPersonalListings(req, res, next)
+}
+
 exports.createListing = createListing
 exports.fetchListings = fetchListings
 exports.fetchListing = fetchListing
 exports.fetchHost = fetchHost
 exports.bookReservation = bookReservation
+exports.fetchPersonalListings = fetchPersonalListings
