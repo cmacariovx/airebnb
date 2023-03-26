@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback, useContext } from "react"
 
 import './ListingBody.css'
 
@@ -7,10 +7,11 @@ import personalPic from '../../Images/personalPic.jpg'
 import aircoverLogo from '../../Images/aircover.png'
 import airbnbMapMarker2 from '../../Images/airbnbMapMarker2.png'
 import Calendar from "./Calendar";
-import { Navigate, useNavigate } from "react-router";
-import ErrorModal from "./ErrorModal";
+import { Navigate, useNavigate } from "react-router"
+import ErrorModal from "./ErrorModal"
 
 import { Loader } from "@googlemaps/js-api-loader"
+import { AuthContext } from "../../Context/Auth-Context"
 
 function ListingBody() {
     const navigate = useNavigate()
@@ -21,11 +22,14 @@ function ListingBody() {
     const [fetchingHost, setFetchingHost] = useState(false)
     const [listingId, setListingId] = useState(window.location.pathname.slice(9))
     const [totalDays, setTotalDays] = useState(0)
+    const [bookings, setBookings] = useState([])
     const [reviews, setReviews] = useState([])
     const [leftReviews, setLeftReviews] = useState([])
     const [rightReviews, setRightReviews] = useState([])
     const [averageRating, setAverageRating] = useState(null)
     const [averageRatings, setAverageRatings] = useState(null)
+
+    const auth = useContext(AuthContext)
 
     useEffect(() => {
         async function fetchListing() {
@@ -46,6 +50,7 @@ function ListingBody() {
             if (!data.error) {
                 setListing(data.listing)
                 setReviews(data.listing.reviewsData.reviews)
+                setBookings(data.listing.bookings)
             }
 
             setFetchingListing(false)
@@ -113,13 +118,13 @@ function ListingBody() {
     const [petCounter, setPetCounter] = useState(0)
 
     function increment(counter, operator) {
-        if (counter === 'adults') {
+        if (counter === 'adults' && !fetchingListing && listing) {
             if (operator === "-" && adultsCounter > 1) setAdultsCounter((prev) => prev - 1)
-            if (operator === "+" && adultsCounter < 10) setAdultsCounter((prev) => prev + 1)
+            if (operator === "+" && adultsCounter + childrenCounter < listing.placeMaxData.placeMaxGuests) setAdultsCounter((prev) => prev + 1)
         }
-        if (counter === 'children') {
+        if (counter === 'children' && !fetchingListing && listing) {
             if (operator === "-" && childrenCounter > 0) setChildrenCounter((prev) => prev - 1)
-            if (operator === "+" && childrenCounter < 4) setChildrenCounter((prev) => prev + 1)
+            if (operator === "+" && childrenCounter + adultsCounter < listing.placeMaxData.placeMaxGuests) setChildrenCounter((prev) => prev + 1)
         }
         if (counter === 'infants') {
             if (operator === "-" && infantsCounter > 0) setInfantsCounter((prev) => prev - 1)
@@ -134,9 +139,13 @@ function ListingBody() {
     }
 
     const handleDateChange = (startDate, endDate, days) => {
-        setSelectedStartDate((prevStartDate) => startDate)
-        setSelectedEndDate((prevEndDate) => endDate)
-        setTotalDays((prevDays) => days)
+        if (startDate && endDate && startDate > endDate) {
+            [startDate, endDate] = [endDate, startDate]
+        }
+
+        setSelectedStartDate(startDate)
+        setSelectedEndDate(endDate)
+        setTotalDays(days)
     }
 
     const formatDate = (date) => {
@@ -149,7 +158,7 @@ function ListingBody() {
 
     const formatDate2 = (timestamp) => {
         if (!timestamp) return "--"
-        const date = new Date(timestamp * 1000)
+        const date = new Date(timestamp)
         const month = date.toLocaleString("en-US", { month: "long" })
         const year = date.getFullYear()
         return `${month} ${year}`
@@ -279,7 +288,7 @@ function ListingBody() {
     }, [window.google, listing])
 
     function toProfileHandler() {
-        navigate("/profile/" + "userId")
+        navigate("/profile/" + host._id)
     }
 
     const offsetTop = 700
@@ -341,7 +350,7 @@ function ListingBody() {
     }, [checkInContainerVisible, guestsContainerVisible, applyStickyPositioning])
 
     function toCheckoutHandler() {
-        if (selectedStartDate && selectedEndDate && adultsCounter > 0) {
+        if (selectedStartDate && selectedEndDate && adultsCounter > 0 && auth.token) {
             const queryParams = new URLSearchParams({
                 start: selectedStartDate.toISOString(),
                 end: selectedEndDate.toISOString(),
@@ -349,6 +358,8 @@ function ListingBody() {
                 children: childrenCounter,
                 infants: infantsCounter,
                 pets: petCounter,
+                totalDays: totalDays,
+                listingId: listingId
             })
 
             navigate("/checkout/?" + queryParams.toString())
@@ -360,6 +371,9 @@ function ListingBody() {
             }
             if (adultsCounter < 1) {
                 errorMessage += ' Please select at least one adult.'
+            }
+            if (!auth.token) {
+                errorMessage += ' You must be logged in to book a reservation.'
             }
 
             setError(errorMessage)
@@ -498,50 +512,50 @@ function ListingBody() {
             </div>
             <div className="listingBodyImagesContainer">
                 <div className="listingBodyMainImageContainer">
-                    {/* <div
+                    <div
                         className="listingBodyMainImage"
                         style={{
                             backgroundImage: (!fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[0]})`
                             : "none",
                         }}
-                    /> */}
+                    />
                 </div>
                 <div className="listingBodySubImageContainer" id="listingBodySubImage1">
-                    {/* <div className="listingBodySubImage"
+                    <div className="listingBodySubImage"
                         style={{
                             backgroundImage: (!fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[1]})`
                             : "none",
                         }}
-                    /> */}
+                    />
                 </div>
                 <div className="listingBodySubImageContainer" id="listingBodySubImage2">
-                    {/* <div className="listingBodySubImage"
+                    <div className="listingBodySubImage"
                         style={{
                             backgroundImage: (!fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[2]})`
                             : "none",
                         }}
-                    /> */}
+                    />
                 </div>
                 <div className="listingBodySubImageContainer" id="listingBodySubImage3">
-                    {/* <div className="listingBodySubImage"
+                    <div className="listingBodySubImage"
                         style={{
                             backgroundImage: (!fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[3]})`
                             : "none",
                         }}
-                    /> */}
+                    />
                 </div>
                 <div className="listingBodySubImageContainer" id="listingBodySubImage4">
-                    {/* <div className="listingBodySubImage"
+                    <div className="listingBodySubImage"
                         style={{
                             backgroundImage: (!fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[4]})`
                             : "none",
                         }}
-                    /> */}
+                    />
                 </div>
             </div>
             <div className="listingBodyMainContainer">
@@ -683,8 +697,8 @@ function ListingBody() {
                             <p className="listingBodyMainLeftCalendarTitleText">Select check-in date</p>
                         </div>
                         <div className="listingBodyMainLeftCalendarBodyContainer">
-                            <Calendar key={calendarKey1} onDateChange={handleDateChange} selectedStartDate={selectedStartDate}
-                            selectedEndDate={selectedEndDate} ref={calendarRef}/>
+                            {!fetchingListing && listing && <Calendar key={calendarKey1} onDateChange={handleDateChange} selectedStartDate={selectedStartDate}
+                            selectedEndDate={selectedEndDate} bookings={bookings}ref={calendarRef}/>}
                         </div>
                         <div className="listingBodyMainLeftCalendarFooterContainer">
                             <div className="listingBodyMainLeftCalendarFooterTextContainer" onClick={handleClearDates}>
@@ -714,8 +728,8 @@ function ListingBody() {
                             </div>
                         </div>
                         <div className="listingBodyMainRightCheckInContainerLower">
-                            <Calendar key={calendarKey2} onDateChange={handleDateChange} selectedStartDate={selectedStartDate}
-                            selectedEndDate={selectedEndDate} ref={calendarRef2}/>
+                            {!fetchingListing && listing && <Calendar key={calendarKey2} onDateChange={handleDateChange} selectedStartDate={selectedStartDate}
+                            selectedEndDate={selectedEndDate} bookings={bookings} ref={calendarRef2}/>}
                             <div className="listingBodyMainLeftCalendarFooterTextContainer3" onClick={handleClearDates2}>
                                 <p className="listingBodyMainLeftCalendarFooterText3">Clear dates</p>
                             </div>
@@ -835,21 +849,20 @@ function ListingBody() {
                         <div className="listingBodyMainRightCheckFeesContainer">
                             <div className="listingBodyMainRightCheckFeeContainer">
                                 <p className="listingBodyMainRightCheckFeeLeft">{(listing && !fetchingListing) && ["$", listing.placePriceData.priceCounter, " x ", totalDays, " nights"]}</p>
-                                <p className="listingBodyMainRightCheckFeeRight">{(listing && !fetchingListing) && ["$", listing.placePriceData.priceCounter * totalDays]}</p>
+                                <p className="listingBodyMainRightCheckFeeRight">{(listing && !fetchingListing) && ["$", (listing.placePriceData.priceCounter * totalDays).toFixed(2)]}</p>
                             </div>
                             <div className="listingBodyMainRightCheckFeeContainer">
                                 <p className="listingBodyMainRightCheckFeeLeft">Cleaning fee</p>
-                                <p className="listingBodyMainRightCheckFeeRight">{(listing && !fetchingListing) && ["$", listing.placePriceData.cleaningFee]}</p>
+                                <p className="listingBodyMainRightCheckFeeRight">{(listing && !fetchingListing) && ["$", listing.placePriceData.cleaningFee.toFixed(2)]}</p>
                             </div>
                             <div className="listingBodyMainRightCheckFeeContainer">
                                 <p className="listingBodyMainRightCheckFeeLeft">Airbnb service fee</p>
-                                {/* 14%-16% airbnb fee */}
-                                <p className="listingBodyMainRightCheckFeeRight">{(listing && !fetchingListing) && ["$", listing.placePriceData.airbnbFee]}</p>
+                                <p className="listingBodyMainRightCheckFeeRight">{(listing && !fetchingListing) && ["$", listing.placePriceData.airbnbFee.toFixed(2)]}</p>
                             </div>
                         </div>
                         <div className="listingBodyMainRightCheckTotalContainer">
                             <p className="listingBodyMainRightCheckTotalLeft">Total before taxes</p>
-                            <p className="listingBodyMainRightCheckTotalRight">{(listing && !fetchingListing) && ["$", ((listing.placePriceData.priceCounter * totalDays) + listing.placePriceData.cleaningFee + listing.placePriceData.airbnbFee)]}</p>
+                            <p className="listingBodyMainRightCheckTotalRight">{(listing && !fetchingListing) && ["$", ((listing.placePriceData.priceCounter * totalDays) + listing.placePriceData.cleaningFee + listing.placePriceData.airbnbFee).toFixed(2)]}</p>
                         </div>
                     </div>
                 </div>
@@ -1009,7 +1022,7 @@ function ListingBody() {
             <div className="listingBodyMapContainer">
                 <div className="listingBodyMapHeaderContainer">
                     <p className="listingBodyMapHeaderText1">Where you'll be</p>
-                    <p className="listingBodyMapHeaderText2">Asheville, North Carolina</p>
+                    <p className="listingBodyMapHeaderText2">{(listing && !fetchingListing) && listing.placeLocationData.placeCity + ", " + listing.placeLocationData.placeState}</p>
                 </div>
                 <div className="listingBodyMainMapContainer" id="listingBodyMainMapContainer">
 
@@ -1024,16 +1037,16 @@ function ListingBody() {
                         </div>
                         <div className="listingBodyHostedByContainerRight">
                             <p className="listingBodyHostedByContainerRightHostedByText">{(!fetchingHost && host) && `Hosted by ${host.firstName}`}</p>
-                            <p className="listingBodyHostedByContainerRightDateJoinedText">Joined in March 2023</p>
+                            <p className="listingBodyHostedByContainerRightDateJoinedText">{(!fetchingHost && host) && `Joined in ${formatDate2(host.joinedDate)}`}</p>
                         </div>
                     </div>
                     <div className="listingBodyHostedByReviewsContainer">
                         <i className="fa-solid fa-star listingBodyHostedByStar"></i>
-                        <p className="listingBodyReviewText4">110 Reviews</p>
+                        <p className="listingBodyReviewText4">{(!fetchingHost && host) && `${host.reviewsReceived.reviewsReceivedCount} ${host.reviewsReceived.reviewsReceivedCount === 1 ? "Review" : "Reviews"}`}</p>
                     </div>
                     <div className="listingBodyHostedByDuringStayContainer">
                         <p className="listingBodyHostedByDuringStayTitle">About</p>
-                        <p className="listingBodyHostedByDuringStayDesc">I live 2 miles from the farm and have no problem helping guests when needed. I tend to stay away from the guests during their stay but try to be available whenever I can by phone or person when needed.</p>
+                        <p className="listingBodyHostedByDuringStayDesc">{(!fetchingHost && host) && `${host.aboutDescription}`}</p>
                     </div>
                 </div>
             </div>

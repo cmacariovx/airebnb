@@ -15,5 +15,7 @@ router.use(checkAuth)
 
 router.post("/create", fileUpload.fields(), listingControllers.createListing)
 
+router.post("/bookReservation", listingControllers.bookReservation)
+
 
 module.exports = router

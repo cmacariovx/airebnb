@@ -75,6 +75,7 @@
                     justify-content: center;
                     align-items: center;
                     object-fit: cover;
+                    object-position: center;
                     border-radius: 10px;
                 }
 
@@ -616,6 +617,21 @@
         align-items: center;
         border-radius: 10px;
         background-color: var(--pink);
+        font-weight: bold;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .checkoutButton2 {
+        height: 55px;
+        width: 200px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        background-color: rgb(89, 228, 145);
         font-weight: bold;
         color: white;
         font-size: 16px;

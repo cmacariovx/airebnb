@@ -27,7 +27,6 @@ function HomeBody() {
         if (!data.error) setListings(prev => [...prev, ...data.listings])
         setFetchingListings(false)
         setPage(prev => prev + 1)
-
         return data
     }
 

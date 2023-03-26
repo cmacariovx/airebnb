@@ -3,7 +3,6 @@ require("dotenv").config()
 
 async function createListing (req, res, next) {
     const placeGeneralData = JSON.parse(req.body.placeGeneralData)
-    const bookings= JSON.parse(req.body.bookings)
     const placePriceData = JSON.parse(req.body.placePriceData)
     const placeMaxData = JSON.parse(req.body.placeMaxData)
     const placeLocationData = JSON.parse(req.body.placeLocationData)
@@ -25,7 +24,7 @@ async function createListing (req, res, next) {
         placeAmenitiesData,
         reviewsData,
         imageIds,
-        bookings
+        bookings: []
     }
 
     let createListingResult = await mongo.createListing(req, res, next, listingData)
@@ -43,7 +42,12 @@ async function fetchHost(req, res, next) {
     let fetchHostResult = await mongo.fetchHost(req, res, next)
 }
 
+async function bookReservation(req, res, next) {
+    let bookReservationResult = await mongo.bookReservation(req, res, next)
+}
+
 exports.createListing = createListing
 exports.fetchListings = fetchListings
 exports.fetchListing = fetchListing
 exports.fetchHost = fetchHost
+exports.bookReservation = bookReservation

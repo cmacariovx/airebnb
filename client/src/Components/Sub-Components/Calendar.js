@@ -2,7 +2,7 @@ import React, { useState, useImperativeHandle, useEffect } from "react";
 
 import './Calendar.css'
 
-const Calendar = React.forwardRef(({ onDateChange, selectedStartDate, selectedEndDate }, ref) => {
+const Calendar = React.forwardRef(({ onDateChange, selectedStartDate, selectedEndDate, bookings }, ref) => {
     const currentDate = new Date()
     const [currentYear, setCurrentYear] = useState(currentDate.getFullYear())
     const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth())
@@ -56,40 +56,39 @@ const Calendar = React.forwardRef(({ onDateChange, selectedStartDate, selectedEn
     const onDayClick = (day, month, year) => {
         const selectedDate = new Date(year, month, day)
 
-        if (selectedDate <= today) {
-            return
+        if (isInDisabledRange(day, month, year)) {
+            return;
         }
 
         if (!startDate) {
-            setStartDate(selectedDate)
-            onDateChange(selectedDate, endDate)
+            setStartDate(selectedDate);
+            onDateChange(selectedDate, endDate, calculateDaysBetween(selectedDate, endDate))
         }
         else if (!endDate) {
-            if (selectedDate < startDate) {
-                setEndDate(startDate)
-                setStartDate(selectedDate)
-            }
-            else if (selectedDate > startDate) {
+            const diffDays = calculateDaysBetween(startDate, selectedDate)
+            if (diffDays <= 7) {
                 setEndDate(selectedDate)
+                onDateChange(startDate, selectedDate, diffDays)
             }
-            else {
-                setStartDate(null)
-            }
-            onDateChange(startDate, endDate)
         }
         else {
-            if (selectedDate.getTime() === startDate.getTime()) {
-                setStartDate(endDate)
-                setEndDate(null)
-            }
-            else if (selectedDate.getTime() === endDate.getTime()) {
-                setEndDate(null)
+            const diffDays = calculateDaysBetween(selectedDate, endDate)
+            if (diffDays <= 7) {
+                setStartDate(selectedDate)
+                onDateChange(selectedDate, endDate, diffDays)
             }
             else {
-                setStartDate(selectedDate)
-                setEndDate(null)
+                const allowedStartDate = new Date(endDate.getTime() - 6 * 24 * 60 * 60 * 1000)
+                if (selectedDate >= allowedStartDate) {
+                    setStartDate(selectedDate)
+                    onDateChange(selectedDate, endDate, calculateDaysBetween(selectedDate, endDate))
+                }
             }
-            onDateChange(startDate, endDate)
+
+            if (selectedDate.getTime() === endDate.getTime()) {
+                setEndDate(null)
+                onDateChange(startDate, null, 0)
+            }
         }
     }
 
@@ -133,6 +132,54 @@ const Calendar = React.forwardRef(({ onDateChange, selectedStartDate, selectedEn
         return calendar
     }
 
+    const isInDisabledRange = (day, month, year) => {
+        const date = new Date(year, month, day);
+
+        if (isDateBooked(date, bookings)) {
+            return true;
+        }
+
+        if (!startDate) return false;
+
+        const maxEndDate = new Date(startDate.getTime() + 6 * 24 * 60 * 60 * 1000);
+        const minStartDate = new Date(startDate.getTime() - 6 * 24 * 60 * 60 * 1000);
+
+        if (!endDate) {
+            if (date > maxEndDate || date < minStartDate) {
+                return true;
+            }
+
+            let currentDate = new Date(startDate);
+            while (currentDate < date) {
+                currentDate.setDate(currentDate.getDate() + 1);
+                if (isDateBooked(currentDate, bookings)) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            const minDate = startDate < endDate ? startDate : endDate;
+            const maxDate = startDate > endDate ? startDate : endDate;
+            const maxAllowedDate = new Date(minDate.getTime() + 6 * 24 * 60 * 60 * 1000);
+            const minAllowedDate = new Date(maxDate.getTime() - 6 * 24 * 60 * 60 * 1000);
+
+            return date > maxAllowedDate || date < minAllowedDate;
+        }
+    }
+
+    const isDateBooked = (date) => {
+        if (bookings && bookings.length > 0) {
+            for (const booking of bookings) {
+                const bookedStartDate = new Date(booking.startDate);
+                const bookedEndDate = new Date(booking.endDate);
+                if (date >= bookedStartDate && date <= bookedEndDate) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
     const renderCalendarTable = (monthData, month, year) => (
         <table className={"calendar"}>
         <thead>
@@ -154,7 +201,7 @@ const Calendar = React.forwardRef(({ onDateChange, selectedStartDate, selectedEn
                         const isSelectedEnd = day && endDate && endDate.getDate() === day && endDate.getMonth() === month && endDate.getFullYear() === year
                         const isHovered = day && hoverDate && hoverDate.getDate() === day && hoverDate.getMonth() === month && hoverDate.getFullYear() === year
                         const inRange = day && isInSelectedRange(day, month, year)
-                        const isDisabled = day && new Date(year, month, day) <= today
+                        const isDisabled = (day && new Date(year, month, day) <= today) || isInDisabledRange(day, month, year)
                         const cellClassName = day
                         ? isSelectedStart || isSelectedEnd
                             ? "selected"

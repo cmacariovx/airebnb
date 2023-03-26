@@ -440,11 +440,6 @@ function CreateListing() {
             })
         )
 
-        formData.append(
-            "bookings",
-            JSON.stringify({})
-        )
-
         Object.entries(images).forEach(([key, imageObj], index) => {
             let imagePrefix = ''
 

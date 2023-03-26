@@ -108,6 +108,22 @@ async function fetchListings(req, res, next) {
             .limit(listingsPerPage)
             .toArray()
 
+        // Fetch all review IDs of the listings
+        const allReviewIds = result.flatMap(listing => listing.reviewsData.reviews.map(id => new ObjectId(id)));
+
+        const allReviews = await db.collection("reviews").find({_id: {$in: allReviewIds}}).toArray()
+
+        result = result.map(listing => {
+            const listingReviews = allReviews.filter(review => listing.reviewsData.reviews.some(id => id.toString() === review._id.toString()))
+            return {
+                ...listing,
+                reviewsData: {
+                    ...listing.reviewsData,
+                    reviews: listingReviews
+                }
+            }
+        })
+
         client.close()
 
         res.status(200).json({ message: "Listings fetched successfully.", listings: result })
@@ -162,9 +178,96 @@ async function fetchHost(req, res, next) {
     }
 }
 
+async function bookReservation(req, res, next) {
+    const client = new MongoClient(mongoUrl)
+    const { listingId, userId, userFirstName, userLastName, startDate, endDate } = req.body
+
+    try {
+        await client.connect()
+        const collection = client.db("airebnb").collection("listings")
+
+        const validationResult = await validateBooking(
+            listingId,
+            new Date(startDate),
+            new Date(endDate)
+        )
+
+        if (validationResult.error) {
+            res.status(400).json({ error: validationResult.error })
+            return
+        }
+
+        const newBooking = {
+            userId,
+            userFirstName,
+            userLastName,
+            startDate,
+            endDate,
+        }
+
+        const result = await collection.updateOne(
+            { _id: new ObjectId(listingId) },
+            { $push: { bookings: newBooking } }
+        )
+
+        if (result.modifiedCount === 1) {
+            res.status(200).json({ success: true, message: result })
+        }
+        else {
+            throw new Error("Error adding the booking.")
+        }
+    }
+    catch (error) {
+      console.error(error)
+      res.status(500).json({ error: { message: error.message } })
+    }
+    finally {
+      await client.close()
+    }
+}
+
+const validateBooking = async (listingId, startDate, endDate) => {
+    const client = new MongoClient(mongoUrl)
+
+    try {
+        await client.connect()
+        const collection = client.db("airebnb").collection("listings")
+
+        const listing = await collection.findOne({ _id: new ObjectId(listingId) })
+
+        if (!listing) {
+            throw new Error("Listing not found.")
+        }
+
+        const bookings = listing.bookings || []
+
+        for (const booking of bookings) {
+            const bookedStartDate = new Date(booking.startDate)
+            const bookedEndDate = new Date(booking.endDate)
+
+            if (
+                (startDate >= bookedStartDate && startDate <= bookedEndDate) ||
+                (endDate >= bookedStartDate && endDate <= bookedEndDate) ||
+                (startDate <= bookedStartDate && endDate >= bookedEndDate)
+            ) {
+                throw new Error("Overlapping booking dates.")
+            }
+        }
+    }
+    catch (error) {
+        console.error(error)
+        return { error: { message: error.message } }
+    }
+    finally {
+        await client.close()
+    }
+}
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
 exports.createListing = createListing
 exports.fetchListings = fetchListings
 exports.fetchListing = fetchListing
 exports.fetchHost = fetchHost
+exports.bookReservation = bookReservation
+exports.validateBooking = validateBooking

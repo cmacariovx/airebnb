@@ -82,7 +82,7 @@ function HostingDashboard() {
             <div className="hostingDashboardListingsContainer">
                 <p className="hostingDashboardListingsTitle">Your listings</p>
                 <div className="hostingDashboardListings">
-                    <div className="hostingDashboardListingContainer">
+                    {/* <div className="hostingDashboardListingContainer">
                         <ListingCard/>
                     </div>
                     <div className="hostingDashboardListingContainer">
@@ -99,7 +99,7 @@ function HostingDashboard() {
                     </div>
                     <div className="hostingDashboardListingContainer">
                         <ListingCard/>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

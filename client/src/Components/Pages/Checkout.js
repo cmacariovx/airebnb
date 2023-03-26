@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
-import { useSearchParams } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react"
+import { useNavigate } from "react-router"
+import { useSearchParams } from "react-router-dom"
+
+import ErrorModal from "../Sub-Components/ErrorModal"
 
 import amexLogo from '../../Images/amexLogo.svg'
 import visaLogo from '../../Images/visaLogo.svg'
@@ -12,6 +14,7 @@ import aircover from '../../Images/aircover.png'
 import home from '../../Images/home1.jpg'
 
 import './Checkout.css'
+import { AuthContext } from "../../Context/Auth-Context"
 
 function Checkout() {
     const [searchParams] = useSearchParams()
@@ -21,6 +24,18 @@ function Checkout() {
     const [childrenCounter, setChildrenCounter] = useState(null)
     const [infantsCounter, setInfantsCounter] = useState(null)
     const [petCounter, setPetCounter] = useState(null)
+    const [listingId, setListingId] = useState(null)
+    const [bookingReservation, setBookingReservation] = useState(false)
+    const [fetchingListing, setFetchingListing] = useState(false)
+    const [listing, setListing] = useState(null)
+    const [reviews, setReviews] = useState([])
+    const [averageRating, setAverageRating] = useState(null)
+    const [averageRatings, setAverageRatings] = useState(null)
+    const [totalDays, setTotalDays] = useState(null)
+    const [bookingSuccess, setBookingSuccess] = useState(false)
+    const [errorModalMessage, setErrorModalMessage] = useState(null)
+
+    const auth = useContext(AuthContext)
 
     useEffect(() => {
         setSelectedStartDate(new Date(searchParams.get('start')))
@@ -29,6 +44,8 @@ function Checkout() {
         setChildrenCounter(parseInt(searchParams.get('children')))
         setInfantsCounter(parseInt(searchParams.get('infants')))
         setPetCounter(parseInt(searchParams.get('pets')))
+        setTotalDays(parseInt(searchParams.get('totalDays')))
+        setListingId(searchParams.get('listingId'))
     }, [searchParams])
 
     const navigate = useNavigate()
@@ -45,15 +62,195 @@ function Checkout() {
         window.open("https://www.linkedin.com/in/carlos-macariooo/")
     }
 
+    useEffect(() => {
+        async function fetchListing() {
+            setFetchingListing(true)
+
+            const response = await fetch("http://localhost:5000/" + "listing/fetchSingle", {
+                method: "POST",
+                body: JSON.stringify({
+                    listingId: listingId
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+
+            const data = await response.json()
+
+            if (!data.error) {
+                setListing(data.listing)
+                setReviews(data.listing.reviewsData.reviews)
+            }
+
+            setFetchingListing(false)
+            return data
+        }
+
+        if (listingId) {
+            fetchListing()
+        }
+    }, [listingId])
+
+    function calculateAverageRatings(reviews) {
+        if (reviews.length === 0) {
+            return {
+                cleanlinessRating: 0,
+                accuracyRating: 0,
+                communicationRating: 0,
+                locationRating: 0,
+                checkInRating: 0,
+                valueRating: 0,
+            }
+        }
+
+        const sumRatings = reviews.reduce(
+            (sum, review) => ({
+                cleanlinessRating: sum.cleanlinessRating + review.cleanlinessRating,
+                accuracyRating: sum.accuracyRating + review.accuracyRating,
+                communicationRating: sum.communicationRating + review.communicationRating,
+                locationRating: sum.locationRating + review.locationRating,
+                checkInRating: sum.checkInRating + review.checkInRating,
+                valueRating: sum.valueRating + review.valueRating,
+            }),
+            {
+                cleanlinessRating: 0,
+                accuracyRating: 0,
+                communicationRating: 0,
+                locationRating: 0,
+                checkInRating: 0,
+                valueRating: 0,
+            }
+        )
+
+        const averageRatings = {
+            cleanlinessRating: (sumRatings.cleanlinessRating / reviews.length).toFixed(1),
+            accuracyRating: (sumRatings.accuracyRating / reviews.length).toFixed(1),
+            communicationRating: (sumRatings.communicationRating / reviews.length).toFixed(1),
+            locationRating: (sumRatings.locationRating / reviews.length).toFixed(1),
+            checkInRating: (sumRatings.checkInRating / reviews.length).toFixed(1),
+            valueRating: (sumRatings.valueRating / reviews.length).toFixed(1),
+        }
+
+        return averageRatings
+    }
+
+    function calculateAverageRating(reviews) {
+        if (reviews && reviews.length > 0) {
+            let averageRatings = calculateAverageRatings(reviews)
+            setAverageRatings(averageRatings)
+            const totalStars =
+                parseFloat(averageRatings.cleanlinessRating) +
+                parseFloat(averageRatings.accuracyRating) +
+                parseFloat(averageRatings.communicationRating) +
+                parseFloat(averageRatings.locationRating) +
+                parseFloat(averageRatings.checkInRating) +
+                parseFloat(averageRatings.valueRating)
+
+            const overallRating = (totalStars / (reviews.length * 6)).toFixed(2)
+            return overallRating
+        }
+        else return "New"
+    }
+
+    useEffect(() => {
+        if (reviews.length > 0) setAverageRating(calculateAverageRating(reviews))
+    }, [reviews])
+
+    const monthNameToNumber = (monthName) => {
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        return monthNames.indexOf(monthName) + 1
+    }
+
+    const formatDateToISO = (date) => {
+        if (!date) return null
+        const year = date.getFullYear()
+        const month = monthNameToNumber(date.toLocaleString("en-US", { month: "short" })).toString().padStart(2, "0")
+        const day = date.getDate().toString().padStart(2, "0")
+        return `${year}-${month}-${day}`
+    }
+
+    async function bookReservation() {
+        setBookingReservation(true)
+        try {
+            const response = await fetch("http://localhost:5000/" + "listing/bookReservation", {
+                method: "POST",
+                body: JSON.stringify({
+                    listingId,
+                    userId: auth.userId,
+                    userFirstName: auth.firstName,
+                    userLastName: auth.lastName,
+                    startDate: formatDateToISO(selectedStartDate),
+                    endDate: formatDateToISO(selectedEndDate),
+                }),
+                headers: {
+                    "Content-Type" : "application/json",
+                    "Authorization" : "Bearer " + auth.token,
+                },
+            })
+
+            const data = await response.json()
+            if (data.error) {
+                setErrorModalMessage(data.error.message)
+            }
+            else if (data.success) {
+                setBookingSuccess(true)
+
+                setTimeout(() => {
+                    navigate("/")
+                    window.location.reload()
+                }, 1000)
+            }
+        }
+        catch (error) {
+            setErrorModalMessage("An error occurred during the booking process.")
+        }
+
+        setBookingReservation(false)
+    }
+
+    function place(placeTerm) {
+        if (placeTerm === "entirePlace") return "Entire Place"
+        if (placeTerm === "privateRoom") return "Private Room"
+        if (placeTerm === "sharedRoom") return "Shared Room"
+    }
+
+    useEffect(() => {
+        if (!searchParams) return
+
+        const startDate = new Date(searchParams.get("start"))
+        const endDate = new Date(searchParams.get("end"))
+        const totalDays = parseInt(searchParams.get("totalDays"))
+
+        if (totalDays <= 0) {
+            navigate(`/listing/${listingId}`)
+            return
+        }
+
+        const newEndDate = new Date(startDate.getTime() + (totalDays - 1) * 24 * 60 * 60 * 1000)
+
+        if (endDate !== newEndDate) {
+            setSelectedEndDate(newEndDate)
+            searchParams.set("end", formatDate(newEndDate))
+            window.history.replaceState(null, "", `?${searchParams.toString()}`)
+        }
+    }, [searchParams, listingId, navigate])
+
     return (
         <div className="checkoutContainer">
+            {errorModalMessage && (
+                <ErrorModal
+                    errors={[errorModalMessage]}
+                    closeModal={() => setErrorModalMessage(null)}
+                />
+            )}
             <div className="checkoutHeader">
                 <img src={airbnbLogo} className="checkoutHeaderImage" onClick={() => navigate("/")}/>
             </div>
 
             <div className="checkoutContainerLeft">
                 <div className="checkoutTitleContainer">
-                    <div className="checkoutTitleIconContainer">
+                    <div className="checkoutTitleIconContainer" onClick={() => navigate('/listing/' + listingId)}>
                         <i className="fa-solid fa-chevron-left checkoutTitleIcon"></i>
                     </div>
                     <p className="checkoutTitle">Confirm and pay</p>
@@ -75,7 +272,7 @@ function Checkout() {
                         <div className="checkoutPayInFullUpper">
                             <p className="checkoutPayInFullText1">Pay in full</p>
                             <div className="checkoutPayInFullUpperRight">
-                                <p className="checkoutPayInFullUpperRightAmount">$1,318.85</p>
+                                <p className="checkoutPayInFullUpperRightAmount">{(listing && !fetchingListing) && ["$", (((listing.placePriceData.priceCounter * totalDays) + listing.placePriceData.cleaningFee + listing.placePriceData.airbnbFee) * 1.07).toFixed(2)]}</p>
                                 <div className="leftCircleContainer">
                                     <div className="leftCircleMid">
                                         <div className="leftCircleLast"/>
@@ -130,22 +327,22 @@ function Checkout() {
                     <p className="checkoutCancellationPolicyText2">Free cancellation for 48 hours.</p>
                 </div>
                 <div className="checkoutButtonContainer">
-                    <button className="checkoutButton">Confirm and pay</button>
+                    <button className={!bookingSuccess ? "checkoutButton" : "checkoutButton2"} onClick={(!fetchingListing && listing) ? bookReservation : null}>{!bookingSuccess ? "Confirm and pay" : "Success!"}</button>
                 </div>
             </div>
             <div className="checkoutContainerRight">
                 <div className="checkoutContainerRightCard">
                     <div className="checkoutContainerRightCard1">
                         <div className="checkoutContainerRightCard1Left">
-                            <img src={home} className="checkoutContainerRightCard1Pic"/>
+                            <img src={(listing && !fetchingListing) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + listing.imageIds[0]) : null} className="checkoutContainerRightCard1Pic"/>
                         </div>
                         <div className="checkoutContainerRightCard1Right">
-                            <p className="checkoutContainerRightCard1RightText1">Entire home</p>
-                            <p className="checkoutContainerRightCard1RightText2">Modern Mansion</p>
+                            <p className="checkoutContainerRightCard1RightText1">{(!fetchingListing && listing) && place(listing.placeGeneralData.placeSize)}</p>
+                            <p className="checkoutContainerRightCard1RightText2">{(!fetchingListing && listing) && listing.placeGeneralData.placeTitle}</p>
                             <div className="checkoutContainerRightCard1RightTextContainer">
                                 <i className="fa-solid fa-star checkoutContainerRightCard1RightTextContainerIcon"></i>
-                                <p className="checkoutContainerRightCard1RightText3">4.96</p>
-                                <p className="checkoutContainerRightCard1RightText4">(170 reviews)</p>
+                                <p className="checkoutContainerRightCard1RightText3">{(!fetchingListing && listing) && averageRating}</p>
+                                <p className="checkoutContainerRightCard1RightText4">{(!fetchingListing && listing) && `(${listing.reviewsData.reviewsCount} ${listing.reviewsData.reviewsCount === 1 ? "Review" : "Reviews"})`}</p>
                             </div>
                         </div>
                     </div>
@@ -159,26 +356,26 @@ function Checkout() {
                         </div>
                         <div className="checkoutContainerRightCard3Body">
                             <div className="checkoutContainerRightCard3BodyStatContainer">
-                                <p className="checkoutContainerRightCard3BodyStatContainerLeftText">$225.00 x 4 nights</p>
-                                <p className="checkoutContainerRightCard3BodyStatContainerRightText">$900.00</p>
+                                <p className="checkoutContainerRightCard3BodyStatContainerLeftText">{(listing && !fetchingListing) && ["$", listing.placePriceData.priceCounter, " x ", totalDays, " nights"]}</p>
+                                <p className="checkoutContainerRightCard3BodyStatContainerRightText">{(listing && !fetchingListing) && ["$", (listing.placePriceData.priceCounter * totalDays).toFixed(2)]}</p>
                             </div>
                             <div className="checkoutContainerRightCard3BodyStatContainer">
                                 <p className="checkoutContainerRightCard3BodyStatContainerLeftText">Cleaning fee</p>
-                                <p className="checkoutContainerRightCard3BodyStatContainerRightText">$125.00</p>
+                                <p className="checkoutContainerRightCard3BodyStatContainerRightText">{(listing && !fetchingListing) && ["$", listing.placePriceData.cleaningFee.toFixed(2)]}</p>
                             </div>
                             <div className="checkoutContainerRightCard3BodyStatContainer">
                                 <p className="checkoutContainerRightCard3BodyStatContainerLeftText">Airbnb service fee</p>
-                                <p className="checkoutContainerRightCard3BodyStatContainerRightText">$144.71</p>
+                                <p className="checkoutContainerRightCard3BodyStatContainerRightText">{(listing && !fetchingListing) && ["$", listing.placePriceData.airbnbFee.toFixed(2)]}</p>
                             </div>
                             <div className="checkoutContainerRightCard3BodyStatContainer">
                                 <p className="checkoutContainerRightCard3BodyStatContainerLeftText">Taxes</p>
-                                <p className="checkoutContainerRightCard3BodyStatContainerRightText">$149.14</p>
+                                <p className="checkoutContainerRightCard3BodyStatContainerRightText">{(listing && !fetchingListing) && ["$", (((listing.placePriceData.priceCounter * totalDays) + listing.placePriceData.cleaningFee + listing.placePriceData.airbnbFee) * 0.07).toFixed(2)]}</p>
                             </div>
                         </div>
                     </div>
                     <div className="checkoutContainerRightCard4">
                         <p className="checkoutContainerRightCard4TotalText">Total (USD)</p>
-                        <p className="checkoutContainerRightCard4TotalAmount">$1,318.85</p>
+                        <p className="checkoutContainerRightCard4TotalAmount">{(listing && !fetchingListing) && ["$", ((listing.placePriceData.priceCounter * totalDays) + listing.placePriceData.cleaningFee + listing.placePriceData.airbnbFee) * 1.07]}</p>
                     </div>
                 </div>
             </div>
