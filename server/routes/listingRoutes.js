@@ -19,4 +19,6 @@ router.post("/bookReservation", listingControllers.bookReservation)
 
 router.post("/fetchPersonalListings", listingControllers.fetchPersonalListings)
 
+router.post("/createReview", listingControllers.createReview)
+
 module.exports = router

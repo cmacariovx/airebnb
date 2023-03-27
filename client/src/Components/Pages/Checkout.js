@@ -176,7 +176,7 @@ function Checkout() {
             const response = await fetch("http://localhost:5000/" + "listing/bookReservation", {
                 method: "POST",
                 body: JSON.stringify({
-                    listingId,
+                    listingId: listingId,
                     userId: auth.userId,
                     userFirstName: auth.firstName,
                     userLastName: auth.lastName,

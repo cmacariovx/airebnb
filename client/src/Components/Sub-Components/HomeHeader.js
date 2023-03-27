@@ -235,7 +235,7 @@ function HomeHeader(props) {
                     </div>
                     <div className="homeHeader1UserContainer" onClick={() => setActiveProfileDropdown(true)}>
                         <i className="fa-solid fa-bars homeHeader1UserMenuBars"></i>
-                        {/* <img src={auth.token ? "https://airebnb.s3.us-east-2.amazonaws.com/" + auth.profilePicture : null} className="homeHeader1UserPicture"></img> */}
+                        <img src={auth.token ? "https://airebnb.s3.us-east-2.amazonaws.com/" + auth.profilePicture : null} className="homeHeader1UserPicture"></img>
                     </div>
                 </div>
                 {activeProfileDropdown && <div className='homeHeaderProfileDropdownContainer' ref={profileDropdownRef}>

@@ -897,7 +897,6 @@ function CreateListing() {
                     <p className="createListingSubBody12Title">Now, let's give your house a title</p>
                     <p className="createListingSubBody12SubTitle">Short titles work best. Have fun with it—you can always change it later.</p>
                     <textarea rows="5" maxLength="32" className="createListingSubBody12TextArea" onChange={(e) => setPlaceTitle(e.target.value)} defaultValue={placeTitle || ''} minLength={5}/>
-                    <p className="createListingSubBody12CounterText">0/32</p>
                 </div>
             </div>}
             {listingBodyId == 13 && <div className="createListingBody13">

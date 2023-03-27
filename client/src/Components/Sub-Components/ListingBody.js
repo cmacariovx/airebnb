@@ -28,6 +28,17 @@ function ListingBody() {
     const [rightReviews, setRightReviews] = useState([])
     const [averageRating, setAverageRating] = useState(null)
     const [averageRatings, setAverageRatings] = useState(null)
+    const [showCreateReview, setShowCreateReview] = useState(false)
+    const [cleanRating, setCleanRating] = useState(5)
+    const [communicationRating, setCommunicationRating] = useState(5)
+    const [checkInRating, setCheckInRating] = useState(5)
+    const [accuracyRating, setAccuracyRating] = useState(5)
+    const [locationRating, setLocationRating] = useState(5)
+    const [valueRating, setValueRating] = useState(5)
+    const [submittingReview, setSubmittingReview] = useState(false)
+    const [successfulReview, setSuccessfulReview] = useState(false)
+
+    const reviewRef = useRef()
 
     const auth = useContext(AuthContext)
 
@@ -135,6 +146,33 @@ function ListingBody() {
                 if (operator === "-" && petCounter > 0) setPetCounter((prev) => prev - 1)
                 if (operator === "+" && petCounter < 4) setPetCounter((prev) => prev + 1)
             }
+        }
+    }
+
+    function incrementRatings(rating, operator) {
+        if (rating === "clean") {
+            if (operator === "-" && cleanRating > 1) setCleanRating(prev => prev - 1)
+            if (operator === "+" && cleanRating < 5) setCleanRating(prev => prev + 1)
+        }
+        if (rating === "communication") {
+            if (operator === "-" && communicationRating > 1) setCommunicationRating(prev => prev - 1)
+            if (operator === "+" && communicationRating < 5) setCommunicationRating(prev => prev + 1)
+        }
+        if (rating === "checkIn") {
+            if (operator === "-" && checkInRating > 1) setCheckInRating(prev => prev - 1)
+            if (operator === "+" && checkInRating < 5) setCheckInRating(prev => prev + 1)
+        }
+        if (rating === "accuracy") {
+            if (operator === "-" && accuracyRating > 1) setAccuracyRating(prev => prev - 1)
+            if (operator === "+" && accuracyRating < 5) setAccuracyRating(prev => prev + 1)
+        }
+        if (rating === "location") {
+            if (operator === "-" && locationRating > 1) setLocationRating(prev => prev - 1)
+            if (operator === "+" && locationRating < 5) setLocationRating(prev => prev + 1)
+        }
+        if (rating === "value") {
+            if (operator === "-" && valueRating > 1) setValueRating(prev => prev - 1)
+            if (operator === "+" && valueRating < 5) setValueRating(prev => prev + 1)
         }
     }
 
@@ -341,8 +379,6 @@ function ListingBody() {
         }
     }, [stickyContainerRef.current, applyStickyPositioning])
 
-    console.log(totalDays)
-
     useEffect(() => {
         if (stickyContainerRef.current) {
             applyStickyPositioning()
@@ -439,10 +475,50 @@ function ListingBody() {
                 parseFloat(averageRatings.checkInRating) +
                 parseFloat(averageRatings.valueRating)
 
-            const overallRating = (totalStars / (reviews.length * 6)).toFixed(2)
+            const overallRating = (totalStars / 6).toFixed(2)
             return overallRating
         }
         else return "New"
+    }
+
+    async function submitReview() {
+        if (reviewRef.current.value.length < 5) return
+
+        console.log(reviewRef)
+        setSubmittingReview(true)
+
+        const response = await fetch("http://localhost:5000/" + "listing/createReview", {
+            method: "POST",
+            body: JSON.stringify({
+                creatorFirstName: auth.firstName,
+                creatorId: auth.userId,
+                creatorLastName: auth.lastName,
+                creatorProfilePicture: auth.profilePicture,
+                postedDate: Date.now(),
+                accuracyRating: accuracyRating,
+                checkInRating: checkInRating,
+                cleanlinessRating: cleanRating,
+                communicationRating: communicationRating,
+                description: reviewRef.current.value,
+                locationRating: locationRating,
+                valueRating: valueRating,
+                listingId: listingId,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
+
+        const data = await response.json()
+
+        if (!data.error) setSuccessfulReview(true)
+        setSubmittingReview(false)
+
+        setTimeout(() => {
+            window.location.reload()
+        }, 1000)
+        return data
     }
 
     useEffect(() => {
@@ -475,7 +551,7 @@ function ListingBody() {
                         <div className="floatingListingHeaderRightLeftLower">
                             <div className="floatingListReviewContainer">
                                 <i className="fa-solid fa-star floatingListingStar"></i>
-                                <p className="floatingListingReviewText">{averageRating}</p>
+                                <p className="floatingListingReviewText">{averageRating ? averageRating : "New"}</p>
                             </div>
                             <p className="floatingListingDotText">•</p>
                             <a className="floatingListingReviewCountText">{(listing && !fetchingListing) && listing.reviewsData.reviewsCount + " reviews"}</a>
@@ -495,7 +571,7 @@ function ListingBody() {
                     <div className="listingBodyInfoContainerLeft">
                         <div className="listingBodyReviewContainer">
                             <i className="fa-solid fa-star listingBodyStar"></i>
-                            <p className="listingBodyReviewText">{averageRating}</p>
+                            <p className="listingBodyReviewText">{averageRating ? averageRating : "New"}</p>
                         </div>
                         <p className="listingBodyDotText">•</p>
                         <a className="listingBodyReviewCountText" href="#reviewsAnchor">{(listing && !fetchingListing) && listing.reviewsData.reviewsCount + " reviews"}</a>
@@ -815,7 +891,7 @@ function ListingBody() {
                             <div className="listingBodyMainRightCheckHeaderRight">
                                 <div className="listingBodyReviewContainer">
                                     <i className="fa-solid fa-star listingBodyStar"></i>
-                                    <p className="listingBodyReviewText">{averageRating}</p>
+                                    <p className="listingBodyReviewText">{averageRating ? averageRating : "New"}</p>
                                 </div>
                                 <p className="listingBodyDotText">•</p>
                                 <a className="listingBodyReviewCountText2" href="#reviewsAnchor">{listing ? listing.reviewsData.reviewsCount + " reviews" : "-"}</a>
@@ -868,14 +944,105 @@ function ListingBody() {
                 </div>
             </div>
             <a id="reviewsAnchor"></a>
+            {showCreateReview && <div className="createReviewBackdrop" onClick={() => setShowCreateReview(false)}>
+                <div className="createReviewModal" onClick={(e) => e.stopPropagation()}>
+                    <p className="createReviewTitle">Add review</p>
+                    <p className="createReviewDescText">{"What'd you think" + ((!fetchingListing && listing) ? (" of " + listing.placeGeneralData.placeTitle) : "") + "?"}</p>
+                    <textarea ref={reviewRef} className="createReviewTextarea" minLength={10} maxLength={170}></textarea>
+                    <div className="createReviewRatingsContainer">
+                        <div className="createReviewRatingsContainerLeft">
+                            <div className="createReviewRatingContainer">
+                                <p className="createReviewRatingContainerTitle">Cleanliness</p>
+                                <div className="createReviewRatingContainerIncrement">
+                                    <div className="createReviewRatingIconContainer" onClick={() => incrementRatings("clean", "-")}>
+                                        <p className="createReviewRatingIcon">-</p>
+                                    </div>
+                                    <p className="createReviewRatingNum">{cleanRating}</p>
+                                    <div className="createReviewRatingIconContainer" onClick={() => incrementRatings("clean", "+")}>
+                                        <p className="createReviewRatingIcon">+</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="createReviewRatingContainer">
+                                <p className="createReviewRatingContainerTitle">Communication</p>
+                                <div className="createReviewRatingContainerIncrement">
+                                    <div className="createReviewRatingIconContainer" onClick={() => incrementRatings("communication", "-")}>
+                                        <p className="createReviewRatingIcon">-</p>
+                                    </div>
+                                    <p className="createReviewRatingNum">{communicationRating}</p>
+                                    <div className="createReviewRatingIconContainer" onClick={() => incrementRatings("communication", "+")}>
+                                        <p className="createReviewRatingIcon">+</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="createReviewRatingContainer">
+                                <p className="createReviewRatingContainerTitle">Check-in</p>
+                                <div className="createReviewRatingContainerIncrement">
+                                    <div className="createReviewRatingIconContainer" onClick={() => incrementRatings("checkIn", "-")}>
+                                        <p className="createReviewRatingIcon">-</p>
+                                    </div>
+                                    <p className="createReviewRatingNum">{checkInRating}</p>
+                                    <div className="createReviewRatingIconContainer" onClick={() => incrementRatings("clean", "+")}>
+                                        <p className="createReviewRatingIcon">+</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="createReviewRatingsContainerRight">
+                            <div className="createReviewRatingContainer">
+                                <p className="createReviewRatingContainerTitle">Accuracy</p>
+                                <div className="createReviewRatingContainerIncrement">
+                                    <div className="createReviewRatingIconContainer" onClick={() => incrementRatings("accuracy", "-")}>
+                                        <p className="createReviewRatingIcon">-</p>
+                                    </div>
+                                    <p className="createReviewRatingNum">{accuracyRating}</p>
+                                    <div className="createReviewRatingIconContainer" onClick={() => incrementRatings("accuracy", "+")}>
+                                        <p className="createReviewRatingIcon">+</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="createReviewRatingContainer">
+                                <p className="createReviewRatingContainerTitle">Location</p>
+                                <div className="createReviewRatingContainerIncrement">
+                                    <div className="createReviewRatingIconContainer" onClick={() => incrementRatings("location", "-")}>
+                                        <p className="createReviewRatingIcon">-</p>
+                                    </div>
+                                    <p className="createReviewRatingNum">{locationRating}</p>
+                                    <div className="createReviewRatingIconContainer" onClick={() => incrementRatings("location", "+")}>
+                                        <p className="createReviewRatingIcon">+</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="createReviewRatingContainer">
+                                <p className="createReviewRatingContainerTitle">Value</p>
+                                <div className="createReviewRatingContainerIncrement">
+                                    <div className="createReviewRatingIconContainer" onClick={() => incrementRatings("value", "-")}>
+                                        <p className="createReviewRatingIcon">-</p>
+                                    </div>
+                                    <p className="createReviewRatingNum">{valueRating}</p>
+                                    <div className="createReviewRatingIconContainer" onClick={() => incrementRatings("value", "+")}>
+                                        <p className="createReviewRatingIcon">+</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="createReviewSubmitButtonContainer">
+                        <button className={successfulReview ? "createReviewSubmitButton2" : "createReviewSubmitButton"} onClick={submitReview}>{successfulReview ? "Success!" : "Share"}</button>
+                    </div>
+                </div>
+            </div>}
             <div className="listingBodyReviewsContainer">
                 <div className="listingBodyReviewsHeaderContainer">
-                    <div className="listingBodyReviewContainer2">
-                        <i className="fa-solid fa-star listingBodyStar2"></i>
-                        <p className="listingBodyReviewText2">4.93</p>
+                    <div className="listingBodyReviewsHeaderContainerLeft">
+                        <div className="listingBodyReviewContainer2">
+                            <i className="fa-solid fa-star listingBodyStar2"></i>
+                            <p className="listingBodyReviewText2">{(listing && !fetchingListing) && averageRating ? averageRating : "New"}</p>
+                        </div>
+                        <p className="listingBodyDotText2">•</p>
+                        <a className="listingBodyReviewCountText3">{(listing && !fetchingListing) && listing.reviewsData.reviewsCount + " reviews"}</a>
                     </div>
-                    <p className="listingBodyDotText2">•</p>
-                    <a className="listingBodyReviewCountText3">653 reviews</a>
+                    <button className="listingBodyReviewsHeaderContainerRightButton" onClick={() => {auth.token ? setShowCreateReview(true) : setError("Must be logged in to add a review.")}}>Add review</button>
                 </div>
                 <div className="listingBodyReviewStatsContainer">
                     <div className="listingBodyReviewStatsContainerLeft">
@@ -1003,11 +1170,11 @@ function ListingBody() {
                             <div key={review._id} className="listingBodyFullReviewContainer">
                                 <div className="listingBodyFullReviewProfileContainer">
                                 <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={review.creatorProfilePicture} className="fullReviewProfilePic" />
+                                    <img src={(!fetchingListing && listing) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + review.creatorProfilePicture) : null} className="fullReviewProfilePic" />
                                 </div>
                                 <div className="listingBodyFullReviewProfileContainerRight">
                                     <p className="fullReviewProfileName">{review.creatorFirstName}</p>
-                                    <p className="fullReviewPostMonth">{review.postedDate}</p>
+                                    <p className="fullReviewPostMonth">{formatDate2(review.postedDate)}</p>
                                 </div>
                                 </div>
                                 <div className="listingBodyFullReviewDescContainer">

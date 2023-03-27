@@ -13,6 +13,15 @@ function HostingDashboard() {
     const [fetchingListings, setFetchingListings] = useState(false)
     const [user, setUser] = useState(null)
     const [listings, setListings] = useState([])
+    const [checkOutToday, setCheckOutToday] = useState([])
+    const [currentlyHosting, setCurrentlyHosting] = useState([])
+    const [arrivingSoon, setArrivingSoon] = useState([])
+    const [upcoming, setUpcoming] = useState([])
+    const [showCheckout, setShowCheckout] = useState(true)
+    const [showHosting, setShowHosting] = useState(false)
+    const [showArriving, setShowArriving] = useState(false)
+    const [showUpcoming, setShowUpcoming] = useState(false)
+
     const navigate = useNavigate()
     const auth = useContext(AuthContext)
 
@@ -50,11 +59,79 @@ function HostingDashboard() {
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside)
-        fetchPersonalListings()
         return () => {
             document.removeEventListener("mousedown", handleClickOutside)
         }
     }, [])
+
+    useEffect(() => {
+        fetchPersonalListings()
+    }, [])
+
+    useEffect(() => {
+        if (listings && listings.length > 0) {
+            const today = new Date()
+            const tomorrow = new Date(today)
+            tomorrow.setDate(tomorrow.getDate() + 1)
+
+            const categorizedBookings = listings.reduce(
+                (categories, listing) => {
+                    listing.bookings.forEach((booking) => {
+                    const startDate = new Date(booking.startDate)
+                    const endDate = new Date(booking.endDate)
+
+                    if (endDate.toDateString() === today.toDateString()) {
+                        categories.checkOutToday.push({ ...booking, listing })
+                    }
+                    else if (startDate <= today && endDate > today) {
+                        categories.currentlyHosting.push({ ...booking, listing })
+                    }
+                    else if (
+                        startDate.toDateString() === today.toDateString() ||
+                        startDate.toDateString() === tomorrow.toDateString()
+                    ) {
+                        categories.arrivingSoon.push({ ...booking, listing })
+                    }
+                    else if (startDate > tomorrow) {
+                        categories.upcoming.push({ ...booking, listing })
+                    }
+                    })
+
+                    return categories
+                },
+                {
+                    checkOutToday: [],
+                    currentlyHosting: [],
+                    arrivingSoon: [],
+                    upcoming: [],
+                }
+            )
+
+            setCheckOutToday(categorizedBookings.checkOutToday)
+            setCurrentlyHosting(categorizedBookings.currentlyHosting)
+            setArrivingSoon(categorizedBookings.arrivingSoon)
+            setUpcoming(categorizedBookings.upcoming)
+        }
+    }, [listings])
+
+    function getListingTitleById(listingId) {
+        const listing = listings.find(listing => listing._id === listingId)
+        return listing ? listing.placeGeneralData.placeTitle : 'Unknown'
+    }
+
+    function setShowState(targetSetter) {
+        const arr = [
+            { state: showArriving, setter: setShowArriving },
+            { state: showCheckout, setter: setShowCheckout },
+            { state: showHosting, setter: setShowHosting },
+            { state: showUpcoming, setter: setShowUpcoming },
+        ]
+
+        arr.forEach((el) => {
+            if (el.setter !== targetSetter) el.setter(false)
+            else el.setter(true)
+        })
+    }
 
     return (
         <div className="hostingDashboardContainer">
@@ -90,22 +167,90 @@ function HostingDashboard() {
             <div className="hostingDashboardReservationsContainer">
                 <p className="hostingDashboardReservationsTitle">Your reservations</p>
                 <div className="hostingDashboardReservationsButtons">
-                    <button className="hostingDashboardReservationsButton">Checking out (0)</button>
-                    <button className="hostingDashboardReservationsButton">Currently hosting (0)</button>
-                    <button className="hostingDashboardReservationsButton">Arriving soon (0)</button>
-                    <button className="hostingDashboardReservationsButton">Upcoming (0)</button>
+                    <button className="hostingDashboardReservationsButton" onClick={() => setShowState(setShowCheckout)}>Checking out ({checkOutToday.length})</button>
+                    <button className="hostingDashboardReservationsButton" onClick={() => setShowState(setShowHosting)}>Currently hosting ({currentlyHosting.length})</button>
+                    <button className="hostingDashboardReservationsButton" onClick={() => setShowState(setShowArriving)}>Arriving soon ({arrivingSoon.length})</button>
+                    <button className="hostingDashboardReservationsButton" onClick={() => setShowState(setShowUpcoming)}>Upcoming ({upcoming.length})</button>
                 </div>
-                <div className="hostingDashboardReservationsOptionsContainer">
-                    <div className="hostingDashboardReservationsOptionContainer">
-                        <p className="hostingDashboardReservationsOptionText">Carlos is checking out of Modern Mansion today.</p>
+                {showCheckout && (checkOutToday.length === 0 ? (
+                    <div className="hostingDashboardReservationsOptionsContainer2">
+                        <div className="hostingDashboardReservationsOptionContainerEmpty">
+                            <p className="hostingDashboardReservationsOptionText2">
+                                You don't have any guests checking out.
+                            </p>
+                        </div>
                     </div>
-                </div>
-                {/* <div className="hostingDashboardReservationsOptionsContainer2">
-                    <div className="hostingDashboardReservationsOptionsContainerEmpty">
-                        <i className="fa-regular fa-circle-check hostingDashboardReservationsOptionsContainerEmptyCheck"></i>
-                        <p className="hostingDashboardReservationsOptionsContainerEmptyText">You don’t have any guests checking out today or tomorrow.</p>
+                    ) : (
+                    checkOutToday.map((booking, index) => (
+                        <div className="hostingDashboardReservationsOptionsContainer" key={index}>
+                            <div className="hostingDashboardReservationsOptionContainer">
+                                <p className="hostingDashboardReservationsOptionText">
+                                    {booking.userFirstName} is checking out of {getListingTitleById(booking.listingId)} today.
+                                </p>
+                            </div>
+                        </div>
+                    ))
+                ))}
+
+                {showHosting && (currentlyHosting.length === 0 ? (
+                    <div className="hostingDashboardReservationsOptionsContainer2">
+                        <div className="hostingDashboardReservationsOptionContainerEmpty">
+                            <p className="hostingDashboardReservationsOptionText2">
+                                You don't have any guests currently hosting.
+                            </p>
+                        </div>
                     </div>
-                </div> */}
+                    ) : (
+                    currentlyHosting.map((booking, index) => (
+                        <div className="hostingDashboardReservationsOptionsContainer" key={index}>
+                            <div className="hostingDashboardReservationsOptionContainer">
+                                <p className="hostingDashboardReservationsOptionText">
+                                    You are currently hosting {booking.userFirstName} at {getListingTitleById(booking.listingId)}.
+                                </p>
+                            </div>
+                        </div>
+                    ))
+                ))}
+
+                {showArriving && (arrivingSoon.length === 0 ? (
+                    <div className="hostingDashboardReservationsOptionsContainer2">
+                        <div className="hostingDashboardReservationsOptionContainerEmpty">
+                            <p className="hostingDashboardReservationsOptionText2">
+                                You don't have any guests arriving soon.
+                            </p>
+                        </div>
+                    </div>
+                    ) : (
+                    arrivingSoon.map((booking, index) => (
+                        <div className="hostingDashboardReservationsOptionsContainer" key={index}>
+                            <div className="hostingDashboardReservationsOptionContainer">
+                                <p className="hostingDashboardReservationsOptionText">
+                                    {booking.userFirstName} is arriving at {getListingTitleById(booking.listingId)} soon.
+                                </p>
+                            </div>
+                        </div>
+                    ))
+                ))}
+
+                {showUpcoming && (upcoming.length === 0 ? (
+                    <div className="hostingDashboardReservationsOptionsContainer2">
+                        <div className="hostingDashboardReservationsOptionContainerEmpty">
+                            <p className="hostingDashboardReservationsOptionText2">
+                                You don't have any upcoming reservations.
+                            </p>
+                        </div>
+                    </div>
+                    ) : (
+                    upcoming.map((booking, index) => (
+                        <div className="hostingDashboardReservationsOptionsContainer" key={index}>
+                            <div className="hostingDashboardReservationsOptionContainer">
+                                <p className="hostingDashboardReservationsOptionText">
+                                    {booking.userFirstName} has an upcoming reservation at {getListingTitleById(booking.listingId)}.
+                                </p>
+                            </div>
+                        </div>
+                    ))
+                ))}
             </div>
             <div className="hostingDashboardListingsContainer">
                 <p className="hostingDashboardListingsTitle">Your listings</p>

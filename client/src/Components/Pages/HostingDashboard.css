@@ -211,7 +211,7 @@
                 line-height: 1.6;
             }
 
-                .hostingDashboardReservationsOptionsContainerEmpty {
+                .hostingDashboardReservationsOptionContainerEmpty {
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
@@ -223,7 +223,7 @@
                     margin-bottom: 20px;
                 }
 
-                .hostingDashboardReservationsOptionsContainerEmptyText {
+                .hostingDashboardReservationsOptionText2 {
                     font-size: 14px;
                     width: 200px;
                     text-align: center;

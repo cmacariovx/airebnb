@@ -83,8 +83,14 @@ async function createListing(req, res, next, listingData) {
 
         let result = await db.collection("listings").insertOne(listingData)
 
-        client.close()
+        const hostId = listingData.placeGeneralData.host
 
+        await db.collection("users").updateOne(
+            { _id: new ObjectId(hostId) },
+            { $push: { listings: result.insertedId.toString() } }
+        )
+
+        client.close()
         res.status(200).json({ message: "Listing created successfully." })
     }
     catch (error) {
@@ -196,6 +202,7 @@ async function bookReservation(req, res, next) {
         }
 
         const newBooking = {
+            listingId,
             userId,
             userFirstName,
             userLastName,
@@ -259,6 +266,8 @@ const validateBooking = async (listingId, startDate, endDate) => {
     finally {
         await client.close()
     }
+
+    return {}
 }
 
 async function fetchPersonalListings(req, res, next) {
@@ -298,6 +307,67 @@ async function fetchPersonalListings(req, res, next) {
     }
 }
 
+async function createReview(req, res, next) {
+    const { creatorFirstName, creatorId, creatorLastName, creatorProfilePicture, postedDate, accuracyRating, checkInRating, cleanlinessRating, communicationRating, description, locationRating, valueRating, listingId } = req.body
+
+    let data = {
+        creatorFirstName,
+        creatorId,
+        creatorLastName,
+        creatorProfilePicture,
+        postedDate,
+        accuracyRating,
+        checkInRating,
+        cleanlinessRating,
+        communicationRating,
+        description,
+        locationRating,
+        valueRating,
+        listingId,
+    }
+
+    try {
+        const client = new MongoClient(mongoUrl)
+        const db = client.db('airebnb')
+
+        const review = await db.collection('reviews').insertOne(data)
+        const reviewId = review.insertedId
+
+        await db.collection('listings').updateOne(
+            { _id: new ObjectId(listingId) },
+            {
+                $push: { 'reviewsData.reviews': reviewId.toString() },
+                $inc: { 'reviewsData.reviewsCount': 1 },
+            }
+        )
+
+        await db.collection('users').updateOne(
+            { _id: new ObjectId(creatorId) },
+            {
+                $push: { 'reviewsPosted.reviewsPostedArray': reviewId.toString() },
+                $inc: { 'reviewsPosted.reviewsPostedCount': 1 },
+            }
+        )
+
+        const listing = await db.collection('listings').findOne({ _id: new ObjectId(listingId) })
+        const hostId = listing.placeGeneralData.host
+
+        await db.collection('users').updateOne(
+            { _id: new ObjectId(hostId) },
+            {
+                $push: { 'reviewsReceived.reviewsReceivedArray': reviewId.toString() },
+                $inc: { 'reviewsReceived.reviewsReceivedCount': 1 },
+            }
+        );
+
+        client.close()
+        res.status(200).json({ message: 'Review created successfully', reviewId })
+    }
+    catch (error) {
+        console.error('Error:', error)
+        res.status(500).json({ error: 'An error occurred while creating the review' })
+    }
+}
 
 exports.userSignup = userSignup
 exports.userLogin = userLogin
@@ -308,3 +378,4 @@ exports.fetchHost = fetchHost
 exports.bookReservation = bookReservation
 exports.validateBooking = validateBooking
 exports.fetchPersonalListings = fetchPersonalListings
+exports.createReview = createReview

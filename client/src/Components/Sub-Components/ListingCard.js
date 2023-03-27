@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import './ListingCard.css'
 
 function ListingCard(props) {
-    console.log(props.listing)
     const navigate = useNavigate()
     const [listing, setListing] = useState(props.listing)
     const [averageRating, setAverageRating] = useState(null)
@@ -72,7 +71,7 @@ function ListingCard(props) {
                 parseFloat(averageRatings.checkInRating) +
                 parseFloat(averageRatings.valueRating)
 
-            const overallRating = (totalStars / (reviews.length * 6)).toFixed(2)
+            const overallRating = (totalStars / 6).toFixed(2)
             return overallRating
         }
         else return "New"
@@ -147,7 +146,7 @@ function ListingCard(props) {
                     </div>
                     <div className="listingCardInfoReviewContainer">
                         <i className="fa-solid fa-star listingCardInfoReviewStar"></i>
-                        <p className="listingCardInfoReviewText">{averageRating}</p>
+                        <p className="listingCardInfoReviewText">{averageRating ? averageRating : "New"}</p>
                     </div>
                 </div>
                 <div className="listingCardInfoAvailableDateContainer">
