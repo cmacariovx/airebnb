@@ -132,7 +132,7 @@ function ListingCard(props) {
             <div className="listingCardImageContainer" style={listing.imageIds.length > 0 ? {backgroundImage: "url(https://airebnb.s3.us-east-2.amazonaws.com/" + listing.imageIds[0] + ")"} : {backgroundImage: "url(../../Images/home1.jpg)"}}>
                 <div className="listingCardCarouselContainer">
                     <div className="listingCardHeartContainer">
-                        <i className="fa-solid fa-heart listingCardHeart"></i>
+                        <i className="fa-solid fa-heart listingCardHeart" onClick={(e) => e.stopPropagation()}></i>
                     </div>
                 </div>
             </div>

@@ -22,15 +22,17 @@ function App() {
   const [token, setToken] = useState(null)
   const [profilePicture, setProfilePicture] = useState(null)
   const [email, setEmail] = useState(null)
+  const [joinedDate, setJoinedDate] = useState(null)
   const [loadingLogin, setLoadingLogin] = useState(true)
 
-  const login = useCallback((uid, token, firstName, lastName, profilePicture, email) => {
+  const login = useCallback((uid, token, firstName, lastName, profilePicture, email, joinedDate) => {
     setUserId(uid)
     setFirstNameAuth(firstName)
     setLastNameAuth(lastName)
     setToken(token)
     setProfilePicture(profilePicture)
     setEmail(email)
+    setJoinedDate(joinedDate)
 
     localStorage.setItem(
       "userDataAirebnb",
@@ -41,6 +43,7 @@ function App() {
         lastName: lastName,
         profilePicture: profilePicture,
         email: email,
+        joinedDate: joinedDate,
       })
     )
   }, [])
@@ -52,6 +55,7 @@ function App() {
     setToken(null)
     setProfilePicture(null)
     setEmail(null)
+    setJoinedDate(null)
     localStorage.removeItem("userDataAirebnb")
   }, [])
 
@@ -64,7 +68,8 @@ function App() {
         storedData.firstName,
         storedData.lastName,
         storedData.profilePicture,
-        storedData.email
+        storedData.email,
+        storedData.joinedDate
       )
     }
     setLoadingLogin(false)
@@ -81,6 +86,7 @@ function App() {
           token: token,
           profilePicture: profilePicture,
           email: email,
+          joinedDate: joinedDate,
           login: login,
           logout: logout
         }}

@@ -181,7 +181,7 @@
                 position: relative;
             }
 
-                .profileBodyListingsBodyOverlayContainer {
+                /* .profileBodyListingsBodyOverlayContainer {
                     height: 100%;
                     width: 100%;
                     display: flex;
@@ -191,9 +191,10 @@
                     position: absolute;
                     padding: 0 10px;
                     padding-bottom: 70px;
-                }
+                    z-index: 0;
+                } */
 
-                    .profileBodyListingsBodyOverlayArrowContainer {
+                    .profileBodyListingsBodyOverlayArrowContainer1 {
                         min-height: 32px;
                         min-width: 32px;
                         height: 32px;
@@ -205,6 +206,29 @@
                         background-color: rgba(255, 255, 255, 0.85);
                         border-radius: 50%;
                         box-shadow: 0 0 10px rgba(75, 75, 75, 0.2);
+                        position: absolute;
+                        z-index: 99;
+                        top: 32%;
+                        left: 15px;
+                        cursor: pointer;
+                    }
+
+                    .profileBodyListingsBodyOverlayArrowContainer2 {
+                        min-height: 32px;
+                        min-width: 32px;
+                        height: 32px;
+                        width: 32px;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: rgba(255, 255, 255, 0.85);
+                        border-radius: 50%;
+                        box-shadow: 0 0 10px rgba(75, 75, 75, 0.2);
+                        position: absolute;
+                        z-index: 99;
+                        top: 32%;
+                        right: 15px;
                         cursor: pointer;
                     }
 
@@ -280,12 +304,13 @@
                 }
 
                 .profileBodyReviewContainer {
-                    height: 200px;
+                    min-height: 200px;
                     width: 100%;
                     display: flex;
                     flex-direction: column;
-                    justify-content: space-between;
+                    justify-content: center;
                     align-items: flex-start;
+                    margin-bottom: 40px;
                 }
 
                     .profileBodyReviewTitleContainer {
@@ -309,6 +334,7 @@
                             .profileBodyReviewTitleText {
                                 font-size: 16px;
                                 font-weight: bold;
+                                margin-bottom: 4px;
                             }
 
                             .profileBodyReviewDatePostedText {
@@ -338,7 +364,7 @@
                             }
 
                     .profileBodyReviewText {
-                        height: 30%;
+                        min-height: 30%;
                         width: 100%;
                         display: flex;
                         flex-direction: row;
@@ -381,7 +407,7 @@
                         flex-direction: column;
                         justify-content: center;
                         align-items: flex-start;
-                        margin-left: 10px;
+                        margin-left: 12px;
                     }
 
                     .profileBodyReviewProfileContainerRightName {

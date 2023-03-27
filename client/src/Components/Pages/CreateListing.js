@@ -18,11 +18,6 @@ import staticMap from '../../Images/staticmap.png'
 import airbnbMapMarker from '../../Images/airbnbMapMarker.png'
 import airbnbMapMarker2 from '../../Images/airbnbMapMarker2.png'
 import airbnbMapMarker3 from '../../Images/airbnbMapMarker3.png'
-import spill1 from '../../Images/spill1.png'
-import spill2 from '../../Images/spill2.png'
-import spill3 from '../../Images/spill3.png'
-import spill4 from '../../Images/spill4.png'
-import spill5 from '../../Images/spill5.png'
 import homePic from '../../Images/home1.jpg'
 import { useNavigate } from "react-router"
 import { AuthContext } from "../../Context/Auth-Context"
@@ -376,7 +371,7 @@ function CreateListing() {
                 placeDesc,
                 placeType,
                 placeSize,
-                placeCategory,
+                placeCategory: [],
                 datePosted: date,
                 host: auth.userId,
             })

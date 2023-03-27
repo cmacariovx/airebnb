@@ -11,6 +11,10 @@ router.post("/fetchSingle", listingControllers.fetchListing)
 
 router.post("/fetchHost", listingControllers.fetchHost)
 
+router.post("/fetchUser", listingControllers.fetchUser)
+
+router.post("/searchListings", listingControllers.searchListings)
+
 router.use(checkAuth)
 
 router.post("/create", fileUpload.fields(), listingControllers.createListing)

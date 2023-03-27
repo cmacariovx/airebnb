@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
+import React, { useState, useRef, useEffect, useContext, useLayoutEffect } from 'react'
 import { useNavigate } from "react-router"
+import { useSearchParams } from 'react-router-dom'
 
 import './HomeHeader.css'
 
@@ -19,13 +20,24 @@ function HomeHeader(props) {
 
     const auth = useContext(AuthContext)
 
-    const [adultsCounter, setAdultsCounter] = useState(0)
-    const [childrenCounter, setChildrenCounter] = useState(0)
-    const [infantsCounter, setInfantsCounter] = useState(0)
-    const [petCounter, setPetCounter] = useState(0)
+    const navigate = useNavigate()
 
-    const [selectedStartDate, setSelectedStartDate] = useState(null)
-    const [selectedEndDate, setSelectedEndDate] = useState(null)
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    const [city, setCity] = useState(searchParams.get("city") || "")
+    const [state, setState] = useState(searchParams.get("state") || "")
+    const [adults, setAdults] = useState(searchParams.get("adults") || "")
+    const [children, setChildren] = useState(searchParams.get("children") || "")
+    const [infants, setInfants] = useState(searchParams.get("infants") || "")
+    const [pets, setPets] = useState(searchParams.get("pets") || "")
+    const [selectedStartDate, setSelectedStartDate] = useState(searchParams.get("startDate") ? new Date(searchParams.get("startDate")) : null)
+    const [selectedEndDate, setSelectedEndDate] = useState(searchParams.get("endDate") ? new Date(searchParams.get("endDate")) : null)
+
+    const [adultsCounter, setAdultsCounter] = useState(+searchParams.get("adults") || 0)
+    const [childrenCounter, setChildrenCounter] = useState(+searchParams.get("children") || 0)
+    const [infantsCounter, setInfantsCounter] = useState(+searchParams.get("infants") || 0)
+    const [petCounter, setPetCounter] = useState(+searchParams.get("pets") || 0)
+
 
     const [showSignup, setShowSignup] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
@@ -63,6 +75,7 @@ function HomeHeader(props) {
 
     const closeModal = () => {
         setShowErrorModal(false)
+        setErrorMessages([])
     }
 
     const formatDate = (date) => {
@@ -117,7 +130,6 @@ function HomeHeader(props) {
         setActiveDropdown("who")
     }
 
-    const navigate = useNavigate()
     const inputRef = useRef()
 
     const handleScriptLoad = () => {
@@ -137,6 +149,9 @@ function HomeHeader(props) {
 
     function setPlace(place) {
         setCurrentPlace(place)
+        const cityState = place.split(", ")
+        setCity(cityState[0])
+        setState(cityState[1])
         inputRef.current.value = place
     }
 
@@ -198,6 +213,72 @@ function HomeHeader(props) {
           window.removeEventListener('scroll', handleScroll)
         }
     }, [])
+
+    function searchHandler() {
+        let valid = true
+        if (!city) {
+            setErrorMessages(prev => [...prev, "Choose a *city* from our Autocomplete list."])
+            valid = false
+        }
+        if (!selectedStartDate) {
+            setErrorMessages(prev => [...prev, "Must select a start date."])
+            valid = false
+        }
+        if (!selectedEndDate) {
+            setErrorMessages(prev => [...prev, "Must select an end date."])
+            valid = false
+        }
+        if (adultsCounter < 1) {
+            setErrorMessages(prev => [...prev, "At least 1 adult must be present."])
+            valid = false
+        }
+
+        if (!valid) {
+            setShowErrorModal(true)
+            return
+        }
+
+        setSearchParams({
+            city: city,
+            state: state,
+            startDate: selectedStartDate ? selectedStartDate : "",
+            endDate: selectedEndDate ? selectedEndDate : "",
+            adults: adultsCounter,
+            children: childrenCounter,
+            infants: infantsCounter,
+            pets: petCounter,
+        })
+    }
+
+    useEffect(() => {
+        setCity(searchParams.get("city") || "")
+        setState(searchParams.get("state") || "")
+        setAdults(searchParams.get("adults") || "")
+        setChildren(searchParams.get("children") || "")
+        setInfants(searchParams.get("infants") || "")
+        setPets(searchParams.get("pets") || "")
+        setSelectedStartDate(searchParams.get("startDate") ? new Date(searchParams.get("startDate")) : null)
+        setSelectedEndDate(searchParams.get("endDate") ? new Date(searchParams.get("endDate")) : null)
+    }, [searchParams])
+
+    const formatDateToISO = (date) => {
+        if (!date) return null
+        const year = date.getFullYear()
+        const month = monthNameToNumber(date.toLocaleString("en-US", { month: "short" })).toString().padStart(2, "0")
+        const day = date.getDate().toString().padStart(2, "0")
+        return `${year}-${month}-${day}`
+    }
+
+    const monthNameToNumber = (monthName) => {
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        return monthNames.indexOf(monthName) + 1
+    }
+
+    useLayoutEffect(() => {
+        if (city && state && inputRef.current) {
+            inputRef.current.value = `${city}, ${state}`
+        }
+    }, [searchHeaderOpen])
 
     return (
         <div className={homePage ? "homeHeaderContainer" : "homeHeaderContainerListing"}>
@@ -276,10 +357,10 @@ function HomeHeader(props) {
                         <i className="fa-solid fa-tree homeHeader2CategoryIcon"></i>
                         <p className="homeHeader2CategoryText">Treehouses</p>
                     </div>
-                    <div className="homeHeader2CategoryContainer2">
+                    {/* <div className="homeHeader2CategoryContainer2">
                         <i className="fa-solid fa-fire homeHeader2CategoryIcon"></i>
                         <p className="homeHeader2CategoryText">Trending</p>
-                    </div>
+                    </div> */}
                 </div>
             </div>}
             {(homePage || !profilePage) && searchHeaderOpen && <div className="homeHeader2SearchDropdownContainer">
@@ -303,9 +384,9 @@ function HomeHeader(props) {
                     </div>
                     <div className="homeHeader2SearchDropdownWho" onClick={handleWhoClick}>
                         <p className="homeHeader2SearchDropdownSubHeader">Who</p>
-                        <p className={(adultsCounter > 0 || childrenCounter > 0 || infantsCounter > 0 || petCounter > 0) ? "homeHeader2SearchDropdownSubText2" : "homeHeader2SearchDropdownSubText"}>{(adultsCounter > 0 || childrenCounter > 0 || infantsCounter > 0 || petCounter > 0) ? (adultsCounter + childrenCounter) + " guests, " + (infantsCounter) + " infants, " + (petCounter) + " pets": "Add guests"}</p>
+                        <p className={(adultsCounter > 0 || childrenCounter > 0 || infantsCounter > 0 || petCounter > 0) ? "homeHeader2SearchDropdownSubText2" : "homeHeader2SearchDropdownSubText"}>{(adultsCounter > 0 || childrenCounter > 0 || infantsCounter > 0 || petCounter > 0) ? (+adultsCounter + +childrenCounter) + " guests, " + (infantsCounter) + " infants, " + (petCounter) + " pets": "Add guests"}</p>
                     </div>
-                    <div className="homeHeader2SearchDropdownSearchContainer">
+                    <div className="homeHeader2SearchDropdownSearchContainer" onClick={searchHandler}>
                         <i className="fa-solid fa-magnifying-glass homeHeader2SearchDropdownSearchIcon"></i>
                     </div>
                 </div>

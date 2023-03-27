@@ -66,6 +66,7 @@ async function userLogin(req, res, next, email, password) {
             token,
             email: user.email,
             profilePicture: user.profilePicture,
+            joinedDate: user.joinedDate
         })
     }
     catch (error) {
@@ -308,7 +309,7 @@ async function fetchPersonalListings(req, res, next) {
 }
 
 async function createReview(req, res, next) {
-    const { creatorFirstName, creatorId, creatorLastName, creatorProfilePicture, postedDate, accuracyRating, checkInRating, cleanlinessRating, communicationRating, description, locationRating, valueRating, listingId } = req.body
+    const { creatorFirstName, creatorId, creatorLastName, creatorProfilePicture, postedDate, accuracyRating, checkInRating, cleanlinessRating, communicationRating, description, locationRating, valueRating, listingId, creatorJoinedDate } = req.body
 
     let data = {
         creatorFirstName,
@@ -324,6 +325,7 @@ async function createReview(req, res, next) {
         locationRating,
         valueRating,
         listingId,
+        creatorJoinedDate
     }
 
     try {
@@ -369,6 +371,86 @@ async function createReview(req, res, next) {
     }
 }
 
+async function fetchUser(req, res, next) {
+    const client = new MongoClient(mongoUrl)
+    const { userId } = req.body
+
+    try {
+        await client.connect()
+        const db = client.db("airebnb")
+
+        let user = await db.collection("users").findOne({_id: new ObjectId(userId)})
+
+        const listingIds = user.listings.map(id => new ObjectId(id))
+
+        let listings = await db.collection("listings").find({ _id: { $in: listingIds } }).toArray()
+
+        const listingsMap = new Map()
+
+        for (let listing of listings) {
+            const reviewIds = listing.reviewsData.reviews.map(id => new ObjectId(id))
+            const reviews = await db.collection("reviews").find({ _id: { $in: reviewIds } }).toArray()
+
+            listing.reviewsData.reviews = reviews
+
+            const listingWithoutReviews = { ...listing }
+            delete listingWithoutReviews.reviewsData
+
+            listingsMap.set(listing._id.toString(), listingWithoutReviews)
+        }
+
+        user.listings = listings
+
+        for (let listing of user.listings) {
+            for (let review of listing.reviewsData.reviews) {
+                review.listingId = listingsMap.get(review.listingId)
+            }
+        }
+
+        client.close()
+
+        res.status(200).json({ message: "User fetched successfully.", user: user })
+    }
+    catch (error) {
+        console.error(error)
+        res.status(500).json({ error: "Sorry! Could not fetch user, please try again." })
+    }
+}
+
+async function searchListings(req, res, next) {
+    const client = new MongoClient(mongoUrl)
+    const { city, guests, pets, startDate, endDate } = req.body
+
+    try {
+        await client.connect()
+        const db = client.db("airebnb")
+
+        let result = await db.collection("listings").find().toArray()
+
+        const allReviewIds = result.flatMap(listing => listing.reviewsData.reviews.map(id => new ObjectId(id)))
+
+        const allReviews = await db.collection("reviews").find({_id: {$in: allReviewIds}}).toArray()
+
+        result = result.map(listing => {
+            const listingReviews = allReviews.filter(review => listing.reviewsData.reviews.some(id => id.toString() === review._id.toString()))
+            return {
+                ...listing,
+                reviewsData: {
+                    ...listing.reviewsData,
+                    reviews: listingReviews
+                }
+            }
+        })
+
+        client.close()
+
+        res.status(200).json({ message: "Listings fetched successfully.", listings: result })
+    }
+    catch (error) {
+        res.status(500).json({ error: "Sorry! Could not fetch listings, please try again." })
+    }
+}
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
 exports.createListing = createListing
@@ -379,3 +461,5 @@ exports.bookReservation = bookReservation
 exports.validateBooking = validateBooking
 exports.fetchPersonalListings = fetchPersonalListings
 exports.createReview = createReview
+exports.fetchUser = fetchUser
+exports.searchListings = searchListings

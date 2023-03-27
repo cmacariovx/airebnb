@@ -83,7 +83,7 @@ function Signup({ closeSignup, showErrorModal }) {
             showErrorModal([data.error])
         }
         else {
-            auth.login(data.userId, data.token, data.firstName, data.lastName, data.profilePicture, data.email)
+            auth.login(data.userId, data.token, data.firstName, data.lastName, data.profilePicture, data.email, data.joinedDate)
         }
     }
 

@@ -7,10 +7,8 @@ import personalPic from '../../Images/personalPic.jpg'
 import aircoverLogo from '../../Images/aircover.png'
 import airbnbMapMarker2 from '../../Images/airbnbMapMarker2.png'
 import Calendar from "./Calendar";
-import { Navigate, useNavigate } from "react-router"
+import { useNavigate } from "react-router"
 import ErrorModal from "./ErrorModal"
-
-import { Loader } from "@googlemaps/js-api-loader"
 import { AuthContext } from "../../Context/Auth-Context"
 
 function ListingBody() {
@@ -37,6 +35,7 @@ function ListingBody() {
     const [valueRating, setValueRating] = useState(5)
     const [submittingReview, setSubmittingReview] = useState(false)
     const [successfulReview, setSuccessfulReview] = useState(false)
+    const [allLoaded, setAllLoaded] = useState([])
 
     const reviewRef = useRef()
 
@@ -62,6 +61,7 @@ function ListingBody() {
                 setListing(data.listing)
                 setReviews(data.listing.reviewsData.reviews)
                 setBookings(data.listing.bookings)
+                setAllLoaded(prev => [...prev, 0])
             }
 
             setFetchingListing(false)
@@ -88,7 +88,10 @@ function ListingBody() {
 
             const data = await response.json()
 
-            if (!data.error) setHost(data.host)
+            if (!data.error) {
+                setHost(data.host)
+                setAllLoaded(prev => [...prev, 1])
+            }
             setFetchingHost(false)
             return data
         }
@@ -503,6 +506,7 @@ function ListingBody() {
                 locationRating: locationRating,
                 valueRating: valueRating,
                 listingId: listingId,
+                creatorJoinedDate: auth.joinedDate
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -565,7 +569,7 @@ function ListingBody() {
             <a id="photosAnchor"></a>
             <div className="listingBodyIntroContainer">
                 <div className="listingBodyTitleContainer">
-                    <p className="listingBodyTitleText">{(listing && !fetchingListing) && listing.placeGeneralData.placeTitle}</p>
+                    <p className="listingBodyTitleText">{(allLoaded.length === 2 && listing && !fetchingListing) && listing.placeGeneralData.placeTitle}</p>
                 </div>
                 <div className="listingBodyInfoContainer">
                     <div className="listingBodyInfoContainerLeft">
@@ -576,7 +580,7 @@ function ListingBody() {
                         <p className="listingBodyDotText">•</p>
                         <a className="listingBodyReviewCountText" href="#reviewsAnchor">{(listing && !fetchingListing) && listing.reviewsData.reviewsCount + " reviews"}</a>
                         <p className="listingBodyDotText">•</p>
-                        <a className="listingBodyLocationText" href="#locationAnchor">{(listing && !fetchingListing) && listing.placeLocationData.placeCity + ", " + listing.placeLocationData.placeState}</a>
+                        <a className="listingBodyLocationText" href="#locationAnchor">{(allLoaded.length === 2 && listing && !fetchingListing) && listing.placeLocationData.placeCity + ", " + listing.placeLocationData.placeState}</a>
                     </div>
                     <div className="listingBodyInfoContainerRight">
                         <div className="listingBodySaveContainer">
@@ -591,7 +595,7 @@ function ListingBody() {
                     <div
                         className="listingBodyMainImage"
                         style={{
-                            backgroundImage: (!fetchingListing && listing && listing.imageIds)
+                            backgroundImage: (allLoaded.length === 2 && !fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[0]})`
                             : "none",
                         }}
@@ -600,7 +604,7 @@ function ListingBody() {
                 <div className="listingBodySubImageContainer" id="listingBodySubImage1">
                     <div className="listingBodySubImage"
                         style={{
-                            backgroundImage: (!fetchingListing && listing && listing.imageIds)
+                            backgroundImage: (allLoaded.length === 2 && !fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[1]})`
                             : "none",
                         }}
@@ -609,7 +613,7 @@ function ListingBody() {
                 <div className="listingBodySubImageContainer" id="listingBodySubImage2">
                     <div className="listingBodySubImage"
                         style={{
-                            backgroundImage: (!fetchingListing && listing && listing.imageIds)
+                            backgroundImage: (allLoaded.length === 2 && !fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[2]})`
                             : "none",
                         }}
@@ -618,7 +622,7 @@ function ListingBody() {
                 <div className="listingBodySubImageContainer" id="listingBodySubImage3">
                     <div className="listingBodySubImage"
                         style={{
-                            backgroundImage: (!fetchingListing && listing && listing.imageIds)
+                            backgroundImage: (allLoaded.length === 2 && !fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[3]})`
                             : "none",
                         }}
@@ -627,7 +631,7 @@ function ListingBody() {
                 <div className="listingBodySubImageContainer" id="listingBodySubImage4">
                     <div className="listingBodySubImage"
                         style={{
-                            backgroundImage: (!fetchingListing && listing && listing.imageIds)
+                            backgroundImage: (allLoaded.length === 2 && !fetchingListing && listing && listing.imageIds)
                             ? `url(https://airebnb.s3.us-east-2.amazonaws.com/${listing.imageIds[4]})`
                             : "none",
                         }}
@@ -639,25 +643,25 @@ function ListingBody() {
                     <div className="listingBodyMainLeftHostedContainer">
                         <div className="listingBodyMainLeftHostedLeftContainer">
                             <div className="listingBodyMainLeftHostedLeftTitleContainer">
-                                <p className="listingBodyMainLeftHostedLeftTitleText">{(!fetchingHost && host) &&"House hosted by " + host.firstName}</p>
+                                <p className="listingBodyMainLeftHostedLeftTitleText">{(allLoaded.length === 2 && !fetchingHost && host) &&"House hosted by " + host.firstName}</p>
                             </div>
                             <div className="listingBodyMainLeftHostedLeftInfoContainer">
-                                <p className="listingBodyMainLeftHostedLeftInfoText">{(!fetchingListing && listing) &&
+                                <p className="listingBodyMainLeftHostedLeftInfoText">{(allLoaded.length === 2 && !fetchingListing && listing) &&
                                 listing.placeMaxData.placeMaxGuests + " guests"}</p>
                                 <p className="listingBodyMainLeftHostedLeftDotText">•</p>
-                                <p className="listingBodyMainLeftHostedLeftInfoText">{(!fetchingListing && listing) &&
+                                <p className="listingBodyMainLeftHostedLeftInfoText">{(allLoaded.length === 2 && !fetchingListing && listing) &&
                                 listing.placeMaxData.placeBedrooms + " bedrooms"}</p>
                                 <p className="listingBodyMainLeftHostedLeftDotText">•</p>
-                                <p className="listingBodyMainLeftHostedLeftInfoText">{(!fetchingListing && listing) &&
+                                <p className="listingBodyMainLeftHostedLeftInfoText">{(allLoaded.length === 2 && !fetchingListing && listing) &&
                                 listing.placeMaxData.placeBeds + " beds"}</p>
                                 <p className="listingBodyMainLeftHostedLeftDotText">•</p>
-                                <p className="listingBodyMainLeftHostedLeftInfoText">{(!fetchingListing && listing) &&
+                                <p className="listingBodyMainLeftHostedLeftInfoText">{(allLoaded.length === 2 && !fetchingListing && listing) &&
                                 listing.placeMaxData.placeBathrooms + " bath"}</p>
                             </div>
                         </div>
                         <div className="listingBodyMainRightHostedRightContainer">
                             <a href="#profileAnchor">
-                                <img src={(!fetchingHost && host) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + host.profilePicture) : null} className="listingBodyMainRightHostedRightImage"/>
+                                <img src={(allLoaded.length === 2 && !fetchingHost && host) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + host.profilePicture) : null} className="listingBodyMainRightHostedRightImage"/>
                             </a>
                         </div>
                     </div>
@@ -689,7 +693,7 @@ function ListingBody() {
                         </div>
                     </div>
                     <div className="listingBodyMainLeftDescriptionContainer">
-                        <p className="listingBodyMainLeftDescriptionText">{(!fetchingListing && listing) &&
+                        <p className="listingBodyMainLeftDescriptionText">{(allLoaded.length === 2 && !fetchingListing && listing) &&
                         listing.placeGeneralData.placeDesc}</p>
                     </div>
                     <a id="amenitiesAnchor"></a>
@@ -699,7 +703,7 @@ function ListingBody() {
                         </div>
                         <div className="listingBodyMainLeftAmenitiesListContainer">
                             <div className="listingBodyMainLeftAmenitiesListLeftContainer">
-                                {(!fetchingListing && listing && listing.placeAmenitiesData.wifi) && <div className="listingBodyMainLeftAmenityContainer">
+                                {(allLoaded.length === 2 && !fetchingListing && listing && listing.placeAmenitiesData.wifi) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-wifi listingBodyMainLeftAmenity"></i>
                                     </div>
@@ -707,7 +711,7 @@ function ListingBody() {
                                         <p className="listingBodyMainLeftAmenityText">Wifi</p>
                                     </div>
                                 </div>}
-                                {(!fetchingListing && listing && listing.placeAmenitiesData.heating) && <div className="listingBodyMainLeftAmenityContainer">
+                                {(allLoaded.length === 2 && !fetchingListing && listing && listing.placeAmenitiesData.heating) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-temperature-three-quarters listingBodyMainLeftAmenity"></i>
                                     </div>
@@ -715,7 +719,7 @@ function ListingBody() {
                                         <p className="listingBodyMainLeftAmenityText">Heating</p>
                                     </div>
                                 </div>}
-                                {(!fetchingListing && listing && listing.placeAmenitiesData.washerDryer) && <div className="listingBodyMainLeftAmenityContainer">
+                                {(allLoaded.length === 2 && !fetchingListing && listing && listing.placeAmenitiesData.washerDryer) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-shirt listingBodyMainLeftAmenity"></i>
                                     </div>
@@ -723,7 +727,7 @@ function ListingBody() {
                                         <p className="listingBodyMainLeftAmenityText">Washer & Dryer</p>
                                     </div>
                                 </div>}
-                                {(!fetchingListing && listing && listing.placeAmenitiesData.selfCheckIn) && <div className="listingBodyMainLeftAmenityContainer">
+                                {(allLoaded.length === 2 && !fetchingListing && listing && listing.placeAmenitiesData.selfCheckIn) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-key listingBodyMainLeftAmenity"></i>
                                     </div>
@@ -733,7 +737,7 @@ function ListingBody() {
                                 </div>}
                             </div>
                             <div className="listingBodyMainLeftAmenitiesListRightContainer">
-                                {(!fetchingListing && listing && listing.placeAmenitiesData.tv) && <div className="listingBodyMainLeftAmenityContainer">
+                                {(allLoaded.length === 2 && !fetchingListing && listing && listing.placeAmenitiesData.tv) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-tv listingBodyMainLeftAmenity"></i>
                                     </div>
@@ -741,7 +745,7 @@ function ListingBody() {
                                         <p className="listingBodyMainLeftAmenityText">TV</p>
                                     </div>
                                 </div>}
-                                {(!fetchingListing && listing && listing.placeAmenitiesData.ac) && <div className="listingBodyMainLeftAmenityContainer">
+                                {(allLoaded.length === 2 && !fetchingListing && listing && listing.placeAmenitiesData.ac) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-snowflake listingBodyMainLeftAmenity"></i>
                                     </div>
@@ -749,7 +753,7 @@ function ListingBody() {
                                         <p className="listingBodyMainLeftAmenityText">Air conditioning</p>
                                     </div>
                                 </div>}
-                                {(!fetchingListing && listing && listing.placeAmenitiesData.essentials) && <div className="listingBodyMainLeftAmenityContainer">
+                                {(allLoaded.length === 2 && !fetchingListing && listing && listing.placeAmenitiesData.essentials) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-bottle-droplet listingBodyMainLeftAmenity"></i>
                                     </div>
@@ -757,7 +761,7 @@ function ListingBody() {
                                         <p className="listingBodyMainLeftAmenityText">Essentials</p>
                                     </div>
                                 </div>}
-                                {(!fetchingListing && listing && listing.placeAmenitiesData.smokeAlarm) && <div className="listingBodyMainLeftAmenityContainer">
+                                {(allLoaded.length === 2 && !fetchingListing && listing && listing.placeAmenitiesData.smokeAlarm) && <div className="listingBodyMainLeftAmenityContainer">
                                     <div className="listingBodyMainLeftAmenityLeftContainer">
                                         <i className="fa-solid fa-bell listingBodyMainLeftAmenity"></i>
                                     </div>
@@ -773,7 +777,7 @@ function ListingBody() {
                             <p className="listingBodyMainLeftCalendarTitleText">Select check-in date</p>
                         </div>
                         <div className="listingBodyMainLeftCalendarBodyContainer">
-                            {!fetchingListing && listing && <Calendar key={calendarKey1} onDateChange={handleDateChange} selectedStartDate={selectedStartDate}
+                            {allLoaded.length === 2 && !fetchingListing && listing && <Calendar key={calendarKey1} onDateChange={handleDateChange} selectedStartDate={selectedStartDate}
                             selectedEndDate={selectedEndDate} bookings={bookings}ref={calendarRef}/>}
                         </div>
                         <div className="listingBodyMainLeftCalendarFooterContainer">
@@ -804,7 +808,7 @@ function ListingBody() {
                             </div>
                         </div>
                         <div className="listingBodyMainRightCheckInContainerLower">
-                            {!fetchingListing && listing && <Calendar key={calendarKey2} onDateChange={handleDateChange} selectedStartDate={selectedStartDate}
+                            {allLoaded.length === 2 && !fetchingListing && listing && <Calendar key={calendarKey2} onDateChange={handleDateChange} selectedStartDate={selectedStartDate}
                             selectedEndDate={selectedEndDate} bookings={bookings} ref={calendarRef2}/>}
                             <div className="listingBodyMainLeftCalendarFooterTextContainer3" onClick={handleClearDates2}>
                                 <p className="listingBodyMainLeftCalendarFooterText3">Clear dates</p>
@@ -869,17 +873,17 @@ function ListingBody() {
                             </div>
                             <div className='homeHeader2SearchDropdownGuestContainerRight2'>
                                 <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("pets", "-")}>
-                                    {(!fetchingListing && listing && listing.placeMaxData.placePets) && <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>-</p>}
+                                    {(allLoaded.length === 2 && !fetchingListing && listing && listing.placeMaxData.placePets) && <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>-</p>}
                                 </div>
 
                                     <p className='homeHeader2SearchDropdownGuestContainerRightNumber2'>{petCounter}</p>
 
                                 <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer2' onClick={() => increment("pets", "+")}>
-                                    {(!fetchingListing && listing && listing.placeMaxData.placePets) && <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>+</p>}
+                                    {(allLoaded.length === 2 && !fetchingListing && listing && listing.placeMaxData.placePets) && <p className='homeHeader2SearchDropdownGuestContainerRightIcon2'>+</p>}
                                 </div>
                             </div>
                         </div>
-                        <p className="homeHeader2SearchDropdownGuestContainer4">{(!fetchingListing && listing) && `This place has a maximum of ${listing.placeMaxData.placeMaxGuests} guests, not including infants. Pets ${listing.placeMaxData.placePets ? "are allowed." : "aren't allowed."}`}</p>
+                        <p className="homeHeader2SearchDropdownGuestContainer4">{(allLoaded.length === 2 && !fetchingListing && listing) && `This place has a maximum of ${listing.placeMaxData.placeMaxGuests} guests, not including infants. Pets ${listing.placeMaxData.placePets ? "are allowed." : "aren't allowed."}`}</p>
                     </div>}
 
                     <div className="listingBodyMainRightCheckContainer">
@@ -924,21 +928,21 @@ function ListingBody() {
                         <p className="listingBodyMainRightCheckDisclaimerText">You won't be charged yet</p>
                         <div className="listingBodyMainRightCheckFeesContainer">
                             <div className="listingBodyMainRightCheckFeeContainer">
-                                <p className="listingBodyMainRightCheckFeeLeft">{(listing && !fetchingListing) && ["$", listing.placePriceData.priceCounter, " x ", totalDays, " nights"]}</p>
+                                <p className="listingBodyMainRightCheckFeeLeft">{(allLoaded.length === 2 && listing && !fetchingListing) && ["$", listing.placePriceData.priceCounter, " x ", totalDays, " nights"]}</p>
                                 <p className="listingBodyMainRightCheckFeeRight">{(listing && !fetchingListing) && ["$", (listing.placePriceData.priceCounter * totalDays).toFixed(2)]}</p>
                             </div>
                             <div className="listingBodyMainRightCheckFeeContainer">
                                 <p className="listingBodyMainRightCheckFeeLeft">Cleaning fee</p>
-                                <p className="listingBodyMainRightCheckFeeRight">{(listing && !fetchingListing) && ["$", listing.placePriceData.cleaningFee.toFixed(2)]}</p>
+                                <p className="listingBodyMainRightCheckFeeRight">{(allLoaded.length === 2 && listing && !fetchingListing) && ["$", listing.placePriceData.cleaningFee.toFixed(2)]}</p>
                             </div>
                             <div className="listingBodyMainRightCheckFeeContainer">
                                 <p className="listingBodyMainRightCheckFeeLeft">Airbnb service fee</p>
-                                <p className="listingBodyMainRightCheckFeeRight">{(listing && !fetchingListing) && ["$", listing.placePriceData.airbnbFee.toFixed(2)]}</p>
+                                <p className="listingBodyMainRightCheckFeeRight">{(allLoaded.length === 2 && listing && !fetchingListing) && ["$", listing.placePriceData.airbnbFee.toFixed(2)]}</p>
                             </div>
                         </div>
                         <div className="listingBodyMainRightCheckTotalContainer">
                             <p className="listingBodyMainRightCheckTotalLeft">Total before taxes</p>
-                            <p className="listingBodyMainRightCheckTotalRight">{(listing && !fetchingListing) && ["$", ((listing.placePriceData.priceCounter * totalDays) + listing.placePriceData.cleaningFee + listing.placePriceData.airbnbFee).toFixed(2)]}</p>
+                            <p className="listingBodyMainRightCheckTotalRight">{(allLoaded.length === 2 && listing && !fetchingListing) && ["$", ((listing.placePriceData.priceCounter * totalDays) + listing.placePriceData.cleaningFee + listing.placePriceData.airbnbFee).toFixed(2)]}</p>
                         </div>
                     </div>
                 </div>
@@ -1037,10 +1041,10 @@ function ListingBody() {
                     <div className="listingBodyReviewsHeaderContainerLeft">
                         <div className="listingBodyReviewContainer2">
                             <i className="fa-solid fa-star listingBodyStar2"></i>
-                            <p className="listingBodyReviewText2">{(listing && !fetchingListing) && averageRating ? averageRating : "New"}</p>
+                            <p className="listingBodyReviewText2">{(allLoaded.length === 2 && listing && !fetchingListing) && averageRating ? averageRating : "New"}</p>
                         </div>
                         <p className="listingBodyDotText2">•</p>
-                        <a className="listingBodyReviewCountText3">{(listing && !fetchingListing) && listing.reviewsData.reviewsCount + " reviews"}</a>
+                        <a className="listingBodyReviewCountText3">{(allLoaded.length === 2 && listing && !fetchingListing) && listing.reviewsData.reviewsCount + " reviews"}</a>
                     </div>
                     <button className="listingBodyReviewsHeaderContainerRightButton" onClick={() => {auth.token ? setShowCreateReview(true) : setError("Must be logged in to add a review.")}}>Add review</button>
                 </div>
@@ -1053,13 +1057,13 @@ function ListingBody() {
                                     <div
                                         className="listingBodyReviewBarFiller"
                                         style={{
-                                            width: `${(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
+                                            width: `${(allLoaded.length === 2 && !fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
                                             ? averageRatings.cleanlinessRating * 20
                                             : 0}%`,
                                         }}
                                     />
                                 </div>
-                                <p className="listingBodyReviewNumber">{(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.cleanlinessRating}</p>
+                                <p className="listingBodyReviewNumber">{(allLoaded.length === 2 && !fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.cleanlinessRating}</p>
                             </div>
                         </div>
                         <div className="listingBodyReviewStatContainer">
@@ -1069,13 +1073,13 @@ function ListingBody() {
                                     <div
                                         className="listingBodyReviewBarFiller"
                                         style={{
-                                            width: `${(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
+                                            width: `${(allLoaded.length === 2 && !fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
                                             ? averageRatings.communicationRating * 20
                                             : 0}%`,
                                         }}
                                     />
                                 </div>
-                                <p className="listingBodyReviewNumber">{(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.communicationRating}</p>
+                                <p className="listingBodyReviewNumber">{(allLoaded.length === 2 && !fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.communicationRating}</p>
                             </div>
                         </div>
                         <div className="listingBodyReviewStatContainer">
@@ -1085,13 +1089,13 @@ function ListingBody() {
                                     <div
                                         className="listingBodyReviewBarFiller"
                                         style={{
-                                            width: `${(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
+                                            width: `${(allLoaded.length === 2 && !fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
                                             ? averageRatings.checkInRating * 20
                                             : 0}%`,
                                         }}
                                     />
                                 </div>
-                                <p className="listingBodyReviewNumber">{(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.checkInRating}</p>
+                                <p className="listingBodyReviewNumber">{(allLoaded.length === 2 && !fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.checkInRating}</p>
                             </div>
                         </div>
                     </div>
@@ -1103,13 +1107,13 @@ function ListingBody() {
                                 <div
                                         className="listingBodyReviewBarFiller"
                                         style={{
-                                            width: `${(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
+                                            width: `${(allLoaded.length === 2 && !fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
                                             ? averageRatings.accuracyRating * 20
                                             : 0}%`,
                                         }}
                                     />
                                 </div>
-                                <p className="listingBodyReviewNumber">{(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.accuracyRating}</p>
+                                <p className="listingBodyReviewNumber">{(allLoaded.length === 2 && !fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.accuracyRating}</p>
                             </div>
                         </div>
                         <div className="listingBodyReviewStatContainer">
@@ -1119,13 +1123,13 @@ function ListingBody() {
                                     <div
                                         className="listingBodyReviewBarFiller"
                                         style={{
-                                            width: `${(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
+                                            width: `${(allLoaded.length === 2 && !fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
                                             ? averageRatings.locationRating * 20
                                             : 0}%`,
                                         }}
                                     />
                                 </div>
-                                <p className="listingBodyReviewNumber">{(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.locationRating}</p>
+                                <p className="listingBodyReviewNumber">{(allLoaded.length === 2 && !fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.locationRating}</p>
                             </div>
                         </div>
                         <div className="listingBodyReviewStatContainer">
@@ -1135,24 +1139,24 @@ function ListingBody() {
                                     <div
                                         className="listingBodyReviewBarFiller"
                                         style={{
-                                            width: `${(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
+                                            width: `${(allLoaded.length === 2 && !fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0)
                                             ? averageRatings.valueRating * 20
                                             : 0}%`,
                                         }}
                                     />
                                 </div>
-                                <p className="listingBodyReviewNumber">{(!fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.valueRating}</p>
+                                <p className="listingBodyReviewNumber">{(allLoaded.length === 2 && !fetchingListing && listing && averageRatings && Object.keys(averageRatings).length > 0) && averageRatings.valueRating}</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="listingBodyReviewsBodyContainer">
                     <div className="listingBodyReviewsBodyContainerLeft">
-                        {(!fetchingListing && listing && leftReviews.length > 0) && leftReviews.map((review) => (
+                        {(allLoaded.length === 2 && !fetchingListing && listing && leftReviews.length > 0) && leftReviews.map((review) => (
                             <div key={review._id} className="listingBodyFullReviewContainer">
                                 <div className="listingBodyFullReviewProfileContainer">
                                 <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={(!fetchingListing && listing) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + review.creatorProfilePicture) : null} className="fullReviewProfilePic" />
+                                    <img src={(allLoaded.length === 2 && !fetchingListing && listing) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + review.creatorProfilePicture) : null} className="fullReviewProfilePic" />
                                 </div>
                                 <div className="listingBodyFullReviewProfileContainerRight">
                                     <p className="fullReviewProfileName">{review.creatorFirstName}</p>
@@ -1166,11 +1170,11 @@ function ListingBody() {
                         ))}
                     </div>
                     <div className="listingBodyReviewsBodyContainerRight">
-                        {(!fetchingListing && listing && rightReviews.length > 0) && rightReviews.map((review) => (
+                        {(allLoaded.length === 2 && !fetchingListing && listing && rightReviews.length > 0) && rightReviews.map((review) => (
                             <div key={review._id} className="listingBodyFullReviewContainer">
                                 <div className="listingBodyFullReviewProfileContainer">
                                 <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={(!fetchingListing && listing) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + review.creatorProfilePicture) : null} className="fullReviewProfilePic" />
+                                    <img src={(allLoaded.length === 2 && !fetchingListing && listing) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + review.creatorProfilePicture) : null} className="fullReviewProfilePic" />
                                 </div>
                                 <div className="listingBodyFullReviewProfileContainerRight">
                                     <p className="fullReviewProfileName">{review.creatorFirstName}</p>
@@ -1189,7 +1193,7 @@ function ListingBody() {
             <div className="listingBodyMapContainer">
                 <div className="listingBodyMapHeaderContainer">
                     <p className="listingBodyMapHeaderText1">Where you'll be</p>
-                    <p className="listingBodyMapHeaderText2">{(listing && !fetchingListing) && listing.placeLocationData.placeCity + ", " + listing.placeLocationData.placeState}</p>
+                    <p className="listingBodyMapHeaderText2">{(allLoaded.length === 2 && listing && !fetchingListing) && listing.placeLocationData.placeCity + ", " + listing.placeLocationData.placeState}</p>
                 </div>
                 <div className="listingBodyMainMapContainer" id="listingBodyMainMapContainer">
 
@@ -1200,20 +1204,20 @@ function ListingBody() {
                 <div className="listingBodyHostedByContainerMainLeft">
                     <div className="listingBodyHostedByProfileContainer">
                         <div className="listingBodyHostedByContainerLeft">
-                            <img src={(!fetchingHost && host) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + host.profilePicture) : null} className="listingBodyHostedByProfilePicture" onClick={toProfileHandler}/>
+                            <img src={(allLoaded.length === 2 && !fetchingHost && host) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + host.profilePicture) : null} className="listingBodyHostedByProfilePicture" onClick={toProfileHandler}/>
                         </div>
                         <div className="listingBodyHostedByContainerRight">
-                            <p className="listingBodyHostedByContainerRightHostedByText">{(!fetchingHost && host) && `Hosted by ${host.firstName}`}</p>
-                            <p className="listingBodyHostedByContainerRightDateJoinedText">{(!fetchingHost && host) && `Joined in ${formatDate2(host.joinedDate)}`}</p>
+                            <p className="listingBodyHostedByContainerRightHostedByText">{(allLoaded.length === 2 && !fetchingHost && host) && `Hosted by ${host.firstName}`}</p>
+                            <p className="listingBodyHostedByContainerRightDateJoinedText">{(allLoaded.length === 2 && !fetchingHost && host) && `Joined in ${formatDate2(host.joinedDate)}`}</p>
                         </div>
                     </div>
                     <div className="listingBodyHostedByReviewsContainer">
                         <i className="fa-solid fa-star listingBodyHostedByStar"></i>
-                        <p className="listingBodyReviewText4">{(!fetchingHost && host) && `${host.reviewsReceived.reviewsReceivedCount} ${host.reviewsReceived.reviewsReceivedCount === 1 ? "Review" : "Reviews"}`}</p>
+                        <p className="listingBodyReviewText4">{(allLoaded.length === 2 && !fetchingHost && host) && `${host.reviewsReceived.reviewsReceivedCount} ${host.reviewsReceived.reviewsReceivedCount === 1 ? "Review" : "Reviews"}`}</p>
                     </div>
                     <div className="listingBodyHostedByDuringStayContainer">
                         <p className="listingBodyHostedByDuringStayTitle">About</p>
-                        <p className="listingBodyHostedByDuringStayDesc">{(!fetchingHost && host) && `${host.aboutDescription}`}</p>
+                        <p className="listingBodyHostedByDuringStayDesc">{(allLoaded.length === 2 && !fetchingHost && host) && `${host.aboutDescription}`}</p>
                     </div>
                 </div>
             </div>

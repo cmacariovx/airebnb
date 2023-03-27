@@ -54,6 +54,14 @@ async function createReview(req, res, next) {
     let createReviewResult = await mongo.createReview(req, res, next)
 }
 
+async function fetchUser(req, res, next) {
+    let fetchUserResult = await mongo.fetchUser(req, res, next)
+}
+
+async function searchListings(req, res, next) {
+    let searchListingResult = await mongo.searchListings(req, res, next)
+}
+
 exports.createListing = createListing
 exports.fetchListings = fetchListings
 exports.fetchListing = fetchListing
@@ -61,3 +69,5 @@ exports.fetchHost = fetchHost
 exports.bookReservation = bookReservation
 exports.fetchPersonalListings = fetchPersonalListings
 exports.createReview = createReview
+exports.fetchUser = fetchUser
+exports.searchListings = searchListings

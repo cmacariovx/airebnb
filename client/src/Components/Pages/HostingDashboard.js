@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react"
+import { Ripples } from '@uiball/loaders'
 
 import './HostingDashboard.css'
 
@@ -255,7 +256,12 @@ function HostingDashboard() {
             <div className="hostingDashboardListingsContainer">
                 <p className="hostingDashboardListingsTitle">Your listings</p>
                 <div className="hostingDashboardListings">
-                    {(!fetchingListings && listings) && listings.map((listing, index) => (
+                    {(fetchingListings && listings.length === 0) &&
+                        <div className="homeBodySpinnerContainer2">
+                            <Ripples size={100} color="#c9c9c9" />
+                        </div>
+                    }
+                    {(!fetchingListings && listings.length > 0) && listings.map((listing, index) => (
                         <div key={index} className="hostingDashboardListingContainer">
                             <ListingCard key={listing._id} listing={listing} />
                         </div>
