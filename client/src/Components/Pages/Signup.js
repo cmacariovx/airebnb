@@ -93,6 +93,30 @@ function Signup({ closeSignup, showErrorModal, already }) {
         }
     }
 
+    async function loginUserHandlerDemo(event) {
+        event.preventDefault()
+
+        const response = await fetch("http://localhost:5000/" + 'auth/login', {
+            method: 'POST',
+            body: JSON.stringify({
+                'email': "demo@demo.com",
+                'password': "Demo123!"
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        const data = await response.json()
+
+        if (data.error) {
+            showErrorModal([data.error])
+        }
+        else {
+            auth.login(data.userId, data.token, data.firstName, data.lastName, data.profilePicture, data.email, data.joinedDate)
+        }
+    }
+
     return (
         <div className="signupBackdrop" onClick={closeSignup}>
             <div className="signupPageContainer">
@@ -114,7 +138,10 @@ function Signup({ closeSignup, showErrorModal, already }) {
                     <label className="signupLabelContainer">
                         <ImageUpload onValid={onImageUpload} />
                     </label>
-                    <button className="signupSubmitButton" type="submit">Sign up</button>
+                    <div className="signupButtonsContainer">
+                        <button className="signupSubmitButton" type="submit">Sign up</button>
+                        <button className="demoSubmitButton" on onClick={loginUserHandlerDemo}>Demo Login</button>
+                    </div>
                     <p className="signupFormLogText" onClick={already}>Already have an account?</p>
                 </form>
             </div>

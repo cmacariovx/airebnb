@@ -14,6 +14,7 @@ function Saved() {
     const [activeProfileDropdown, setActiveProfileDropdown] = useState(false)
     const [fetchingListings, setFetchingListings] = useState(false)
     const [listings, setListings] = useState([])
+    const [user, setUser] = useState(null)
 
     const auth = useContext(AuthContext)
     const navigate = useNavigate()
@@ -50,7 +51,8 @@ function Saved() {
         const data = await response.json()
 
         if (!data.error) {
-            setListings(data.listings)
+            setUser(data.user)
+            setListings(data.user.saved)
         }
 
         setFetchingListings(false)
@@ -87,7 +89,7 @@ function Saved() {
             <p className="savedTitle">Saved Listings</p>
             <div className="savedBodyContainer">
                 {(!fetchingListings && listings.length > 0) && listings.map((listing, index) => (
-                    <ListingCard listing={listing}/>
+                    <ListingCard listing={listing} isSaved={true}/>
                 ))}
                 {(!fetchingListings && listings.length === 0) && <p className="emptyListingsText">You don't have any listings saved.</p>}
             </div>

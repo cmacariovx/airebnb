@@ -102,7 +102,7 @@ async function createListing(req, res, next, listingData) {
 async function fetchListings(req, res, next) {
     const client = new MongoClient(mongoUrl)
     const { page } = req.body
-    const listingsPerPage = 20
+    const listingsPerPage = 12
 
     try {
         await client.connect()
@@ -421,16 +421,73 @@ async function fetchUser(req, res, next) {
     }
 }
 
+const stateAbbreviations = {
+    "Alabama": "AL",
+    "Alaska": "AK",
+    "Arizona": "AZ",
+    "Arkansas": "AR",
+    "California": "CA",
+    "Colorado": "CO",
+    "Connecticut": "CT",
+    "Delaware": "DE",
+    "Florida": "FL",
+    "Georgia": "GA",
+    "Hawaii": "HI",
+    "Idaho": "ID",
+    "Illinois": "IL",
+    "Indiana": "IN",
+    "Iowa": "IA",
+    "Kansas": "KS",
+    "Kentucky": "KY",
+    "Louisiana": "LA",
+    "Maine": "ME",
+    "Maryland": "MD",
+    "Massachusetts": "MA",
+    "Michigan": "MI",
+    "Minnesota": "MN",
+    "Mississippi": "MS",
+    "Missouri": "MO",
+    "Montana": "MT",
+    "Nebraska": "NE",
+    "Nevada": "NV",
+    "New Hampshire": "NH",
+    "New Jersey": "NJ",
+    "New Mexico": "NM",
+    "New York": "NY",
+    "North Carolina": "NC",
+    "North Dakota": "ND",
+    "Ohio": "OH",
+    "Oklahoma": "OK",
+    "Oregon": "OR",
+    "Pennsylvania": "PA",
+    "Rhode Island": "RI",
+    "South Carolina": "SC",
+    "South Dakota": "SD",
+    "Tennessee": "TN",
+    "Texas": "TX",
+    "Utah": "UT",
+    "Vermont": "VT",
+    "Virginia": "VA",
+    "Washington": "WA",
+    "West Virginia": "WV",
+    "Wisconsin": "WI",
+    "Wyoming": "WY"
+};
+
+function getStateAbbreviation(stateName) {
+    return stateAbbreviations[stateName] || stateName;
+}
+
 async function searchListings(req, res, next) {
     const client = new MongoClient(mongoUrl)
-    const { city, guests, pets, startDate, endDate } = req.body
+    const { city, state, guests, pets, startDate, endDate } = req.body
 
     try {
         await client.connect()
         const db = client.db("airebnb")
 
-        const searchFilter = {
-            "placeLocationData.placeCity": city,
+        const searchFilter = (location) => ({
+            ...location,
             "placeMaxData.placeMaxGuests": { $gte: parseInt(guests) },
             "placeMaxData.placePets": pets > 0 ? true : { $in: [true, false] },
             "bookings": {
@@ -441,16 +498,22 @@ async function searchListings(req, res, next) {
                     }
                 }
             }
-        }
+        })
 
-        let result = await db.collection("listings").find(searchFilter).toArray()
+        let cityListings = city ? await db.collection("listings").find(searchFilter({ "placeLocationData.placeCity": city })).toArray() : []
+        let stateListings = state ? await db.collection("listings").find(searchFilter({ "placeLocationData.placeState": getStateAbbreviation(state) })).toArray() : []
 
-        const allReviewIds = result.flatMap(listing => listing.reviewsData.reviews.map(id => new ObjectId(id)))
+        let cityListingIds = cityListings.map(listing => listing._id.toString())
+        let uniqueStateListings = stateListings.filter(listing => !cityListingIds.includes(listing._id.toString()))
 
-        const allReviews = await db.collection("reviews").find({_id: {$in: allReviewIds}}).toArray()
+        let result = [...cityListings, ...uniqueStateListings]
+
+        let allReviewIds = result.flatMap(listing => listing.reviewsData.reviews.map(id => new ObjectId(id)))
+
+        let allReviews = await db.collection("reviews").find({ _id: { $in: allReviewIds } }).toArray()
 
         result = result.map(listing => {
-            const listingReviews = allReviews.filter(review => listing.reviewsData.reviews.some(id => id.toString() === review._id.toString()))
+            let listingReviews = allReviews.filter(review => listing.reviewsData.reviews.some(id => id.toString() === review._id.toString()));
             return {
                 ...listing,
                 reviewsData: {
@@ -465,6 +528,7 @@ async function searchListings(req, res, next) {
         res.status(200).json({ message: "Listings fetched successfully.", listings: result })
     }
     catch (error) {
+        console.log(error)
         res.status(500).json({ error: "Sorry! Could not fetch listings, please try again." })
     }
 }
@@ -500,7 +564,7 @@ async function fetchSavedListings(req, res, next) {
 
         client.close()
 
-        res.status(200).json({ message: "Saved listings fetched successfully.", listings: user.saved })
+        res.status(200).json({ message: "Saved listings fetched successfully.", user: user })
     }
     catch (error) {
         client.close()
@@ -551,7 +615,6 @@ async function unsave(req, res, next) {
             throw new Error("User not found.")
         }
 
-        // Remove the listingId from the user's saved array
         await db.collection("users").updateOne(
             { _id: new ObjectId(userId) },
             { $pull: { saved: listingId } }

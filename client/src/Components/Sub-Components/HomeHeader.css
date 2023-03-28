@@ -695,8 +695,8 @@
 
                 .homeHeader2CategoryIcon {
                     font-size: 20px;
-                    color: var(--gray);
                     margin-bottom: 10px;
+                    color: var(--pink);
                 }
 
                 .homeHeader2CategoryIconSelectedAll {

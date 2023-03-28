@@ -39,6 +39,33 @@ function Login({ closeLogin, showErrorModal, already }) {
         setIsLoggingIn(false)
     }
 
+    async function loginUserHandlerDemo(event) {
+        event.preventDefault()
+        setIsLoggingIn(true)
+
+        const response = await fetch("http://localhost:5000/" + 'auth/login', {
+            method: 'POST',
+            body: JSON.stringify({
+                'email': "demo@demo.com",
+                'password': "Demo123!"
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        const data = await response.json()
+
+        if (data.error) {
+            showErrorModal([data.error])
+        }
+        else {
+            auth.login(data.userId, data.token, data.firstName, data.lastName, data.profilePicture, data.email, data.joinedDate)
+        }
+
+        setIsLoggingIn(false)
+    }
+
     return (
         <div className="loginBackdrop" onClick={closeLogin}>
             <div className="loginPageContainer">
@@ -50,7 +77,10 @@ function Login({ closeLogin, showErrorModal, already }) {
                     <label className="loginLabelContainer">
                         <input className="loginInputContainer" ref={passwordInputRef} type="password" placeholder="Password" required />
                     </label>
-                    <button className="loginSubmitButton" type="submit">Log in</button>
+                    <div className="loginButtonsContainer">
+                        <button className="loginSubmitButton" type="submit">Log in</button>
+                        <button className="demoSubmitButton" onClick={loginUserHandlerDemo}>Demo Login</button>
+                    </div>
                     <p className="signupFormLogText" onClick={already}>Don't have an account?</p>
                 </form>
             </div>

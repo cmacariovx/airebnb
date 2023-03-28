@@ -13,6 +13,7 @@ import Login from '../Pages/Login'
 import ErrorModal from './ErrorModal'
 
 import { AuthContext } from '../../Context/Auth-Context'
+import ListingsContext from '../../Context/ListingsContext'
 
 function HomeHeader(props) {
     const homePage = props.homePage
@@ -21,6 +22,8 @@ function HomeHeader(props) {
     const auth = useContext(AuthContext)
 
     const navigate = useNavigate()
+
+    const { resetListings } = useContext(ListingsContext)
 
     const [searchParams, setSearchParams] = useSearchParams()
 
@@ -155,8 +158,20 @@ function HomeHeader(props) {
     function setPlace(place) {
         setCurrentPlace(place)
         const cityState = place.split(", ")
-        setCity(cityState[0])
-        setState(cityState[1])
+
+        if (cityState.length === 3) {
+            setCity(cityState[0])
+            setState(cityState[1])
+        }
+        else if (cityState.length === 2) {
+            setCity(null)
+            setState(cityState[0])
+        }
+        else {
+            setCity(null)
+            setState(null)
+        }
+
         inputRef.current.value = place
     }
 
@@ -221,8 +236,8 @@ function HomeHeader(props) {
 
     function searchHandler() {
         let valid = true
-        if (!city) {
-            setErrorMessages(prev => [...prev, "Choose a *city* from our Autocomplete list."])
+        if (!city && !state) {
+            setErrorMessages(prev => [...prev, "Choose a location from our Autocomplete list."])
             valid = false
         }
         if (!selectedStartDate) {
@@ -280,8 +295,8 @@ function HomeHeader(props) {
     }
 
     useLayoutEffect(() => {
-        if (city && state && inputRef.current) {
-            inputRef.current.value = `${city}, ${state}`
+        if ((city || state) && inputRef.current) {
+            inputRef.current.value = `${city ? city : "-"}, ${state}`
         }
     }, [searchHeaderOpen])
 
@@ -303,6 +318,10 @@ function HomeHeader(props) {
         setShowErrorModal(true)
     }
 
+    function handleReset() {
+        resetListings()
+        resetParams()
+    }
     return (
         <div className={homePage ? "homeHeaderContainer" : "homeHeaderContainerListing"}>
             <div className={homePage ? "homeHeader1Container" : "homeHeader1Container2"}>
@@ -368,17 +387,9 @@ function HomeHeader(props) {
             </div>
             {homePage && !searchHeaderOpen && <div className="homeHeader2Container">
                 <div className="homeHeader2CategoriesContainer">
-                    <div className="homeHeader2CategoryContainer">
-                        <i className="fa-solid fa-umbrella-beach homeHeader2CategoryIcon"></i>
-                        <p className="homeHeader2CategoryText">Beachfront</p>
-                    </div>
-                    <div className="homeHeader2CategoryContainer">
-                        <i className="fa-solid fa-mountain homeHeader2CategoryIcon"></i>
-                        <p className="homeHeader2CategoryText">Amazing Views</p>
-                    </div>
-                    <div className="homeHeader2CategoryContainer1">
-                        <i className="fa-solid fa-tree homeHeader2CategoryIcon"></i>
-                        <p className="homeHeader2CategoryText">Treehouses</p>
+                    <div className="homeHeader2CategoryContainer2">
+                        <i className="fa-solid fa-sliders homeHeader2CategoryIcon"></i>
+                        <p className="homeHeader2CategoryText">All</p>
                     </div>
                 </div>
             </div>}
@@ -409,7 +420,7 @@ function HomeHeader(props) {
                         <i className="fa-solid fa-magnifying-glass homeHeader2SearchDropdownSearchIcon"></i>
                     </div>
                 </div>
-                <button className='homeSearch2ResetButton' onClick={resetParams}>Reset Filters</button>
+                <button className='homeSearch2ResetButton' onClick={() => handleReset()}>Reset Filters</button>
                 <div className="homeHeader2SearchDropdownBackdrop" onClick={() => setSearchHeaderOpen(false)}></div>
                 {activeDropdown === "where" && searchResults && searchResults.length > 0 && <div className="homeHeader2SearchDropdownPlacesContainer">
                     {searchResults.map((result, index) => (

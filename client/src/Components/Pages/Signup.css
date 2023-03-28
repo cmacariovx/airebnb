@@ -79,9 +79,18 @@
         color: var(--gray);
     }
 
-    .signupSubmitButton {
+    .signupButtonsContainer {
         min-height: 50px;
         width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .signupSubmitButton {
+        min-height: 50px;
+        width: 50%;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -93,6 +102,23 @@
         padding: 10px 20px;
         background-color: var(--pink);
         cursor: pointer;
+        margin-right: 20px;
+    }
+
+    .demoSubmitButton {
+        min-height: 50px;
+        width: 50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        font-weight: bold;
+        border-radius: 10px;
+        padding: 10px 20px;
+        background-color: rgb(240, 240, 240);
+        cursor: pointer;
+        margin-left: 20px;
     }
 
     .signupFormLogText {

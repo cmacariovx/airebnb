@@ -335,6 +335,10 @@ function ListingBody() {
         navigate("/profile/" + host._id)
     }
 
+    function toProfileHandler2(id) {
+        navigate("/profile/" + id)
+    }
+
     const offsetTop = 700
     const topOffset = 186
     const topOffset2 = 334
@@ -553,7 +557,7 @@ function ListingBody() {
     }, [reviews])
 
     useEffect(() => {
-        fetchUser()
+        if (auth.token && auth.isLoggedIn) fetchUser()
     }, [])
 
     useEffect(() => {
@@ -1264,8 +1268,8 @@ function ListingBody() {
                         {(allLoaded.length === 2 && !fetchingListing && listing && rightReviews.length > 0) && rightReviews.map((review) => (
                             <div key={review._id} className="listingBodyFullReviewContainer">
                                 <div className="listingBodyFullReviewProfileContainer">
-                                <div className="listingBodyFullReviewProfileContainerLeft">
-                                    <img src={(allLoaded.length === 2 && !fetchingListing && listing) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + review.creatorProfilePicture) : null} className="fullReviewProfilePic" />
+                                <div className="listingBodyFullReviewProfileContainerLeft" onClick={() => toProfileHandler2(review.creatorId)}>
+                                    <img src={(allLoaded.length === 2 && !fetchingListing && listing) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + review.creatorProfilePicture) : null} className="fullReviewProfilePic"/>
                                 </div>
                                 <div className="listingBodyFullReviewProfileContainerRight">
                                     <p className="fullReviewProfileName">{review.creatorFirstName}</p>
