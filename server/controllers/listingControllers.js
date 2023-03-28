@@ -62,6 +62,18 @@ async function searchListings(req, res, next) {
     let searchListingResult = await mongo.searchListings(req, res, next)
 }
 
+async function fetchSavedListings(req, res, next) {
+    let fetchSavedListingsResult = await mongo.fetchSavedListings(req, res, next)
+}
+
+async function createSave(req, res, next) {
+    let createSaveResult = await mongo.createSave(req, res, next)
+}
+
+async function unsave(req, res, next) {
+    let unsaveResult = await mongo.unsave(req, res, next)
+}
+
 exports.createListing = createListing
 exports.fetchListings = fetchListings
 exports.fetchListing = fetchListing
@@ -71,3 +83,6 @@ exports.fetchPersonalListings = fetchPersonalListings
 exports.createReview = createReview
 exports.fetchUser = fetchUser
 exports.searchListings = searchListings
+exports.fetchSavedListings = fetchSavedListings
+exports.createSave = createSave
+exports.unsave = unsave

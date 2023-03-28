@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router";
+import { AuthContext } from "../../Context/Auth-Context";
 
 import './ListingCard.css'
 
@@ -10,9 +11,11 @@ function ListingCard(props) {
     const [averageRatings, setAverageRatings] = useState(null)
     const [reviews, setReviews] = useState(props.listing.reviewsData.reviews)
     const [nearestAvailableDate, setNearestAvailableDate] = useState(null)
+    const [isSaved, setIsSaved] = useState(props.isSaved ? props.isSaved : null)
+
+    const auth = useContext(AuthContext)
 
     function toListingHandler() {
-        // in listing body, with useEffect fetch the id
         navigate("/listing/" + listing._id)
     }
 
@@ -114,7 +117,7 @@ function ListingCard(props) {
             startDate.setDate(startDate.getDate() + 1)
         }
 
-        return {startDate: null, endDate: null}
+        return { startDate: null, endDate: null }
     }
 
     function formatDateRange(startDate, endDate) {
@@ -127,12 +130,65 @@ function ListingCard(props) {
         return `${startMonth} ${startDay} - ${endDay}`
     }
 
+    const debounceTimer = useRef(null)
+
+    async function createSave() {
+        const response = await fetch("http://localhost:5000/" + "listing/createSave", {
+            method: "POST",
+            body: JSON.stringify({
+                userId: auth.userId,
+                listingId: listing._id.toString()
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
+
+        const data = await response.json()
+        return data
+    }
+
+    async function unsave() {
+        const response = await fetch("http://localhost:5000/" + "listing/unsave", {
+            method: "POST",
+            body: JSON.stringify({
+                userId: auth.userId,
+                listingId: listing._id.toString()
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
+
+        const data = await response.json()
+        return data
+    }
+
+    function handleSave() {
+        setIsSaved((prevIsSaved) => !prevIsSaved)
+
+        if (debounceTimer.current) {
+            clearTimeout(debounceTimer.current)
+        }
+
+        debounceTimer.current = setTimeout(() => {
+            if (isSaved) {
+                unsave()
+            }
+            else {
+                createSave()
+            }
+        }, 500)
+    }
+
     return (
         <div className="listingCardContainer" onClick={toListingHandler}>
             <div className="listingCardImageContainer" style={listing.imageIds.length > 0 ? {backgroundImage: "url(https://airebnb.s3.us-east-2.amazonaws.com/" + listing.imageIds[0] + ")"} : {backgroundImage: "url(../../Images/home1.jpg)"}}>
                 <div className="listingCardCarouselContainer">
                     <div className="listingCardHeartContainer">
-                        <i className="fa-solid fa-heart listingCardHeart" onClick={(e) => e.stopPropagation()}></i>
+                    <i className={`fa-solid fa-heart listingCardHeart ${isSaved ? "saved" : ""}`} onClick={(e) => {e.stopPropagation(); handleSave();}}></i>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router";
 import { useSearchParams } from 'react-router-dom'
 import { Ripples } from '@uiball/loaders'
@@ -7,19 +7,25 @@ import ErrorModal from "./ErrorModal";
 import './HomeBody.css'
 
 import ListingCard from "./ListingCard";
+import { AuthContext } from "../../Context/Auth-Context";
 
 function HomeBody() {
     const [listings, setListings] = useState([])
     const [fetchingListings, setFetchingListings] = useState(false)
     const [page, setPage] = useState(0)
+    const [user, setUser] = useState(null)
 
     const chunkedLists = []
 
-    for (let i = 0; i < listings.length; i += 20) {
-        chunkedLists.push(listings.slice(i, i + 20))
+    if (!fetchingListings && listings.length > 0) {
+        for (let i = 0; i < listings.length; i += 20) {
+            chunkedLists.push(listings.slice(i, i + 20))
+        }
     }
 
     const navigate = useNavigate()
+
+    const auth = useContext(AuthContext)
 
     const [searchParams, setSearchParams] = useSearchParams()
 
@@ -134,16 +140,40 @@ function HomeBody() {
         }
     }, [searchParams])
 
+    async function fetchUser() {
+        const response = await fetch("http://localhost:5000/" + "listing/fetchUser", {
+            method: "POST",
+            body: JSON.stringify({
+                userId: auth.userId
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        const data = await response.json()
+
+        if (!data.error) {
+            setUser(data.user)
+        }
+
+        return data
+    }
+
+    useEffect(() => {
+        fetchUser()
+    }, [])
+
     return (
         <React.Fragment>
-            {chunkedLists.map((listGroup, index) => (
+            {(!fetchingListings && listings.length > 0 && chunkedLists.length > 0 && user) && chunkedLists.map((listGroup, index) => (
                 <div key={index} className="homeBodyContainer">
                     {listGroup.map((listing) => (
-                        <ListingCard key={listing._id} listing={listing} />
+                        <ListingCard key={listing._id} listing={listing} isSaved={user && user.saved.includes(listing._id.toString())}/>
                     ))}
                 </div>
             ))}
-            {fetchingListings && chunkedLists.length === 0 && <div className="homeBodySpinnerContainer">
+            {(chunkedLists.length === 0 && listings.length === 0 && !user) && <div className="homeBodySpinnerContainer">
                 <Ripples size={100} color="#c9c9c9" />
             </div>}
             {error && <ErrorModal errors={[error]} closeModal={() => setError(null)}/>}

@@ -343,7 +343,7 @@ function HomeHeader(props) {
                             <div className='homeHeaderProfileDropdownOption' onClick={() => navigate("/profile/" + auth.userId)}>
                                 <p className='homeHeaderProfileDropdownOptionText'>Profile</p>
                             </div>
-                            <div className='homeHeaderProfileDropdownOption'>
+                            <div className='homeHeaderProfileDropdownOption' onClick={() => navigate("/saved")}>
                                 <p className='homeHeaderProfileDropdownOptionText'>Saved</p>
                             </div>
                             <div className='homeHeaderProfileDropdownOption' onClick={() => auth.logout()}>

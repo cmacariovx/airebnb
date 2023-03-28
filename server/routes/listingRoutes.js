@@ -23,6 +23,12 @@ router.post("/bookReservation", listingControllers.bookReservation)
 
 router.post("/fetchPersonalListings", listingControllers.fetchPersonalListings)
 
+router.post("/fetchSavedListings", listingControllers.fetchSavedListings)
+
 router.post("/createReview", listingControllers.createReview)
+
+router.post("/createSave", listingControllers.createSave)
+
+router.post("/unsave", listingControllers.unsave)
 
 module.exports = router

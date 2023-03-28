@@ -286,17 +286,19 @@ async function fetchPersonalListings(req, res, next) {
             throw new Error("User not found.")
         }
 
-        const listingIds = user.listings.map(id => new ObjectId(id))
+        if (user.listings.length > 0) {
+            const listingIds = user.listings.map(id => new ObjectId(id))
 
-        let listings = await db.collection("listings").find({ _id: { $in: listingIds } }).toArray()
+            let listings = await db.collection("listings").find({ _id: { $in: listingIds } }).toArray()
 
-        for (let listing of listings) {
-            const reviewIds = listing.reviewsData.reviews.map(id => new ObjectId(id))
-            const reviews = await db.collection("reviews").find({ _id: { $in: reviewIds } }).toArray()
-            listing.reviewsData.reviews = reviews
+            for (let listing of listings) {
+                const reviewIds = listing.reviewsData.reviews.map(id => new ObjectId(id))
+                const reviews = await db.collection("reviews").find({ _id: { $in: reviewIds } }).toArray()
+                listing.reviewsData.reviews = reviews
+            }
+
+            user.listings = listings
         }
-
-        user.listings = listings
 
         client.close()
 
@@ -381,29 +383,31 @@ async function fetchUser(req, res, next) {
 
         let user = await db.collection("users").findOne({_id: new ObjectId(userId)})
 
-        const listingIds = user.listings.map(id => new ObjectId(id))
+        if (user.listings.length > 0) {
+            const listingIds = user.listings.map(id => new ObjectId(id))
 
-        let listings = await db.collection("listings").find({ _id: { $in: listingIds } }).toArray()
+            let listings = await db.collection("listings").find({ _id: { $in: listingIds } }).toArray()
 
-        const listingsMap = new Map()
+            const listingsMap = new Map()
 
-        for (let listing of listings) {
-            const reviewIds = listing.reviewsData.reviews.map(id => new ObjectId(id))
-            const reviews = await db.collection("reviews").find({ _id: { $in: reviewIds } }).toArray()
+            for (let listing of listings) {
+                const reviewIds = listing.reviewsData.reviews.map(id => new ObjectId(id))
+                const reviews = await db.collection("reviews").find({ _id: { $in: reviewIds } }).toArray()
 
-            listing.reviewsData.reviews = reviews
+                listing.reviewsData.reviews = reviews
 
-            const listingWithoutReviews = { ...listing }
-            delete listingWithoutReviews.reviewsData
+                const listingWithoutReviews = { ...listing }
+                delete listingWithoutReviews.reviewsData
 
-            listingsMap.set(listing._id.toString(), listingWithoutReviews)
-        }
+                listingsMap.set(listing._id.toString(), listingWithoutReviews)
+            }
 
-        user.listings = listings
+            user.listings = listings
 
-        for (let listing of user.listings) {
-            for (let review of listing.reviewsData.reviews) {
-                review.listingId = listingsMap.get(review.listingId)
+            for (let listing of user.listings) {
+                for (let review of listing.reviewsData.reviews) {
+                    review.listingId = listingsMap.get(review.listingId)
+                }
             }
         }
 
@@ -465,6 +469,104 @@ async function searchListings(req, res, next) {
     }
 }
 
+async function fetchSavedListings(req, res, next) {
+    const { userId } = req.body
+
+    const client = new MongoClient(mongoUrl)
+
+    try {
+        await client.connect()
+        const db = client.db("airebnb")
+
+        const user = await db.collection("users").findOne({ _id: new ObjectId(userId) })
+
+        if (!user) {
+            throw new Error("User not found.")
+        }
+
+        if (user.saved.length > 0) {
+            const listingIds = user.saved.map(id => new ObjectId(id))
+
+            let listings = await db.collection("listings").find({ _id: { $in: listingIds } }).toArray()
+
+            for (let listing of listings) {
+                const reviewIds = listing.reviewsData.reviews.map(id => new ObjectId(id))
+                const reviews = await db.collection("reviews").find({ _id: { $in: reviewIds } }).toArray()
+                listing.reviewsData.reviews = reviews
+            }
+
+            user.saved = listings
+        }
+
+        client.close()
+
+        res.status(200).json({ message: "Saved listings fetched successfully.", listings: user.saved })
+    }
+    catch (error) {
+        client.close()
+        res.status(500).json({ error: { message: error.message } })
+    }
+}
+
+async function createSave(req, res, next) {
+    const { userId, listingId } = req.body
+
+    const client = new MongoClient(mongoUrl)
+
+    try {
+        await client.connect()
+        const db = client.db("airebnb")
+
+        const result = await db.collection("users").updateOne(
+            { _id: new ObjectId(userId) },
+            { $addToSet: { saved: listingId } }
+        )
+
+        if (result.matchedCount === 0) {
+            throw new Error("User not found.")
+        }
+
+        client.close()
+
+        res.status(200).json({ message: "Listing saved successfully.", userId: userId, listingId: listingId })
+    }
+    catch (error) {
+        client.close()
+        res.status(500).json({ error: error.message })
+    }
+}
+
+async function unsave(req, res, next) {
+    const { userId, listingId } = req.body
+
+    const client = new MongoClient(mongoUrl)
+
+    try {
+        await client.connect()
+        const db = client.db("airebnb")
+
+        const user = await db.collection("users").findOne({ _id: new ObjectId(userId) })
+
+        if (!user) {
+            throw new Error("User not found.")
+        }
+
+        // Remove the listingId from the user's saved array
+        await db.collection("users").updateOne(
+            { _id: new ObjectId(userId) },
+            { $pull: { saved: listingId } }
+        );
+
+        client.close()
+
+        res.status(200).json({ message: "Listing removed from saved successfully." })
+    }
+    catch (error) {
+        client.close()
+        res.status(500).json({ error: { message: error.message } })
+    }
+}
+
 exports.userSignup = userSignup
 exports.userLogin = userLogin
 exports.createListing = createListing
@@ -477,3 +579,6 @@ exports.fetchPersonalListings = fetchPersonalListings
 exports.createReview = createReview
 exports.fetchUser = fetchUser
 exports.searchListings = searchListings
+exports.fetchSavedListings = fetchSavedListings
+exports.createSave = createSave
+exports.unsave = unsave

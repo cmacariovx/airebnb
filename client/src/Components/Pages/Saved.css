@@ -1,0 +1,134 @@
+.savedContainer {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+    .savedHeaderContainer {
+        height: 70px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 60px;
+        border-bottom: 1px solid rgba(160, 160, 160, 0.4);
+        margin-bottom: 40px;
+    }
+
+        .savedHeaderLogo {
+            height: 32px;
+            width: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .savedProfileContainer {
+            min-height: 44px;
+            min-width: 44px;
+            height: 44px;
+            width: 44px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            border: 1px solid rgba(160, 160, 160, 0.4);
+            cursor: pointer;
+        }
+
+            .savedProfilePic {
+                height: 36px;
+                width: 36px;
+                border-radius: 50%;
+            }
+
+            .savedProfileDropdownContainer2 {
+                min-height: 180px;
+                width: 200px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                right: 40px;
+                top: 80px;
+                background-color: white;
+                border-radius: 10px;
+                overflow-y: auto;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+                .savedProfileDropdownOption2 {
+                    height: 60px;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    cursor: pointer;
+                    padding: 10px 20px;
+                }
+
+                .savedProfileDropdownOption2:hover {
+                    background-color: rgba(172, 172, 172, 0.2);
+                }
+
+                    .savedProfileDropdownOptionText2 {
+                        font-size: 14px;
+                    }
+
+    .savedTitle {
+        height: 40px;
+        font-size: 30px;
+        font-weight: bold;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0 60px;
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+
+    .savedBodyContainer {
+        min-height: calc(100vh - 240px);
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        place-items: start;
+        padding: 0 40px;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .savedSpinnerContainer {
+        min-height: calc(100vh - 170px);
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 200px;
+    }
+
+    .emptyListingsText {
+        height: 50%;
+        width: 50%;
+        position: fixed;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%)
+    }

@@ -11,6 +11,7 @@ import Profile from './Components/Pages/Profile'
 import CreateListing from './Components/Pages/CreateListing'
 import HostingDashboard from './Components/Pages/HostingDashboard'
 import Checkout from './Components/Pages/Checkout'
+import Saved from './Components/Pages/Saved'
 
 import AppPrivateRoutes from './AppRoutes/AppPrivateRoutes'
 import AppPublicRoutes from'./AppRoutes/AppPublicRoutes'
@@ -93,19 +94,20 @@ function App() {
       >
         <Routes>
           {!token && <Route element={<AppPublicRoutes isLoadingLogin={loadingLogin}/>}>
-            <Route path='/' exact element={<Home/>} />
-            <Route path='/listing/:listingId' element={<Listing/>} />
-            <Route path='/profile/:userId' element={<Profile/>} />
+            <Route path='/' exact element={<Home />} />
+            <Route path='/listing/:listingId' element={<Listing />} />
+            <Route path='/profile/:userId' element={<Profile />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Route>}
 
           {token && <Route element={<AppPrivateRoutes isLoadingLogin={loadingLogin}/>}>
             <Route path='/' exact element={<Home/>} />
-            <Route path='/listing/:listingId' element={<Listing/>} />
-            <Route path='/profile/:userId' element={<Profile/>} />
-            <Route path='/createListing/:createListingBodyId' element={<CreateListing/>} />
-            <Route path='/checkout' element={<Checkout/>}/>
-            <Route path='/hostingDashboard' exact element={<HostingDashboard/>}/>
+            <Route path='/listing/:listingId' element={<Listing />} />
+            <Route path='/profile/:userId' element={<Profile />} />
+            <Route path='/createListing/:createListingBodyId' element={<CreateListing />} />
+            <Route path='/checkout' element={<Checkout />}/>
+            <Route path='/hostingDashboard' exact element={<HostingDashboard />}/>
+            <Route path='/saved' exact element={<Saved />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Route>}
         </Routes>

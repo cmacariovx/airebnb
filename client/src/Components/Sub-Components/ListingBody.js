@@ -37,7 +37,8 @@ function ListingBody() {
     const [submittingReview, setSubmittingReview] = useState(false)
     const [successfulReview, setSuccessfulReview] = useState(false)
     const [allLoaded, setAllLoaded] = useState([])
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [user, setUser] = useState(null)
+    const [isSaved, setIsSaved] = useState(null)
 
     const reviewRef = useRef()
 
@@ -527,9 +528,94 @@ function ListingBody() {
         return data
     }
 
+    async function fetchUser() {
+        const response = await fetch("http://localhost:5000/" + "listing/fetchUser", {
+            method: "POST",
+            body: JSON.stringify({
+                userId: auth.userId
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        const data = await response.json()
+
+        if (!data.error) {
+            setUser(data.user)
+        }
+
+        return data
+    }
+
     useEffect(() => {
         if (reviews.length > 0) setAverageRating(calculateAverageRating(reviews))
     }, [reviews])
+
+    useEffect(() => {
+        fetchUser()
+    }, [])
+
+    useEffect(() => {
+        if (listing && user) {
+            setIsSaved(user.saved.includes(listing._id.toString()))
+        }
+    }, [listing, user])
+
+    const debounceTimer = useRef(null)
+
+    async function createSave() {
+        const response = await fetch("http://localhost:5000/" + "listing/createSave", {
+            method: "POST",
+            body: JSON.stringify({
+                userId: auth.userId,
+                listingId: listing._id.toString()
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
+
+        const data = await response.json()
+        return data
+    }
+
+    async function unsave() {
+        const response = await fetch("http://localhost:5000/" + "listing/unsave", {
+            method: "POST",
+            body: JSON.stringify({
+                userId: auth.userId,
+                listingId: listing._id.toString()
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + auth.token
+            }
+        })
+
+        const data = await response.json()
+        return data
+    }
+
+    function handleSave() {
+        setIsSaved((prevIsSaved) => !prevIsSaved)
+
+        if (debounceTimer.current) {
+            clearTimeout(debounceTimer.current)
+        }
+
+        debounceTimer.current = setTimeout(() => {
+            if (listing && user) {
+                if (isSaved) {
+                    unsave()
+                }
+                else {
+                    createSave()
+                }
+            }
+        }, 500)
+    }
 
     return (
         <div className="listingBodyContainer">
@@ -585,9 +671,9 @@ function ListingBody() {
                         <a className="listingBodyLocationText" href="#locationAnchor">{(allLoaded.length === 2 && listing && !fetchingListing) && listing.placeLocationData.placeCity + ", " + listing.placeLocationData.placeState}</a>
                     </div>
                     <div className="listingBodyInfoContainerRight">
-                        <div className="listingBodySaveContainer">
-                            <i className="fa-regular fa-heart listingBodySaveHeart"></i>
-                            <p className="listingBodySaveText">Save</p>
+                        <div className="listingBodySaveContainer" onClick={(e) => {e.stopPropagation(); handleSave();}}>
+                            <i className={!isSaved ? "fa-solid fa-heart listingBodySaveHeart" : "fa-solid fa-heart listingBodySaveHeart saved"}></i>
+                            <p className="listingBodySaveText">{!isSaved ? "Save" : "Unsave"}</p>
                         </div>
                     </div>
                 </div>

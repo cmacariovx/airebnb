@@ -139,7 +139,7 @@ function HostingDashboard() {
             <header className="hostingDashboardHeaderContainer">
                 <img src={logo} className="hostingDashboardHeaderLogo" onClick={() => navigate("/")}/>
                 <div className="hostingDashboardProfileContainer" onClick={() => setActiveProfileDropdown(true)}>
-                    <img src={personalPic} className="hostingDashboardProfilePic"/>
+                    <img src={"https://airebnb.s3.us-east-2.amazonaws.com/" + auth.profilePicture}  className="hostingDashboardProfilePic"/>
                 </div>
                 {activeProfileDropdown && <div className='homeHeaderProfileDropdownContainer2' ref={profileDropdownRef}>
                     {auth.isLoggedIn &&
@@ -263,7 +263,7 @@ function HostingDashboard() {
                     }
                     {(!fetchingListings && listings.length > 0) && listings.map((listing, index) => (
                         <div key={index} className="hostingDashboardListingContainer">
-                            <ListingCard key={listing._id} listing={listing} />
+                            <ListingCard key={listing._id} listing={listing} isSaved={user && user.saved.includes(listing._id.toString())} />
                         </div>
                     ))}
                 </div>

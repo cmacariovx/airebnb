@@ -28,7 +28,6 @@ function Login({ closeLogin, showErrorModal }) {
         })
 
         const data = await response.json()
-        console.log(data)
 
         if (data.error) {
             showErrorModal([data.error])
