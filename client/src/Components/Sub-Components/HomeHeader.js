@@ -56,9 +56,14 @@ function HomeHeader(props) {
     }
 
     const handleDateChange = (startDate, endDate) => {
+        if (startDate && endDate && startDate > endDate) {
+            [startDate, endDate] = [endDate, startDate]
+        }
+
         setSelectedStartDate(startDate)
         setSelectedEndDate(endDate)
     }
+
 
     function closeSignup() {
         setShowSignup(false)
@@ -280,6 +285,19 @@ function HomeHeader(props) {
         }
     }, [searchHeaderOpen])
 
+    function resetParams() {
+        navigate(window.location.pathname, { replace: true })
+        setCity("")
+        setState("")
+        setAdults("")
+        setChildren("")
+        setInfants("")
+        setPets("")
+        setSelectedStartDate(null)
+        setSelectedEndDate(null)
+        inputRef.current.value = ""
+    }
+
     return (
         <div className={homePage ? "homeHeaderContainer" : "homeHeaderContainerListing"}>
             <div className={homePage ? "homeHeader1Container" : "homeHeader1Container2"}>
@@ -390,6 +408,7 @@ function HomeHeader(props) {
                         <i className="fa-solid fa-magnifying-glass homeHeader2SearchDropdownSearchIcon"></i>
                     </div>
                 </div>
+                <button className='homeSearch2ResetButton' onClick={resetParams}>Reset Filters</button>
                 <div className="homeHeader2SearchDropdownBackdrop" onClick={() => setSearchHeaderOpen(false)}></div>
                 {activeDropdown === "where" && searchResults && searchResults.length > 0 && <div className="homeHeader2SearchDropdownPlacesContainer">
                     {searchResults.map((result, index) => (

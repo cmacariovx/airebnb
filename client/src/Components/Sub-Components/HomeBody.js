@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useSearchParams } from 'react-router-dom'
 import { Ripples } from '@uiball/loaders'
+import ErrorModal from "./ErrorModal";
 
 import './HomeBody.css'
 
@@ -11,31 +12,6 @@ function HomeBody() {
     const [listings, setListings] = useState([])
     const [fetchingListings, setFetchingListings] = useState(false)
     const [page, setPage] = useState(0)
-
-    async function fetchListings() {
-        setFetchingListings(true)
-
-        const response = await fetch("http://localhost:5000/" + "listing/fetch", {
-            method: "POST",
-            body: JSON.stringify({
-                page: page
-            }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-
-        const data = await response.json()
-
-        if (!data.error) setListings(prev => [...prev, ...data.listings])
-        setFetchingListings(false)
-        setPage(prev => prev + 1)
-        return data
-    }
-
-    useEffect(() => {
-        fetchListings()
-    }, [])
 
     const chunkedLists = []
 
@@ -53,8 +29,18 @@ function HomeBody() {
     const [children, setChildren] = useState(searchParams.get("children") || "")
     const [infants, setInfants] = useState(searchParams.get("infants") || "")
     const [pets, setPets] = useState(searchParams.get("pets") || "")
-    const [selectedStartDate, setSelectedStartDate] = useState(searchParams.get("startDate") ? new Date(searchParams.get("startDate")) : null)
-    const [selectedEndDate, setSelectedEndDate] = useState(searchParams.get("endDate") ? new Date(searchParams.get("endDate")) : null)
+
+    const [selectedStartDate, setSelectedStartDate] =
+        useState(searchParams.get("startDate")
+        ? new Date(searchParams.get("startDate"))
+        : null)
+
+    const [selectedEndDate, setSelectedEndDate] =
+        useState(searchParams.get("endDate")
+        ? new Date(searchParams.get("endDate"))
+        : null)
+
+    const [error, setError] = useState(null)
 
     const formatDateToISO = (date) => {
         if (!date) return null
@@ -80,37 +66,66 @@ function HomeBody() {
         setSelectedEndDate(searchParams.get("endDate") ? new Date(searchParams.get("endDate")) : null)
     }, [searchParams])
 
-    useEffect(() => {
-        async function searchListings() {
-            setFetchingListings(true)
+    async function fetchListings() {
+        setFetchingListings(true)
 
-            const response = await fetch("http://localhost:5000/" + "listing/searchListings", {
-                method: "POST",
-                body: JSON.stringify({
-                    city: searchParams.get("city").trim(),
-                    guests: +searchParams.get("adults") + +searchParams.get("children"),
-                    pets: +searchParams.get("pets"),
-                    startDate: formatDateToISO(searchParams.get("startDate")),
-                    endDate: formatDateToISO(searchParams.get("startDate"))
-                }),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-
-            const data = await response.json()
-            console.log(data)
-
-            if (!data.error) {
-                setListings(data.listings)
+        const response = await fetch("http://localhost:5000/" + "listing/fetch", {
+            method: "POST",
+            body: JSON.stringify({
+                page: page
+            }),
+            headers: {
+                "Content-Type": "application/json"
             }
+        })
 
-            setFetchingListings(false)
-            return data
+        const data = await response.json()
+
+        if (!data.error) {
+            setError(null)
+            setListings(prev => [...prev, ...data.listings])
+        }
+        setFetchingListings(false)
+        setPage(prev => prev + 1)
+        return data
+    }
+
+    async function searchListings() {
+        setFetchingListings(true)
+
+        const response = await fetch("http://localhost:5000/" + "listing/searchListings", {
+            method: "POST",
+            body: JSON.stringify({
+                city: searchParams.get("city").trim(),
+                guests: +searchParams.get("adults") + +searchParams.get("children"),
+                pets: +searchParams.get("pets"),
+                startDate: formatDateToISO(new Date (searchParams.get("startDate"))),
+                endDate: formatDateToISO(new Date (searchParams.get("endDate")))
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+
+        const data = await response.json()
+
+        if (!data.error) {
+            setError(null)
+            setListings(data.listings)
         }
 
-        if (searchParams.get("city"), searchParams.get("adults"), searchParams.get("startDate"), searchParams.get("endDate")) {
-            // searchListings()
+        if (data.listings.length === 0) setError("No listings matched your criteria. Try another booking date and/or major city as we expand our listings database.")
+
+        setFetchingListings(false)
+        return data
+    }
+
+    useEffect(() => {
+        if (!searchParams.toString() || searchParams.get("city") === "all") {
+            fetchListings()
+        }
+        else if (searchParams.get("city"), searchParams.get("adults"), searchParams.get("startDate"), searchParams.get("endDate")) {
+            searchListings()
         }
     }, [searchParams])
 
@@ -123,9 +138,10 @@ function HomeBody() {
                     ))}
                 </div>
             ))}
-            {chunkedLists.length === 0 && <div className="homeBodySpinnerContainer">
+            {fetchingListings && chunkedLists.length === 0 && <div className="homeBodySpinnerContainer">
                 <Ripples size={100} color="#c9c9c9" />
             </div>}
+            {error && <ErrorModal errors={[error]} closeModal={() => setError(null)}/>}
         </React.Fragment>
     )
 }

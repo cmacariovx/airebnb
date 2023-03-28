@@ -425,7 +425,21 @@ async function searchListings(req, res, next) {
         await client.connect()
         const db = client.db("airebnb")
 
-        let result = await db.collection("listings").find().toArray()
+        const searchFilter = {
+            "placeLocationData.placeCity": city,
+            "placeMaxData.placeMaxGuests": { $gte: parseInt(guests) },
+            "placeMaxData.placePets": pets > 0 ? true : { $in: [true, false] },
+            "bookings": {
+                $not: {
+                    $elemMatch: {
+                        startDate: { $lt: endDate },
+                        endDate: { $gt: startDate }
+                    }
+                }
+            }
+        }
+
+        let result = await db.collection("listings").find(searchFilter).toArray()
 
         const allReviewIds = result.flatMap(listing => listing.reviewsData.reviews.map(id => new ObjectId(id)))
 
