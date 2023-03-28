@@ -114,18 +114,23 @@ function HomeBody() {
             setListings(data.listings)
         }
 
-        if (data.listings.length === 0) setError("No listings matched your criteria. Try another booking date and/or major city as we expand our listings database.")
+        if (data.listings.length === 0) setError("No listings matched your criteria. Try another booking date and/or major city such as Hawaii, Malibu, etc. as we expand our listings database.")
 
         setFetchingListings(false)
         return data
     }
 
     useEffect(() => {
-        if (!searchParams.toString() || searchParams.get("city") === "all") {
-            fetchListings()
-        }
-        else if (searchParams.get("city"), searchParams.get("adults"), searchParams.get("startDate"), searchParams.get("endDate")) {
+        if (
+            searchParams.get('city') &&
+            searchParams.get('adults') &&
+            searchParams.get('startDate') &&
+            searchParams.get('endDate')
+        ) {
             searchListings()
+        }
+        else {
+            fetchListings()
         }
     }, [searchParams])
 

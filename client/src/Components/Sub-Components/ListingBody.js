@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback, useContext } from "react"
+import { useSearchParams } from "react-router-dom"
 
 import './ListingBody.css'
 
@@ -36,6 +37,7 @@ function ListingBody() {
     const [submittingReview, setSubmittingReview] = useState(false)
     const [successfulReview, setSuccessfulReview] = useState(false)
     const [allLoaded, setAllLoaded] = useState([])
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const reviewRef = useRef()
 
@@ -1221,17 +1223,17 @@ function ListingBody() {
                     </div>
                 </div>
             </div>
-            <div className="listingBodyExploreContainer">
+            {/* <div className="listingBodyExploreContainer">
                 <div className="listingBodyExploreTitleContainer">
                     <p className="listingBodyExploreTitle">Explore other options</p>
                 </div>
                 <div className="listingBodyExploreOptionsContainer">
-                    <p className="listingBodyExploreOption">Asheville</p>
-                    <p className="listingBodyExploreOption">Seattle</p>
-                    <p className="listingBodyExploreOption">Hilton Head</p>
-                    <p className="listingBodyExploreOption">Beverly Hills</p>
+                    <p className="listingBodyExploreOption" onClick={() => toCityHandler("Asheville")}>Asheville</p>
+                    <p className="listingBodyExploreOption" onClick={() => toCityHandler("Hawaii")}>Hawaii</p>
+                    <p className="listingBodyExploreOption" onClick={() => toCityHandler("Malibu")}>Malibu</p>
+                    <p className="listingBodyExploreOption" onClick={() => toCityHandler("Seattle")}>Seattle</p>
                 </div>
-            </div>
+            </div> */}
             {error && <ErrorModal errors={[error]} closeModal={closeModal} />}
         </div>
     )
