@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../Context/Auth-Context";
 
+import ErrorModal from "./ErrorModal";
+
 import './ListingCard.css'
 
 function ListingCard(props) {
@@ -167,20 +169,23 @@ function ListingCard(props) {
     }
 
     function handleSave() {
-        setIsSaved((prevIsSaved) => !prevIsSaved)
+        if (auth.token) {
+            setIsSaved((prevIsSaved) => !prevIsSaved)
 
-        if (debounceTimer.current) {
-            clearTimeout(debounceTimer.current)
+            if (debounceTimer.current) {
+                clearTimeout(debounceTimer.current)
+            }
+
+            debounceTimer.current = setTimeout(() => {
+                if (isSaved) {
+                    unsave()
+                }
+                else {
+                    createSave()
+                }
+            }, 500)
         }
-
-        debounceTimer.current = setTimeout(() => {
-            if (isSaved) {
-                unsave()
-            }
-            else {
-                createSave()
-            }
-        }, 500)
+        else props.authCheck()
     }
 
     return (

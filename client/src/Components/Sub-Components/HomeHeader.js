@@ -298,6 +298,11 @@ function HomeHeader(props) {
         inputRef.current.value = ""
     }
 
+    function authErrorHandler() {
+        setErrorMessages(prev => [...prev, "You must be logged in to use the hosting dashboard."])
+        setShowErrorModal(true)
+    }
+
     return (
         <div className={homePage ? "homeHeaderContainer" : "homeHeaderContainerListing"}>
             <div className={homePage ? "homeHeader1Container" : "homeHeader1Container2"}>
@@ -329,12 +334,12 @@ function HomeHeader(props) {
                     </div>}
                 </div>
                 <div className="homeHeader1RightContainer">
-                    <div className="homeHeader1AddHomeContainer" onClick={() => navigate("/hostingDashboard")}>
+                    <div className="homeHeader1AddHomeContainer" onClick={() => {auth.token ? navigate("/hostingDashboard") : authErrorHandler()}}>
                         <p className="homeHeader1AddHomeText">Airbnb your home</p>
                     </div>
                     <div className="homeHeader1UserContainer" onClick={() => setActiveProfileDropdown(true)}>
                         <i className="fa-solid fa-bars homeHeader1UserMenuBars"></i>
-                        <img src={auth.token ? "https://airebnb.s3.us-east-2.amazonaws.com/" + auth.profilePicture : null} className="homeHeader1UserPicture"></img>
+                        {auth.token && <img src={auth.token ? "https://airebnb.s3.us-east-2.amazonaws.com/" + auth.profilePicture : null} className="homeHeader1UserPicture"></img>}
                     </div>
                 </div>
                 {activeProfileDropdown && <div className='homeHeaderProfileDropdownContainer' ref={profileDropdownRef}>
@@ -375,10 +380,6 @@ function HomeHeader(props) {
                         <i className="fa-solid fa-tree homeHeader2CategoryIcon"></i>
                         <p className="homeHeader2CategoryText">Treehouses</p>
                     </div>
-                    {/* <div className="homeHeader2CategoryContainer2">
-                        <i className="fa-solid fa-fire homeHeader2CategoryIcon"></i>
-                        <p className="homeHeader2CategoryText">Trending</p>
-                    </div> */}
                 </div>
             </div>}
             {(homePage || !profilePage) && searchHeaderOpen && <div className="homeHeader2SearchDropdownContainer">
@@ -497,8 +498,8 @@ function HomeHeader(props) {
                     </div>
                 </div>}
             </div>}
-            {showSignup && <Signup closeSignup={closeSignup} showErrorModal={showError}/>}
-            {showLogin && <Login closeLogin={closeLogin} showErrorModal={showError}/>}
+            {showSignup && <Signup already={showLoginHandler} closeSignup={closeSignup} showErrorModal={showError}/>}
+            {showLogin && <Login already={showSignupHandler} closeLogin={closeLogin} showErrorModal={showError}/>}
             {showErrorModal && (
                 <ErrorModal errors={errorMessages} closeModal={closeModal} />
             )}

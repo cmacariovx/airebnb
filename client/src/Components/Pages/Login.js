@@ -4,7 +4,7 @@ import { AuthContext } from "../../Context/Auth-Context";
 
 import './Login.css'
 
-function Login({ closeLogin, showErrorModal }) {
+function Login({ closeLogin, showErrorModal, already }) {
     const auth = useContext(AuthContext)
 
     const emailInputRef = useRef()
@@ -51,6 +51,7 @@ function Login({ closeLogin, showErrorModal }) {
                         <input className="loginInputContainer" ref={passwordInputRef} type="password" placeholder="Password" required />
                     </label>
                     <button className="loginSubmitButton" type="submit">Log in</button>
+                    <p className="signupFormLogText" onClick={already}>Don't have an account?</p>
                 </form>
             </div>
         </div>

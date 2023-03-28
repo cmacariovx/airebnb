@@ -61,7 +61,7 @@
     position: absolute;
     top: 100px;
     background-color: rgba(0, 0, 0, 0.3);
-    min-height: 100vh;
+    min-height: calc(100vh - 180px);
     width: 100%;
 }
 
@@ -684,14 +684,13 @@
 
             .homeHeader2CategoryContainer2 {
                 height: 80px;
-                width: 100px;
+                width: 50px;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
-                margin: 0 10px;
-                margin-left: 0px;
+                margin-right: 12px;
             }
 
                 .homeHeader2CategoryIcon {
@@ -699,6 +698,33 @@
                     color: var(--gray);
                     margin-bottom: 10px;
                 }
+
+                .homeHeader2CategoryIconSelectedAll {
+                    font-size: 20px;
+                    color: var(--pink);
+                    margin-bottom: 10px;
+                }
+
+                .homeHeader2CategoryIconSelectedBeachfront {
+                    font-size: 20px;
+                    color: rgba(255, 170, 0, 1);
+                    margin-bottom: 10px;
+                }
+
+
+                .homeHeader2CategoryIconSelectedAmazingViews {
+                    font-size: 20px;
+                    color: rgb(61, 141, 187);
+                    margin-bottom: 10px;
+                }
+
+
+                .homeHeader2CategoryIconSelectedTreeHouses {
+                    font-size: 20px;
+                    color: rgb(35, 78, 55);
+                    margin-bottom: 10px;
+                }
+
 
                 .homeHeader2CategoryText {
                     font-size: 12px;

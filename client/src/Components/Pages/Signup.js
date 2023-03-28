@@ -5,7 +5,7 @@ import ImageUpload from "../Sub-Components/ImageUpload";
 
 import './Signup.css'
 
-function Signup({ closeSignup, showErrorModal }) {
+function Signup({ closeSignup, showErrorModal, already }) {
     const firstNameInputRef = useRef()
     const lastNameInputRef = useRef()
     const emailInputRef = useRef()
@@ -115,6 +115,7 @@ function Signup({ closeSignup, showErrorModal }) {
                         <ImageUpload onValid={onImageUpload} />
                     </label>
                     <button className="signupSubmitButton" type="submit">Sign up</button>
+                    <p className="signupFormLogText" onClick={already}>Already have an account?</p>
                 </form>
             </div>
         </div>

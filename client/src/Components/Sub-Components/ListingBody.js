@@ -599,22 +599,25 @@ function ListingBody() {
     }
 
     function handleSave() {
-        setIsSaved((prevIsSaved) => !prevIsSaved)
+        if (auth.token) {
+            setIsSaved((prevIsSaved) => !prevIsSaved)
 
-        if (debounceTimer.current) {
-            clearTimeout(debounceTimer.current)
-        }
-
-        debounceTimer.current = setTimeout(() => {
-            if (listing && user) {
-                if (isSaved) {
-                    unsave()
-                }
-                else {
-                    createSave()
-                }
+            if (debounceTimer.current) {
+                clearTimeout(debounceTimer.current)
             }
-        }, 500)
+
+            debounceTimer.current = setTimeout(() => {
+                if (listing && user) {
+                    if (isSaved) {
+                        unsave()
+                    }
+                    else {
+                        createSave()
+                    }
+                }
+            }, 500)
+        }
+        else setError("You must be logged in to save listings.")
     }
 
     return (

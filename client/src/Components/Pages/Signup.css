@@ -94,3 +94,14 @@
         background-color: var(--pink);
         cursor: pointer;
     }
+
+    .signupFormLogText {
+        font-size: 14px;
+        margin-top: 20px;
+        cursor: pointer;
+    }
+
+    .signupFormLogText:hover {
+        transition: 0.1s linear;
+        color: rgba(0, 0, 0, 0.5)
+    }

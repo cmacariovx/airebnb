@@ -161,15 +161,15 @@ function HomeBody() {
     }
 
     useEffect(() => {
-        fetchUser()
+        if (auth.token) fetchUser()
     }, [])
 
     return (
         <React.Fragment>
-            {(!fetchingListings && listings.length > 0 && chunkedLists.length > 0 && user) && chunkedLists.map((listGroup, index) => (
+            {(!fetchingListings && listings.length > 0 && chunkedLists.length > 0) && chunkedLists.map((listGroup, index) => (
                 <div key={index} className="homeBodyContainer">
                     {listGroup.map((listing) => (
-                        <ListingCard key={listing._id} listing={listing} isSaved={user && user.saved.includes(listing._id.toString())}/>
+                        <ListingCard key={listing._id} listing={listing} isSaved={user && user.saved.includes(listing._id.toString())} authCheck={() => setError("You must be logged in to save listings.")}/>
                     ))}
                 </div>
             ))}
