@@ -682,6 +682,17 @@
                 -webkit-user-drag: none;
             }
 
+            .listingBodyMainLeftCalendarBodyContainer22 {
+                height: 60%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                -webkit-user-drag: none;
+                display: none;
+            }
+
             .listingBodyMainLeftCalendarFooterContainer {
                 height: 15%;
                 width: 100%;
@@ -1678,7 +1689,7 @@
                             flex-direction: row;
                             justify-content: flex-start;
                             align-items: center;
-                            margin-right: 10px;
+                            margin-right: 20px;
                         }
 
                             .fullReviewProfilePic {
@@ -1916,3 +1927,483 @@
                 cursor: pointer;
                 user-select: none;
             }
+
+.imageCarouselContainer {
+    display: none;
+}
+
+.listingBodyReviewsBodyContainerSingle {
+    display: none;
+}
+
+.mediaListingFooter {
+    display: none;
+}
+
+.floatingListingHeaderRight2 {
+    display: none;
+}
+
+.mediaBackIconContainer {
+    display: none;
+}
+
+@media screen and (max-width: 1100px) {
+    .listingBodyMainLeftCalendarBodyContainer {
+        display: none;
+    }
+
+    .listingBodyMainLeftCalendarBodyContainer22 {
+        display: flex;
+    }
+
+    .listingBodyHostedByContainerMainLeft {
+        width: 75%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .listingBodyMainRightCheckContainer {
+        padding: 18px;
+        padding-bottom: 0px;
+    }
+
+    .listingBodyMainRightCheckHeaderContainer {
+        height: 10%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        .listingBodyMainRightCheckHeaderLeft {
+            height: 100%;
+            width: 40%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+            .listingBodyMainRightCheckHeaderLeftPriceText {
+                font-size: 18px;
+                font-weight: bold;
+                margin-right: 4px;
+            }
+
+            .listingBodyMainRightCheckHeaderLeftNightText {
+                font-size: 16px;
+                font-weight: normal;
+            }
+
+        .listingBodyMainRightCheckHeaderRight {
+            height: 100%;
+            width: 60%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .fa-solid.fa-star.listingBodyStar {
+            font-size: 10px;
+            margin-bottom: 2px;
+            margin-right: 2px;
+        }
+
+        .listingBodyDotText {
+            opacity: 0.8;
+            font-size: 10px;
+            margin-left: 0px;
+            margin-right: 4px;
+        }
+
+        .listingBodyReviewText {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .listingBodyReviewCountText2 {
+            font-size: 12px;
+        }
+
+        .listingBodyMainRightCheckFeeLeft {
+            font-size: 14px;
+        }
+
+        .listingBodyMainRightCheckFeeRight {
+            font-size: 14px;
+        }
+}
+
+@media screen and (max-width: 900px) {
+    .homeHeaderContainerListing {
+        display: none;
+    }
+
+    .listingBodyIntroContainer {
+        display: none;
+    }
+
+    .listingBodyImagesContainer {
+        display: none;
+    }
+
+    .listingBodyContainer {
+        padding: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .listingBodyMainContainer {
+        padding: 40px;
+    }
+
+    .imageCarouselContainer {
+        height: 450px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .listingBodyMainRightContainer {
+        display: none;
+    }
+
+    .listingBodyMainLeftContainer {
+        width: 100%;
+    }
+
+    .listingBodyReviewsContainer {
+        padding: 0 40px;
+    }
+
+    .listingBodyMapContainer {
+        padding: 0 40px;
+        padding-bottom: 40px;
+    }
+
+    .listingBodyHostedByContainer {
+        padding: 0 40px;
+    }
+
+    .listingBodyReviewStatsContainer {
+        display: none;
+    }
+
+    .listingBodyFullReviewProfileContainerLeft {
+        margin-right: 25px;
+    }
+
+    .floatingListingHeader {
+        display: none;
+    }
+
+    .mediaListingFooter {
+        height: 80px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        background-color: white;
+        border-top: 1px solid rgba(160, 160, 160, 0.2);
+    }
+
+    .floatingListingHeaderRight2 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 99;
+        padding: 0 40px;
+    }
+
+        .floatingListingHeaderRightLeft2 {
+            height: 100%;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .floatingListingHeaderRightLeftUpper2 {
+                height: 30%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+                .floatingListingHeaderRightLeftUpperPriceText2 {
+                    font-size: 15px;
+                    font-weight: bold;
+                    margin-right: 4px;
+                }
+
+                .floatingListingHeaderRightLeftUpperNightText2 {
+                    font-size: 14px;
+                }
+
+            .floatingListingHeaderRightLeftLower2 {
+                height: 30%;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+            }
+
+                .floatingListReviewContainer2 {
+                    height: 100%;
+                    min-width: 10%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                }
+
+                .fa-solid.fa-star.floatingListingStar2 {
+                    font-size: 10px;
+                    margin-bottom: 2px;
+                    margin-right: 3px;
+                }
+
+                .floatingListingReviewText2 {
+                    font-size: 11px;
+                    font-weight: bold;
+                }
+
+                .floatingListingDotText2 {
+                    font-size: 8px;
+                    margin-left: 3px;
+                    margin-right: 3px;
+                }
+
+                .floatingListingReviewCountText2 {
+                    font-size: 11px;
+                    font-weight: bold;
+                    color: var(--gray);
+                    text-decoration: underline;
+                }
+
+        .floatingListingHeaderRightRight2 {
+            height: 100%;
+            width: 50%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+            .floatingListingReserveButton2 {
+                height: 50px;
+                width: 110px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                background-color: var(--pink);
+                border-radius: 10px;
+                color: white;
+                font-weight: bold;
+                font-size: 15px;
+                cursor: pointer;
+            }
+
+    .mediaBackIconContainer {
+        min-height: 36px;
+        min-width: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(165, 165, 165, 0.3);
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 20px;
+        left: 20px
+    }
+
+    .mediaBackIconContainer2 {
+        min-height: 36px;
+        min-width: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(165, 165, 165, 0.4);
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 20px;
+        right: 20px
+    }
+
+    .fa-solid.fa-chevron-left.mediaBackIcon {
+        font-size: 14px;
+    }
+
+    .fa-regular.fa-heart.mediaBackIcon {
+        font-size: 16px;
+        margin-top: 1px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .listingBodyReviewsBodyContainerLeft {
+        padding-right: 40px;
+    }
+
+    .listingBodyReviewsBodyContainerRight {
+        padding-right: 40px;
+    }
+
+    .listingBodyHostedByContainerMainLeft {
+        width: 100%;
+        padding-right: 0;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .listingBodyReviewsBodyContainerLeft {
+        display: none;
+    }
+
+    .listingBodyReviewsBodyContainerRight {
+        display: none;
+    }
+
+    .listingBodyReviewsBodyContainerSingle {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .listingBodyReviewsBodyContainer {
+        height: auto;
+        max-height: 900px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 30px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        align-items: stretch;
+    }
+
+    .listingBodyFullReviewProfileContainerLeft {
+        margin-right: 10px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .listingBodyHostedByDuringStayDesc {
+        font-size: 14px;
+    }
+
+    .listingBodyFullReviewProfileContainerLeft {
+        margin-right: 20px;
+    }
+
+    .listingBodyReviewText2 {
+        font-size: 16px;
+    }
+
+    .listingBodyDotText2 {
+        font-size: 16px;
+        margin: 0;
+        margin-right: 8px;
+    }
+
+    .listingBodyReviewCountText3 {
+        font-size: 16px;
+    }
+
+    .listingBodyMainLeftAircoverDescriptionText {
+        font-size: 14px;
+    }
+
+    .listingBodyMainLeftDescriptionText {
+        font-size: 14px;
+    }
+
+    .listingBodyMainLeftAmenityRightContainer {
+        padding-left: 10px;
+    }
+
+    .listingBodyHostedByContainerRight {
+        margin-left: 40px;
+    }
+
+    .listingBodyMainContainer {
+        padding: 30px
+    }
+
+    .listingBodyReviewsContainer {
+        padding: 0 30px;
+    }
+
+    .listingBodyMapContainer {
+        padding: 0 30px;
+        padding-bottom: 30px;
+    }
+
+    .listingBodyHostedByContainer {
+        padding: 0 30px;
+    }
+
+    .floatingListingHeaderRight2 {
+        padding: 0 30px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .listingBodyMainContainer {
+        padding: 20px
+    }
+
+    .listingBodyReviewsContainer {
+        padding: 0 20px;
+    }
+
+    .listingBodyMapContainer {
+        padding: 0 20px;
+        padding-bottom: 20px;
+    }
+
+    .listingBodyHostedByContainer {
+        padding: 0 20px;
+    }
+
+    .floatingListingHeaderRight2 {
+        padding: 0 20px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .listingBodyReviewsHeaderContainerLeft {
+        margin-right: 10px;
+    }
+
+    .listingBodyReviewsHeaderContainerRightButton {
+        padding: 10px;
+    }
+}

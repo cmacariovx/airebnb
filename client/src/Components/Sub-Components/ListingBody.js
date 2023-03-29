@@ -11,6 +11,7 @@ import Calendar from "./Calendar";
 import { useNavigate } from "react-router"
 import ErrorModal from "./ErrorModal"
 import { AuthContext } from "../../Context/Auth-Context"
+import ImageCarousel from "./ImageCarousel"
 
 function ListingBody() {
     const navigate = useNavigate()
@@ -231,13 +232,22 @@ function ListingBody() {
     }, [])
 
     document.addEventListener("scroll", (e) => {
-        let percent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+        let percent = (h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight) * 100
+        let windowWidth = window.innerWidth
 
-        if (floatingHeader && percent <= 22) floatingHeader.style.display = "none"
-        if (floatingHeader && percent > 22 && percent < 49) floatingHeader.style.display = "flex"
+        if (floatingHeader && (percent <= 22 || windowWidth < 900)) {
+            floatingHeader.style.display = "none"
+        }
+        if (floatingHeader && percent > 22 && percent < 49 && windowWidth >= 900) {
+            floatingHeader.style.display = "flex"
+        }
 
-        if (floatingHeaderRight && percent < 60) floatingHeaderRight.style.display = "none"
-        if (floatingHeaderRight && percent > 60) floatingHeaderRight.style.display = "flex"
+        if (floatingHeaderRight && percent < 60) {
+            floatingHeaderRight.style.display = "none"
+        }
+        if (floatingHeaderRight && percent > 60) {
+            floatingHeaderRight.style.display = "flex"
+        }
     })
 
     const handleLowerClick = () => {
@@ -733,6 +743,9 @@ function ListingBody() {
                     />
                 </div>
             </div>
+            <div className="imageCarouselContainer">
+                <ImageCarousel images={(allLoaded.length === 2 && !fetchingListing && listing && listing.imageIds) ? listing.imageIds : []} />
+            </div>
             <div className="listingBodyMainContainer">
                 <div className="listingBodyMainLeftContainer">
                     <div className="listingBodyMainLeftHostedContainer">
@@ -874,6 +887,10 @@ function ListingBody() {
                         <div className="listingBodyMainLeftCalendarBodyContainer">
                             {allLoaded.length === 2 && !fetchingListing && listing && <Calendar key={calendarKey1} onDateChange={handleDateChange} selectedStartDate={selectedStartDate}
                             selectedEndDate={selectedEndDate} bookings={bookings}ref={calendarRef}/>}
+                        </div>
+                        <div className="listingBodyMainLeftCalendarBodyContainer22">
+                            {allLoaded.length === 2 && !fetchingListing && listing && <Calendar key={calendarKey1} onDateChange={handleDateChange} selectedStartDate={selectedStartDate}
+                            selectedEndDate={selectedEndDate} bookings={bookings}ref={calendarRef} single={true}/>}
                         </div>
                         <div className="listingBodyMainLeftCalendarFooterContainer">
                             <div className="listingBodyMainLeftCalendarFooterTextContainer" onClick={handleClearDates}>
@@ -1282,6 +1299,25 @@ function ListingBody() {
                             </div>
                         ))}
                     </div>
+
+                    <div className="listingBodyReviewsBodyContainerSingle">
+                        {(allLoaded.length === 2 && !fetchingListing && listing && listing.reviewsData.reviews.length > 0) && listing.reviewsData.reviews.map((review) => (
+                            <div key={review._id} className="listingBodyFullReviewContainer">
+                                <div className="listingBodyFullReviewProfileContainer">
+                                <div className="listingBodyFullReviewProfileContainerLeft">
+                                    <img src={(allLoaded.length === 2 && !fetchingListing && listing) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + review.creatorProfilePicture) : null} className="fullReviewProfilePic" />
+                                </div>
+                                <div className="listingBodyFullReviewProfileContainerRight">
+                                    <p className="fullReviewProfileName">{review.creatorFirstName}</p>
+                                    <p className="fullReviewPostMonth">{formatDate2(review.postedDate)}</p>
+                                </div>
+                                </div>
+                                <div className="listingBodyFullReviewDescContainer">
+                                    <p className="listingBodyFullReviewDesc">{review.description}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
             <a id="locationAnchor"></a>
@@ -1316,17 +1352,33 @@ function ListingBody() {
                     </div>
                 </div>
             </div>
-            {/* <div className="listingBodyExploreContainer">
-                <div className="listingBodyExploreTitleContainer">
-                    <p className="listingBodyExploreTitle">Explore other options</p>
+            <div className="mediaListingFooter">
+                <div className="floatingListingHeaderRight2">
+                    <div className="floatingListingHeaderRightLeft2">
+                        <div className="floatingListingHeaderRightLeftUpper2">
+                            <p className="floatingListingHeaderRightLeftUpperPriceText2">{listing ? "$" + listing.placePriceData.priceCounter : "Loading"}</p>
+                            <p className="floatingListingHeaderRightLeftUpperNightText2">night</p>
+                        </div>
+                        <div className="floatingListingHeaderRightLeftLower2">
+                            <div className="floatingListReviewContainer2">
+                                <i className="fa-solid fa-star floatingListingStar2"></i>
+                                <p className="floatingListingReviewText2">{averageRating ? averageRating : "New"}</p>
+                            </div>
+                            <p className="floatingListingDotText2">•</p>
+                            <a className="floatingListingReviewCountText2">{(listing && !fetchingListing) && listing.reviewsData.reviewsCount + " reviews"}</a>
+                        </div>
+                    </div>
+                    <div className="floatingListingHeaderRightRight2">
+                        <button className="floatingListingReserveButton2" onClick={toCheckoutHandler}>Reserve</button>
+                    </div>
                 </div>
-                <div className="listingBodyExploreOptionsContainer">
-                    <p className="listingBodyExploreOption" onClick={() => toCityHandler("Asheville")}>Asheville</p>
-                    <p className="listingBodyExploreOption" onClick={() => toCityHandler("Hawaii")}>Hawaii</p>
-                    <p className="listingBodyExploreOption" onClick={() => toCityHandler("Malibu")}>Malibu</p>
-                    <p className="listingBodyExploreOption" onClick={() => toCityHandler("Seattle")}>Seattle</p>
-                </div>
-            </div> */}
+            </div>
+            <div className="mediaBackIconContainer">
+                <i className="fa-solid fa-chevron-left mediaBackIcon"></i>
+            </div>
+            <div className="mediaBackIconContainer2" onClick={(e) => {e.stopPropagation(); handleSave();}}>
+                <i className={!isSaved ? "fa-regular fa-heart mediaBackIcon" : "fa-regular fa-heart mediaBackIcon saved"}></i>
+            </div>
             {error && <ErrorModal errors={[error]} closeModal={closeModal} />}
         </div>
     )
