@@ -2,7 +2,7 @@ import React, { useState, useImperativeHandle, useEffect } from "react";
 
 import './Calendar.css'
 
-const Calendar = React.forwardRef(({ onDateChange, selectedStartDate, selectedEndDate, bookings }, ref) => {
+const Calendar = React.forwardRef(({ onDateChange, selectedStartDate, selectedEndDate, bookings, single }, ref) => {
     const currentDate = new Date()
     const [currentYear, setCurrentYear] = useState(currentDate.getFullYear())
     const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth())
@@ -250,32 +250,41 @@ const Calendar = React.forwardRef(({ onDateChange, selectedStartDate, selectedEn
     }, [startDate, endDate, onDateChange, selectedStartDate, selectedEndDate])
 
     return (
-        <div className="calendarContainer">
-            <div className="calendarMonthContainer">
-                <div className="calendarLeftMonthContainer">
-                    <p className="calendarLeftMonthText">{months[currentMonth] + " " + currentYear}</p>
-                    <div className="calendarLeftArrowContainer">
+        <div className={"calendarContainer"}>
+            <div className={`calendarMonthContainer ${single ? "single" : "double"}`}>
+                <div className={`calendarLeftMonthContainer ${single ? "single" : "double"}`}>
+                    <div className={`calendarLeftArrowContainer ${single ? "single" : "double"}`}>
                         <div className="calendarLeftArrowCircleContainer" onClick={handleLeftArrowClick}>
                             <i className="fa-solid fa-chevron-left calendarLeftArrow"></i>
                         </div>
                     </div>
+                    <p className="calendarLeftMonthText">{months[currentMonth] + " " + currentYear}</p>
+                    {single && <div className="calendarRightArrowContainer2">
+                        <div className="calendarRightArrowCircleContainer2" onClick={handleRightArrowClick}>
+                                <i className="fa-solid fa-chevron-right calendarRightArrow2"></i>
+                        </div>
+                    </div>}
                 </div>
-                <div className="calendarRightMonthContainer">
-                    <p className="calendarRightMonthText">{months[(currentMonth + 1) % 12] + " " + (currentMonth === 11 ? currentYear + 1 : currentYear)}</p>
-                    <div className="calendarRightArrowContainer">
-                        <div className="calendarRightArrowCircleContainer" onClick={handleRightArrowClick}>
-                            <i className="fa-solid fa-chevron-right calendarRightArrow"></i>
+                {!single && (
+                    <div className="calendarRightMonthContainer">
+                        <p className="calendarRightMonthText">{months[(currentMonth + 1) % 12] + " " + (currentMonth === 11 ? currentYear + 1 : currentYear)}</p>
+                        <div className="calendarRightArrowContainer">
+                            <div className="calendarRightArrowCircleContainer" onClick={handleRightArrowClick}>
+                                <i className="fa-solid fa-chevron-right calendarRightArrow"></i>
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
             </div>
             <div className="calendarBodyContainer">
-                <div className="calendarLeftBodyContainer">
+                <div className={`calendarLeftBodyContainer ${single ? "single" : "double"}`}>
                     {renderCalendarTable(leftCalendarData, currentMonth, currentYear)}
                 </div>
-                <div className="calendarRightBodyContainer">
-                    {renderCalendarTable(rightCalendarData, nextMonth, currentYear)}
-                </div>
+                {!single && (
+                    <div className="calendarRightBodyContainer">
+                        {renderCalendarTable(rightCalendarData, nextMonth, nextYear)}
+                    </div>
+                )}
             </div>
         </div>
     )

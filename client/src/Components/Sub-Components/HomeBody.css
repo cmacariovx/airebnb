@@ -20,3 +20,22 @@
     align-items: center;
     padding-bottom: 200px;
 }
+
+@media screen and (max-width: 1150px) {
+    .homeBodyContainer {
+      grid-template-columns: repeat(3, 1fr)
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .homeBodyContainer {
+        grid-template-columns: repeat(2, 1fr)
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    .homeBodyContainer {
+        grid-template-columns: repeat(1, 1fr)
+    }
+}

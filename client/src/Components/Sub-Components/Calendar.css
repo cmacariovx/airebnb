@@ -20,16 +20,34 @@
         -webkit-user-drag: none;
     }
 
+    .calendarMonthContainer.single {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
         .calendarLeftMonthContainer {
             height: 100%;
             width: 50%;
             display: flex;
             flex-direction: row;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
             padding-right: 25px;
             position: relative;
             -webkit-user-drag: none;
+        }
+
+        .calendarLeftMonthContainer.single {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            -webkit-user-drag: none;
+            padding-right: 0;
         }
 
             .calendarLeftArrowContainer {
@@ -39,7 +57,16 @@
                 flex-direction: row;
                 justify-content: flex-start;
                 align-items: center;
-                position: absolute;
+                -webkit-user-drag: none;
+            }
+
+            .calendarLeftArrowContainer.single {
+                height: 100%;
+                width: 50%;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
                 -webkit-user-drag: none;
             }
 
@@ -71,6 +98,12 @@
                 font-size: 15px;
                 font-weight: bold;
                 -webkit-user-drag: none;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                min-width: 100px;
             }
 
             .calendarRightMonthText {
@@ -93,12 +126,11 @@
 
                 .calendarRightArrowContainer {
                     height: 100%;
-                    width: 100%;
+                    width: 50%;
                     display: flex;
                     flex-direction: row;
                     justify-content: flex-end;
                     align-items: center;
-                    position: absolute;
                     -webkit-user-drag: none;
                 }
 
@@ -126,6 +158,40 @@
                         -webkit-user-drag: none;
                     }
 
+                    .calendarRightArrowContainer2 {
+                        height: 100%;
+                        width: 50%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: flex-end;
+                        align-items: center;
+                        -webkit-user-drag: none;
+                    }
+
+                        .calendarRightArrowCircleContainer2 {
+                            min-height: 30px;
+                            min-width: 30px;
+                            height: 30px;
+                            width: 30px;
+                            display: flex;
+                            flex-direction: row;
+                            justify-content: center;
+                            align-items: center;
+                            border-radius: 50%;
+                            cursor: pointer;
+                            -webkit-user-drag: none;
+                        }
+
+                            .calendarRightArrowCircleContainer2:hover {
+                                background-color: rgba(210, 210, 210, 0.2);
+                            }
+
+                        .fa-solid.fa-chevron-right.calendarRightArrow2 {
+                            font-size: 14px;
+                            font-weight: bold;
+                            -webkit-user-drag: none;
+                        }
+
     .calendarBodyContainer {
         height: 100%;
         width: 100%;
@@ -146,6 +212,13 @@
             -webkit-user-drag: none;
         }
 
+        .calendarLeftBodyContainer.single {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
 
         .calendarRightBodyContainer {
             height: 100%;
@@ -196,24 +269,24 @@
 
             .calendar td.day {
                 cursor: pointer;
-              }
+            }
 
-              .calendar td.selected {
+            .calendar td.selected {
                 background-color: black;
                 color: white;
-              }
+            }
 
-              .calendar td.in-range {
+            .calendar td.in-range {
                 background-color: rgba(210, 210, 210, 0.3);
-              }
+            }
 
-              .calendar td.disabled {
+            .calendar td.disabled {
                 color: #c1c1c1;
                 text-decoration: line-through;
                 cursor: not-allowed;
-              }
+            }
 
-              .calendar td.disabled:hover {
+            .calendar td.disabled:hover {
                 background-color: transparent;
                 border: none;
-              }
+            }

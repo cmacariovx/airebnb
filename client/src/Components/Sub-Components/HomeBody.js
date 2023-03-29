@@ -14,9 +14,11 @@ function HomeBody() {
     const { listings, setListings } = useContext(ListingsContext)
     const [fetchingListings, setFetchingListings] = useState(false)
     const [page, setPage] = useState(0)
+    const [searchPage, setSearchPage] = useState(0)
     const [user, setUser] = useState(null)
-    const [hasMoreListings, setHasMoreListings] = useState(true)
     const [showLoadingSpinner, setShowLoadingSpinner] = useState(false)
+
+    const { hasMoreListings, setHasMoreListings } = useContext(ListingsContext)
 
     const chunkedLists = []
 
@@ -30,8 +32,17 @@ function HomeBody() {
 
     const observerCallback = (entries) => {
         const [entry] = entries
+
         if (entry.isIntersecting && hasMoreListings && !fetchingListings) {
-            fetchListings()
+            if ((searchParams.get('city') || searchParams.get('state')) &&
+            searchParams.get('adults') &&
+            searchParams.get('startDate') &&
+            searchParams.get('endDate')) {
+                searchListings()
+            }
+            else {
+                fetchListings()
+            }
         }
     }
 
@@ -115,7 +126,6 @@ function HomeBody() {
         })
 
         const data = await response.json()
-        console.log(data)
 
         if (!data.error) {
             setError(null);
@@ -133,32 +143,46 @@ function HomeBody() {
 
     async function searchListings() {
         setFetchingListings(true)
-        console.log(city, state)
+
         const response = await fetch("http://localhost:5000/" + "listing/searchListings", {
             method: "POST",
             body: JSON.stringify({
+                page: searchPage,
                 city: searchParams.get("city") ? searchParams.get("city").trim() : null,
                 state: searchParams.get("state") ? searchParams.get("state").trim() : null,
                 guests: +searchParams.get("adults") + +searchParams.get("children"),
                 pets: +searchParams.get("pets"),
-                startDate: formatDateToISO(new Date (searchParams.get("startDate"))),
-                endDate: formatDateToISO(new Date (searchParams.get("endDate")))
+                startDate: formatDateToISO(new Date(searchParams.get("startDate"))),
+                endDate: formatDateToISO(new Date(searchParams.get("endDate"))),
             }),
             headers: {
-                "Content-Type": "application/json"
-            }
+                "Content-Type": "application/json",
+            },
         })
 
         const data = await response.json()
 
         if (!data.error) {
             setError(null)
-            setListings(data.listings)
+
+            if (searchPage === 0) {
+                setListings(data.listings)
+            }
+            else {
+                setListings((prev) => [...prev, ...data.listings])
+            }
+
+            if (data.listings.length < 12) {
+                setHasMoreListings(false)
+            }
         }
 
-        if (data.listings.length === 0) setError("No listings matched your criteria. Try another booking date and/or major city such as Waimea, Malibu, etc. as we expand our listings database.")
+        if (data.listings.length === 0) {
+            setError("No listings matched your criteria. Try another booking date and/or major city such as Waimea, Malibu, etc. as we expand our listings database.")
+        }
 
         setFetchingListings(false)
+        setSearchPage((prev) => prev + 1)
         return data
     }
 

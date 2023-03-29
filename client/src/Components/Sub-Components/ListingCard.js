@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 import { AuthContext } from "../../Context/Auth-Context";
 
 import ErrorModal from "./ErrorModal";
-
 import './ListingCard.css'
 
 const ListingCard = forwardRef((props, ref) => {
@@ -190,8 +189,8 @@ const ListingCard = forwardRef((props, ref) => {
 
     return (
         <div className="listingCardContainer" onClick={toListingHandler} ref={ref}>
-            <div className="listingCardImageContainer" style={listing.imageIds.length > 0 ? {backgroundImage: "url(https://airebnb.s3.us-east-2.amazonaws.com/" + listing.imageIds[0] + ")"} : {backgroundImage: "url(../../Images/home1.jpg)"}}>
-            {/* <div className="listingCardImageContainer" style={{backgroundImage: "url(../../Images/home1.jpg)"}}> */}
+            {/* <div className="listingCardImageContainer" style={listing.imageIds.length > 0 ? {backgroundImage: "url(https://airebnb.s3.us-east-2.amazonaws.com/" + listing.imageIds[0] + ")"} : {backgroundImage: "url(../../Images/home1.jpg)"}}> */}
+            <div className="listingCardImageContainer">
                 <div className="listingCardCarouselContainer">
                     <div className="listingCardHeartContainer">
                     <i className={`fa-solid fa-heart listingCardHeart ${isSaved ? "saved" : ""}`} onClick={(e) => {e.stopPropagation(); handleSave();}}></i>

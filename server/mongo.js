@@ -480,7 +480,9 @@ function getStateAbbreviation(stateName) {
 
 async function searchListings(req, res, next) {
     const client = new MongoClient(mongoUrl)
-    const { city, state, guests, pets, startDate, endDate } = req.body
+    const { page, city, state, guests, pets, startDate, endDate } = req.body
+
+    const listingsPerPage = 12
 
     try {
         await client.connect()
@@ -500,8 +502,27 @@ async function searchListings(req, res, next) {
             }
         })
 
-        let cityListings = city ? await db.collection("listings").find(searchFilter({ "placeLocationData.placeCity": city })).toArray() : []
-        let stateListings = state ? await db.collection("listings").find(searchFilter({ "placeLocationData.placeState": getStateAbbreviation(state) })).toArray() : []
+        let cityListings = city
+            ? await db
+                .collection("listings")
+                .find(searchFilter({ "placeLocationData.placeCity": city }))
+                .skip(page * listingsPerPage)
+                .limit(listingsPerPage)
+                .toArray()
+            : []
+
+        let stateListings = state
+            ? await db
+                .collection("listings")
+                .find(
+                    searchFilter({
+                    "placeLocationData.placeState": getStateAbbreviation(state),
+                    })
+                )
+                .skip(page * listingsPerPage)
+                .limit(listingsPerPage)
+                .toArray()
+            : []
 
         let cityListingIds = cityListings.map(listing => listing._id.toString())
         let uniqueStateListings = stateListings.filter(listing => !cityListingIds.includes(listing._id.toString()))

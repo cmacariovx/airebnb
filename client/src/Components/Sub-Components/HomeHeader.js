@@ -48,6 +48,13 @@ function HomeHeader(props) {
     const [showErrorModal, setShowErrorModal] = useState(false)
     const [errorMessages, setErrorMessages] = useState([])
 
+    const [showMediaSearch, setShowMediaSearch] = useState(false)
+    const [mediaCategoryOpen, setMediaCategoryOpen] = useState("where")
+    const [searchResults2, setSearchResults2] = useState([])
+    const [autocompleteOpen, setAutocompleteOpen] = useState(false)
+
+    const { setHasMoreListings } = useContext(ListingsContext)
+
     function showSignupHandler() {
         if (showLogin) setShowLogin(false)
         setShowSignup(true)
@@ -155,9 +162,18 @@ function HomeHeader(props) {
         }
     }
 
+    const searchPlaces2 = (input) => {
+        if (autocompleteService && input) {
+            autocompleteService.getPlacePredictions({ input, types: ['(regions)'], componentRestrictions: { country: 'us' } }, setSearchResults2)
+        }
+        else {
+            setSearchResults2([])
+        }
+    }
+
     function setPlace(place) {
-        setCurrentPlace(place)
-        const cityState = place.split(", ")
+        setCurrentPlace(place);
+        const cityState = place.split(", ").map(item => item.replace(/\d+/g, '').trim())
 
         if (cityState.length === 3) {
             setCity(cityState[0])
@@ -173,6 +189,7 @@ function HomeHeader(props) {
         }
 
         inputRef.current.value = place
+        setAutocompleteOpen(false)
     }
 
     useEffect(() => {
@@ -215,6 +232,7 @@ function HomeHeader(props) {
     }
 
     const debouncedSearchPlaces = debounce(searchPlaces, 300)
+    const debouncedSearchPlaces2 = debounce(searchPlaces2, 300)
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside)
@@ -268,6 +286,8 @@ function HomeHeader(props) {
             infants: infantsCounter,
             pets: petCounter,
         })
+
+        setShowMediaSearch(false)
     }
 
     useEffect(() => {
@@ -310,7 +330,7 @@ function HomeHeader(props) {
         setPets("")
         setSelectedStartDate(null)
         setSelectedEndDate(null)
-        inputRef.current.value = ""
+        if (inputRef.current) inputRef.current.value = ""
     }
 
     function authErrorHandler() {
@@ -321,10 +341,161 @@ function HomeHeader(props) {
     function handleReset() {
         resetListings()
         resetParams()
+        setHasMoreListings(true)
+        window.location.reload()
     }
+
     return (
         <div className={homePage ? "homeHeaderContainer" : "homeHeaderContainerListing"}>
             <div className={homePage ? "homeHeader1Container" : "homeHeader1Container2"}>
+                {/* media query div */}
+                <div className='homeHeader1SearchContainerMedia' onClick={() => setShowMediaSearch(true)}>
+                    <i className="fa-solid fa-magnifying-glass homeHeader1SearchContainerMediaIcon"></i>
+                    <div className="homeHeader1SearchContainerMediaTextContainer">
+                        <p className="homeHeader1SearchContainerMediaTextContainerUpper">Anywhere</p>
+                        <div className='homeHeader1SearchContainerMediaTextContainerLower'>
+                            <p className="homeHeader1SearchContainerMediaTextContainerLowerLeft">Any week</p>
+                            <p className="homeHeader1SearchContainerMediaTextContainerLowerMiddle">•</p>
+                            <p className="homeHeader1SearchContainerMediaTextContainerLowerRight">Add guests</p>
+                        </div>
+                    </div>
+                </div>
+                {showMediaSearch &&
+                    <React.Fragment>
+                    <div className='homeHeader1SearchContainerMediaFull'>
+                        <div className='homeHeader1SearchContainerMediaFullIconContainer'>
+                            <div className='homeHeader1SearchContainerMediaFullIconContainerInner' onClick={() => setShowMediaSearch(false)}>
+                                <i className="fa-solid fa-x homeHeader1SearchContainerMediaFullIcon"></i>
+                            </div>
+                        </div>
+                        <div className='homeHeader1SearchContainerMediaFullBody'>
+                            <div className='homeHeader1SearchContainerMediaFullBodyOption' onClick={() => setMediaCategoryOpen("where")}>
+                                <p className="homeHeader1SearchContainerMediaFullBodyOptionLeft">Where</p>
+                                <p className="homeHeader1SearchContainerMediaFullBodyOptionRight">Add a location</p>
+                            </div>
+                            {mediaCategoryOpen === "where" && <div className='homeHeader1SearchContainerMediaFullBodyOptionWhere'>
+                                <p className='homeHeader1SearchContainerMediaFullBodyOptionWhereTitle'>Where to?</p>
+                                <div className='homeHeader1SearchContainerMediaFullBodyOptionWhereInputContainer'>
+                                    <i className="fa-solid fa-magnifying-glass homeHeader1SearchContainerMediaFullBodyOptionWhereInputContainerIcon"></i>
+                                    <input ref={inputRef}
+                                        className="homeHeader1SearchContainerMediaFullBodyOptionWhereInput"
+                                        placeholder="Search destinations"
+                                        onChange={(e) => debouncedSearchPlaces2(e.target.value)}
+                                        onClick={() => setAutocompleteOpen(true)}
+                                    >
+                                    </input>
+                                </div>
+                                {mediaCategoryOpen === "where" && searchResults2 && searchResults2.length > 0 && autocompleteOpen && <div className="homeHeader2SearchDropdownPlacesContainer2">
+                                    {searchResults2.map((result, index) => (
+                                        <div key={index} className="homeHeader2SearchDropdownPlaceContainer" onClick={() => setPlace(result.description)}>
+                                            <i className="fa-solid fa-location-dot homeHeader2SearchDropdownPlaceIcon"></i>
+                                            <p className="homeHeader2SearchDropdownPlaceText">{result.description}</p>
+                                        </div>
+                                    ))}
+                                </div>}
+                            </div>}
+                            <div className='homeHeader1SearchContainerMediaFullBodyOption' onClick={() => setMediaCategoryOpen("when")}>
+                                <p className="homeHeader1SearchContainerMediaFullBodyOptionLeft">When</p>
+                                <p className="homeHeader1SearchContainerMediaFullBodyOptionRight">Add dates</p>
+                            </div>
+                            {mediaCategoryOpen === "when" && <div className='homeHeader1SearchContainerMediaFullBodyOptionWhen'>
+                                <p className='homeHeader1SearchContainerMediaFullBodyOptionWhenTitle'>Where to?</p>
+                                <div className='homeHeader1SearchContainerMediaFullBodyOptionWhenCalendar'>
+                                    <Calendar onDateChange={handleDateChange} ref={calendarRef} single={true}/>
+                                </div>
+                                <div className='homeHeader1SearchContainerMediaFullBodyOptionWhenButtonsContainer'>
+                                    <button className='homeHeader1SearchContainerMediaFullBodyOptionWhenButton' onClick={() => setMediaCategoryOpen("who")}>Next</button>
+                                </div>
+                            </div>}
+
+                            <div className='homeHeader1SearchContainerMediaFullBodyOption' onClick={() => setMediaCategoryOpen("who")}>
+                                <p className="homeHeader1SearchContainerMediaFullBodyOptionLeft">Who</p>
+                                <p className="homeHeader1SearchContainerMediaFullBodyOptionRight">Add guests</p>
+                            </div>
+                            {mediaCategoryOpen === "who" && <div className='homeHeader1SearchContainerMediaFullBodyOptionWho'>
+                                <p className='homeHeader1SearchContainerMediaFullBodyOptionWhenTitle'>Who's coming?</p>
+                                <div className='homeHeader2SearchDropdownGuestContainer3'>
+                                    <div className='homeHeader2SearchDropdownGuestContainerLeft'>
+                                        <p className='homeHeader2SearchDropdownGuestContainerLeftText1'>Adults</p>
+                                        <p className='homeHeader2SearchDropdownGuestContainerLeftText2'>Ages 13 or above</p>
+                                    </div>
+                                    <div className='homeHeader2SearchDropdownGuestContainerRight'>
+                                        <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("adults", "-")}>
+                                            <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>-</p>
+                                        </div>
+
+                                            <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>{adultsCounter}</p>
+
+                                        <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("adults", "+")}>
+                                            <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>+</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='homeHeader2SearchDropdownGuestContainer3'>
+                                    <div className='homeHeader2SearchDropdownGuestContainerLeft'>
+                                        <p className='homeHeader2SearchDropdownGuestContainerLeftText1'>Children</p>
+                                        <p className='homeHeader2SearchDropdownGuestContainerLeftText2'>Ages 2-12</p>
+                                    </div>
+                                    <div className='homeHeader2SearchDropdownGuestContainerRight'>
+                                        <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("children", "-")}>
+                                            <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>-</p>
+                                        </div>
+
+                                            <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>{childrenCounter}</p>
+
+                                        <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("children", "+")}>
+                                            <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>+</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='homeHeader2SearchDropdownGuestContainer3'>
+                                    <div className='homeHeader2SearchDropdownGuestContainerLeft'>
+                                        <p className='homeHeader2SearchDropdownGuestContainerLeftText1'>Infants</p>
+                                        <p className='homeHeader2SearchDropdownGuestContainerLeftText2'>Under 2</p>
+                                    </div>
+                                    <div className='homeHeader2SearchDropdownGuestContainerRight'>
+                                        <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("infants", "-")}>
+                                            <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>-</p>
+                                        </div>
+
+                                            <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>{infantsCounter}</p>
+
+                                        <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("infants", "+")}>
+                                            <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>+</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='homeHeader2SearchDropdownGuestContainer4'>
+                                    <div className='homeHeader2SearchDropdownGuestContainerLeft'>
+                                        <p className='homeHeader2SearchDropdownGuestContainerLeftText1'>Pets</p>
+                                        <p className='homeHeader2SearchDropdownGuestContainerLeftText2'>Service Animals Included</p>
+                                    </div>
+                                    <div className='homeHeader2SearchDropdownGuestContainerRight'>
+                                        <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("pets", "-")}>
+                                            <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>-</p>
+                                        </div>
+
+                                            <p className='homeHeader2SearchDropdownGuestContainerRightNumber'>{petCounter}</p>
+
+                                        <div className='homeHeader2SearchDropdownGuestContainerRightIconContainer' onClick={() => increment("pets", "+")}>
+                                            <p className='homeHeader2SearchDropdownGuestContainerRightIcon'>+</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>}
+                        </div>
+                        <div className='homeSearchMediaSubmitButtons'>
+                            <button className='homeSearchMediaSubmitButton2' onClick={handleReset}>
+                                <p className='homeSearchMediaSubmitButtonText2'>Reset Filters</p>
+                            </button>
+                            <button className='homeSearchMediaSubmitButton' onClick={searchHandler}>
+                                <i className="fa-solid fa-magnifying-glass homeSearchMediaSubmitButtonIcon"></i>
+                                <p className='homeSearchMediaSubmitButtonText'>Search</p>
+                            </button>
+                        </div>
+                    </div>
+                </React.Fragment>}
+                {/* media query div */}
                 <div className="homeHeader1LogoContainer">
                     <img src={airbnbLogo} className="homeHeader1Logo" onClick={toHomeHandler}/>
                 </div>
