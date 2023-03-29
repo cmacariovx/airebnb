@@ -82,7 +82,7 @@ function ProfileListingCard(props) {
     }
 
     return (
-        <div className="profileListingCardContainer" onClick={toListingBody}>
+        <div className="profileListingCardContainer" onClick={toListingBody} style={props.single ? {width: "100%"} : {width: "47%"}}>
             <img src={"https://airebnb.s3.us-east-2.amazonaws.com/" + listing.imageIds[0]} className="profileListingCardPic"/>
             <div className="profileListingInfoContainer">
                 <div className="profileListingReviewsContainer">

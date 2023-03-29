@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
+import { useNavigate } from "react-router"
 import { Ripples } from '@uiball/loaders'
 
 import './ProfileBody.css'
@@ -18,6 +19,10 @@ function ProfileBody() {
     const [activeIndex, setActiveIndex] = useState(0)
     const [reviewsCount, setReviewsCount] = useState(null)
     const [reviews, setReviews] = useState([])
+
+    const [activeListingCards, setActiveListingCards] = useState(null)
+
+    const navigate = useNavigate()
 
     const handlePrevClick = () => {
         setActiveIndex((prevIndex) => (prevIndex - 1 + userListings.length) % userListings.length)
@@ -87,8 +92,42 @@ function ProfileBody() {
         if (!fetchingUser && user && userListings.length > 0) showAllReviews()
     }, [user])
 
+    useEffect(() => {
+        if ((!fetchingUser && user && userListings) && userListings.length > 0) {
+            const cards = (
+                <React.Fragment>
+                    <ProfileListingCard listing={userListings[activeIndex]} />
+                    {userListings.length > 1 && (
+                        <ProfileListingCard listing={userListings[(activeIndex + 1) % userListings.length]} />
+                    )}
+                </React.Fragment>
+            );
+            setActiveListingCards(cards)
+        }
+    }, [fetchingUser, user, userListings, activeIndex])
+
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth)
+        }
+
+        window.addEventListener('resize', handleResize)
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, [])
+
     return (
         <div className="profileBodyContainer">
+
+            <div className="profileBodyHeaderContainer">
+                <div className="profileBodyHeaderIconContainer" onClick={() => navigate("..")}>
+                    <i className="fa-solid fa-chevron-left profileBodyHeaderIcon"></i>
+                </div>
+            </div>
+
             <div className="profileBodyLeftContainer">
                 <div className="profileBodyLeftUserInfoContainer">
                     <div className="profileBodyLeftUserInfoUpperContainer">
@@ -101,6 +140,7 @@ function ProfileBody() {
                 </div>
             </div>
             <div className="profileBodyRightContainer">
+
                 <div className="profileBodyRightIntroContainer">
                     <div className="profileBodyRightIntroNameDateContainer">
                         <p className="profileBodyRightIntroNameText">{(!fetchingUser && user) && ("Hi, I'm " + user.firstName)}</p>
@@ -109,20 +149,33 @@ function ProfileBody() {
                     <div className="profileBodyRightIntroAboutContainer">
                         <p className="profileBodyRightIntroAboutText">About</p>
                         <p className="profileBodyRightIntroAboutDesc">{(!fetchingUser && user) && (user.aboutDescription)}</p>
-                        {/* <div className="profileBodyRightIntroLivesContainer">
-                            <i className="fa-solid fa-house profileBodyRightIntroLivesHouse"></i>
-                            <p className="profileBodyRightIntroLivesText">Lives in Asheville, NC</p>
-                        </div> */}
                     </div>
                 </div>
+
+                <div className="profileBodyRightIntroContainer2">
+                    <div className="profileBodyRightIntroNameDateContainer2">
+                        <div className="profileBodyRightIntroNameDateContainerLeft">
+                            <p className="profileBodyRightIntroNameText">{(!fetchingUser && user) && ("Hi, I'm " + user.firstName)}</p>
+                            <p className="profileBodyRightIntroDateText">{(!fetchingUser && user) && ("Joined in " + formatDate2(user.joinedDate))}</p>
+                        </div>
+                        <div className="profileBodyRightIntroNameDateContainerRight">
+                            <img src={(!fetchingUser && user) ? "https://airebnb.s3.us-east-2.amazonaws.com/" + user.profilePicture : null} className="profileBodyRightIntroNameDateContainerRightImage"/>
+                        </div>
+                    </div>
+                    <div className="profileBodyRightIntroAboutContainer">
+                        <p className="profileBodyRightIntroAboutText">About</p>
+                        <p className="profileBodyRightIntroAboutDesc">{(!fetchingUser && user) && (user.aboutDescription)}</p>
+                    </div>
+                </div>
+
                 <div className="profileBodyListingsContainer">
                     <p className="profileBodyListingsHeaderText">Carlos' Listings</p>
-                    <div className="profileBodyListingsBodyContainer">
+                    <div className={(windowWidth <= 500 || (!fetchingUser && user) && userListings.length === 1) ? "profileBodyListingsBodyContainer2" : "profileBodyListingsBodyContainer"}>
                         {(!fetchingUser && user) && userListings.length > 0 && (
                             <React.Fragment>
-                                <ProfileListingCard listing={userListings[activeIndex]} />
-                                {userListings.length > 1 && (
-                                    <ProfileListingCard listing={userListings[(activeIndex + 1) % userListings.length]} />
+                                <ProfileListingCard key={`listing-${activeIndex}`} listing={userListings[activeIndex]} single={(windowWidth <= 500 || userListings.length === 1) ? true : false}/>
+                                {userListings.length > 1 && windowWidth >= 500 && (
+                                    <ProfileListingCard key={`listing-${(activeIndex + 1) % userListings.length}`} listing={userListings[(activeIndex + 1) % userListings.length]} />
                                 )}
                             </React.Fragment>
                         )}

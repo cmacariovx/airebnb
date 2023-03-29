@@ -1373,7 +1373,7 @@ function ListingBody() {
                     </div>
                 </div>
             </div>
-            <div className="mediaBackIconContainer">
+            <div className="mediaBackIconContainer" onClick={() => navigate("..")}>
                 <i className="fa-solid fa-chevron-left mediaBackIcon"></i>
             </div>
             <div className="mediaBackIconContainer2" onClick={(e) => {e.stopPropagation(); handleSave();}}>

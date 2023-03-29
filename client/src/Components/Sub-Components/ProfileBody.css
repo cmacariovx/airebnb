@@ -130,6 +130,7 @@
                 .profileBodyRightIntroAboutDesc {
                     font-size: 16px;
                     margin-bottom: 30px;
+                    line-height: 1.6;
                 }
 
                 .profileBodyRightIntroLivesContainer {
@@ -420,3 +421,174 @@
                         font-size: 14px;
                         color: var(--gray);
                     }
+
+.profileBodyRightIntroContainer2 {
+    display: none;
+}
+
+.profileBodyHeaderContainer {
+    display: none;
+}
+
+.profileBodyListingsBodyContainer2 {
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+@media screen and (max-width: 1100px) {
+    .profileBodyLeftContainer {
+        display: none;
+        width: 0;
+    }
+
+    .profileBodyRightContainer {
+        width: 100%;
+        padding: 0;
+    }
+
+    .profileBodyRightIntroContainer {
+        display: none;
+    }
+
+    .profileBodyRightIntroContainer2 {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .profileBodyHeaderContainer {
+        height: 80px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: white;
+        border-bottom: 1px solid rgba(160, 160, 160, 0.2);
+        padding: 0 60px;
+        z-index: 100;
+    }
+
+    .profileBodyHeaderIconContainer {
+        min-height: 36px;
+        min-width: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(160, 160, 160, 0.4);
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .profileBodyRightIntroNameDateContainer2 {
+        height: 50%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .profileBodyRightIntroNameDateContainerLeft {
+        height: 100%;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .profileBodyRightIntroNameDateContainerRight {
+        height: 100%;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    .profileBodyRightIntroNameDateContainerRightImage {
+        min-height: 64px;
+        min-width: 64px;
+        max-height: 64px;
+        max-width: 64px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }
+
+    .profileBodyRightIntroNameText {
+        font-size: 26px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .profileBodyContainer {
+        padding: 0 60px;
+        padding-top: 60px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .profileBodyContainer {
+        padding: 0 40px;
+        padding-top: 60px;
+    }
+
+    .profileBodyHeaderContainer {
+        padding: 0 40px;
+    }
+
+    .profileBodyRightIntroNameDateContainerLeft {
+        width: 70%;
+    }
+
+    .profileBodyRightIntroNameDateContainerRight {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .profileBodyRightIntroAboutDesc {
+        font-size: 15px;
+    }
+
+    .profileBodyReviewTitleText {
+        font-size: 14px;
+    }
+
+    .profileBodyReviewText {
+        font-size: 15px;
+    }
+
+    .profileBodyReviewProfilePic {
+        min-height: 40px;
+        min-width: 40px;
+        max-height: 40px;
+        max-width: 40px;
+    }
+
+    .profileBodyContainer {
+        padding: 0 20px;
+        padding-top: 60px;
+    }
+
+    .profileBodyHeaderContainer {
+        padding: 0 20px;
+    }
+}
