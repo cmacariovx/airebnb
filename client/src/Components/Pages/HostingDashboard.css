@@ -153,10 +153,11 @@
         }
 
         .hostingDashboardReservationsButtons {
-            height: 50px;
+            min-height: 50px;
             width: 100%;
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
             justify-content: flex-start;
             align-items: center;
             margin-bottom: 20px;
@@ -174,6 +175,8 @@
                 justify-content: center;
                 align-items: center;
                 transition: 0.1s linear;
+                margin-top: 10px;
+                margin-bottom: 10px;
             }
 
             .hostingDashboardReservationsButton:hover {
@@ -186,6 +189,7 @@
             width: 100%;
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
             justify-content: flex-start;
             align-items: center;
             flex-wrap: wrap;
@@ -272,3 +276,55 @@
                 margin-right: 60px;
                 margin-bottom: 20px;
             }
+
+@media screen and (max-width: 800px) {
+    .hostingDashboardListings {
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .hostingDashboardListings {
+        justify-content: center;
+    }
+
+    .hostingDashboardListingContainer {
+        margin-right: 0;
+    }
+
+    .hostingDashboardWelcomeContainer {
+        padding: 20px 40px;
+    }
+
+    .hostingDashboardReservationsContainer {
+        padding: 20px 40px;
+    }
+
+    .hostingDashboardListingsContainer {
+        padding: 20px 40px;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .hostingDashboardReservationsButtons {
+        justify-content: flex-start;
+    }
+
+    .hostingDashboardWelcomeText {
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .hostingDashboardWelcomeContainer {
+        padding: 20px 30px;
+    }
+
+    .hostingDashboardReservationsContainer {
+        padding: 20px 30px;
+    }
+
+    .hostingDashboardListingsContainer {
+        padding: 20px 30px;
+    }
+}

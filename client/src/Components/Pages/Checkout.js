@@ -148,7 +148,7 @@ function Checkout() {
                 parseFloat(averageRatings.checkInRating) +
                 parseFloat(averageRatings.valueRating)
 
-            const overallRating = (totalStars / (reviews.length * 6)).toFixed(2)
+            const overallRating = (totalStars / 6).toFixed(2)
             return overallRating
         }
         else return "New"
@@ -248,8 +248,37 @@ function Checkout() {
             <div className="checkoutHeader">
                 <img src={airbnbLogo} className="checkoutHeaderImage" onClick={() => navigate("/")}/>
             </div>
+            <div className="checkoutHeaderMedia">
+                <div className="checkoutMediaBackIconContainer" onClick={() => navigate('/listing/' + listingId)}>
+                    <i class="fa-solid fa-chevron-left checkoutMediaBackIcon"></i>
+                </div>
+                <p className="checkoutMediaConfirmText">Confirm and pay</p>
+                <img src={airbnbLogo} className="checkoutHeaderImageMedia" onClick={() => navigate("/")}/>
+            </div>
 
             <div className="checkoutContainerLeft">
+
+                <div className="checkoutListingContainer">
+                    <div className="checkoutListingContainerUpper">
+                        <div className="checkoutListingContainerUpperLeft">
+                            <img src={(listing && !fetchingListing) ? ("https://airebnb.s3.us-east-2.amazonaws.com/" + listing.imageIds[0]) : null} className="checkoutListingContainerUpperLeftImage"/>
+                        </div>
+                        <div className="checkoutListingContainerUpperRight">
+                            <p className="checkoutListingContainerUpperRightText1">{(!fetchingListing && listing) && place(listing.placeGeneralData.placeSize)}</p>
+                            <p className="checkoutListingContainerUpperRightText2">{(!fetchingListing && listing) && listing.placeGeneralData.placeTitle}</p>
+                            <div className="checkoutListingContainerUpperRightTextContainer">
+                                <i className="fa-solid fa-star checkoutListingContainerUpperRightTextContainerIcon"></i>
+                                <p className="checkoutListingContainerUpperRightText3">{(!fetchingListing && listing) && averageRating}</p>
+                                <p className="checkoutListingContainerUpperRightText4">{(!fetchingListing && listing) && `(${listing.reviewsData.reviewsCount} ${listing.reviewsData.reviewsCount === 1 ? "Review" : "Reviews"})`}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="checkoutListingContainerLower">
+                        <p className="checkoutListingContainerLowerText">Your booking is protected by </p>
+                        <img src={aircover} className="checkoutListingContainerLowerPic"/>
+                    </div>
+                </div>
+
                 <div className="checkoutTitleContainer">
                     <div className="checkoutTitleIconContainer" onClick={() => navigate('/listing/' + listingId)}>
                         <i className="fa-solid fa-chevron-left checkoutTitleIcon"></i>
@@ -376,7 +405,7 @@ function Checkout() {
                     </div>
                     <div className="checkoutContainerRightCard4">
                         <p className="checkoutContainerRightCard4TotalText">Total (USD)</p>
-                        <p className="checkoutContainerRightCard4TotalAmount">{(listing && !fetchingListing) && ["$", ((listing.placePriceData.priceCounter * totalDays) + listing.placePriceData.cleaningFee + listing.placePriceData.airbnbFee) * 1.07]}</p>
+                        <p className="checkoutContainerRightCard4TotalAmount">{(listing && !fetchingListing) && ["$", (((listing.placePriceData.priceCounter * totalDays) + listing.placePriceData.cleaningFee + listing.placePriceData.airbnbFee) * 1.07).toFixed(2)]}</p>
                     </div>
                 </div>
             </div>
