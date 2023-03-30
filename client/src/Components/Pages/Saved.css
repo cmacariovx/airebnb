@@ -1,6 +1,7 @@
 .savedContainer {
     min-height: 100%;
     width: 100%;
+    max-width: 1300px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

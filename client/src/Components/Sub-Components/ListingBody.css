@@ -1,6 +1,7 @@
 .listingBodyContainer {
     min-height: 100vh;
     width: 100%;
+    max-width: 1300px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -12,6 +13,7 @@
 .floatingListingHeader {
     height: 80px;
     width: 100%;
+    max-width: 1300px;
     display: none;
     flex-direction: row;
     justify-content: space-between;
