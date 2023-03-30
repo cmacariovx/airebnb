@@ -11,13 +11,14 @@ import ListingsContext from "../../Context/ListingsContext"
 function Home() {
     const [listings, setListings] = useState([])
     const [hasMoreListings, setHasMoreListings] = useState(true)
+    const [showMediaSearch, setShowMediaSearch] = useState(false)
 
     function resetListings() {
         setListings([])
     }
 
     return (
-        <ListingsContext.Provider value={{ listings, setListings, resetListings, hasMoreListings, setHasMoreListings }}>
+        <ListingsContext.Provider value={{ listings, setListings, resetListings, hasMoreListings, setHasMoreListings, showMediaSearch, setShowMediaSearch }}>
             <div className="homeContainer">
                 <HomeHeader homePage={true}/>
                 <HomeBody/>

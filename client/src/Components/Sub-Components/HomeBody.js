@@ -12,14 +12,15 @@ import ListingsContext from "../../Context/ListingsContext";
 import Footer2 from "./Footer2";
 
 function HomeBody() {
-    const { listings, setListings } = useContext(ListingsContext)
     const [fetchingListings, setFetchingListings] = useState(false)
     const [page, setPage] = useState(0)
     const [searchPage, setSearchPage] = useState(0)
     const [user, setUser] = useState(null)
     const [showLoadingSpinner, setShowLoadingSpinner] = useState(false)
 
+    const { listings, setListings } = useContext(ListingsContext)
     const { hasMoreListings, setHasMoreListings } = useContext(ListingsContext)
+    const { showMediaSearch, setShowMediaSearch } = useContext(ListingsContext)
 
     const chunkedLists = []
 
@@ -270,7 +271,7 @@ function HomeBody() {
               <Ripples size={100} color="#c9c9c9" />
             </div>
           )}
-          <Footer2 />
+          {!showMediaSearch && <Footer2 />}
           {error && <ErrorModal errors={[error]} closeModal={() => setError(null)} />}
         </React.Fragment>
     )

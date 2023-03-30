@@ -48,12 +48,12 @@ function HomeHeader(props) {
     const [showErrorModal, setShowErrorModal] = useState(false)
     const [errorMessages, setErrorMessages] = useState([])
 
-    const [showMediaSearch, setShowMediaSearch] = useState(false)
     const [mediaCategoryOpen, setMediaCategoryOpen] = useState("where")
     const [searchResults2, setSearchResults2] = useState([])
     const [autocompleteOpen, setAutocompleteOpen] = useState(false)
 
     const { setHasMoreListings } = useContext(ListingsContext)
+    const { showMediaSearch, setShowMediaSearch } = useContext(ListingsContext)
 
     function showSignupHandler() {
         if (showLogin) setShowLogin(false)

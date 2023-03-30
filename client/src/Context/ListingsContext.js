@@ -6,6 +6,8 @@ const ListingsContext = createContext({
     resetListings: () => {},
     hasMoreListings: true,
     setHasMoreListings: () => {},
+    showMediaSearch: false,
+    setShowMediaSearch: () => {}
 })
 
 export default ListingsContext;
