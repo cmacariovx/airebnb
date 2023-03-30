@@ -1,7 +1,8 @@
-import React, { useContext, useRef, useState } from "react";
-import { AuthContext } from "../../Context/Auth-Context";
+import React, { useContext, useRef, useState } from "react"
+import { AuthContext } from "../../Context/Auth-Context"
+import { Ripples } from '@uiball/loaders'
 
-import ImageUpload from "../Sub-Components/ImageUpload";
+import ImageUpload from "../Sub-Components/ImageUpload"
 
 import './Signup.css'
 
@@ -10,6 +11,7 @@ function Signup({ closeSignup, showErrorModal, already }) {
     const lastNameInputRef = useRef()
     const emailInputRef = useRef()
     const passwordInputRef = useRef()
+    const aboutInputRef = useRef()
 
     const [image, setImage] = useState(null)
     const [isSigningUp, setIsSigningUp] = useState(false)
@@ -38,6 +40,10 @@ function Signup({ closeSignup, showErrorModal, already }) {
 
         if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/.test(passwordInputRef.current.value)) {
             errors.push("Password must contain at least one uppercase letter, one lowercase letter, one number, one symbol and be at least 6 characters long.")
+        }
+
+        if (aboutInputRef.current.value.length < 6) {
+            errors.push("About section must be at least 6 characters long.")
         }
 
         if (image === null) {
@@ -69,6 +75,7 @@ function Signup({ closeSignup, showErrorModal, already }) {
         formData.append('lastName', lastNameInputRef.current.value)
         formData.append('email', emailInputRef.current.value.toLowerCase())
         formData.append('password', passwordInputRef.current.value)
+        formData.append('about', aboutInputRef.current.value)
         formData.append('imageId', date)
         formData.append('image', image, date)
 
@@ -136,15 +143,21 @@ function Signup({ closeSignup, showErrorModal, already }) {
                         <input className="signupInputContainer" ref={passwordInputRef} type="password" minLength="6" placeholder="Password" required />
                     </label>
                     <label className="signupLabelContainer">
+                        <input className="signupInputContainer" ref={aboutInputRef} type="text" placeholder="About" minLength={6} maxLength={40} required />
+                    </label>
+                    <label className="signupLabelContainer">
                         <ImageUpload onValid={onImageUpload} />
                     </label>
                     <div className="signupButtonsContainer">
                         <button className="signupSubmitButton" type="submit">Sign up</button>
-                        <button className="demoSubmitButton" on onClick={loginUserHandlerDemo}>Demo Login</button>
+                        <button className="demoSubmitButton" onClick={loginUserHandlerDemo}>Demo Login</button>
                     </div>
                     <p className="signupFormLogText" onClick={already}>Already have an account?</p>
                 </form>
             </div>
+            {isSigningUp && <div className="homeBodySpinnerContainer">
+                <Ripples size={100} color="#c9c9c9" />
+            </div>}
         </div>
     )
 }

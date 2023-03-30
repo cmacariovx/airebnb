@@ -8,6 +8,7 @@ import logo from '../../Images/airbnbLogoMain.png'
 import personalPic from '../../Images/personalPic.jpg'
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../Context/Auth-Context";
+import Footer2 from "../Sub-Components/Footer2"
 
 function HostingDashboard() {
     const [activeProfileDropdown, setActiveProfileDropdown] = useState(false)
@@ -136,6 +137,7 @@ function HostingDashboard() {
 
     return (
         <div className="hostingDashboardContainer">
+            <Footer2 />
             <header className="hostingDashboardHeaderContainer">
                 <img src={logo} className="hostingDashboardHeaderLogo" onClick={() => navigate("/")}/>
                 <div className="hostingDashboardProfileContainer" onClick={() => setActiveProfileDropdown(true)}>
@@ -266,6 +268,7 @@ function HostingDashboard() {
                             <ListingCard key={listing._id} listing={listing} isSaved={user && user.saved.includes(listing._id.toString())} />
                         </div>
                     ))}
+                    {(!fetchingListings && listings.length === 0) && "You don't have any listings."}
                 </div>
             </div>
         </div>

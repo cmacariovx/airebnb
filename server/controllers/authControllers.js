@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 require("dotenv").config()
 
 async function userSignup (req, res, next) {
-    const { firstName, lastName, email, password, imageId } = req.body
+    const { firstName, lastName, email, password, about, imageId } = req.body
 
     let plainPassword = password
     let hashedPassword = await bcrypt.hash(password, 12)
@@ -15,7 +15,7 @@ async function userSignup (req, res, next) {
         email,
         password: hashedPassword,
         profilePicture: imageId,
-        aboutDescription: "",
+        aboutDescription: about,
         location: {
             city: "",
             state: ""

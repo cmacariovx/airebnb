@@ -1,0 +1,68 @@
+.footer2Container {
+    height: 72px;
+    width: 100%;
+    display: none;
+    flex-direction: row;
+    justify-content: space-evenly ;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    z-index: 100;
+    border-top: 1px solid rgba(160, 160, 160, 0.4);
+}
+
+.footer2OptionContainer {
+    height: 100%;
+    min-width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.footer2OptionText {
+    font-size: 12px;
+    font-weight: bold;
+    color: rgba(160, 160, 160, 0.9);
+}
+
+.fa-solid.fa-house.footer2OptionIcon {
+    font-size: 20px;
+    color: rgba(160, 160, 160, 0.9);
+    margin-bottom: 8px;
+}
+
+.fa-solid.fa-sliders.footer2OptionIcon {
+    font-size: 20px;
+    color: rgba(160, 160, 160, 0.9);
+    margin-bottom: 8px;
+}
+
+.fa-regular.fa-heart.footer2OptionIcon {
+    font-size: 20px;
+    color: rgba(160, 160, 160, 0.9);
+    margin-bottom: 8px;
+}
+
+.fa-solid.fa-user.footer2OptionIcon {
+    font-size: 20px;
+    color: rgba(160, 160, 160, 0.9);
+    margin-bottom: 8px;
+}
+
+.fa-solid.fa-arrow-up-from-bracket.footer2OptionIcon {
+    font-size: 20px;
+    color: rgba(160, 160, 160, 0.9);
+    margin-bottom: 8px;
+}
+
+
+@media screen and (max-width: 900px) {
+    .footer2Container {
+        display: flex;
+    }
+}

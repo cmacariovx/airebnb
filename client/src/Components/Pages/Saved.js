@@ -9,6 +9,7 @@ import ListingCard from "../Sub-Components/ListingCard"
 import { useNavigate } from "react-router"
 
 import { AuthContext } from "../../Context/Auth-Context"
+import Footer2 from "../Sub-Components/Footer2"
 
 function Saved() {
     const [activeProfileDropdown, setActiveProfileDropdown] = useState(false)
@@ -65,6 +66,7 @@ function Saved() {
 
     return (
         <div className="savedContainer">
+            <Footer2 />
             <header className="savedHeaderContainer">
                 <img src={logo} className="savedHeaderLogo" onClick={() => navigate("/")}/>
                 <div className="savedProfileContainer" onClick={() => setActiveProfileDropdown(true)}>
@@ -89,7 +91,7 @@ function Saved() {
             <p className="savedTitle">Saved Listings</p>
             <div className="savedBodyContainer">
                 {(!fetchingListings && listings.length > 0) && listings.map((listing, index) => (
-                    <ListingCard listing={listing} isSaved={true}/>
+                    <ListingCard key={listing._id} listing={listing} isSaved={true}/>
                 ))}
                 {(!fetchingListings && listings.length === 0) && <p className="emptyListingsText">You don't have any listings saved.</p>}
             </div>

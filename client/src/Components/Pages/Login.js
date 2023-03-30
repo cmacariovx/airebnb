@@ -1,4 +1,5 @@
 import React, { useState, useRef, useContext } from "react";
+import { Ripples } from '@uiball/loaders'
 
 import { AuthContext } from "../../Context/Auth-Context";
 
@@ -84,6 +85,9 @@ function Login({ closeLogin, showErrorModal, already }) {
                     <p className="signupFormLogText" onClick={already}>Don't have an account?</p>
                 </form>
             </div>
+            {isLoggingIn && <div className="homeBodySpinnerContainer">
+                <Ripples size={100} color="#c9c9c9" />
+            </div>}
         </div>
     )
 }

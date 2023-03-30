@@ -9,6 +9,7 @@ import './HomeBody.css'
 import ListingCard from "./ListingCard";
 import { AuthContext } from "../../Context/Auth-Context";
 import ListingsContext from "../../Context/ListingsContext";
+import Footer2 from "./Footer2";
 
 function HomeBody() {
     const { listings, setListings } = useContext(ListingsContext)
@@ -269,6 +270,7 @@ function HomeBody() {
               <Ripples size={100} color="#c9c9c9" />
             </div>
           )}
+          <Footer2 />
           {error && <ErrorModal errors={[error]} closeModal={() => setError(null)} />}
         </React.Fragment>
     )

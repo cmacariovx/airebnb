@@ -9,6 +9,7 @@ import homePic from '../../Images/home1.jpg'
 import ProfileListingCard from "./ProfileListingCard"
 import ErrorModal from "./ErrorModal"
 import { AuthContext } from "../../Context/Auth-Context"
+import Footer2 from "./Footer2"
 
 function ProfileBody() {
     const [userId, setUserId] = useState(window.location.pathname.slice(9))
@@ -17,7 +18,7 @@ function ProfileBody() {
     const [error, setError] = useState(null)
     const [userListings, setUserListings] = useState(null)
     const [activeIndex, setActiveIndex] = useState(0)
-    const [reviewsCount, setReviewsCount] = useState(null)
+    const [reviewsCount, setReviewsCount] = useState(0)
     const [reviews, setReviews] = useState([])
 
     const [activeListingCards, setActiveListingCards] = useState(null)
@@ -121,7 +122,7 @@ function ProfileBody() {
 
     return (
         <div className="profileBodyContainer">
-
+            <Footer2 />
             <div className="profileBodyHeaderContainer">
                 <div className="profileBodyHeaderIconContainer" onClick={() => navigate("..")}>
                     <i className="fa-solid fa-chevron-left profileBodyHeaderIcon"></i>
@@ -169,7 +170,7 @@ function ProfileBody() {
                 </div>
 
                 <div className="profileBodyListingsContainer">
-                    <p className="profileBodyListingsHeaderText">Carlos' Listings</p>
+                    <p className="profileBodyListingsHeaderText">{(!fetchingUser && user) && user.firstName + "'s listings"}</p>
                     <div className={(windowWidth <= 500 || (!fetchingUser && user) && userListings.length === 1) ? "profileBodyListingsBodyContainer2" : "profileBodyListingsBodyContainer"}>
                         {(!fetchingUser && user) && userListings.length > 0 && (
                             <React.Fragment>
@@ -179,6 +180,7 @@ function ProfileBody() {
                                 )}
                             </React.Fragment>
                         )}
+                        {(!fetchingUser && user && userListings.length === 0) && <p className="noListingsText">No listings to show.</p>}
                         <div className="profileBodyListingsBodyOverlayArrowContainer1" onClick={(e) => {handlePrevClick(); e.stopPropagation()}}>
                             <i className="fa-solid fa-chevron-left profileBodyListingsBodyOverlayArrow"></i>
                         </div>
@@ -217,6 +219,7 @@ function ProfileBody() {
                                 </div>
                             </div>
                         ))}
+                        {(!fetchingUser && user && reviews.length === 0) && "No reviews received."}
                     </div>
                 </div>
             </div>
