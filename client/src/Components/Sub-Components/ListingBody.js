@@ -49,7 +49,7 @@ function ListingBody() {
         async function fetchListing() {
             setFetchingListing(true)
 
-            const response = await fetch("http://localhost:5000/" + "listing/fetchSingle", {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/fetchSingle", {
                 method: "POST",
                 body: JSON.stringify({
                     listingId: listingId
@@ -80,7 +80,7 @@ function ListingBody() {
     useEffect(() => {
         async function fetchHost(hostId) {
             setFetchingHost(true)
-            const response = await fetch("http://localhost:5000/" + "listing/fetchHost", {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/fetchHost", {
                 method: "POST",
                 body: JSON.stringify({
                     hostId: hostId,
@@ -507,7 +507,7 @@ function ListingBody() {
         console.log(reviewRef)
         setSubmittingReview(true)
 
-        const response = await fetch("http://localhost:5000/" + "listing/createReview", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/createReview", {
             method: "POST",
             body: JSON.stringify({
                 creatorFirstName: auth.firstName,
@@ -543,7 +543,7 @@ function ListingBody() {
     }
 
     async function fetchUser() {
-        const response = await fetch("http://localhost:5000/" + "listing/fetchUser", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/fetchUser", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId
@@ -579,7 +579,7 @@ function ListingBody() {
     const debounceTimer = useRef(null)
 
     async function createSave() {
-        const response = await fetch("http://localhost:5000/" + "listing/createSave", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/createSave", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId,
@@ -596,7 +596,7 @@ function ListingBody() {
     }
 
     async function unsave() {
-        const response = await fetch("http://localhost:5000/" + "listing/unsave", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/unsave", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId,

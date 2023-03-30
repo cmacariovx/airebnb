@@ -67,7 +67,7 @@ function Checkout() {
         async function fetchListing() {
             setFetchingListing(true)
 
-            const response = await fetch("http://localhost:5000/" + "listing/fetchSingle", {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/fetchSingle", {
                 method: "POST",
                 body: JSON.stringify({
                     listingId: listingId
@@ -174,7 +174,7 @@ function Checkout() {
     async function bookReservation() {
         setBookingReservation(true)
         try {
-            const response = await fetch("http://localhost:5000/" + "listing/bookReservation", {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/bookReservation", {
                 method: "POST",
                 body: JSON.stringify({
                     listingId: listingId,

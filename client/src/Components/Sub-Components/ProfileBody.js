@@ -39,7 +39,7 @@ function ProfileBody() {
         async function fetchUser() {
             setFetchingUser(true)
 
-            const response = await fetch("http://localhost:5000/" + "listing/fetchUser", {
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/fetchUser", {
                 method: "POST",
                 body: JSON.stringify({
                     userId: userId

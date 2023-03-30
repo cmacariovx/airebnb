@@ -134,7 +134,7 @@ const ListingCard = forwardRef((props, ref) => {
     const debounceTimer = useRef(null)
 
     async function createSave() {
-        const response = await fetch("http://localhost:5000/" + "listing/createSave", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/createSave", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId,
@@ -151,7 +151,7 @@ const ListingCard = forwardRef((props, ref) => {
     }
 
     async function unsave() {
-        const response = await fetch("http://localhost:5000/" + "listing/unsave", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/unsave", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId,

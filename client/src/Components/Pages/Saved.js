@@ -38,7 +38,7 @@ function Saved() {
     async function fetchSavedListings() {
         setFetchingListings(true)
 
-        const response = await fetch("http://localhost:5000/" + "listing/fetchSavedListings", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/fetchSavedListings", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId

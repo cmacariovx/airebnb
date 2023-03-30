@@ -37,7 +37,7 @@ function HostingDashboard() {
 
     async function fetchPersonalListings() {
         setFetchingListings(true)
-        const response = await fetch("http://localhost:5000/" + "listing/fetchPersonalListings", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/fetchPersonalListings", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId

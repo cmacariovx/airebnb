@@ -116,7 +116,7 @@ function HomeBody() {
         setShowLoadingSpinner(true)
         setFetchingListings(true)
 
-        const response = await fetch("http://localhost:5000/" + "listing/fetch", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/fetch", {
             method: "POST",
             body: JSON.stringify({
                 page: page
@@ -145,7 +145,7 @@ function HomeBody() {
     async function searchListings() {
         setFetchingListings(true)
 
-        const response = await fetch("http://localhost:5000/" + "listing/searchListings", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/searchListings", {
             method: "POST",
             body: JSON.stringify({
                 page: searchPage,
@@ -202,7 +202,7 @@ function HomeBody() {
     }, [searchParams])
 
     async function fetchUser() {
-        const response = await fetch("http://localhost:5000/" + "listing/fetchUser", {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + "listing/fetchUser", {
             method: "POST",
             body: JSON.stringify({
                 userId: auth.userId

@@ -17,7 +17,7 @@ function Login({ closeLogin, showErrorModal, already }) {
         event.preventDefault()
         setIsLoggingIn(true)
 
-        const response = await fetch("http://localhost:5000/" + 'auth/login', {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/login', {
             method: 'POST',
             body: JSON.stringify({
                 'email': emailInputRef.current.value,
@@ -44,7 +44,7 @@ function Login({ closeLogin, showErrorModal, already }) {
         event.preventDefault()
         setIsLoggingIn(true)
 
-        const response = await fetch("http://localhost:5000/" + 'auth/login', {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/login', {
             method: 'POST',
             body: JSON.stringify({
                 'email': "demo@demo.com",
