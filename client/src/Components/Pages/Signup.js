@@ -79,7 +79,7 @@ function Signup({ closeSignup, showErrorModal, already }) {
         formData.append('imageId', date)
         formData.append('image', image, date)
 
-        const response = await fetch('http://localhost:5000/' + 'auth/signup', {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL + 'auth/signup', {
             method: 'POST',
             body: formData
         })
