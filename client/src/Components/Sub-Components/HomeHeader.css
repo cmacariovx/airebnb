@@ -904,11 +904,14 @@
 
 .homeSearchMediaSubmitButtons {
     min-height: 60px;
-    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    right: 20px;
 }
 
 .homeSearchMediaSubmitButton {
@@ -1092,7 +1095,6 @@
                 background-color: rgb(244, 244, 244);
                 z-index: 99;
                 padding: 20px 20px;
-                padding-bottom: 80px;
             }
 
             .homeHeader1SearchContainerMediaFullIconContainer {
