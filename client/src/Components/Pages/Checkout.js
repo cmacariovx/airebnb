@@ -410,7 +410,7 @@ function Checkout() {
                 </div>
             </div>
 
-            <div className="homeFooterContainer bottom">
+            <div className="homeFooterContainerCheckout">
                 <p className="homeFooterText">© 2023 Airebnb, Inc.</p>
                 <i className="fa-brands fa-linkedin" onClick={toLinkedInProfile}></i>
             </div>
